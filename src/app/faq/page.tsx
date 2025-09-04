@@ -23,11 +23,11 @@ export default function FAQPage() {
   const faqs = [
     {
       question: "What exactly is Templata?",
-      answer: "Templata is a free platform that provides expertly crafted templates for life's biggest moments. Instead of starting with blank pages when planning a wedding, buying a home, or changing careers, you get structured templates with guided setup wizards that ask the right questions and build your personalized workspace."
+      answer: "Templata is a platform that provides expertly crafted templates for life's biggest moments. Instead of starting with blank pages when planning a wedding, buying a home, or changing careers, you get structured templates with guided setup wizards that ask the right questions and build your personalized workspace. Start with free templates or upgrade to access our full library."
     },
     {
       question: "How much does Templata cost?",
-      answer: "Templata is completely free, forever. All templates, guided setup wizards, and features are available at no cost. We believe organizing life's important moments shouldn't come with subscription fees or hidden costs."
+      answer: "Templata offers three tiers: Free (1-2 starter templates, basic features), Plus ($9/mo for full access to 100+ templates, advanced workflows, unlimited active templates), and Pro ($15/mo adding AI Autofill, integrations, team collaboration, and white-label exports). All plans include 14-day free trials with no commitment."
     },
     {
       question: "How does the guided setup work?",
@@ -278,8 +278,8 @@ export default function FAQPage() {
                 <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Sparkles className="h-8 w-8 text-primary" />
                 </div>
-                <CardTitle className="text-3xl font-bold">Free</CardTitle>
-                <CardDescription className="text-base">Always and forever</CardDescription>
+                <CardTitle className="text-3xl font-bold">3</CardTitle>
+                <CardDescription className="text-base">Pricing tiers available</CardDescription>
               </CardHeader>
             </Card>
           </div>

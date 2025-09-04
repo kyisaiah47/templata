@@ -150,7 +150,7 @@ export default function LandingPage() {
             </Badge>
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-              Templates for life's
+              Organize life's
               <br />
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 biggest moments
@@ -165,7 +165,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Button size="lg" className="h-12 px-8 text-base" asChild>
                 <Link href="/templates">
-                  Browse Templates
+                  Start Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -218,7 +218,7 @@ export default function LandingPage() {
                   <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
                     <CheckCircle2 className="h-5 w-5 text-primary" />
                   </div>
-                  <span className="text-lg">Always free, no subscriptions needed</span>
+                  <span className="text-lg">Start free, upgrade for full access to all templates</span>
                 </div>
               </div>
             </div>
@@ -328,52 +328,147 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Why Choose Templata */}
+      {/* Pricing Section */}
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-bold">Why people love Templata</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              We believe organization shouldn't start with a blank page. Get the structure you need with the flexibility you want.
+            <Badge variant="outline" className="px-4 py-2">
+              <Star className="mr-2 h-4 w-4" />
+              Choose Your Plan
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              Simple pricing for
+              <br />
+              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                every need
+              </span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Start free and upgrade as you grow. All plans include our expert guidance and step-by-step setup.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-none bg-background/50">
-              <CardHeader className="text-center pb-6">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Timer className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Setup in minutes</CardTitle>
-                <CardDescription className="text-base">
-                  Guided wizards walk you through personalized setup. Answer a few questions and your workspace is ready.
-                </CardDescription>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Free Tier */}
+            <Card className="relative bg-background border-2">
+              <CardHeader className="text-center pb-8">
+                <CardTitle className="text-2xl font-bold">Free</CardTitle>
+                <div className="text-4xl font-bold">$0</div>
+                <CardDescription className="text-base">Perfect for trying out Templata</CardDescription>
               </CardHeader>
-            </Card>
-            
-            <Card className="border-0 shadow-none bg-background/50">
-              <CardHeader className="text-center pb-6">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-primary" />
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>1-2 starter templates</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Basic setup wizard</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Export to PDF/CSV</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Basic support</span>
+                  </div>
                 </div>
-                <CardTitle className="text-xl">Expert crafted</CardTitle>
-                <CardDescription className="text-base">
-                  Created by domain experts who understand what you need to succeed in planning life's important moments.
-                </CardDescription>
-              </CardHeader>
+                <Button className="w-full mt-8" variant="outline" asChild>
+                  <Link href="/templates">Get Started Free</Link>
+                </Button>
+              </CardContent>
             </Card>
-            
-            <Card className="border-0 shadow-none bg-background/50">
-              <CardHeader className="text-center pb-6">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Sparkles className="h-8 w-8 text-primary" />
+
+            {/* Plus Tier */}
+            <Card className="relative bg-background border-2 border-primary shadow-lg">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <Badge className="px-3 py-1">Most Popular</Badge>
+              </div>
+              <CardHeader className="text-center pb-8 pt-8">
+                <CardTitle className="text-2xl font-bold">Plus</CardTitle>
+                <div className="text-4xl font-bold">$9<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
+                <CardDescription className="text-base">Full access to all templates</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span className="font-medium">Everything in Free, plus:</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Full access to 100+ templates</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Deeper workflows & automation</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Unlimited active templates</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Advanced customization</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Priority support</span>
+                  </div>
                 </div>
-                <CardTitle className="text-xl">Always free</CardTitle>
-                <CardDescription className="text-base">
-                  All templates are completely free. No subscriptions, no hidden fees, no limitations on usage.
-                </CardDescription>
-              </CardHeader>
+                <Button className="w-full mt-8" asChild>
+                  <Link href="/login">Start Plus Trial</Link>
+                </Button>
+              </CardContent>
             </Card>
+
+            {/* Pro Tier */}
+            <Card className="relative bg-background border-2">
+              <CardHeader className="text-center pb-8">
+                <CardTitle className="text-2xl font-bold">Pro</CardTitle>
+                <div className="text-4xl font-bold">$15<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
+                <CardDescription className="text-base">For power users and teams</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span className="font-medium">Everything in Plus, plus:</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>AI Autofill from documents</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Calendar & tool integrations</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Team collaboration</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>White-label exports</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Dedicated support</span>
+                  </div>
+                </div>
+                <Button className="w-full mt-8" variant="outline" asChild>
+                  <Link href="/login">Start Pro Trial</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-sm text-muted-foreground">
+              All plans include 14-day free trial • No commitment • Cancel anytime
+            </p>
           </div>
         </div>
       </section>
@@ -387,18 +482,18 @@ export default function LandingPage() {
             </h2>
             <p className="text-xl text-muted-foreground">
               Choose from our curated collection of templates and get started in minutes. 
-              No account required to browse and explore.
+              Start free or unlock full access with our premium plans.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" className="h-12 px-8 text-base" asChild>
                 <Link href="/templates">
-                  Get Started Free
+                  Browse Templates
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="ghost" size="lg" className="h-12 px-8 text-base" asChild>
-                <Link href="/about">
-                  Learn More
+              <Button variant="outline" size="lg" className="h-12 px-8 text-base" asChild>
+                <Link href="/login">
+                  Start Plus Trial
                 </Link>
               </Button>
             </div>
