@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { WeddingProvider } from "@/contexts/wedding-context"
 import { JobSearchProvider } from "@/contexts/job-search-context"
+import { BabyPlanningProvider } from "@/contexts/baby-planning-context"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,9 @@ export default function RootLayout({
         >
           <WeddingProvider>
             <JobSearchProvider>
-              {children}
+              <BabyPlanningProvider>
+                {children}
+              </BabyPlanningProvider>
             </JobSearchProvider>
           </WeddingProvider>
         </ThemeProvider>

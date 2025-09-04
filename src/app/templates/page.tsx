@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/navigation-menu"
 
 const categories = [
-  { id: "all", name: "All Templates", count: 3 },
-  { id: "life-events", name: "Life Events", count: 1 },
+  { id: "all", name: "All Templates", count: 4 },
+  { id: "life-events", name: "Life Events", count: 2 },
   { id: "career", name: "Career & Education", count: 2 },
 ]
 
@@ -58,6 +58,17 @@ const templates = [
     popular: true,
     features: ["Application Tracker", "Interview Prep", "Network Management", "Salary Tracking"],
     setupTime: "7 min"
+  },
+  {
+    id: "baby-planning",
+    title: "Baby Planning",
+    description: "Prepare for your new arrival with pregnancy tracking, baby gear checklists, nursery planning, and healthcare coordination",
+    category: "life-events",
+    icon: Baby,
+    color: "bg-muted/50 border-border text-foreground",
+    popular: true,
+    features: ["Pregnancy Tracker", "Baby Gear Checklist", "Nursery Planning", "Healthcare Coordination"],
+    setupTime: "6 min"
   }
 ]
 
@@ -104,6 +115,20 @@ export default function TemplatesPage() {
                                 <div>
                                   <div className="font-semibold group-hover:text-primary transition-colors">Wedding Planning</div>
                                   <div className="text-sm text-muted-foreground">Complete wedding organization</div>
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                          
+                          <NavigationMenuLink asChild>
+                            <Link href="/templates/baby-planning" className="block group">
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <Baby className="h-4 w-4 text-muted-foreground" />
+                                </div>
+                                <div>
+                                  <div className="font-semibold group-hover:text-primary transition-colors">Baby Planning</div>
+                                  <div className="text-sm text-muted-foreground">Prepare for your new arrival</div>
                                 </div>
                               </div>
                             </Link>
