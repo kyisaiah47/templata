@@ -8,6 +8,10 @@ import { VendorManagement } from "@/components/vendor-management"
 import { GuestManagement } from "@/components/guest-management"
 import { BudgetTracking } from "@/components/budget-tracking"
 import { TaskManagement } from "@/components/task-management"
+import { CreateNote } from "@/components/create-note"
+import { VendorQuestions } from "@/components/wedding-notes/vendor-questions"
+import { VowsCeremony } from "@/components/wedding-notes/vows-ceremony"
+import { Timeline } from "@/components/wedding-notes/timeline"
 import { WeddingSetupWizard } from "@/components/wedding-setup-wizard"
 import { ThemeToggle, ThemeToggleSwitch } from "@/components/theme-toggle"
 import { Badge } from "@/components/ui/badge"
@@ -58,6 +62,25 @@ export default function Page() {
         return <TaskManagement />
       case "settings":
         return <WeddingSettings />
+      
+      // Guided Notes
+      case "timeline":
+        return <Timeline />
+      case "vendor-questions":
+        return <VendorQuestions />
+      case "vows":
+        return <VowsCeremony />
+      
+      // My Notes
+      case "create-note":
+        return <CreateNote />
+      
+      // Resources (placeholder for now)
+      case "checklist-resource":
+        return <div className="p-6"><h1 className="text-2xl font-bold">Wedding Planning Checklist</h1><p>Resource coming soon...</p></div>
+      case "budget-guide":
+        return <div className="p-6"><h1 className="text-2xl font-bold">Budget Planning Guide</h1><p>Resource coming soon...</p></div>
+      
       case "overview":
       default:
         return <WeddingOverview />
