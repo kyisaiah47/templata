@@ -21,6 +21,8 @@ import { Registry } from "@/components/wedding-notes/registry"
 import { Honeymoon } from "@/components/wedding-notes/honeymoon"
 import { ThankYou } from "@/components/wedding-notes/thankyou"
 import { DaySchedule } from "@/components/wedding-notes/day-schedule"
+import { WeddingChecklist } from "@/components/resources/wedding-checklist"
+import { BudgetGuide } from "@/components/resources/budget-guide"
 import { WeddingSetupWizard } from "@/components/wedding-setup-wizard"
 import { ThemeToggle, ThemeToggleSwitch } from "@/components/theme-toggle"
 import { Badge } from "@/components/ui/badge"
@@ -102,11 +104,11 @@ export default function Page() {
       case "create-note":
         return <CreateNote />
       
-      // Resources (placeholder for now)
+      // Resources
       case "checklist-resource":
-        return <div className="p-6"><h1 className="text-2xl font-bold">Wedding Planning Checklist</h1><p>Resource coming soon...</p></div>
+        return <WeddingChecklist />
       case "budget-guide":
-        return <div className="p-6"><h1 className="text-2xl font-bold">Budget Planning Guide</h1><p>Resource coming soon...</p></div>
+        return <BudgetGuide />
       
       case "overview":
       default:
