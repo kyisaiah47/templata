@@ -488,7 +488,7 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center text-2xl">
-            <Heart className="mr-2 h-6 w-6 text-rose-500" />
+            <Heart className="mr-2 h-6 w-6 text-primary" />
             Wedding Setup Wizard
           </DialogTitle>
           <DialogDescription>

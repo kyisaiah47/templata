@@ -31,7 +31,7 @@ import {
 const getData = (coupleNames: string) => ({
   teams: [
     {
-      name: "Wedding Hub",
+      name: "Wedding Planning",
       logo: Heart,
       plan: coupleNames,
     },

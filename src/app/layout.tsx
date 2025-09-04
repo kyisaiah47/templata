@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import { CustomThemeProvider } from "@/components/theme-provider-custom"
 import { WeddingProvider } from "@/contexts/wedding-context"
 
 const geistSans = Geist({
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wedding Planning Hub",
-  description: "Comprehensive wedding planning and coordination platform",
+  title: "Templata",
+  description: "Organize your life with curated templates and guided setups",
 };
 
 export default function RootLayout({

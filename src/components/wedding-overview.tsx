@@ -87,7 +87,7 @@ export function WeddingOverview() {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Heart className="h-4 w-4 text-rose-500" />
+            <Heart className="h-4 w-4 text-primary" />
             <div>
               <p className="text-sm font-medium">{displayData.weddingStyle}</p>
               <p className="text-xs text-muted-foreground">Wedding Style</p>
