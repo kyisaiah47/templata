@@ -33,6 +33,10 @@ import { DiaperBathing } from "@/components/diaper-bathing"
 import { ClothingAccessories } from "@/components/clothing-accessories"
 import { SafetyHealth } from "@/components/safety-health"
 import { NurseryDesign } from "@/components/nursery-design"
+import { BabyProofing } from "@/components/baby-proofing"
+import { FamilyLogistics } from "@/components/family-logistics"
+import { PetPreparation } from "@/components/pet-preparation"
+import { SupportSystem } from "@/components/support-system"
 import { BabyPlanningSetupWizard } from "@/components/baby-planning-setup-wizard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Badge } from "@/components/ui/badge"
@@ -142,6 +146,14 @@ function BabyPlanningTemplatePage() {
       // Workspace pages - Home & Family Prep
       case "nursery-design":
         return <NurseryDesign />
+      case "baby-proofing":
+        return <BabyProofing />
+      case "family-logistics":
+        return <FamilyLogistics />
+      case "pet-preparation":
+        return <PetPreparation />
+      case "support-system":
+        return <SupportSystem />
       
       case "settings":
         return <BabyPlanningSettings />
