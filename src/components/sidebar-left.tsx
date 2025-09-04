@@ -14,10 +14,11 @@ import {
   MessageCircleQuestion,
 } from "lucide-react"
 
-import { NavFavorites } from "@/components/nav-favorites"
+import { NavGuidedNotes } from "@/components/nav-guided-notes"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
-import { NavWorkspaces } from "@/components/nav-workspaces"
+import { NavResources } from "@/components/nav-resources"
+import { NavMyNotes } from "@/components/nav-my-notes"
 import { TeamSwitcher } from "@/components/team-switcher"
 import { useWedding, getWeddingDisplayData } from "@/contexts/wedding-context"
 import {
@@ -66,30 +67,20 @@ const getData = (coupleNames: string) => ({
   ],
   navSecondary: [
     {
-      title: "Wedding Planner",
-      url: "#planner",
-      icon: UserCheck,
-    },
-    {
       title: "Settings",
       url: "#settings",
       icon: Settings2,
     },
-    {
-      title: "Help",
-      url: "#help",
-      icon: LifeBuoy,
-    },
   ],
-  favorites: [
+  guidedNotes: [
     {
       name: "Wedding Timeline & Countdown",
       url: "#timeline",
       emoji: "📅",
     },
     {
-      name: "Vendor Contracts & Payments",
-      url: "#contracts",
+      name: "Vendor Questions & Contracts",
+      url: "#vendor-questions",
       emoji: "📋",
     },
     {
@@ -118,6 +109,11 @@ const getData = (coupleNames: string) => ({
       emoji: "🎵",
     },
     {
+      name: "Vows & Ceremony Script",
+      url: "#vows",
+      emoji: "💕",
+    },
+    {
       name: "Wedding Registry Management",
       url: "#registry",
       emoji: "🎁",
@@ -132,101 +128,29 @@ const getData = (coupleNames: string) => ({
       url: "#thankyou",
       emoji: "💌",
     },
+    {
+      name: "Wedding Day Schedule",
+      url: "#day-schedule",
+      emoji: "⏰",
+    },
   ],
-  workspaces: [
+  resources: [
     {
-      name: "Venue & Location",
-      emoji: "🏛️",
-      pages: [
-        {
-          name: "Ceremony Venue Details",
-          url: "#ceremony",
-          emoji: "⛪",
-        },
-        {
-          name: "Reception Venue Setup",
-          url: "#reception",
-          emoji: "🎪",
-        },
-        {
-          name: "Backup Weather Plans",
-          url: "#weather",
-          emoji: "☔",
-        },
-      ],
+      name: "Wedding Planning Checklist",
+      url: "#checklist-resource",
+      emoji: "✅",
     },
     {
-      name: "Vendors & Services",
-      emoji: "🤝",
-      pages: [
-        {
-          name: "Photography & Videography",
-          url: "#photo-video",
-          emoji: "📷",
-        },
-        {
-          name: "Catering & Bar Service",
-          url: "#catering",
-          emoji: "🍽️",
-        },
-        {
-          name: "Flowers & Decorations",
-          url: "#decorations",
-          emoji: "🌸",
-        },
-        {
-          name: "Music & Entertainment",
-          url: "#entertainment",
-          emoji: "🎼",
-        },
-        {
-          name: "Transportation & Parking",
-          url: "#transport",
-          emoji: "🚗",
-        },
-      ],
+      name: "Budget Planning Guide",
+      url: "#budget-guide",
+      emoji: "💰",
     },
+  ],
+  myNotes: [
     {
-      name: "Wedding Party",
-      emoji: "👫",
-      pages: [
-        {
-          name: "Bridal Party Coordination",
-          url: "#bridal-party",
-          emoji: "👰",
-        },
-        {
-          name: "Groomsmen Activities",
-          url: "#groomsmen",
-          emoji: "🤵",
-        },
-        {
-          name: "Bachelor/Bachelorette Parties",
-          url: "#parties",
-          emoji: "🎉",
-        },
-      ],
-    },
-    {
-      name: "Guest Experience",
-      emoji: "🎊",
-      pages: [
-        {
-          name: "Welcome Bags & Favors",
-          url: "#welcome",
-          emoji: "🎁",
-        },
-        {
-          name: "Accommodation for Guests",
-          url: "#hotels",
-          emoji: "🏨",
-        },
-        {
-          name: "Activities & Itinerary",
-          url: "#activities",
-          emoji: "🗓️",
-        },
-      ],
+      name: "Create New Note",
+      url: "#create-note",
+      emoji: "➕",
     },
   ],
 })
@@ -245,8 +169,9 @@ export function SidebarLeft({
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        <NavFavorites favorites={data.favorites} />
-        <NavWorkspaces workspaces={data.workspaces} />
+        <NavGuidedNotes guidedNotes={data.guidedNotes} />
+        <NavResources resources={data.resources} />
+        <NavMyNotes myNotes={data.myNotes} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarRail />

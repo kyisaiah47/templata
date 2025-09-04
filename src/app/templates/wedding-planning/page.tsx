@@ -147,11 +147,7 @@ export default function Page() {
         </div>
       </SidebarInset>
       <SidebarRight />
-      <WeddingSetupWizard 
-        isOpen={isWizardOpen}
-        onClose={() => setWizardOpen(false)}
-        onComplete={(data) => updateWeddingData(data)}
-      />
+{/* Wizard temporarily disabled */}
     </SidebarProvider>
   )
 }
