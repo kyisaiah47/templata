@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { 
   Heart, Home, Briefcase, GraduationCap, Baby, Car, Search, ArrowLeft, 
-  Zap, Filter, Grid3X3, List, ChevronDown, BookTemplate, Target
+  Zap, Filter, Grid3X3, List, ChevronDown, BookTemplate, Target, Dumbbell, School
 } from "lucide-react"
 import {
   NavigationMenu,
@@ -20,9 +20,11 @@ import {
 } from "@/components/ui/navigation-menu"
 
 const categories = [
-  { id: "all", name: "All Templates", count: 3 },
-  { id: "life-events", name: "Life Events", count: 1 },
-  { id: "career", name: "Career & Education", count: 2 },
+  { id: "all", name: "All Templates", count: 7 },
+  { id: "life-events", name: "Life Events", count: 2 },
+  { id: "career", name: "Career & Education", count: 3 },
+  { id: "property", name: "Property & Finance", count: 1 },
+  { id: "health", name: "Health & Wellness", count: 1 },
 ]
 
 const templates = [
@@ -58,6 +60,50 @@ const templates = [
     popular: true,
     features: ["Application Tracker", "Interview Prep", "Network Management", "Salary Tracking"],
     setupTime: "7 min"
+  },
+  {
+    id: "baby-planning",
+    title: "Baby Planning",
+    description: "Complete pregnancy and baby preparation with milestone tracking, gear checklists, name selection, and parenting resources",
+    category: "life-events",
+    icon: Baby,
+    color: "bg-muted/50 border-border text-foreground",
+    popular: true,
+    features: ["Milestone Tracker", "Gear Checklist", "Name Tracker", "Healthcare Planning"],
+    setupTime: "5 min"
+  },
+  {
+    id: "college-planning",
+    title: "College Planning",
+    description: "Navigate college applications, financial planning, course selection, and academic preparation for higher education success",
+    category: "career",
+    icon: School,
+    color: "bg-muted/50 border-border text-foreground",
+    popular: false,
+    features: ["Application Tracker", "Financial Planning", "Course Selection", "Scholarship Search"],
+    setupTime: "6 min"
+  },
+  {
+    id: "fitness-journey",
+    title: "Fitness Journey",
+    description: "Track workouts, nutrition, goals, and progress with comprehensive fitness planning and health monitoring tools",
+    category: "health",
+    icon: Dumbbell,
+    color: "bg-muted/50 border-border text-foreground",
+    popular: false,
+    features: ["Workout Planner", "Nutrition Tracker", "Goal Setting", "Progress Photos"],
+    setupTime: "4 min"
+  },
+  {
+    id: "home-buying",
+    title: "Home Buying",
+    description: "Navigate the home buying process with property tracking, budget management, inspection checklists, and mortgage planning",
+    category: "property",
+    icon: Home,
+    color: "bg-muted/50 border-border text-foreground",
+    popular: false,
+    features: ["Property Search", "Budget Tracker", "Inspection Checklist", "Mortgage Calculator"],
+    setupTime: "8 min"
   }
 ]
 
@@ -109,6 +155,34 @@ export default function TemplatesPage() {
                             </Link>
                           </NavigationMenuLink>
                           
+                          <NavigationMenuLink asChild>
+                            <Link href="/templates/baby-planning" className="block group">
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <Baby className="h-4 w-4 text-muted-foreground" />
+                                </div>
+                                <div>
+                                  <div className="font-semibold group-hover:text-primary transition-colors">Baby Planning</div>
+                                  <div className="text-sm text-muted-foreground">Pregnancy & baby preparation</div>
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                          
+                          <NavigationMenuLink asChild>
+                            <Link href="/templates/home-buying" className="block group">
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <Home className="h-4 w-4 text-muted-foreground" />
+                                </div>
+                                <div>
+                                  <div className="font-semibold group-hover:text-primary transition-colors">Home Buying</div>
+                                  <div className="text-sm text-muted-foreground">Navigate home buying process</div>
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                          
                         </div>
                       </div>
                       
@@ -138,6 +212,20 @@ export default function TemplatesPage() {
                                 <div>
                                   <div className="font-semibold group-hover:text-primary transition-colors">Job Search</div>
                                   <div className="text-sm text-muted-foreground">Track applications & interviews</div>
+                                </div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                          
+                          <NavigationMenuLink asChild>
+                            <Link href="/templates/college-planning" className="block group">
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <School className="h-4 w-4 text-muted-foreground" />
+                                </div>
+                                <div>
+                                  <div className="font-semibold group-hover:text-primary transition-colors">College Planning</div>
+                                  <div className="text-sm text-muted-foreground">Navigate college applications</div>
                                 </div>
                               </div>
                             </Link>
