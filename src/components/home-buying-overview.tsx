@@ -288,9 +288,9 @@ export function HomeBuyingOverview() {
                 const getActivityDescription = () => {
                   switch (activity.type) {
                     case "property":
-                      return `${activity.address} • ${homeBuyingData.currency} ${activity.price.toLocaleString()}`
+                      return `${activity.address} • ${homeBuyingData.currency} ${activity.price?.toLocaleString() || 'TBD'}`
                     case "offer":
-                      return `${activity.address} • ${homeBuyingData.currency} ${activity.price.toLocaleString()}`
+                      return `${activity.address} • ${homeBuyingData.currency} ${activity.price?.toLocaleString() || 'TBD'}`
                     case "agent":
                       return `${activity.contact} at ${activity.company}`
                     case "mortgage":
