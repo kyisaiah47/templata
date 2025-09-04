@@ -58,7 +58,7 @@ echo "📊 Found ${#available_templates[@]} template worktrees"
 # Handle command line arguments
 START_INDEX=0
 MAX_COUNT=${#available_templates[@]}
-DELAY_SECONDS=14
+DELAY_SECONDS=20
 
 if [[ $# -gt 0 ]]; then
     if [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -114,9 +114,11 @@ generate_template_prompt() {
     cat << EOF
 Build complete ${template_name} template following job search template pattern. ID: ${template_id}
 
-BUILD ALL: 1) Context provider src/contexts/${template_id}-context.tsx with 30+ fields, localStorage, wizard state 2) Setup wizard src/components/${template_id}-setup-wizard.tsx multi-step with validation 3) Sidebar src/components/${template_id}-sidebar-left.tsx with nav/favorites/workspaces 4) Main page src/app/templates/${template_id}/page.tsx with routing 5) Overview dashboard src/components/${template_id}-overview.tsx 6) 4-6 functional components with CRUD 7) Add to layout.tsx and templates gallery
+BUILD ALL COMPONENTS: 1) Context provider src/contexts/${template_id}-context.tsx with 30+ fields, localStorage, wizard state 2) Setup wizard src/components/${template_id}-setup-wizard.tsx multi-step with validation 3) CRITICAL: Sidebar src/components/${template_id}-sidebar-left.tsx with nav/favorites/workspaces AND BUILD ALL INDIVIDUAL SIDEBAR PAGES - examine the sidebar to see what pages it links to, then create every single page component with full functionality 4) Main page src/app/templates/${template_id}/page.tsx with routing 5) Overview dashboard src/components/${template_id}-overview.tsx 6) 4-6 functional CRUD components 7) Add provider to layout.tsx and template to gallery 8) Run 'npm run build' and fix ALL build errors - create missing components, fix TypeScript errors, use only theme colors (no explicit red/blue/etc) 9) Commit when build passes
 
-Use job search template as pattern. Only shadcn/ui components. Full functionality not placeholders. START BUILDING NOW.
+SIDEBAR PAGES: After creating the sidebar component, examine it carefully to identify ALL navigation pages it references, then build each one as a complete functional component. Do NOT leave sidebar pages as placeholders.
+
+Use job search template as pattern. Only shadcn/ui components. Full functionality not placeholders. Work autonomously until EVERYTHING builds without errors. START BUILDING NOW.
 EOF
 }
 
@@ -141,7 +143,7 @@ open_template_window() {
     
     # Wait for VS Code to load
     echo "   ⏳ Waiting for VS Code to load..."
-    sleep 8
+    sleep 10
     
     # Generate the prompt for this template
     local claude_prompt=$(generate_template_prompt "$template_id")
@@ -161,7 +163,7 @@ tell application "System Events"
     keystroke "\`" using {control down}
 end tell
 
-delay 4
+delay 5
 
 tell application "System Events"
     -- Type 'claude' command
@@ -173,7 +175,7 @@ tell application "System Events"
 end tell
 
 -- Wait for Claude to fully start up and initialize
-delay 12
+delay 20
 
 tell application "System Events"
     -- Type the template-specific build command

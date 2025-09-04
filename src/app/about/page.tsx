@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { 
-  BookTemplate, ArrowRight, Lightbulb, Target, Users, Zap, 
+  ArrowRight, Lightbulb, Target, Users, Zap, 
   Sparkles, FileText, PenTool, Layers, CheckCircle2, Heart,
   Home, Briefcase, Building, Camera, GraduationCap, Palette
 } from "lucide-react"
@@ -28,7 +28,7 @@ export default function AboutPage() {
           <div className="flex h-16 items-center justify-between px-6">
             <div className="flex items-center space-x-2">
               <Link href="/" className="flex items-center space-x-2">
-                <BookTemplate className="h-7 w-7" />
+                <img src="/shift.svg" alt="Templata" className="h-7 w-7 dark:invert" />
                 <span className="font-bold text-2xl">Templata</span>
               </Link>
             </div>
@@ -344,7 +344,7 @@ export default function AboutPage() {
           <Card className="border-2 border-primary/20 bg-primary/5 p-8 text-center">
             <div className="space-y-4">
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto">
-                <BookTemplate className="h-8 w-8 text-primary" />
+                <img src="/shift.svg" alt="Templata" className="h-8 w-8 dark:invert" />
               </div>
               
               <h3 className="text-2xl font-bold">Templata for life organization</h3>
@@ -447,7 +447,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <BookTemplate className="h-6 w-6" />
+                <img src="/shift.svg" alt="Templata" className="h-6 w-6 dark:invert" />
                 <span className="font-bold text-xl">Templata</span>
               </div>
               <p className="text-muted-foreground">

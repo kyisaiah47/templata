@@ -291,6 +291,52 @@ echo ""
 echo "🚀 Next steps:"
 echo "1. Running build check to verify everything works..."
 
+# Auto-update providers in layout
+echo "   🔗 Adding providers to root layout..."
+if [[ ${#successful_merges[@]} -gt 0 ]]; then
+    # Function to add provider to layout
+    add_providers_to_layout() {
+        local template_ids=("$@")
+        local layout_file="src/app/layout.tsx"
+        
+        echo "   📝 Updating $layout_file with new providers..."
+        
+        # Build import statements for new providers
+        local new_imports=""
+        local new_providers=""
+        local closing_providers=""
+        
+        for template_id in "${template_ids[@]}"; do
+            # Convert template-id to PascalCase for provider name
+            local provider_name=$(echo "$template_id" | sed 's/-\([a-z]\)/\U\1/g' | sed 's/^./\U&/')
+            new_imports+="\nimport { ${provider_name}Provider } from \"@/contexts/${template_id}-context\""
+            new_providers+="                  <${provider_name}Provider>\n"
+            closing_providers="                  </${provider_name}Provider>\n$closing_providers"
+        done
+        
+        # Add imports after existing context imports
+        if [[ -n "$new_imports" ]]; then
+            sed -i '' "/import.*contexts.*context\"/a\\
+$new_imports" "$layout_file"
+        fi
+        
+        # Add providers to the provider tree
+        if [[ -n "$new_providers" ]]; then
+            # Find the innermost provider and add our providers
+            sed -i '' "s|                    <HomeBuyingProvider>|$new_providers                    <HomeBuyingProvider>|" "$layout_file"
+            sed -i '' "s|                    </HomeBuyingProvider>|                    </HomeBuyingProvider>\\
+$closing_providers|" "$layout_file"
+        fi
+        
+        echo "   ✅ Added ${#template_ids[@]} provider(s) to layout"
+    }
+    
+    # Add providers for successfully merged templates
+    add_providers_to_layout "${successful_merges[@]}"
+else
+    echo "   ⚠️  No templates were merged, skipping provider update"
+fi
+
 # Auto-run build check
 echo "   🔨 Checking build..."
 if npm run build > /dev/null 2>&1; then

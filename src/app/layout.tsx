@@ -4,6 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { WeddingProvider } from "@/contexts/wedding-context"
 import { JobSearchProvider } from "@/contexts/job-search-context"
+import { BabyPlanningProvider } from "@/contexts/baby-planning-context"
+import { CollegePlanningProvider } from "@/contexts/college-planning-context"
+import { FitnessJourneyProvider } from "@/contexts/fitness-journey-context"
+import { HomeBuyingProvider } from "@/contexts/home-buying-context"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +22,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Templata",
   description: "Organize your life with curated templates and guided setups",
+  icons: {
+    icon: "/favicon-black.svg",
+  },
 };
 
 export default function RootLayout({
@@ -38,7 +45,15 @@ export default function RootLayout({
         >
           <WeddingProvider>
             <JobSearchProvider>
-              {children}
+              <BabyPlanningProvider>
+                <CollegePlanningProvider>
+                  <FitnessJourneyProvider>
+                    <HomeBuyingProvider>
+                      {children}
+                    </HomeBuyingProvider>
+                  </FitnessJourneyProvider>
+                </CollegePlanningProvider>
+              </BabyPlanningProvider>
             </JobSearchProvider>
           </WeddingProvider>
         </ThemeProvider>

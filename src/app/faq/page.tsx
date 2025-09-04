@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { 
-  BookTemplate, ArrowRight, HelpCircle, MessageSquare, Mail,
+  ArrowRight, HelpCircle, MessageSquare, Mail,
   Heart, Home, Briefcase, Target, Zap, Users, Sparkles, Clock, Shield
 } from "lucide-react"
 import {
@@ -79,7 +79,7 @@ export default function FAQPage() {
           <div className="flex h-16 items-center justify-between px-6">
             <div className="flex items-center space-x-2">
               <Link href="/" className="flex items-center space-x-2">
-                <BookTemplate className="h-7 w-7" />
+                <img src="/shift.svg" alt="Templata" className="h-7 w-7 dark:invert" />
                 <span className="font-bold text-2xl">Templata</span>
               </Link>
             </div>
@@ -246,7 +246,7 @@ export default function FAQPage() {
             <Card className="border-0 shadow-none bg-background/50 text-center">
               <CardHeader>
                 <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <BookTemplate className="h-8 w-8 text-primary" />
+                  <img src="/shift.svg" alt="Templata" className="h-8 w-8 dark:invert" />
                 </div>
                 <CardTitle className="text-3xl font-bold">100+</CardTitle>
                 <CardDescription className="text-base">Expert-crafted templates</CardDescription>
@@ -361,7 +361,7 @@ export default function FAQPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <BookTemplate className="h-6 w-6" />
+                <img src="/shift.svg" alt="Templata" className="h-6 w-6 dark:invert" />
                 <span className="font-bold text-xl">Templata</span>
               </div>
               <p className="text-muted-foreground">

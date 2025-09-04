@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # =============================================================================
-# Force Build Check - Make all Claude instances run build and fix errors
+# Force Sidebar Build - Make all Claude instances build out sidebar pages
 # =============================================================================
 
 set -e  # Exit on any error
 
-echo "🔨 Force Build Check - All Claude Instances"
+echo "📋 Force Sidebar Build - All Claude Instances"
 echo "============================================="
 
 # Show usage if help requested
@@ -15,18 +15,18 @@ if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
     echo "Usage: $0 [template_filter]"
     echo ""
     echo "Arguments:"
-    echo "  template_filter  - Optional: Only check specific templates (e.g., 'baby' for baby-planning)"
+    echo "  template_filter  - Optional: Only build sidebars for specific templates (e.g., 'baby' for baby-planning)"
     echo ""
     echo "Examples:"
-    echo "  $0              # Check builds in all template worktrees"
-    echo "  $0 baby         # Only check templates containing 'baby'"
-    echo "  $0 college      # Only check templates containing 'college'"
+    echo "  $0              # Build sidebars in all template worktrees"
+    echo "  $0 baby         # Only build templates containing 'baby'"
+    echo "  $0 college      # Only build templates containing 'college'"
     echo ""
     echo "This script will:"
     echo "1. Find all active template worktrees"
     echo "2. Open terminal in each VS Code window"
-    echo "3. Force Claude to run 'npm run build'"
-    echo "4. Instruct Claude to fix any build errors"
+    echo "3. Force Claude to build out all sidebar navigation pages"
+    echo "4. Each Claude will create functional sidebar components with real content"
     echo ""
     exit 0
 fi
@@ -63,13 +63,13 @@ if [[ ${#available_templates[@]} -eq 0 ]]; then
     exit 1
 fi
 
-echo "🎯 Found ${#available_templates[@]} template worktree(s) to check:"
+echo "🎯 Found ${#available_templates[@]} template worktree(s) to build sidebars for:"
 for template in "${available_templates[@]}"; do
     echo "   - $template"
 done
 
-# Function to send build check command to a VS Code window
-force_build_check() {
+# Function to send sidebar build command to a VS Code window
+force_sidebar_build() {
     local template_id="$1"
     local worktree_path="$WORKTREES_DIR/$template_id"
     
@@ -79,11 +79,11 @@ force_build_check() {
     fi
     
     echo ""
-    echo "🔨 Forcing build check for: $template_id"
+    echo "📋 Forcing sidebar build for: $template_id"
     echo "   Path: $worktree_path"
     
-    # The build check command for Claude
-    local build_command="Run 'npm run build' and fix any build errors. If there are missing components, create placeholder components with proper TypeScript types. If there are TypeScript errors, fix them. IMPORTANT: Do NOT use any explicit colors like red, blue, green, etc. Only use theme colors like text-primary, text-muted-foreground, bg-primary, bg-muted, etc. Commit your fixes when done."
+    # The sidebar build command for Claude
+    local sidebar_command="Build out all the sidebar navigation pages for the $template_id template. The sidebar component exists but the individual pages it links to are not built. Look at the sidebar component to see what pages need to be created, then build each page with proper content, components, and functionality. Make sure each sidebar page is a complete, functional component that matches the template's purpose. Commit your work when done."
     
     # Send command to Claude via AppleScript
     osascript << EOF
@@ -113,8 +113,8 @@ tell application "System Events"
             keystroke return
             delay 8
             
-            -- Send the build check command
-            keystroke "$build_command"
+            -- Send the sidebar build command
+            keystroke "$sidebar_command"
             delay 1
             keystroke return
             
@@ -126,7 +126,7 @@ EOF
     
     local exit_code=$?
     if [[ $exit_code -eq 0 ]]; then
-        echo "   ✅ Build check command sent to $template_id"
+        echo "   ✅ Sidebar build command sent to $template_id"
     else
         echo "   ⚠️  Failed to send command to $template_id (window may not be open)"
     fi
@@ -135,13 +135,13 @@ EOF
 }
 
 echo ""
-echo "🚀 Sending build check commands to all template windows..."
+echo "🚀 Sending sidebar build commands to all template windows..."
 
 successful_commands=0
 failed_commands=0
 
 for template_id in "${available_templates[@]}"; do
-    if force_build_check "$template_id"; then
+    if force_sidebar_build "$template_id"; then
         ((successful_commands++))
     else
         ((failed_commands++))
@@ -152,28 +152,30 @@ for template_id in "${available_templates[@]}"; do
 done
 
 echo ""
-echo "📊 Build Check Summary:"
+echo "📊 Sidebar Build Command Summary:"
 echo "   ✅ Successful: $successful_commands templates"
 echo "   ⚠️  Failed: $failed_commands templates"
 echo ""
 
 if [[ $successful_commands -gt 0 ]]; then
     echo "🎯 Next Steps:"
-    echo "1. Monitor each VS Code window as Claude runs builds"
-    echo "2. Claude will automatically fix build errors and missing components"
-    echo "3. Each Claude will commit fixes when complete"
-    echo "4. Use merge-completed-templates.sh when all builds pass"
+    echo "1. Monitor each VS Code window as Claude builds sidebar pages"
+    echo "2. Claude will analyze the sidebar component to see what pages are needed"
+    echo "3. Each Claude will create functional page components with proper content"
+    echo "4. All work will be committed when complete"
+    echo "5. Use merge-completed-templates.sh when all sidebars are built"
     echo ""
-    echo "⏰ Estimated time: 3-5 minutes per template"
-    echo "   You can continue working while Claude instances fix builds in parallel"
+    echo "⏰ Estimated time: 10-15 minutes per template"
+    echo "   You can continue working while Claude instances build sidebars in parallel"
 else
     echo "❌ No commands were sent successfully"
-    echo "   Make sure VS Code windows are open for the templates you want to check"
+    echo "   Make sure VS Code windows are open for the templates you want to update"
 fi
 
 echo ""
 echo "💡 Pro Tips:"
-echo "   - Each Claude will create placeholder components for missing imports"
-echo "   - TypeScript errors will be automatically resolved"  
-echo "   - All fixes will be committed with descriptive messages"
-echo "   - Run this script anytime during parallel development"
+echo "   - Each Claude will examine the sidebar component to understand what pages are needed"
+echo "   - All sidebar pages will be built with proper functionality and content"
+echo "   - Components will match the template's specific purpose and theme"  
+echo "   - All changes will be committed with descriptive messages"
+echo "   - Run this script anytime you need sidebar pages built out"

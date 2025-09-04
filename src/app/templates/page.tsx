@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { 
   Heart, Home, Briefcase, GraduationCap, Baby, Car, Search, ArrowLeft, 
-  Zap, Filter, Grid3X3, List, ChevronDown, BookTemplate, Target, Dumbbell, School
+  Zap, Filter, Grid3X3, List, ChevronDown, Target, Dumbbell, School
 } from "lucide-react"
 import {
   NavigationMenu,
@@ -127,7 +127,7 @@ export default function TemplatesPage() {
           <div className="flex h-16 items-center justify-between px-6">
             <div className="flex items-center space-x-2">
               <Link href="/" className="flex items-center space-x-2">
-                <BookTemplate className="h-7 w-7" />
+                <img src="/shift.svg" alt="Templata" className="h-7 w-7 dark:invert" />
                 <span className="font-bold text-2xl">Templata</span>
               </Link>
             </div>

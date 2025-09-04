@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { 
-  Heart, Home, Briefcase, GraduationCap, Baby, Car, ArrowRight, Zap, BookTemplate, Users,
+  Heart, Home, Briefcase, GraduationCap, Baby, Car, ArrowRight, Zap, Users,
   Star, CheckCircle2, Clock, Sparkles, Target, Rocket, Globe, Shield, Timer,
   MessageSquare, ThumbsUp, TrendingUp, Award, ChevronRight, Plus, Play
 } from "lucide-react"
@@ -28,7 +28,7 @@ export default function LandingPage() {
         <div className="bg-background/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-lg">
           <div className="flex h-16 items-center justify-between px-6">
             <div className="flex items-center space-x-2">
-              <BookTemplate className="h-7 w-7" />
+              <img src="/shift.svg" alt="Templata" className="h-7 w-7 dark:invert" />
               <span className="font-bold text-2xl">Templata</span>
             </div>
             
@@ -507,7 +507,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <BookTemplate className="h-6 w-6" />
+                <img src="/shift.svg" alt="Templata" className="h-6 w-6 dark:invert" />
                 <span className="font-bold text-xl">Templata</span>
               </div>
               <p className="text-muted-foreground">
