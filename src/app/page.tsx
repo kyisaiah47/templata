@@ -1,92 +1,121 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CalendarIcon, Clock, DollarSign, Heart, Users, CheckSquare } from "lucide-react"
+import { useState, useEffect } from "react"
+import { SidebarLeft } from "@/components/sidebar-left"
+import { SidebarRight } from "@/components/sidebar-right"
 import { WeddingOverview } from "@/components/wedding-overview"
 import { VendorManagement } from "@/components/vendor-management"
 import { GuestManagement } from "@/components/guest-management"
 import { BudgetTracking } from "@/components/budget-tracking"
 import { TaskManagement } from "@/components/task-management"
 import { ThemeToggle, ThemeToggleSwitch } from "@/components/theme-toggle"
+import { Badge } from "@/components/ui/badge"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { CalendarIcon, Clock } from "lucide-react"
 
-export default function WeddingDashboard() {
+export default function Page() {
+  const [activeSection, setActiveSection] = useState("overview")
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "")
+      if (hash) {
+        setActiveSection(hash)
+      }
+    }
+
+    handleHashChange()
+    window.addEventListener("hashchange", handleHashChange)
+    
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange)
+    }
+  }, [])
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case "vendors":
+        return <VendorManagement />
+      case "guests":
+        return <GuestManagement />
+      case "budget":
+        return <BudgetTracking />
+      case "tasks":
+        return <TaskManagement />
+      case "overview":
+      default:
+        return <WeddingOverview />
+    }
+  }
+
+  const getSectionTitle = () => {
+    switch (activeSection) {
+      case "vendors":
+        return "Vendor Management"
+      case "guests":
+        return "Guest Management"
+      case "budget":
+        return "Budget Tracking"
+      case "tasks":
+        return "Task Management"
+      case "overview":
+      default:
+        return "Wedding Overview"
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Heart className="h-8 w-8 text-rose-500" />
-              <div>
-                <h1 className="text-2xl font-bold">Wedding Planning Hub</h1>
-                <p className="text-sm text-muted-foreground">Sarah & Michael Thompson</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Badge variant="secondary" className="text-sm">
-                <CalendarIcon className="mr-1 h-3 w-3" />
-                June 15, 2024
-              </Badge>
-              <Badge variant="outline" className="text-sm">
-                <Clock className="mr-1 h-3 w-3" />
-                142 days left
-              </Badge>
-              <div className="flex items-center space-x-2">
-                <ThemeToggleSwitch />
-                <ThemeToggle />
-              </div>
+    <SidebarProvider>
+      <SidebarLeft />
+      <SidebarInset>
+        <header className="bg-background sticky top-0 flex h-14 shrink-0 items-center gap-2 border-b">
+          <div className="flex flex-1 items-center gap-2 px-3">
+            <SidebarTrigger />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="line-clamp-1">
+                    {getSectionTitle()} - Sarah & Michael Thompson
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          <div className="flex items-center space-x-3 px-3">
+            <Badge variant="secondary" className="text-sm hidden sm:flex">
+              <CalendarIcon className="mr-1 h-3 w-3" />
+              June 15, 2024
+            </Badge>
+            <Badge variant="outline" className="text-sm hidden sm:flex">
+              <Clock className="mr-1 h-3 w-3" />
+              142 days left
+            </Badge>
+            <div className="flex items-center space-x-2">
+              <ThemeToggleSwitch />
+              <ThemeToggle />
             </div>
           </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          {renderContent()}
         </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-6">
-        <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="overview" className="flex items-center space-x-2">
-              <Heart className="h-4 w-4" />
-              <span>Overview</span>
-            </TabsTrigger>
-            <TabsTrigger value="vendors" className="flex items-center space-x-2">
-              <Users className="h-4 w-4" />
-              <span>Vendors</span>
-            </TabsTrigger>
-            <TabsTrigger value="guests" className="flex items-center space-x-2">
-              <Users className="h-4 w-4" />
-              <span>Guests</span>
-            </TabsTrigger>
-            <TabsTrigger value="budget" className="flex items-center space-x-2">
-              <DollarSign className="h-4 w-4" />
-              <span>Budget</span>
-            </TabsTrigger>
-            <TabsTrigger value="tasks" className="flex items-center space-x-2">
-              <CheckSquare className="h-4 w-4" />
-              <span>Tasks</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview" className="space-y-4">
-            <WeddingOverview />
-          </TabsContent>
-
-          <TabsContent value="vendors" className="space-y-4">
-            <VendorManagement />
-          </TabsContent>
-
-          <TabsContent value="guests" className="space-y-4">
-            <GuestManagement />
-          </TabsContent>
-
-          <TabsContent value="budget" className="space-y-4">
-            <BudgetTracking />
-          </TabsContent>
-
-          <TabsContent value="tasks" className="space-y-4">
-            <TaskManagement />
-          </TabsContent>
-        </Tabs>
-      </main>
-    </div>
+      </SidebarInset>
+      <SidebarRight />
+    </SidebarProvider>
   )
 }
