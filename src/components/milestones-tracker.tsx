@@ -716,7 +716,6 @@ export function MilestonesTracker() {
                             <Checkbox
                               checked={milestone.completed}
                               onCheckedChange={() => toggleMilestone(milestone.id)}
-                              size="sm"
                             />
                             <span className={`text-sm ${milestone.completed ? 'line-through text-muted-foreground' : ''}`}>
                               {milestone.title}

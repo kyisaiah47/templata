@@ -15,7 +15,10 @@ import {
 } from "lucide-react"
 
 import { NavFavorites } from "@/components/nav-favorites"
+import { NavGuidedNotes } from "@/components/nav-guided-notes"
 import { NavMain } from "@/components/nav-main"
+import { NavMyNotes } from "@/components/nav-my-notes"
+import { NavResources } from "@/components/nav-resources"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavWorkspaces } from "@/components/nav-workspaces"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -79,6 +82,67 @@ const getData = (coupleNames: string) => ({
       title: "Help",
       url: "#help",
       icon: LifeBuoy,
+    },
+  ],
+  guidedNotes: [
+    {
+      name: "Wedding Planning Guide",
+      url: "#wedding-planning-guide",
+      emoji: "💒",
+    },
+    {
+      name: "Venue Selection Guide",
+      url: "#venue-selection-guide",
+      emoji: "🏛️",
+    },
+    {
+      name: "Vendor Management Guide",
+      url: "#vendor-management-guide",
+      emoji: "🤝",
+    },
+    {
+      name: "Guest Management Guide",
+      url: "#guest-management-guide",
+      emoji: "👥",
+    },
+    {
+      name: "Budget Planning Guide",
+      url: "#budget-planning-guide",
+      emoji: "💰",
+    },
+    {
+      name: "Timeline Planning Guide",
+      url: "#timeline-planning-guide",
+      emoji: "📅",
+    },
+    {
+      name: "Wedding Day Guide",
+      url: "#wedding-day-guide",
+      emoji: "💍",
+    },
+    {
+      name: "Photography Guide",
+      url: "#photography-guide",
+      emoji: "📸",
+    },
+  ],
+  resources: [
+    {
+      name: "Wedding Planning Checklist",
+      url: "#wedding-planning-checklist",
+      emoji: "✅",
+    },
+    {
+      name: "Wedding Planning Tips",
+      url: "#wedding-planning-tips",
+      emoji: "💡",
+    },
+  ],
+  myNotes: [
+    {
+      name: "My Wedding Notes",
+      url: "#my-notes",
+      emoji: "📝",
     },
   ],
   favorites: [
@@ -245,6 +309,9 @@ export function SidebarLeft({
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
+        <NavGuidedNotes guidedNotes={data.guidedNotes} />
+        <NavResources resources={data.resources} />
+        <NavMyNotes myNotes={data.myNotes} />
         <NavFavorites favorites={data.favorites} />
         <NavWorkspaces workspaces={data.workspaces} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />

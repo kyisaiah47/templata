@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { FileText, Download, Printer, Save, Baby, Heart, Users, Stethoscope } from "lucide-react"
@@ -198,7 +199,7 @@ Generated with Templata Baby Planning Template`
         totalPreferences++
         if (Array.isArray(value)) {
           if (value.length > 0) completedPreferences++
-        } else if (value && value.trim()) {
+        } else if (value && typeof value === 'string' && value.trim()) {
           completedPreferences++
         }
       })
@@ -376,7 +377,7 @@ Generated with Templata Baby Planning Template`
                 <Label className="text-base font-semibold">Overall Approach</Label>
                 <RadioGroup 
                   value={preferences.painManagement.approach}
-                  onValueChange={(value) => updatePreference('painManagement', 'approach', value)}
+                  onValueChange={(value: string) => updatePreference('painManagement', 'approach', value)}
                   className="mt-2"
                 >
                   <div className="flex items-center space-x-2">

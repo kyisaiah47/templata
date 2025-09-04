@@ -483,7 +483,6 @@ export function MustHaveGear() {
                           <Checkbox
                             checked={item.acquired}
                             onCheckedChange={() => toggleAcquired(item.id)}
-                            size="sm"
                           />
                           <span className={`text-sm ${item.acquired ? 'line-through text-muted-foreground' : ''}`}>
                             {item.name}

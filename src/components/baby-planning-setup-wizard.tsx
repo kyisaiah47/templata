@@ -212,6 +212,7 @@ export function BabyPlanningSetupWizard({ isOpen, onClose, onComplete, initialDa
       genderRevealDate: values.genderRevealDate || "",
       firstKickDate: values.firstKickDate || "",
       babymoonDate: values.babymoonDate || "",
+      parentTwoName: values.parentTwoName || "",
       homePreparation,
       familySupport,
       friendsSupport,

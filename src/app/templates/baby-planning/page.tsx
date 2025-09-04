@@ -128,7 +128,7 @@ function BabyPlanningTemplatePage() {
         return <ThirdTrimester />
       case "labor-delivery":
         return <LaborDelivery />
-      case "postpartum-recovery":
+      case "postpartum":
         return <PostpartumRecovery />
       
       // Workspace pages - Baby Essentials
@@ -138,7 +138,7 @@ function BabyPlanningTemplatePage() {
         return <FeedingSupplies />
       case "diaper-bathing":
         return <DiaperBathing />
-      case "clothing-accessories":
+      case "clothing":
         return <ClothingAccessories />
       case "safety-health":
         return <SafetyHealth />
@@ -150,7 +150,7 @@ function BabyPlanningTemplatePage() {
         return <BabyProofing />
       case "family-logistics":
         return <FamilyLogistics />
-      case "pet-preparation":
+      case "pet-prep":
         return <PetPreparation />
       case "support-system":
         return <SupportSystem />
