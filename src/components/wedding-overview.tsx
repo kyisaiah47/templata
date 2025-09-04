@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { CalendarIcon, CheckCircle2, Clock, DollarSign, Heart, MapPin, Users, Star, AlertCircle } from "lucide-react"
 import { useWedding, getWeddingDisplayData } from "@/contexts/wedding-context"

@@ -4,10 +4,8 @@ import React, { createContext, useContext, useEffect, useState } from "react"
 
 export interface WeddingData {
   // Basic Info
-  partner1FirstName: string
-  partner1LastName: string
-  partner2FirstName: string
-  partner2LastName: string
+  partner1Name: string
+  partner2Name: string
   weddingDate: Date | undefined
   weddingTime: string
   weddingStyle: string
@@ -38,10 +36,8 @@ interface WeddingContextType {
 const WeddingContext = createContext<WeddingContextType | undefined>(undefined)
 
 const defaultWeddingData: WeddingData = {
-  partner1FirstName: "",
-  partner1LastName: "",
-  partner2FirstName: "",
-  partner2LastName: "",
+  partner1Name: "",
+  partner2Name: "",
   weddingDate: undefined,
   weddingTime: "",
   weddingStyle: "",
@@ -172,9 +168,9 @@ export function getWeddingDisplayData(weddingData: WeddingData | null) {
   }
 
   return {
-    coupleNames: `${weddingData.partner1FirstName} & ${weddingData.partner2FirstName} ${weddingData.partner1LastName}`,
-    partner1Name: `${weddingData.partner1FirstName} ${weddingData.partner1LastName}`,
-    partner2Name: `${weddingData.partner2FirstName} ${weddingData.partner2LastName}`,
+    coupleNames: `${weddingData.partner1Name} & ${weddingData.partner2Name}`,
+    partner1Name: weddingData.partner1Name,
+    partner2Name: weddingData.partner2Name,
     weddingDate: weddingData.weddingDate || new Date(),
     weddingTime: weddingData.weddingTime,
     ceremonyVenue: weddingData.ceremonyVenue,

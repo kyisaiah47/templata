@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -13,52 +15,52 @@ import { Separator } from "@/components/ui/separator"
 import { Progress } from "@/components/ui/progress"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { CalendarIcon, Heart, ArrowLeft, ArrowRight, Check, MapPin, Users, DollarSign } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 
 interface WeddingData {
-  // Basic Info
-  partner1FirstName: string
-  partner1LastName: string
-  partner2FirstName: string
-  partner2LastName: string
+  partner1Name: string
+  partner2Name: string
   weddingDate: Date | undefined
   weddingTime: string
   weddingStyle: string
   guestCount: number
   totalBudget: number
-  
-  // Venues
   ceremonyVenue: string
   ceremonyAddress: string
   receptionVenue: string
   receptionAddress: string
-  
-  // Additional Details
   themeColors: string[]
   specialRequirements: string
   culturalTraditions: string
 }
 
-const initialData: WeddingData = {
-  partner1FirstName: "",
-  partner1LastName: "",
-  partner2FirstName: "",
-  partner2LastName: "",
-  weddingDate: undefined,
-  weddingTime: "",
-  weddingStyle: "",
-  guestCount: 0,
-  totalBudget: 0,
-  ceremonyVenue: "",
-  ceremonyAddress: "",
-  receptionVenue: "",
-  receptionAddress: "",
-  themeColors: [],
-  specialRequirements: "",
-  culturalTraditions: ""
-}
+const step1Schema = z.object({
+  partner1Name: z.string().min(1, "Partner name is required"),
+  partner2Name: z.string().min(1, "Partner name is required"),
+  weddingDate: z.date({ required_error: "Wedding date is required" }),
+  weddingTime: z.string().min(1, "Wedding time is required"),
+  weddingStyle: z.string().min(1, "Wedding style is required"),
+})
+
+const step2Schema = z.object({
+  ceremonyVenue: z.string().min(1, "Ceremony venue is required"),
+  ceremonyAddress: z.string().min(1, "Ceremony address is required"),
+  receptionVenue: z.string().min(1, "Reception venue is required"),
+  receptionAddress: z.string().min(1, "Reception address is required"),
+})
+
+const step3Schema = z.object({
+  guestCount: z.number().min(1, "Must be at least 1 guest"),
+  totalBudget: z.number().min(1, "Must be at least $1"),
+})
+
+const step4Schema = z.object({
+  culturalTraditions: z.string().optional(),
+  specialRequirements: z.string().optional(),
+})
 
 const weddingStyles = [
   "Traditional",
@@ -78,25 +80,29 @@ const steps = [
     id: 1,
     title: "Basic Information",
     description: "Tell us about yourselves and your wedding",
-    icon: Heart
+    icon: Heart,
+    schema: step1Schema
   },
   {
     id: 2, 
     title: "Venue Details",
     description: "Where will your celebration take place?",
-    icon: MapPin
+    icon: MapPin,
+    schema: step2Schema
   },
   {
     id: 3,
     title: "Guest & Budget",
     description: "Guest count and budget planning", 
-    icon: Users
+    icon: Users,
+    schema: step3Schema
   },
   {
     id: 4,
     title: "Final Details",
     description: "Colors, traditions, and special requirements",
-    icon: Check
+    icon: Check,
+    schema: step4Schema
   }
 ]
 
@@ -108,58 +114,37 @@ interface WeddingSetupWizardProps {
 
 export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetupWizardProps) {
   const [currentStep, setCurrentStep] = useState(1)
-  const [formData, setFormData] = useState<WeddingData>(initialData)
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [allFormData, setAllFormData] = useState<Partial<WeddingData>>({})
 
-  const updateFormData = (field: keyof WeddingData, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }))
-    }
-  }
+  const currentSchema = steps[currentStep - 1]?.schema || z.object({})
+  
+  const form = useForm({
+    resolver: zodResolver(currentSchema),
+    defaultValues: allFormData,
+  })
 
-  const validateStep = (step: number): boolean => {
-    const newErrors: Record<string, string> = {}
-    
-    switch (step) {
-      case 1:
-        if (!formData.partner1FirstName) newErrors.partner1FirstName = "Required"
-        if (!formData.partner1LastName) newErrors.partner1LastName = "Required"
-        if (!formData.partner2FirstName) newErrors.partner2FirstName = "Required"
-        if (!formData.partner2LastName) newErrors.partner2LastName = "Required"
-        if (!formData.weddingDate) newErrors.weddingDate = "Required"
-        if (!formData.weddingTime) newErrors.weddingTime = "Required"
-        if (!formData.weddingStyle) newErrors.weddingStyle = "Required"
-        break
-      case 2:
-        if (!formData.ceremonyVenue) newErrors.ceremonyVenue = "Required"
-        if (!formData.ceremonyAddress) newErrors.ceremonyAddress = "Required"
-        if (!formData.receptionVenue) newErrors.receptionVenue = "Required"
-        if (!formData.receptionAddress) newErrors.receptionAddress = "Required"
-        break
-      case 3:
-        if (!formData.guestCount || formData.guestCount < 1) newErrors.guestCount = "Must be at least 1"
-        if (!formData.totalBudget || formData.totalBudget < 1) newErrors.totalBudget = "Must be at least $1"
-        break
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
+  const handleNext = async () => {
+    const isValid = await form.trigger()
+    if (isValid) {
+      const currentData = form.getValues()
+      const updatedData = { ...allFormData, ...currentData }
+      setAllFormData(updatedData)
+      
       if (currentStep < steps.length) {
         setCurrentStep(currentStep + 1)
+        form.reset(updatedData)
       } else {
-        onComplete(formData)
+        onComplete(updatedData as WeddingData)
       }
     }
   }
 
   const handlePrevious = () => {
     if (currentStep > 1) {
+      const currentData = form.getValues()
+      setAllFormData({ ...allFormData, ...currentData })
       setCurrentStep(currentStep - 1)
+      form.reset({ ...allFormData, ...currentData })
     }
   }
 
@@ -169,122 +154,108 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
-              <div className="grid w-full items-center gap-3">
-                <Label htmlFor="partner1-first">First Partner - First Name</Label>
-                <Input
-                  id="partner1-first"
-                  value={formData.partner1FirstName}
-                  onChange={(e) => updateFormData("partner1FirstName", e.target.value)}
-                  className={errors.partner1FirstName ? "border-destructive" : ""}
-                />
-                {errors.partner1FirstName && (
-                  <p className="text-sm text-destructive">{errors.partner1FirstName}</p>
+              <FormField
+                control={form.control}
+                name="partner1Name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Partner Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., Sarah Thompson" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              </div>
-              <div className="grid w-full items-center gap-3">
-                <Label htmlFor="partner1-last">First Partner - Last Name</Label>
-                <Input
-                  id="partner1-last"
-                  value={formData.partner1LastName}
-                  onChange={(e) => updateFormData("partner1LastName", e.target.value)}
-                  className={errors.partner1LastName ? "border-destructive" : ""}
-                />
-                {errors.partner1LastName && (
-                  <p className="text-sm text-destructive">{errors.partner1LastName}</p>
+              />
+              <FormField
+                control={form.control}
+                name="partner2Name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Second Partner Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., Michael Johnson" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              </div>
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="grid w-full items-center gap-3">
-                <Label htmlFor="partner2-first">Second Partner - First Name</Label>
-                <Input
-                  id="partner2-first"
-                  value={formData.partner2FirstName}
-                  onChange={(e) => updateFormData("partner2FirstName", e.target.value)}
-                  className={errors.partner2FirstName ? "border-destructive" : ""}
-                />
-                {errors.partner2FirstName && (
-                  <p className="text-sm text-destructive">{errors.partner2FirstName}</p>
+              <FormField
+                control={form.control}
+                name="weddingDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Wedding Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "justify-start text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              </div>
-              <div className="grid w-full items-center gap-3">
-                <Label htmlFor="partner2-last">Second Partner - Last Name</Label>
-                <Input
-                  id="partner2-last"
-                  value={formData.partner2LastName}
-                  onChange={(e) => updateFormData("partner2LastName", e.target.value)}
-                  className={errors.partner2LastName ? "border-destructive" : ""}
-                />
-                {errors.partner2LastName && (
-                  <p className="text-sm text-destructive">{errors.partner2LastName}</p>
+              />
+              <FormField
+                control={form.control}
+                name="weddingTime"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Wedding Time</FormLabel>
+                    <FormControl>
+                      <Input type="time" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              </div>
+              />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid w-full items-center gap-3">
-                <Label>Wedding Date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "justify-start text-left font-normal",
-                        !formData.weddingDate && "text-muted-foreground",
-                        errors.weddingDate && "border-destructive"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.weddingDate ? format(formData.weddingDate, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={formData.weddingDate}
-                      onSelect={(date) => updateFormData("weddingDate", date)}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                {errors.weddingDate && (
-                  <p className="text-sm text-destructive">{errors.weddingDate}</p>
-                )}
-              </div>
-              <div className="grid w-full items-center gap-3">
-                <Label htmlFor="wedding-time">Wedding Time</Label>
-                <Input
-                  id="wedding-time"
-                  type="time"
-                  value={formData.weddingTime}
-                  onChange={(e) => updateFormData("weddingTime", e.target.value)}
-                  className={errors.weddingTime ? "border-destructive" : ""}
-                />
-                {errors.weddingTime && (
-                  <p className="text-sm text-destructive">{errors.weddingTime}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="grid w-full items-center gap-3">
-              <Label>Wedding Style</Label>
-              <Select value={formData.weddingStyle} onValueChange={(value) => updateFormData("weddingStyle", value)}>
-                <SelectTrigger className={errors.weddingStyle ? "border-destructive" : ""}>
-                  <SelectValue placeholder="Select your wedding style" />
-                </SelectTrigger>
-                <SelectContent>
-                  {weddingStyles.map((style) => (
-                    <SelectItem key={style} value={style.toLowerCase()}>
-                      {style}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.weddingStyle && (
-                <p className="text-sm text-destructive">{errors.weddingStyle}</p>
+            <FormField
+              control={form.control}
+              name="weddingStyle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Wedding Style</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your wedding style" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {weddingStyles.map((style) => (
+                        <SelectItem key={style} value={style.toLowerCase()}>
+                          {style}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
+            />
           </div>
         )
 
@@ -297,33 +268,36 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
                 <CardDescription>Where will your ceremony take place?</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid w-full items-center gap-3">
-                  <Label htmlFor="ceremony-venue">Venue Name</Label>
-                  <Input
-                    id="ceremony-venue"
-                    value={formData.ceremonyVenue}
-                    onChange={(e) => updateFormData("ceremonyVenue", e.target.value)}
-                    placeholder="e.g., St. Mary's Cathedral"
-                    className={errors.ceremonyVenue ? "border-destructive" : ""}
-                  />
-                  {errors.ceremonyVenue && (
-                    <p className="text-sm text-destructive">{errors.ceremonyVenue}</p>
+                <FormField
+                  control={form.control}
+                  name="ceremonyVenue"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Venue Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., St. Mary's Cathedral" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </div>
-                <div className="grid w-full items-center gap-3">
-                  <Label htmlFor="ceremony-address">Address</Label>
-                  <Textarea
-                    id="ceremony-address"
-                    value={formData.ceremonyAddress}
-                    onChange={(e) => updateFormData("ceremonyAddress", e.target.value)}
-                    placeholder="Full address including city, state, zip"
-                    className={errors.ceremonyAddress ? "border-destructive" : ""}
-                    rows={3}
-                  />
-                  {errors.ceremonyAddress && (
-                    <p className="text-sm text-destructive">{errors.ceremonyAddress}</p>
+                />
+                <FormField
+                  control={form.control}
+                  name="ceremonyAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Address</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Full address including city, state, zip" 
+                          rows={3} 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </div>
+                />
               </CardContent>
             </Card>
 
@@ -333,33 +307,36 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
                 <CardDescription>Where will your reception be held?</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid w-full items-center gap-3">
-                  <Label htmlFor="reception-venue">Venue Name</Label>
-                  <Input
-                    id="reception-venue"
-                    value={formData.receptionVenue}
-                    onChange={(e) => updateFormData("receptionVenue", e.target.value)}
-                    placeholder="e.g., Grand Ballroom Hotel"
-                    className={errors.receptionVenue ? "border-destructive" : ""}
-                  />
-                  {errors.receptionVenue && (
-                    <p className="text-sm text-destructive">{errors.receptionVenue}</p>
+                <FormField
+                  control={form.control}
+                  name="receptionVenue"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Venue Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., Grand Ballroom Hotel" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </div>
-                <div className="grid w-full items-center gap-3">
-                  <Label htmlFor="reception-address">Address</Label>
-                  <Textarea
-                    id="reception-address"
-                    value={formData.receptionAddress}
-                    onChange={(e) => updateFormData("receptionAddress", e.target.value)}
-                    placeholder="Full address including city, state, zip"
-                    className={errors.receptionAddress ? "border-destructive" : ""}
-                    rows={3}
-                  />
-                  {errors.receptionAddress && (
-                    <p className="text-sm text-destructive">{errors.receptionAddress}</p>
+                />
+                <FormField
+                  control={form.control}
+                  name="receptionAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Address</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Full address including city, state, zip" 
+                          rows={3} 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </div>
+                />
               </CardContent>
             </Card>
           </div>
@@ -378,21 +355,25 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
                   <CardDescription>How many guests are you expecting?</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid w-full items-center gap-3">
-                    <Label htmlFor="guest-count">Number of Guests</Label>
-                    <Input
-                      id="guest-count"
-                      type="number"
-                      value={formData.guestCount || ""}
-                      onChange={(e) => updateFormData("guestCount", parseInt(e.target.value) || 0)}
-                      placeholder="e.g., 150"
-                      className={errors.guestCount ? "border-destructive" : ""}
-                      min="1"
-                    />
-                    {errors.guestCount && (
-                      <p className="text-sm text-destructive">{errors.guestCount}</p>
+                  <FormField
+                    control={form.control}
+                    name="guestCount"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Number of Guests</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            placeholder="e.g., 150"
+                            min="1"
+                            {...field}
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
-                  </div>
+                  />
                 </CardContent>
               </Card>
 
@@ -405,21 +386,25 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
                   <CardDescription>What's your overall wedding budget?</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid w-full items-center gap-3">
-                    <Label htmlFor="total-budget">Budget Amount ($)</Label>
-                    <Input
-                      id="total-budget"
-                      type="number"
-                      value={formData.totalBudget || ""}
-                      onChange={(e) => updateFormData("totalBudget", parseInt(e.target.value) || 0)}
-                      placeholder="e.g., 25000"
-                      className={errors.totalBudget ? "border-destructive" : ""}
-                      min="1"
-                    />
-                    {errors.totalBudget && (
-                      <p className="text-sm text-destructive">{errors.totalBudget}</p>
+                  <FormField
+                    control={form.control}
+                    name="totalBudget"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Budget Amount ($)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            placeholder="e.g., 25000"
+                            min="1"
+                            {...field}
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
-                  </div>
+                  />
                 </CardContent>
               </Card>
             </div>
@@ -429,7 +414,8 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
                 <div className="text-center space-y-2">
                   <p className="text-sm text-muted-foreground">Estimated cost per guest:</p>
                   <p className="text-2xl font-bold text-primary">
-                    ${formData.guestCount > 0 ? Math.round(formData.totalBudget / formData.guestCount) : 0}
+                    ${form.watch("guestCount") > 0 && form.watch("totalBudget") > 0 ? 
+                      Math.round(form.watch("totalBudget") / form.watch("guestCount")) : 0}
                   </p>
                 </div>
               </CardContent>
@@ -440,27 +426,41 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
       case 4:
         return (
           <div className="space-y-6">
-            <div className="grid w-full items-center gap-3">
-              <Label htmlFor="cultural-traditions">Cultural Traditions</Label>
-              <Textarea
-                id="cultural-traditions"
-                value={formData.culturalTraditions}
-                onChange={(e) => updateFormData("culturalTraditions", e.target.value)}
-                placeholder="Any specific cultural or religious traditions to include?"
-                rows={3}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="culturalTraditions"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cultural Traditions</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="Any specific cultural or religious traditions to include?"
+                      rows={3}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div className="grid w-full items-center gap-3">
-              <Label htmlFor="special-requirements">Special Requirements</Label>
-              <Textarea
-                id="special-requirements"
-                value={formData.specialRequirements}
-                onChange={(e) => updateFormData("specialRequirements", e.target.value)}
-                placeholder="Accessibility needs, dietary restrictions, or other special considerations..."
-                rows={4}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="specialRequirements"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Special Requirements</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="Accessibility needs, dietary restrictions, or other special considerations..."
+                      rows={4}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <Card className="bg-primary/5 border-primary/20">
               <CardHeader>
@@ -496,77 +496,80 @@ export function WeddingSetupWizard({ isOpen, onClose, onComplete }: WeddingSetup
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm">
-              <span>Step {currentStep} of {steps.length}</span>
-              <span>{Math.round(progress)}% complete</span>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit((data) => handleNext())} className="space-y-6">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span>Step {currentStep} of {steps.length}</span>
+                <span>{Math.round(progress)}% complete</span>
+              </div>
+              <Progress value={progress} />
             </div>
-            <Progress value={progress} />
-          </div>
 
-          <div className="grid grid-cols-4 gap-2">
-            {steps.map((step) => {
-              const Icon = step.icon
-              const isActive = currentStep === step.id
-              const isCompleted = currentStep > step.id
-              
-              return (
-                <div
-                  key={step.id}
-                  className={cn(
-                    "p-3 rounded-lg border text-center transition-colors",
-                    isActive && "border-primary bg-primary/5",
-                    isCompleted && "border-primary bg-primary/10",
-                    !isActive && !isCompleted && "border-border bg-muted/30"
-                  )}
-                >
-                  <Icon className={cn(
-                    "h-5 w-5 mx-auto mb-2",
-                    isActive && "text-primary",
-                    isCompleted && "text-primary",
-                    !isActive && !isCompleted && "text-muted-foreground"
-                  )} />
-                  <p className="text-xs font-medium">{step.title}</p>
-                </div>
-              )
-            })}
-          </div>
-
-          <Separator />
-
-          <div className="min-h-96">
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold">{steps[currentStep - 1]?.title}</h3>
-              <p className="text-muted-foreground">{steps[currentStep - 1]?.description}</p>
+            <div className="grid grid-cols-4 gap-2">
+              {steps.map((step) => {
+                const Icon = step.icon
+                const isActive = currentStep === step.id
+                const isCompleted = currentStep > step.id
+                
+                return (
+                  <div
+                    key={step.id}
+                    className={cn(
+                      "p-3 rounded-lg border text-center transition-colors",
+                      isActive && "border-primary bg-primary/5",
+                      isCompleted && "border-primary bg-primary/10",
+                      !isActive && !isCompleted && "border-border bg-muted/30"
+                    )}
+                  >
+                    <Icon className={cn(
+                      "h-5 w-5 mx-auto mb-2",
+                      isActive && "text-primary",
+                      isCompleted && "text-primary",
+                      !isActive && !isCompleted && "text-muted-foreground"
+                    )} />
+                    <p className="text-xs font-medium">{step.title}</p>
+                  </div>
+                )
+              })}
             </div>
-            {renderStep()}
-          </div>
-        </div>
 
-        <DialogFooter className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentStep === 1}
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Previous
-          </Button>
-          <Button onClick={handleNext}>
-            {currentStep === steps.length ? (
-              <>
-                <Check className="mr-2 h-4 w-4" />
-                Complete Setup
-              </>
-            ) : (
-              <>
-                Next
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </>
-            )}
-          </Button>
-        </DialogFooter>
+            <Separator />
+
+            <div className="min-h-96">
+              <div className="mb-4">
+                <h3 className="text-xl font-semibold">{steps[currentStep - 1]?.title}</h3>
+                <p className="text-muted-foreground">{steps[currentStep - 1]?.description}</p>
+              </div>
+              {renderStep()}
+            </div>
+
+            <DialogFooter className="flex justify-between">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={currentStep === 1}
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Previous
+              </Button>
+              <Button type="submit">
+                {currentStep === steps.length ? (
+                  <>
+                    <Check className="mr-2 h-4 w-4" />
+                    Complete Setup
+                  </>
+                ) : (
+                  <>
+                    Next
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   )
