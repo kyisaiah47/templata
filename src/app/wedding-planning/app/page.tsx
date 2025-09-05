@@ -8,6 +8,7 @@ import { VendorManagement } from "@/components/templates/wedding/vendor-manageme
 import { GuestManagement } from "@/components/templates/wedding/guest-management"
 import { BudgetTracking } from "@/components/templates/wedding/budget-tracking"
 import { CreateNote } from "@/components/create-note"
+import { TaskManagement } from "@/components/templates/wedding/task-management"
 import { VendorQuestions } from "@/components/guided-notes/wedding/vendor-questions"
 import { VowsCeremony } from "@/components/guided-notes/wedding/vows-ceremony"
 import { Timeline } from "@/components/guided-notes/wedding/timeline"
@@ -69,7 +70,7 @@ export default function Page() {
       case "budget":
         return <BudgetTracking />
       case "tasks":
-        return <div>Task Management - Coming Soon</div>
+        return <TaskManagement />
       case "settings":
         return <WeddingSettings />
       
