@@ -1,36 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { GuidedNotePage } from "@/components/guided-note-page"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { CalendarIcon, CheckCircle, Clock, AlertCircle, Star } from "lucide-react"
 
 export function Timeline() {
-  const [notes, setNotes] = useState({
-    early_planning: "",
-    mid_planning: "",
-    final_month: "",
-    wedding_day: "",
-    personal_notes: ""
-  })
-
-  useEffect(() => {
-    const savedNotes = localStorage.getItem('wedding-timeline-notes')
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('wedding-timeline-notes', JSON.stringify(notes))
-  }, [notes])
-
-  const handleNotesChange = (field: keyof typeof notes, value: string) => {
-    setNotes(prev => ({ ...prev, [field]: value }))
-  }
-
   return (
     <div className="space-y-6">
       <div>
@@ -39,336 +12,361 @@ export function Timeline() {
       </div>
 
       <Tabs defaultValue="early-planning" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="early-planning">Early Planning</TabsTrigger>
-          <TabsTrigger value="mid-planning">Mid Planning</TabsTrigger>
-          <TabsTrigger value="final-month">Final Month</TabsTrigger>
-          <TabsTrigger value="wedding-day">Wedding Day</TabsTrigger>
-          <TabsTrigger value="notes">My Notes</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+          <TabsTrigger value="early-planning" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Early Planning</span>
+            <span className="sm:hidden">Early</span>
+          </TabsTrigger>
+          <TabsTrigger value="mid-planning" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Mid Planning</span>
+            <span className="sm:hidden">Mid</span>
+          </TabsTrigger>
+          <TabsTrigger value="final-month" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Final Month</span>
+            <span className="sm:hidden">Final</span>
+          </TabsTrigger>
+          <TabsTrigger value="wedding-day" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Wedding Day</span>
+            <span className="sm:hidden">Day</span>
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="early-planning" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <CalendarIcon className="h-5 w-5 text-primary" />
-                  <CardTitle>12+ Months Before Wedding</CardTitle>
-                </div>
-                <CardDescription>Foundation planning and major bookings</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Key Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What's your ideal wedding date and backup options?</li>
-                    <li>• What's your overall budget and how will you allocate it?</li>
-                    <li>• Who will be on your guest list and what's your target headcount?</li>
-                    <li>• What venues align with your vision and budget?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Major Tasks to Complete:</h4>
-                  <div className="grid gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Book your venue and set the date</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Create initial guest list with addresses</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Research and book your photographer</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Start shopping for wedding dress</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Consider hiring a wedding planner</span>
-                    </div>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Track your early planning progress, vendor research, and initial decisions..."
-                      value={notes.early_planning}
-                      onChange={(e) => handleNotesChange("early_planning", e.target.value)}
-                      rows={4}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="early-planning">
+          <GuidedNotePage
+            title="Early Planning (12+ Months Before Wedding)"
+            description="Foundation planning and major bookings"
+            sections={[
+              {
+                title: "Initial Planning Questions",
+                prompts: [
+                  "What's your ideal wedding date and backup options?",
+                  "What's your overall budget and how will you allocate it?",
+                  "Who will be on your guest list and what's your target headcount?",
+                  "What venues align with your vision and budget?",
+                  "Do you want to hire a wedding planner and if so, when?"
+                ],
+                examples: [
+                  "Consider multiple seasons and backup dates to increase venue availability",
+                  "Typical budget allocation: 40% venue/catering, 15% photography, 10% flowers, 10% music",
+                  "Start with must-have guests, then add nice-to-haves based on venue capacity",
+                  "Visit venues during your preferred time/season to see lighting and atmosphere",
+                  "Day-of coordinators cost less than full planners but handle logistics"
+                ]
+              },
+              {
+                title: "Venue & Date Planning",
+                prompts: [
+                  "What are your top 3 venue options and their pricing?",
+                  "What season and day of the week work best for your budget?",
+                  "What backup dates will you consider if your first choice isn't available?",
+                  "How will venue choice impact your guest count and overall vision?",
+                  "What questions will you ask during venue tours?"
+                ],
+                examples: [
+                  "Compare total costs including service fees, taxes, and required vendors",
+                  "Friday/Sunday weddings and off-season dates often cost 20-30% less",
+                  "Have 3-5 backup dates spanning different months if possible",
+                  "Indoor vs outdoor, formal vs casual, size restrictions all flow from venue choice",
+                  "Ask about setup/breakdown time, noise restrictions, vendor requirements, and weather backup plans"
+                ]
+              },
+              {
+                title: "Budget & Guest List",
+                prompts: [
+                  "What's your total wedding budget and how will you fund it?",
+                  "How will you prioritize budget allocation across different categories?",
+                  "Who are your must-have guests vs. nice-to-have invites?",
+                  "How will guest count impact your venue and catering choices?",
+                  "What budget tracking system will you use throughout planning?"
+                ],
+                examples: [
+                  "Include savings, family contributions, and realistic timeline for saving more",
+                  "Venue/catering typically 40-50% of budget, photography 10-15%, flowers 8-10%",
+                  "Start with immediate family and closest friends, then expand based on budget/space",
+                  "Each guest typically adds $75-200 in catering costs depending on your choices",
+                  "Use spreadsheet, wedding apps, or budgeting tools to track expenses vs. budget"
+                ]
+              },
+              {
+                title: "Early Vendor Research",
+                prompts: [
+                  "What photographers fit your style and budget?",
+                  "When will you start dress shopping and what's your timeline?",
+                  "What other vendors do you need to research early?",
+                  "How will you track vendor contacts and pricing?",
+                  "What questions will you ask each type of vendor?"
+                ],
+                examples: [
+                  "Look at full wedding galleries, not just highlight reels, and meet in person",
+                  "Start shopping 8-10 months before wedding to allow time for ordering and alterations",
+                  "Florists, musicians/DJs, and hair/makeup artists also book up quickly",
+                  "Create spreadsheet with vendor type, contact info, pricing, and notes",
+                  "Ask about experience, backup plans, timeline requirements, and what's included in pricing"
+                ]
+              }
+            ]}
+            tips={[
+              "Book your venue first as it impacts most other decisions and vendor availability",
+              "Create a guest list early to determine venue size and catering needs",
+              "Set your budget before making any major decisions to stay on track",
+              "Popular photographers book up quickly, so start research early",
+              "Consider hiring a day-of coordinator even if you don't want a full planner"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="mid-planning" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-primary" />
-                  <CardTitle>6 Months Before Wedding</CardTitle>
-                </div>
-                <CardDescription>Vendor bookings and invitation planning</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Key Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What vendors do you still need to book?</li>
-                    <li>• How will you communicate the date to guests?</li>
-                    <li>• What's your catering style and menu preferences?</li>
-                    <li>• Who will officiate your ceremony?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Major Tasks to Complete:</h4>
-                  <div className="grid gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Send save-the-dates</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Book caterer, florist, and DJ/band</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Order wedding invitations</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Plan your honeymoon</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Register for gifts</span>
-                    </div>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Track mid-planning tasks, vendor communications, and invitation details..."
-                      value={notes.mid_planning}
-                      onChange={(e) => handleNotesChange("mid_planning", e.target.value)}
-                      rows={4}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="mid-planning">
+          <GuidedNotePage
+            title="Mid Planning (6 Months Before Wedding)"
+            description="Vendor bookings and invitation planning"
+            sections={[
+              {
+                title: "Remaining Vendor Bookings",
+                prompts: [
+                  "What vendors do you still need to book?",
+                  "What's your catering style and menu preferences?",
+                  "Who will officiate your ceremony and what's the booking process?",
+                  "What florist fits your vision and budget for ceremony and reception?",
+                  "What entertainment options (DJ, band, etc.) match your celebration style?"
+                ],
+                examples: [
+                  "Focus on caterer, florist, DJ/band, officiant - these book up fastest",
+                  "Buffet vs plated, dietary restrictions, cocktail hour appetizers, late-night snacks",
+                  "Religious vs secular, friend/family vs professional, ceremony requirements",
+                  "Bridal bouquet, centerpieces, ceremony arch/backdrop, budget per arrangement",
+                  "Live band vs DJ, music style preferences, equipment needs, reception timeline"
+                ]
+              },
+              {
+                title: "Save-the-Dates & Invitations",
+                prompts: [
+                  "How will you communicate the date to guests through save-the-dates?",
+                  "What style and design do you want for your wedding invitations?",
+                  "What information needs to be included on your invitations?",
+                  "How will you handle RSVP tracking and guest management?",
+                  "What's your timeline for ordering, addressing, and sending invitations?"
+                ],
+                examples: [
+                  "Send 6-8 months early, include venue city/state, wedding website URL",
+                  "Match your wedding style - formal, rustic, modern, vintage, destination theme",
+                  "Date, time, venue address, RSVP deadline, dress code, wedding website",
+                  "Online RSVP system, spreadsheet tracking, meal choice collection",
+                  "Order 4 months early, address 6 weeks before, send 8 weeks before wedding"
+                ]
+              },
+              {
+                title: "Guest Experience Planning",
+                prompts: [
+                  "What accommodations will you recommend for out-of-town guests?",
+                  "How will you create a wedding website with all the details?",
+                  "What special considerations do you have for elderly or disabled guests?",
+                  "Will you plan any welcome events or post-wedding activities?",
+                  "How will you handle dietary restrictions and special requests?"
+                ],
+                examples: [
+                  "Block rooms at 2-3 hotels in different price ranges near venue",
+                  "Include timeline, venue info, accommodations, registry, photos, RSVP system",
+                  "Accessible seating, transportation assistance, dietary needs, early departure options",
+                  "Welcome dinner, morning-after brunch, local activity recommendations",
+                  "Collect dietary info with RSVP, communicate with caterer, label food stations"
+                ]
+              },
+              {
+                title: "Registry & Honeymoon Planning",
+                prompts: [
+                  "Where will you register for gifts and what items are priorities?",
+                  "What's your honeymoon destination and booking timeline?",
+                  "How will you balance honeymoon planning with wedding tasks?",
+                  "What travel documents or preparations are needed for your honeymoon?",
+                  "How will registry information be shared with guests?"
+                ],
+                examples: [
+                  "2-3 stores with different price points, focus on home essentials and upgrades",
+                  "Book 6+ months early for best rates, consider shoulder season dates",
+                  "Plan honeymoon details in off-peak wedding planning weeks, delegate tasks",
+                  "Check passport expiration, visa requirements, vaccinations, travel insurance",
+                  "Wedding website, bridal shower invites, word-of-mouth through family"
+                ]
+              }
+            ]}
+            tips={[
+              "Send save-the-dates 6-8 months before your wedding date",
+              "Book your caterer early as they often get booked up quickly",
+              "Create a wedding website to centralize information for guests",
+              "Start your gift registry now so it's ready when invitations go out",
+              "Plan your honeymoon early to get better deals and availability"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="final-month" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5 text-primary" />
-                  <CardTitle>Final Month Before Wedding</CardTitle>
-                </div>
-                <CardDescription>Final preparations and coordination</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Key Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What are your final headcount numbers?</li>
-                    <li>• How will you coordinate with all your vendors?</li>
-                    <li>• What last-minute details need attention?</li>
-                    <li>• Who's responsible for day-of coordination?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Critical Tasks to Complete:</h4>
-                  <div className="grid gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Final dress fitting and pickup</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Confirm details with all vendors</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Create day-of timeline for wedding party</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Prepare rehearsal dinner plans</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-sm">Pack for honeymoon</span>
-                    </div>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Track final month preparations, vendor confirmations, and last-minute details..."
-                      value={notes.final_month}
-                      onChange={(e) => handleNotesChange("final_month", e.target.value)}
-                      rows={4}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="final-month">
+          <GuidedNotePage
+            title="Final Month Before Wedding"
+            description="Final preparations and coordination"
+            sections={[
+              {
+                title: "Final Headcount & Logistics",
+                prompts: [
+                  "What are your final headcount numbers from RSVPs?",
+                  "How will you handle any last-minute guest changes?",
+                  "What seating arrangements need to be finalized?",
+                  "How will you communicate final details to your wedding party?",
+                  "What transportation arrangements are needed for the wedding day?"
+                ],
+                examples: [
+                  "Confirm final count 1 week before wedding, add 2-3 for safety",
+                  "Have backup plan for last-minute cancellations or additions",
+                  "Group people strategically, consider relationships and personalities",
+                  "Create timeline cards for each person with their specific responsibilities",
+                  "Arrange rides for elderly guests, coordinate hotel shuttles if needed"
+                ]
+              },
+              {
+                title: "Vendor Coordination",
+                prompts: [
+                  "How will you coordinate with all your vendors in the final weeks?",
+                  "What final details need to be confirmed with each vendor?",
+                  "Who will be your point person for vendor communication on wedding day?",
+                  "What vendor contact sheet will you create for the wedding day?",
+                  "How will you handle any vendor issues that arise?"
+                ],
+                examples: [
+                  "Schedule final walkthrough calls with each vendor 1-2 weeks before",
+                  "Timeline, setup requirements, final headcount, payment details, emergency contacts",
+                  "Designate reliable family member or hire day-of coordinator",
+                  "Include vendor names, arrival times, contact numbers, setup locations",
+                  "Have backup vendors on standby, know cancellation/substitution policies"
+                ]
+              },
+              {
+                title: "Final Preparations",
+                prompts: [
+                  "When is your final dress fitting and what alterations are needed?",
+                  "What beauty appointments are scheduled (hair trial, nails, etc.)?",
+                  "How will you prepare your wedding party for their responsibilities?",
+                  "What items need to be picked up or delivered before the wedding?",
+                  "What emergency kit will you pack for the wedding day?"
+                ],
+                examples: [
+                  "Schedule 1-2 weeks before, bring actual undergarments and shoes",
+                  "Hair trial 1 month before, nails 2-3 days before, facial 1 week before",
+                  "Send detailed timeline, hold rehearsal, assign specific duties",
+                  "Flowers day before, cake day of, rentals delivered morning of",
+                  "Safety pins, stain remover, tissues, backup makeup, snacks, phone chargers"
+                ]
+              },
+              {
+                title: "Rehearsal & Day-of Planning",
+                prompts: [
+                  "What are your rehearsal dinner plans and timeline?",
+                  "How will you create a detailed day-of timeline for everyone?",
+                  "Who's responsible for day-of coordination and problem-solving?",
+                  "What honeymoon packing and preparation needs to be done?",
+                  "How will you ensure you get rest and stay calm before the big day?"
+                ],
+                examples: [
+                  "Night before wedding, casual dinner with wedding party and immediate family",
+                  "Hour-by-hour schedule for vendors, wedding party, and family members",
+                  "Day-of coordinator or designated family member with decision-making authority",
+                  "Pack 2-3 days before, leave day after wedding or take break first",
+                  "Delegate final tasks, schedule massage, get good sleep, eat breakfast"
+                ]
+              }
+            ]}
+            tips={[
+              "Confirm final headcount with caterer and venue 1 week before",
+              "Create a detailed day-of timeline and share with wedding party",
+              "Pack an emergency kit with safety pins, stain remover, and backup makeup",
+              "Delegate day-of responsibilities to reliable friends or family",
+              "Focus on self-care and getting enough sleep the week before"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="wedding-day" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-primary" />
-                  <CardTitle>Wedding Day & Beyond</CardTitle>
-                </div>
-                <CardDescription>Day-of timeline and post-wedding plans</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Key Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What's your ideal wedding day timeline?</li>
-                    <li>• How will you handle any last-minute issues?</li>
-                    <li>• What are your post-wedding plans?</li>
-                    <li>• How will you preserve your wedding memories?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Sample Wedding Day Timeline:</h4>
-                  <div className="grid gap-2">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="w-16 justify-center text-xs">9:00 AM</Badge>
-                      <span className="text-sm">Hair & makeup start</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="w-16 justify-center text-xs">12:00 PM</Badge>
-                      <span className="text-sm">Hair & makeup complete</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="w-16 justify-center text-xs">2:00 PM</Badge>
-                      <span className="text-sm">Photography begins</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="w-16 justify-center text-xs">4:00 PM</Badge>
-                      <span className="text-sm">Ceremony starts</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="w-16 justify-center text-xs">5:00 PM</Badge>
-                      <span className="text-sm">Cocktails & reception</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="w-16 justify-center text-xs">11:00 PM</Badge>
-                      <span className="text-sm">Reception ends</span>
-                    </div>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Create your detailed wedding day timeline and post-wedding plans..."
-                      value={notes.wedding_day}
-                      onChange={(e) => handleNotesChange("wedding_day", e.target.value)}
-                      rows={4}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="wedding-day">
+          <GuidedNotePage
+            title="Wedding Day & Beyond"
+            description="Day-of timeline and post-wedding plans"
+            sections={[
+              {
+                title: "Wedding Day Timeline",
+                prompts: [
+                  "What's your ideal hour-by-hour wedding day timeline?",
+                  "What time should hair and makeup start for you and your wedding party?",
+                  "When will photography begin and what shots are priorities?",
+                  "What's your ceremony start time and how long will it be?",
+                  "How will the reception flow from cocktails to dinner to dancing?"
+                ],
+                examples: [
+                  "Work backwards from ceremony time, build in buffer time between activities",
+                  "Start 4-6 hours before ceremony, bride last for hair, first for makeup",
+                  "Begin 2-3 hours before ceremony for getting ready shots and first look",
+                  "Plan 30-minute ceremony, allow time for processional and recessional",
+                  "Cocktails during photos, dinner service, toasts, then dancing until end"
+                ]
+              },
+              {
+                title: "Day-of Logistics",
+                prompts: [
+                  "How will you handle any last-minute issues or changes?",
+                  "Who are your emergency contacts and what are their responsibilities?",
+                  "What special requests or unique elements are part of your day?",
+                  "How will you stay calm and enjoy your wedding day?",
+                  "What backup plans do you have for weather or other issues?"
+                ],
+                examples: [
+                  "Designate point person to make decisions so you can focus on enjoying",
+                  "Day-of coordinator, best man/maid of honor, parents, vendor contacts",
+                  "Special readings, cultural traditions, surprise performances, unique vows",
+                  "Take breaks, eat regularly, designate photo-free moments, stay present",
+                  "Indoor ceremony option, tent rental, umbrella station, heater rentals"
+                ]
+              },
+              {
+                title: "Memory Preservation",
+                prompts: [
+                  "How will you preserve your wedding memories?",
+                  "What moments do you most want to remember from your wedding day?",
+                  "How will you collect cards, gifts, and mementos from guests?",
+                  "What follow-up will you do with your photographer and videographer?",
+                  "How will you share memories with friends and family after the wedding?"
+                ],
+                examples: [
+                  "Professional photos/video, guest book alternatives, audio recordings",
+                  "First look, ceremony processional, first dance, parent dances, toasts",
+                  "Assign family member to collect cards, designated gift table attendant",
+                  "Confirm delivery timeline, backup options, social media usage rights",
+                  "Thank you cards with wedding photos, social media highlights, photo sharing"
+                ]
+              },
+              {
+                title: "Post-Wedding Plans",
+                prompts: [
+                  "What are your immediate post-wedding plans and timeline?",
+                  "When will you leave for your honeymoon and how will you prepare?",
+                  "What follow-up tasks need to be handled after the wedding?",
+                  "How will you transition back to normal life after the celebration?",
+                  "What traditions or habits do you want to start as a married couple?"
+                ],
+                examples: [
+                  "Recovery day, gift opening, vendor cleanup coordination, photo viewing",
+                  "Leave 1-2 days later for rest, or wait a week for full decompression",
+                  "Thank you notes, vendor reviews, photo sharing, dress preservation",
+                  "Gradual return to routine, process the experience, plan future together",
+                  "Weekly date nights, annual anniversary trip, new shared hobbies or goals"
+                ]
+              }
+            ]}
+            tips={[
+              "Start getting ready early to avoid feeling rushed on your wedding day",
+              "Assign someone to be your point person for handling any day-of issues",
+              "Take moments throughout the day to pause and soak in the experience",
+              "Have someone collect cards and gifts so you don't have to worry about them",
+              "Plan some downtime after the wedding before jumping into thank you notes"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="notes" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Early Planning Notes</CardTitle>
-                <CardDescription>12+ months before wedding thoughts and planning</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Venue booking, photographer selection, initial planning thoughts..."
-                  value={notes.early_planning}
-                  onChange={(e) => handleNotesChange("early_planning", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Mid-Planning Notes</CardTitle>
-                <CardDescription>6 months before wedding planning and coordination</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Vendor bookings, invitation planning, coordination details..."
-                  value={notes.mid_planning}
-                  onChange={(e) => handleNotesChange("mid_planning", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Final Month Notes</CardTitle>
-                <CardDescription>Last-minute preparations and final details</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Final preparations, vendor confirmations, last-minute details..."
-                  value={notes.final_month}
-                  onChange={(e) => handleNotesChange("final_month", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Wedding Day Timeline</CardTitle>
-                <CardDescription>Detailed day-of schedule and timeline</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Hour-by-hour wedding day timeline, vendor coordination, emergency contacts..."
-                  value={notes.wedding_day}
-                  onChange={(e) => handleNotesChange("wedding_day", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>General Timeline Notes</CardTitle>
-                <CardDescription>Overall planning thoughts and considerations</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="General timeline thoughts, buffer time considerations, backup plans..."
-                  value={notes.personal_notes}
-                  onChange={(e) => handleNotesChange("personal_notes", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
       </Tabs>
     </div>
   )

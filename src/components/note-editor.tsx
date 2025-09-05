@@ -46,16 +46,20 @@ interface NoteEditorProps {
 	title?: string;
 	initialBlocks?: NoteBlock[];
 	onSave?: (title: string, blocks: NoteBlock[]) => void;
+	onChange?: (blocks: NoteBlock[]) => void;
 	readOnly?: boolean;
 	showTitle?: boolean;
+	readOnlyBlockTypes?: NoteBlock["type"][];
 }
 
 export function NoteEditor({
 	title: initialTitle = "",
 	initialBlocks = [],
 	onSave,
+	onChange,
 	readOnly = false,
 	showTitle = true,
+	readOnlyBlockTypes = [],
 }: NoteEditorProps) {
 	const [title, setTitle] = useState(initialTitle);
 	const [blocks, setBlocks] = useState<NoteBlock[]>(
@@ -297,18 +301,19 @@ export function NoteEditor({
 					block.type === "heading1" ||
 					block.type === "heading2") && (
 					<div className="group relative flex items-center gap-2">
-						<div className="flex items-center gap-1">
-							<div
-								className="opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-grab active:cursor-grabbing p-1 hover:bg-accent rounded flex items-center justify-center mt-0"
-								draggable
-								onDragStart={(e) => handleDragStart(e, block.id)}
-								onDragEnd={(e) => {
-									(e.currentTarget as HTMLElement).style.opacity = "";
-								}}
-							>
-								<GripVertical className="h-5 w-5 text-muted-foreground" />
-							</div>
-							<DropdownMenu>
+						{!readOnlyBlockTypes.includes(block.type) && (
+							<div className="flex items-center gap-1">
+								<div
+									className="opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-grab active:cursor-grabbing p-1 hover:bg-accent rounded flex items-center justify-center mt-0"
+									draggable
+									onDragStart={(e) => handleDragStart(e, block.id)}
+									onDragEnd={(e) => {
+										(e.currentTarget as HTMLElement).style.opacity = "";
+									}}
+								>
+									<GripVertical className="h-5 w-5 text-muted-foreground" />
+								</div>
+								<DropdownMenu>
 								<DropdownMenuTrigger asChild>
 									<Button
 										variant="ghost"
@@ -465,7 +470,8 @@ export function NoteEditor({
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
-						</div>
+							</div>
+						)}
 						<Textarea
 							value={block.content}
 							onChange={(e) => {
@@ -475,13 +481,14 @@ export function NoteEditor({
 							}}
 							onKeyDown={(e) => handleKeyDown(e, block.id)}
 							placeholder="Type something... (Try /h1 or /h2 followed by space)"
+							disabled={readOnlyBlockTypes.includes(block.type)}
 							className={`mb-0 min-h-[40px] resize-none flex-1 ${
 								block.type === "heading1"
 									? "text-3xl font-bold"
 									: block.type === "heading2"
 									? "text-2xl font-semibold"
 									: ""
-							}`}
+							} ${readOnlyBlockTypes.includes(block.type) ? "cursor-default" : ""}`}
 							rows={1}
 							onInput={(e) => {
 								const target = e.target as HTMLTextAreaElement;

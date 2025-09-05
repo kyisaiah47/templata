@@ -1,35 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { GuidedNotePage } from "@/components/guided-note-page"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Heart, Users, Stars, Church, PenTool } from "lucide-react"
 
 export function VowsCeremony() {
-  const [notes, setNotes] = useState({
-    reflection: "",
-    promises: "",
-    future_dreams: "",
-    ceremony_planning: "",
-    final_vows: ""
-  })
-
-  useEffect(() => {
-    const savedNotes = localStorage.getItem('wedding-vows-notes')
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('wedding-vows-notes', JSON.stringify(notes))
-  }, [notes])
-
-  const handleNotesChange = (field: keyof typeof notes, value: string) => {
-    setNotes(prev => ({ ...prev, [field]: value }))
-  }
-
   return (
     <div className="space-y-6">
       <div>
@@ -38,263 +12,263 @@ export function VowsCeremony() {
       </div>
 
       <Tabs defaultValue="reflection" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="reflection">Reflection</TabsTrigger>
-          <TabsTrigger value="promises">Promises</TabsTrigger>
-          <TabsTrigger value="future">Future Dreams</TabsTrigger>
-          <TabsTrigger value="ceremony">Ceremony</TabsTrigger>
-          <TabsTrigger value="vows">My Notes</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+          <TabsTrigger value="reflection" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Relationship Reflection</span>
+            <span className="sm:hidden">Reflect</span>
+          </TabsTrigger>
+          <TabsTrigger value="promises" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Promises & Commitments</span>
+            <span className="sm:hidden">Promises</span>
+          </TabsTrigger>
+          <TabsTrigger value="dreams" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Future Dreams</span>
+            <span className="sm:hidden">Dreams</span>
+          </TabsTrigger>
+          <TabsTrigger value="ceremony" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Ceremony Planning</span>
+            <span className="sm:hidden">Ceremony</span>
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="reflection" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Heart className="h-5 w-5 text-primary" />
-                  <CardTitle>Reflecting on Your Relationship</CardTitle>
-                </div>
-                <CardDescription>Think about what makes your love special</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What are 3 things you love most about your partner?</li>
-                    <li>• What is your favorite memory together?</li>
-                    <li>• How has your partner made you a better person?</li>
-                    <li>• What moment did you know they were 'the one'?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Example Reflections:</h4>
-                  <div className="bg-muted/30 p-3 rounded-lg text-sm text-muted-foreground">
-                    <p>"I love how you make me laugh even on my worst days"</p>
-                    <p>"Our first trip together when we got completely lost but had the best time"</p>
-                    <p>"You've taught me to be more patient and understanding"</p>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Reflect on your relationship, special moments, and what makes your love unique..."
-                      value={notes.reflection}
-                      onChange={(e) => handleNotesChange("reflection", e.target.value)}
-                      rows={6}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="reflection">
+          <GuidedNotePage
+            title="Reflecting on Your Relationship"
+            description="Think deeply about what makes your partnership special and unique"
+            sections={[
+              {
+                title: "What You Love Most",
+                prompts: [
+                  "What are 3 things you love most about your partner?",
+                  "What unique qualities does your partner have that you want to celebrate?",
+                  "How does your partner make you feel when you're together?",
+                  "What do you admire most about how your partner treats others?"
+                ],
+                examples: [
+                  "I love how you make me laugh even on my worst days",
+                  "Your kindness to strangers, your determination, your silly sense of humor",
+                  "Safe, supported, like I can be completely myself",
+                  "Your patience with children, generosity to friends, respect for family"
+                ]
+              },
+              {
+                title: "Your Journey Together",
+                prompts: [
+                  "What is your favorite memory together as a couple?",
+                  "What moment did you know they were 'the one'?",
+                  "How has your partner made you a better person?",
+                  "What challenges have you overcome together that strengthened your bond?"
+                ],
+                examples: [
+                  "Our first trip together when we got completely lost but had the best time",
+                  "When you took care of me when I was sick without being asked",
+                  "You've taught me to be more patient and understanding",
+                  "Getting through job loss together, supporting each other through family illness"
+                ]
+              },
+              {
+                title: "Partnership & Growth",
+                prompts: [
+                  "How do you complement each other as partners?",
+                  "What have you learned about love from being with your partner?",
+                  "How do you support each other's dreams and goals?",
+                  "What makes your relationship different from other relationships you've had?"
+                ],
+                examples: [
+                  "You're organized where I'm creative, calm where I'm anxious",
+                  "That love is choosing each other every day, not just a feeling",
+                  "Encouraging career changes, celebrating successes, being there for failures",
+                  "Complete honesty, genuine friendship, wanting to grow together"
+                ]
+              }
+            ]}
+            tips={[
+              "Write from the heart using specific examples and stories",
+              "Focus on personality traits and character rather than just physical attributes",
+              "Think about moments that show your partner's true character",
+              "Consider how your relationship has evolved and deepened over time"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="promises" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-primary" />
-                  <CardTitle>Promises & Commitments</CardTitle>
-                </div>
-                <CardDescription>The vows and promises you want to make</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What promises do you want to make for your future together?</li>
-                    <li>• How do you want to support each other through challenges?</li>
-                    <li>• What kind of life do you want to build together?</li>
-                    <li>• What traditions do you want to create as a couple?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Example Promises:</h4>
-                  <div className="bg-muted/30 p-3 rounded-lg text-sm text-muted-foreground">
-                    <p>"I promise to support your dreams, even when they scare me"</p>
-                    <p>"I vow to be your partner in all things, big and small"</p>
-                    <p>"I promise to choose you every day, even when it's hard"</p>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Write the promises and commitments you want to make to your partner..."
-                      value={notes.promises}
-                      onChange={(e) => handleNotesChange("promises", e.target.value)}
-                      rows={6}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="promises">
+          <GuidedNotePage
+            title="Promises & Commitments"
+            description="The vows and commitments you want to make to each other for your future"
+            sections={[
+              {
+                title: "Daily Life Commitments",
+                prompts: [
+                  "What promises do you want to make about your everyday life together?",
+                  "How do you want to support each other through daily challenges?",
+                  "What does 'being a team' mean to you in practical terms?",
+                  "How will you prioritize your relationship in busy times?"
+                ],
+                examples: [
+                  "I promise to share household responsibilities and make decisions together",
+                  "I vow to listen when you need to vent and celebrate your daily wins",
+                  "Making decisions together, dividing responsibilities fairly, supporting each other's goals",
+                  "Weekly date nights, daily check-ins, putting phones away during dinner"
+                ]
+              },
+              {
+                title: "Through Challenges & Growth",
+                prompts: [
+                  "What promises will you make about facing difficulties together?",
+                  "How do you want to handle disagreements and conflicts as a married couple?",
+                  "What commitments will you make about growing and changing together?",
+                  "How will you support each other through major life changes?"
+                ],
+                examples: [
+                  "I promise to face challenges as a team and never give up on us",
+                  "We'll fight fair, listen to understand, and never go to bed angry",
+                  "I vow to grow with you and love who you become, not just who you are today",
+                  "Supporting career changes, family additions, health challenges, new adventures"
+                ]
+              },
+              {
+                title: "Love & Devotion Promises",
+                prompts: [
+                  "What promises do you want to make about your love and faithfulness?",
+                  "How will you keep romance and intimacy alive in your marriage?",
+                  "What traditions do you want to create together as a married couple?",
+                  "What does 'choosing each other every day' look like practically?"
+                ],
+                examples: [
+                  "I promise to be faithful in heart, mind, and body for all our days",
+                  "Regular date nights, surprise gestures, physical affection, emotional intimacy",
+                  "Annual trips, holiday traditions, weekly rituals, celebration customs",
+                  "Small daily choices to show love, putting each other first, working on our relationship"
+                ]
+              }
+            ]}
+            tips={[
+              "Make promises that are specific and actionable rather than just general statements",
+              "Consider both big life promises and small daily commitments",
+              "Think about what your partner most needs to hear from you",
+              "Balance aspirational goals with realistic, achievable promises"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="future" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Stars className="h-5 w-5 text-primary" />
-                  <CardTitle>Future Dreams & Hopes</CardTitle>
-                </div>
-                <CardDescription>Your vision for your life together</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What are your hopes and dreams as a married couple?</li>
-                    <li>• How do you envision growing old together?</li>
-                    <li>• What adventures do you want to share?</li>
-                    <li>• What legacy do you want to leave together?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Example Dreams:</h4>
-                  <div className="bg-muted/30 p-3 rounded-lg text-sm text-muted-foreground">
-                    <p>"I can't wait to travel the world with you and create new memories"</p>
-                    <p>"I look forward to building a family and home together"</p>
-                    <p>"I want to grow old laughing with you on our front porch"</p>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Describe your dreams, hopes, and vision for your future together..."
-                      value={notes.future_dreams}
-                      onChange={(e) => handleNotesChange("future_dreams", e.target.value)}
-                      rows={6}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="dreams">
+          <GuidedNotePage
+            title="Future Dreams & Hopes"
+            description="Your shared vision for the life you want to build together"
+            sections={[
+              {
+                title: "Life Goals & Adventures",
+                prompts: [
+                  "What are your biggest dreams and goals as a married couple?",
+                  "What adventures do you want to share together?",
+                  "How do you envision your life in 5, 10, or 20 years?",
+                  "What experiences are on your 'couple's bucket list'?"
+                ],
+                examples: [
+                  "Build a loving family, travel the world, create a beautiful home together",
+                  "Hiking adventures, international travel, learning new skills together",
+                  "Established in careers, maybe with kids, deeper friendships, financial security",
+                  "See the Northern Lights, visit all the national parks, learn to cook Italian food"
+                ]
+              },
+              {
+                title: "Legacy & Impact",
+                prompts: [
+                  "What kind of legacy do you want to build together?",
+                  "How do you want to impact your community and family as a couple?",
+                  "What values do you want to be known for as a partnership?",
+                  "How do you want to give back to the world together?"
+                ],
+                examples: [
+                  "A family known for generosity, kindness, and always having an open door",
+                  "Volunteering together, mentoring young couples, supporting local causes",
+                  "Integrity, compassion, humor, reliability, unconditional love",
+                  "Charitable giving, environmental stewardship, community service, mentoring"
+                ]
+              },
+              {
+                title: "Growing Old Together",
+                prompts: [
+                  "How do you envision growing old together?",
+                  "What do you hope your relationship looks like in your later years?",
+                  "What traditions do you want to maintain throughout your marriage?",
+                  "How do you want to continue showing love when you're 80 years old?"
+                ],
+                examples: [
+                  "Sitting on our front porch together, still laughing at inside jokes",
+                  "Best friends who still hold hands, still learning new things together",
+                  "Annual anniversary trips, Sunday morning coffee, evening walks",
+                  "Still bringing you flowers, still dancing in the kitchen, still saying 'I love you' every day"
+                ]
+              }
+            ]}
+            tips={[
+              "Paint a picture that feels both aspirational and achievable",
+              "Include both big dreams and small, everyday hopes",
+              "Think about the kind of couple you want to be, not just what you want to have",
+              "Consider how your individual dreams can support and enhance each other"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="ceremony" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Church className="h-5 w-5 text-primary" />
-                  <CardTitle>Ceremony Planning</CardTitle>
-                </div>
-                <CardDescription>Plan the flow and elements of your ceremony</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Questions to Consider:</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• What traditions or readings do you want to include in your ceremony?</li>
-                    <li>• Do you want to exchange rings, and what will you say?</li>
-                    <li>• Are there any cultural or religious elements to incorporate?</li>
-                    <li>• What music or special moments do you want during the ceremony?</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold">Ceremony Ideas:</h4>
-                  <div className="bg-muted/30 p-3 rounded-lg text-sm text-muted-foreground">
-                    <p>• Include a meaningful quote, poem, or religious text</p>
-                    <p>• Unity candle, handfasting, or cultural traditions</p>
-                    <p>• Special songs for processional, recessional, or during ceremony</p>
-                  </div>
-                </div>
-                <Card className="bg-muted/50">
-                  <CardContent className="pt-4">
-                    <Textarea
-                      placeholder="Plan your ceremony elements, traditions, readings, music, and special moments..."
-                      value={notes.ceremony_planning}
-                      onChange={(e) => handleNotesChange("ceremony_planning", e.target.value)}
-                      rows={6}
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="vows" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Relationship Reflection</CardTitle>
-                <CardDescription>Think about what makes your love special</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Reflect on your relationship, special moments, and what makes your love unique..."
-                  value={notes.reflection}
-                  onChange={(e) => handleNotesChange("reflection", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Promises & Commitments</CardTitle>
-                <CardDescription>The vows and promises you want to make</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Write the promises and commitments you want to make to your partner..."
-                  value={notes.promises}
-                  onChange={(e) => handleNotesChange("promises", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Future Dreams & Hopes</CardTitle>
-                <CardDescription>Your vision for your life together</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Describe your dreams, hopes, and vision for your future together..."
-                  value={notes.future_dreams}
-                  onChange={(e) => handleNotesChange("future_dreams", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Ceremony Planning</CardTitle>
-                <CardDescription>Plan the flow and elements of your ceremony</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Plan your ceremony elements, traditions, readings, music, and special moments..."
-                  value={notes.ceremony_planning}
-                  onChange={(e) => handleNotesChange("ceremony_planning", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Final Wedding Vows</CardTitle>
-                <CardDescription>Your complete wedding vows and personal notes</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Write your final wedding vows combining your reflections, promises, and dreams..."
-                  value={notes.final_vows}
-                  onChange={(e) => handleNotesChange("final_vows", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="ceremony">
+          <GuidedNotePage
+            title="Ceremony Planning & Structure"
+            description="Plan the structure and special elements of your wedding ceremony"
+            sections={[
+              {
+                title: "Ceremony Elements & Flow",
+                prompts: [
+                  "What traditions or readings do you want to include in your ceremony?",
+                  "Are there any cultural or religious elements to incorporate?",
+                  "How do you want to structure the order of your ceremony?",
+                  "What special unity ceremonies or rituals do you want to include?"
+                ],
+                examples: [
+                  "Include meaningful quotes, poems, religious texts, family readings",
+                  "Cultural traditions, religious blessings, family customs, heritage elements",
+                  "Processional, opening words, vows, rings, pronouncement, kiss, recessional",
+                  "Unity candle, handfasting, sand ceremony, tree planting, cultural rituals"
+                ]
+              },
+              {
+                title: "Personalization & Music",
+                prompts: [
+                  "What music do you want during different parts of the ceremony?",
+                  "How will you personalize the ceremony to reflect your relationship?",
+                  "What role do you want family members or friends to play?",
+                  "Are there any surprise elements or special moments planned?"
+                ],
+                examples: [
+                  "Special songs for processional, recessional, unity ceremony, or transitions",
+                  "Personal vows, meaningful locations, symbols that represent your journey",
+                  "Parents walking you down aisle, friends doing readings, family blessing",
+                  "Musical performances, special announcements, meaningful object exchanges"
+                ]
+              },
+              {
+                title: "Officiant Coordination & Final Details",
+                prompts: [
+                  "Who will officiate and what tone do you want for the ceremony?",
+                  "What specific instructions or preferences do you have for your officiant?",
+                  "How will you handle ring exchange and any special wording?",
+                  "What final touches will make the ceremony uniquely yours?"
+                ],
+                examples: [
+                  "Friend, family member, or professional officiant with warm, personal style",
+                  "Include humor, keep it short, focus on love and commitment, mention families",
+                  "Traditional vows vs. personal vows, ring warming, special ring presentation",
+                  "Personalized ceremony programs, meaningful venue choice, special decorations"
+                ]
+              }
+            ]}
+            tips={[
+              "Work with your officiant to create a ceremony that feels authentic to you",
+              "Practice reading your vows out loud beforehand to check timing and emotion",
+              "Have backup plans for outdoor ceremonies or technical elements",
+              "Keep ceremony length appropriate for your guest comfort (15-30 minutes typical)"
+            ]}
+          />
         </TabsContent>
       </Tabs>
     </div>

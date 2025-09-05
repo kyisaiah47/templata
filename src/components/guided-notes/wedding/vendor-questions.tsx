@@ -1,36 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { GuidedNotePage } from "@/components/guided-note-page"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { 
-  DollarSign,
-  Calendar,
-  Shield,
-  Users,
-  Camera,
-  Utensils,
-  Music,
-  MapPin,
-  AlertCircle
-} from "lucide-react"
 
 export function VendorQuestions() {
-  const [notes, setNotes] = useState({
-    photography: "",
-    catering: "",
-    venue: "",
-    music: "",
-    florist: "",
-    general: ""
-  })
-
-  const handleNotesChange = (section: string, value: string) => {
-    setNotes(prev => ({ ...prev, [section]: value }))
-  }
-
   return (
     <div className="space-y-6">
       <div>
@@ -39,410 +12,310 @@ export function VendorQuestions() {
       </div>
 
       <Tabs defaultValue="research" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="research">Research</TabsTrigger>
-          <TabsTrigger value="logistics">Logistics</TabsTrigger>
-          <TabsTrigger value="contracts">Contracts</TabsTrigger>
-          <TabsTrigger value="vendor-specific">By Vendor</TabsTrigger>
-          <TabsTrigger value="notes">My Notes</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+          <TabsTrigger value="research" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Research & Pricing</span>
+            <span className="sm:hidden">Research</span>
+          </TabsTrigger>
+          <TabsTrigger value="logistics" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Logistics</span>
+            <span className="sm:hidden">Logistics</span>
+          </TabsTrigger>
+          <TabsTrigger value="contracts" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">Contracts</span>
+            <span className="sm:hidden">Contract</span>
+          </TabsTrigger>
+          <TabsTrigger value="vendor-specific" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
+            <span className="hidden sm:inline">By Vendor Type</span>
+            <span className="sm:hidden">Vendors</span>
+          </TabsTrigger>
         </TabsList>
-        
-        <TabsContent value="research" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <DollarSign className="mr-2 h-5 w-5 text-primary" />
-                Initial Research & Pricing
-              </CardTitle>
-              <CardDescription>Key questions to ask when first contacting vendors</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Pricing Questions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li>• What is your pricing structure and what's included in the base package?</li>
-                      <li>• Are there any additional fees I should know about?</li>
-                      <li>• What is your payment schedule and when are payments due?</li>
-                      <li>• Do you offer payment plans or financing options?</li>
-                      <li>• What happens if we need to cancel or postpone?</li>
-                      <li>• Are there seasonal pricing differences?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Package & Services</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li>• Can you walk me through what's included in each package?</li>
-                      <li>• Do you offer customizable packages?</li>
-                      <li>• What are your most popular add-ons?</li>
-                      <li>• How do you handle special requests or dietary restrictions?</li>
-                      <li>• Do you have backup plans for weather or emergencies?</li>
-                      <li>• Can I see examples of your recent work?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card className="bg-muted/30 border-muted-foreground/20">
-                <CardHeader>
-                  <CardTitle className="text-lg">Questions to Ask References</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm space-y-2">
-                  <ul className="space-y-1 text-muted-foreground">
-                    <li>• How was their communication throughout the planning process?</li>
-                    <li>• Did they arrive on time and stay for the entire event?</li>
-                    <li>• Were there any unexpected issues and how were they handled?</li>
-                    <li>• Would you hire them again for another event?</li>
-                    <li>• Any advice for working with this vendor?</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
+        <TabsContent value="research">
+          <GuidedNotePage
+            title="Initial Research & Pricing"
+            description="Key questions for first vendor contacts and pricing evaluation"
+            sections={[
+              {
+                title: "Pricing & Package Questions",
+                prompts: [
+                  "What is your pricing structure and what's included in the base package?",
+                  "Are there any additional fees I should know about?",
+                  "What is your payment schedule and when are payments due?",
+                  "Do you offer payment plans or financing options?",
+                  "What happens if we need to cancel or postpone?"
+                ],
+                examples: [
+                  "Ask for detailed breakdown of base vs premium packages",
+                  "Service charges, gratuity, overtime fees, travel costs",
+                  "Typical: 25% deposit, 50% 30 days before, 25% day-of",
+                  "Some vendors offer 6-12 month payment plans",
+                  "Look for clear cancellation policy and refund terms"
+                ]
+              },
+              {
+                title: "Services & Customization",
+                prompts: [
+                  "Can you walk me through what's included in each package?",
+                  "Do you offer customizable packages?",
+                  "What are your most popular add-ons?",
+                  "How do you handle special requests or dietary restrictions?",
+                  "Do you have backup plans for weather or emergencies?"
+                ],
+                examples: [
+                  "Request written itemized list of all services included",
+                  "Many vendors allow swapping items between packages",
+                  "Upgrades, extra hours, additional staff, premium options",
+                  "Important for dietary restrictions, accessibility needs",
+                  "Rain plan for outdoor events, backup equipment, substitute vendors"
+                ]
+              },
+              {
+                title: "Portfolio & References",
+                prompts: [
+                  "Can I see examples of your recent work?",
+                  "Do you have references from recent clients I can contact?",
+                  "How long have you been in business?",
+                  "Are you available on our wedding date?",
+                  "What makes you different from other vendors in your field?"
+                ],
+                examples: [
+                  "Look at full galleries, not just highlight reels, recent work preferred",
+                  "Ask for 3-5 recent references, actually call them",
+                  "More experience often means better problem-solving skills",
+                  "Confirm exact date, start/end times, and any prep time needed",
+                  "Unique style, special services, problem-solving approach"
+                ]
+              }
+            ]}
+            tips={[
+              "Always get written contracts before making any payments",
+              "Ask for recent client references and actually contact them",
+              "Take detailed notes during vendor meetings and follow up with emails",
+              "Read online reviews but focus on recent ones and look for patterns",
+              "Trust your gut - personality fit matters as much as skills"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="logistics" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Calendar className="mr-2 h-5 w-5 text-primary" />
-                Availability & Logistics
-              </CardTitle>
-              <CardDescription>Timeline and coordination questions</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Timing & Availability</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li>• Are you available on our wedding date and time?</li>
-                      <li>• How many events do you typically book per day?</li>
-                      <li>• What is your arrival and setup timeline?</li>
-                      <li>• How much time do you need for setup and breakdown?</li>
-                      <li>• Do you work with an assistant or team?</li>
-                      <li>• What time will you leave the venue?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Coordination</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li>• How do you coordinate with other vendors?</li>
-                      <li>• Do you have a preferred vendor list you work with?</li>
-                      <li>• What information do you need from us before the wedding?</li>
-                      <li>• How many pre-wedding meetings or consultations are included?</li>
-                      <li>• What's your communication style and preferred contact method?</li>
-                      <li>• Do you attend the rehearsal?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Equipment & Setup</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm">
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div>
-                      <h4 className="font-medium">Equipment Needs</h4>
-                      <ul className="space-y-1 text-muted-foreground">
-                        <li>• What equipment do you provide?</li>
-                        <li>• Do you need power outlets or special setup?</li>
-                        <li>• Are there venue restrictions we should know about?</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Delivery & Setup</h4>
-                      <ul className="space-y-1 text-muted-foreground">
-                        <li>• When will items be delivered?</li>
-                        <li>• Who handles setup and breakdown?</li>
-                        <li>• Are delivery fees included?</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Weather Contingency</h4>
-                      <ul className="space-y-1 text-muted-foreground">
-                        <li>• What's your rain/weather backup plan?</li>
-                        <li>• Do you provide tents or covered options?</li>
-                        <li>• Any additional fees for weather changes?</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
+        <TabsContent value="logistics">
+          <GuidedNotePage
+            title="Availability & Logistics"
+            description="Timeline, coordination, and setup requirements"
+            sections={[
+              {
+                title: "Timing & Availability",
+                prompts: [
+                  "Are you available on our wedding date and time?",
+                  "How many events do you typically book per day?",
+                  "What is your arrival and setup timeline?",
+                  "How much time do you need for setup and breakdown?",
+                  "Do you work with an assistant or team?"
+                ],
+                examples: [
+                  "Confirm exact date, start/end times, and any prep time needed",
+                  "Look for vendors who limit bookings to ensure quality service",
+                  "Know when they arrive to avoid conflicts with other vendors",
+                  "Plan venue timeline around vendor setup/breakdown needs",
+                  "Understand who will be working your event"
+                ]
+              },
+              {
+                title: "Coordination & Communication",
+                prompts: [
+                  "How do you coordinate with other vendors?",
+                  "Do you have a preferred vendor list you work with?",
+                  "What information do you need from us before the wedding?",
+                  "How many planning meetings will we have?",
+                  "What's your communication style and response time?"
+                ],
+                examples: [
+                  "Good vendors communicate well with your other professionals",
+                  "Can help streamline planning and ensure compatibility",
+                  "Guest count, timeline, special requests, contact info",
+                  "Typically 2-3 meetings: initial, mid-planning, final details",
+                  "Prefer email, phone, text? How quickly do they typically respond?"
+                ]
+              },
+              {
+                title: "Equipment & Setup Requirements",
+                prompts: [
+                  "What equipment do you provide vs what do we need to rent?",
+                  "Do you need power outlets or special setup requirements?",
+                  "Are there venue restrictions we should know about?",
+                  "When will items be delivered and who handles setup?",
+                  "What happens if equipment fails on the wedding day?"
+                ],
+                examples: [
+                  "Clarify what's included vs additional rental costs",
+                  "Power needs, loading dock access, setup space requirements",
+                  "Some venues have restrictions on decorations, noise, vendors",
+                  "Delivery day-of vs day before, who sets up and breaks down",
+                  "Backup equipment available, replacement procedures, emergency contacts"
+                ]
+              }
+            ]}
+            tips={[
+              "Book your most important vendors (venue, photographer, caterer) first",
+              "Ask about setup/teardown time included in venue rental",
+              "Check if tables, chairs, linens are provided or extra cost",
+              "Confirm vendor arrival times don't conflict with each other",
+              "Get contact info for day-of point person, not just office number"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="contracts" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Shield className="mr-2 h-5 w-5 text-primary" />
-                Contract Details & Legal
-              </CardTitle>
-              <CardDescription>Important contract terms and legal protections</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              
-              <Card className="bg-destructive/10 border-destructive/20">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center">
-                    <AlertCircle className="mr-2 h-5 w-5 text-destructive" />
-                    Critical Contract Questions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm space-y-2">
-                  <ul className="space-y-1 text-muted-foreground">
-                    <li>• <strong>Cancellation policy:</strong> What happens if we need to cancel or postpone?</li>
-                    <li>• <strong>Payment schedule:</strong> When are payments due and what methods are accepted?</li>
-                    <li>• <strong>Liability insurance:</strong> Are you insured and bonded?</li>
-                    <li>• <strong>Force majeure:</strong> What happens in case of emergency or natural disaster?</li>
-                    <li>• <strong>Substitutions:</strong> What if you can't perform due to illness or emergency?</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Contract Must-Haves</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li>• Detailed description of services included</li>
-                      <li>• Specific date, time, and venue information</li>
-                      <li>• Complete breakdown of all costs and fees</li>
-                      <li>• Payment schedule and accepted methods</li>
-                      <li>• Cancellation and refund policies</li>
-                      <li>• What happens if vendor cancels</li>
-                      <li>• Timeline for deliverables (photos, etc.)</li>
-                      <li>• Setup and breakdown responsibilities</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Red Flags to Avoid</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li>• Requests for full payment upfront</li>
-                      <li>• No written contract or very vague terms</li>
-                      <li>• Won't provide references from recent clients</li>
-                      <li>• Pressure tactics or limited-time offers</li>
-                      <li>• No liability insurance or business license</li>
-                      <li>• Unrealistic promises or prices too good to be true</li>
-                      <li>• Poor communication or slow response times</li>
-                      <li>• No backup plan or substitute arrangements</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
+        <TabsContent value="contracts">
+          <GuidedNotePage
+            title="Contract Essentials"
+            description="Legal protections and contract must-haves"
+            sections={[
+              {
+                title: "Critical Contract Terms",
+                prompts: [
+                  "What are the cancellation and postponement policies?",
+                  "What happens if you can't fulfill the contract due to emergency?",
+                  "Are you insured and bonded?",
+                  "Who owns the rights to photos/video/recordings?",
+                  "What is the exact scope of services provided?"
+                ],
+                examples: [
+                  "Look for reasonable cancellation terms, avoid no-refund policies",
+                  "Vendor should have backup plan or substitute arrangements",
+                  "Verify liability insurance and ask for certificate",
+                  "Negotiate usage rights for your own marketing/sharing",
+                  "Detailed list prevents disputes about what's included"
+                ]
+              },
+              {
+                title: "Payment & Fees",
+                prompts: [
+                  "What are the payment terms and late fees?",
+                  "Is there a force majeure clause?",
+                  "Can the contract be modified after signing?",
+                  "What additional costs might arise?",
+                  "Are gratuities included or expected?"
+                ],
+                examples: [
+                  "Understand when payments are due and penalty fees",
+                  "Protects both parties from unforeseeable circumstances",
+                  "Some flexibility should be allowed for reasonable changes",
+                  "Overtime fees, additional guests, last-minute requests",
+                  "Industry standard gratuity amounts, when to tip"
+                ]
+              },
+              {
+                title: "Red Flags to Avoid",
+                prompts: [
+                  "What contract terms should I be wary of?",
+                  "How can I spot unprofessional vendors?",
+                  "What payment requests are unreasonable?",
+                  "What communication patterns are concerning?",
+                  "When should I walk away from a vendor?"
+                ],
+                examples: [
+                  "Requests for full payment upfront, very vague terms",
+                  "Won't provide references, no business license, unrealistic promises",
+                  "Demanding cash only, no receipt, pressure for immediate payment",
+                  "Poor response time, unprofessional communication, evasive answers",
+                  "If they make you uncomfortable, don't compromise on important terms"
+                ]
+              }
+            ]}
+            tips={[
+              "Never sign a contract without reading every line carefully",
+              "Get everything in writing - verbal agreements don't hold up",
+              "Ask a trusted friend or family member to review important contracts",
+              "Don't be afraid to negotiate, especially for off-peak dates",
+              "Always ask about additional fees that might not be mentioned upfront"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="vendor-specific" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Users className="mr-2 h-5 w-5 text-primary" />
-                Vendor-Specific Questions
-              </CardTitle>
-              <CardDescription>Tailored questions for different types of vendors</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              
-              <div className="grid gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center">
-                      <Camera className="mr-2 h-5 w-5 text-muted-foreground" />
-                      Photography & Videography
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm space-y-2">
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>• How many edited photos will we receive and when?</li>
-                      <li>• Do you provide an online gallery for sharing?</li>
-                      <li>• What's your shooting style and can we see full wedding galleries?</li>
-                      <li>• Do you scout the venue beforehand?</li>
-                      <li>• How do you handle low light or challenging lighting conditions?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center">
-                      <Utensils className="mr-2 h-5 w-5 text-muted-foreground" />
-                      Catering & Bar Service
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm space-y-2">
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>• Can we schedule a tasting and is there a fee?</li>
-                      <li>• How do you handle dietary restrictions and allergies?</li>
-                      <li>• What's included in service (linens, plates, cleanup)?</li>
-                      <li>• How many servers will you provide?</li>
-                      <li>• Do you provide alcohol or do we need our own license?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center">
-                      <MapPin className="mr-2 h-5 w-5 text-muted-foreground" />
-                      Venue Questions
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm space-y-2">
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>• What's included in the rental fee (tables, chairs, linens)?</li>
-                      <li>• Are there restrictions on decorations or vendor choices?</li>
-                      <li>• What time can we access the venue for setup?</li>
-                      <li>• Is there a bridal suite or getting-ready space?</li>
-                      <li>• What's the rain/weather backup plan?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center">
-                      <Music className="mr-2 h-5 w-5 text-muted-foreground" />
-                      Music & Entertainment
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm space-y-2">
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li>• Do you take song requests and do you have a "do not play" list?</li>
-                      <li>• What equipment do you provide (microphones, speakers, lighting)?</li>
-                      <li>• How do you handle special moments (first dance, toasts)?</li>
-                      <li>• Do you provide music during cocktail hour and dinner?</li>
-                      <li>• What's your backup plan if equipment fails?</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
+        <TabsContent value="vendor-specific">
+          <GuidedNotePage
+            title="Vendor-Specific Questions"
+            description="Tailored questions for different types of wedding vendors"
+            sections={[
+              {
+                title: "Photography & Videography",
+                prompts: [
+                  "How many hours of coverage are included?",
+                  "Will you be the actual photographer at my wedding?",
+                  "What is your backup plan if you're sick or have an emergency?",
+                  "How many edited photos will I receive and when?",
+                  "Can I see a full wedding gallery from a recent event?"
+                ],
+                examples: [
+                  "Typical: 6-8 hours, consider engagement session inclusion",
+                  "Some studios send associates, ensure you meet your actual photographer",
+                  "Reputable photographers have trained backup shooters",
+                  "Expect 50-100 edited photos per hour of coverage",
+                  "Review full galleries to see consistency and style throughout event"
+                ]
+              },
+              {
+                title: "Catering & Bar Service",
+                prompts: [
+                  "What is included in the per-person price?",
+                  "How do you handle dietary restrictions and allergies?",
+                  "What is your staffing ratio for guests?",
+                  "Can we do a tasting before finalizing the menu?",
+                  "What happens to leftover food?"
+                ],
+                examples: [
+                  "Food, service, linens, plates, glassware - get itemized list",
+                  "Ask about gluten-free, vegan, kosher, allergy protocols",
+                  "Standard: 1 server per 8-10 guests, 1 bartender per 75 guests",
+                  "Most caterers include 1-2 tastings in their packages",
+                  "Some caterers pack leftovers, others don't allow takeaway"
+                ]
+              },
+              {
+                title: "Music & Entertainment",
+                prompts: [
+                  "Do you provide sound equipment for the ceremony?",
+                  "What is your music selection process?",
+                  "Do you take requests from guests?",
+                  "What happens if you're sick on the wedding day?",
+                  "Can you provide music during cocktail hour and dinner?"
+                ],
+                examples: [
+                  "Microphones for officiant, speakers for processional music",
+                  "Some DJs let you approve all music, others trust their expertise",
+                  "Discuss do-not-play lists and request policies",
+                  "Professional DJs should have backup equipment and personnel",
+                  "Confirm coverage for entire event, not just dancing portion"
+                ]
+              },
+              {
+                title: "Venue & Coordination",
+                prompts: [
+                  "What is included in the venue rental fee?",
+                  "What are the setup and breakdown time restrictions?",
+                  "Do you have a preferred vendor list we must use?",
+                  "What is your inclement weather policy?",
+                  "Are there noise restrictions or curfews?"
+                ],
+                examples: [
+                  "Tables, chairs, linens, lighting, sound system, parking",
+                  "Know exactly when you can access venue and when you must be out",
+                  "Some venues require exclusive vendors, others just have recommendations",
+                  "Important for outdoor venues - indoor backup options",
+                  "Check local ordinances and venue policies for music/dancing"
+                ]
+              }
+            ]}
+            tips={[
+              "Book your venue first as it impacts most other vendor decisions",
+              "Meet your actual photographer/DJ in person, not just the company owner",
+              "Ask vendors for their preferred vendor recommendations - they know who's reliable",
+              "Get multiple quotes for comparison but don't always choose the cheapest",
+              "Schedule vendor meetings when you're not rushed so you can ask thorough questions"
+            ]}
+          />
         </TabsContent>
 
-        <TabsContent value="notes" className="space-y-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Photography Notes</CardTitle>
-                <CardDescription>Research notes, quotes, and comparisons for photographers</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Record photographer contacts, pricing, style notes, pros/cons..."
-                  value={notes.photography}
-                  onChange={(e) => handleNotesChange("photography", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Catering Notes</CardTitle>
-                <CardDescription>Caterer research, menu options, and pricing details</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Caterer contacts, menu tastings, pricing, dietary accommodations..."
-                  value={notes.catering}
-                  onChange={(e) => handleNotesChange("catering", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Venue Notes</CardTitle>
-                <CardDescription>Venue visits, availability, and contract details</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Venue tours, availability, pricing, what's included, restrictions..."
-                  value={notes.venue}
-                  onChange={(e) => handleNotesChange("venue", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Music & Entertainment Notes</CardTitle>
-                <CardDescription>DJ/band research and music preferences</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="DJ/band contacts, music style, equipment, must-play and do-not-play lists..."
-                  value={notes.music}
-                  onChange={(e) => handleNotesChange("music", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Other Vendors</CardTitle>
-                <CardDescription>Florist, transportation, and other vendor notes</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Florist, transportation, officiant, other vendor research and notes..."
-                  value={notes.florist}
-                  onChange={(e) => handleNotesChange("florist", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>General Vendor Notes</CardTitle>
-                <CardDescription>Overall thoughts, comparisons, and decisions</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="General vendor thoughts, decision criteria, budget considerations..."
-                  value={notes.general}
-                  onChange={(e) => handleNotesChange("general", e.target.value)}
-                  rows={4}
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
       </Tabs>
     </div>
   )

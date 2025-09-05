@@ -162,7 +162,7 @@ export default function Page() {
     <SidebarProvider>
       <SidebarLeft activeSection={activeSection} />
       <SidebarInset>
-        <header className="bg-background sticky top-0 flex h-14 shrink-0 items-center gap-2 border-b">
+        <header className="bg-background sticky top-0 z-50 flex h-14 shrink-0 items-center gap-2 border-b">
           <div className="flex flex-1 items-center gap-2 px-3">
             <SidebarTrigger />
             <Separator
