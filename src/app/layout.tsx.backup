@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { WeddingProvider } from "@/contexts/wedding-context"
-import { HomeBuyingProvider } from "@/contexts/home-buying-context"
-import { BabyPlanningProvider } from "@/contexts/baby-planning-context"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,13 +38,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <BabyPlanningProvider>
-            <HomeBuyingProvider>
-              <WeddingProvider>
-                {children}
-              </WeddingProvider>
-            </HomeBuyingProvider>
-          </BabyPlanningProvider>
+          <WeddingProvider>
+            {children}
+          </WeddingProvider>
         </ThemeProvider>
       </body>
     </html>

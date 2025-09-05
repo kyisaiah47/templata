@@ -56,7 +56,7 @@ interface TestResult {
   testName: string
   result: string
   status: "normal" | "abnormal" | "pending"
-  notes: string
+  notes?: string
 }
 
 const appointmentSchema = z.object({

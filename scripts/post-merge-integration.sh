@@ -25,6 +25,16 @@ if [[ -d "src/app/college-template" || -d "src/components/college-notes" ]]; the
     MERGED_TEMPLATES+=("college-planning")
 fi
 
+# Check for baby-planning template
+if [[ -d "src/app/baby-planning" ]]; then
+    MERGED_TEMPLATES+=("baby-planning")
+fi
+
+# Check for home-buying template
+if [[ -d "src/app/home-buying" ]]; then
+    MERGED_TEMPLATES+=("home-buying")
+fi
+
 # Check for other templates (add more as needed)
 for template_dir in src/app/*-template; do
     if [[ -d "$template_dir" ]]; then
