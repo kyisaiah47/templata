@@ -4,6 +4,15 @@ const fs = require('fs');
 const path = require('path');
 
 // Template requirements based on our established format
+// CRITICAL: Templates should ONLY edit these specific file patterns
+const ALLOWED_FILE_PATTERNS = [
+  'src/app/templates/{template-name}/page.tsx',           // Main template page
+  'src/app/templates/{template-name}-template/page.tsx',  // SEO landing page
+  'src/contexts/{template-name}-context.tsx',            // Template context (if needed)
+  'src/components/{template-name}-notes/*.tsx',          // Guided notes components
+  'src/components/resources/{template-name}-*.tsx'       // Resource components
+];
+
 // CRITICAL: Files that templates should NEVER modify (causes merge conflicts)
 const FORBIDDEN_FILES = [
   'src/app/layout.tsx',           // Providers added after merge
@@ -593,11 +602,41 @@ class TemplateLinter {
 
 // CLI usage
 if (require.main === module) {
-  const templatePath = process.argv[2];
+  let templatePath = process.argv[2];
   
+  // Auto-detect template if no path provided
   if (!templatePath) {
-    console.error('Usage: node template-linter.js <template-path>');
-    process.exit(1);
+    const cwd = process.cwd();
+    
+    // Check if we're in a template directory
+    if (cwd.includes('/src/app/templates/')) {
+      templatePath = cwd;
+    }
+    // Check if we're in worktree root
+    else if (fs.existsSync(path.join(cwd, 'src/app/templates'))) {
+      const templatesDir = path.join(cwd, 'src/app/templates');
+      const templates = fs.readdirSync(templatesDir).filter(t => 
+        fs.statSync(path.join(templatesDir, t)).isDirectory() && 
+        !t.startsWith('.') && 
+        t !== 'page.tsx'
+      );
+      
+      if (templates.length === 1) {
+        templatePath = path.join(templatesDir, templates[0]);
+        console.log(`🎯 Auto-detected template: ${templates[0]}`);
+      } else if (templates.length > 1) {
+        console.error(`Multiple templates found: ${templates.join(', ')}`);
+        console.error('Please specify which template to lint:');
+        templates.forEach(t => console.error(`  node scripts/template-linter.js src/app/templates/${t}`));
+        process.exit(1);
+      }
+    }
+    
+    if (!templatePath) {
+      console.error('Usage: node template-linter.js [template-path]');
+      console.error('Or run from template directory for auto-detection');
+      process.exit(1);
+    }
   }
   
   if (!fs.existsSync(templatePath)) {
