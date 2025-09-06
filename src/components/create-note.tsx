@@ -2,6 +2,13 @@
 
 import { useState } from "react"
 import { NoteEditor } from "@/components/note-editor"
+
+interface NoteBlock {
+  id: string
+  type: "heading1" | "heading2" | "text" | "list" | "ordered-list"
+  content: string
+  items?: string[]
+}
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -50,7 +57,7 @@ const noteTemplates = [
 ]
 
 export function CreateNote() {
-  const handleSaveNote = (title: string, blocks: any[]) => {
+  const handleSaveNote = (title: string, blocks: NoteBlock[]) => {
     // Here you would save to your storage system
     console.log('Saving new note:', title, blocks)
   }
