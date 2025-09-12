@@ -17,6 +17,7 @@ import {
 	Grid3X3,
 	List,
 	Heart,
+	Zap,
 } from "lucide-react";
 import { PageLayout } from "@/components/layout";
 import { templates } from "@/data/templates";
