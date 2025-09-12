@@ -10,7 +10,8 @@ import {
   BarChart3, Trophy, Zap as Energy, GraduationCap, Library, School, MapPinIcon,
   Package, CheckSquare, ClipboardList, ArrowRight, PiggyBank, Wallet, Receipt, ChartLine,
   CreditCardIcon, Banknote, TrendingDown, AlertTriangle, Percent, Focus, Layout, Settings,
-  Brain, Workflow, CheckCircle, PlayCircle, PauseCircle, RotateCcw
+  Brain, Workflow, CheckCircle, PlayCircle, PauseCircle, RotateCcw, Database, FileSearch,
+  BookmarkIcon, PenSquare, BarChart, Microscope
 } from 'lucide-react';
 
 interface ProcessStep {
@@ -2482,6 +2483,169 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     ctaTitle: 'Ready to Make Your Move Stress-Free?',
     ctaDescription: 'Join thousands of families who transformed their relocation experience with our comprehensive moving system.',
     finalCtaText: 'Start Moving Planning',
+  },
+  
+  'academic-research': {
+    id: 'academic-research',
+    hero: {
+      title: 'Master Academic Research & Project Management',
+      subtitle: 'Transform your research process with systematic project management, source organization, and writing workflows designed for academic excellence.',
+      primaryCta: 'Start Research Project',
+      secondaryCta: 'View Sample Projects',
+    },
+    benefits: [
+      {
+        title: 'Systematic Research Process',
+        description: 'Follow proven methodologies from topic selection through publication, ensuring nothing falls through the cracks.',
+        icon: Microscope
+      },
+      {
+        title: 'Source Management Excellence',
+        description: 'Master literature reviews with advanced search strategies, citation management, and synthesis techniques.',
+        icon: Database
+      },
+      {
+        title: 'Academic Writing Success',
+        description: 'Structure compelling arguments, manage revision cycles, and meet publication standards with confidence.',
+        icon: PenSquare
+      },
+      {
+        title: 'Project Timeline Control',
+        description: 'Stay on track with milestone planning, deadline management, and progress tracking systems.',
+        icon: Calendar
+      }
+    ],
+    features: [
+      {
+        icon: FileSearch,
+        title: 'Research Question Development',
+        description: 'Craft focused, answerable research questions that align with your scope and timeline'
+      },
+      {
+        icon: BookmarkIcon,
+        title: 'Literature Review System',
+        description: 'Systematic search strategies, source evaluation criteria, and synthesis frameworks'
+      },
+      {
+        icon: Shield,
+        title: 'Ethics & IRB Compliance',
+        description: 'Navigate institutional review processes and ensure ethical research practices'
+      },
+      {
+        icon: BarChart,
+        title: 'Data Analysis Planning',
+        description: 'Choose appropriate analytical methods and ensure rigor in your research design'
+      },
+      {
+        icon: PenTool,
+        title: 'Academic Writing Framework',
+        description: 'Structure papers effectively with clear argumentation and proper academic style'
+      },
+      {
+        icon: Target,
+        title: 'Publication Strategy',
+        description: 'Identify target journals, understand submission requirements, and plan dissemination'
+      },
+      {
+        icon: Calendar,
+        title: 'Project Timeline Management',
+        description: 'Break down complex projects into manageable phases with realistic deadlines'
+      },
+      {
+        icon: CheckCircle2,
+        title: 'Quality Assurance Checklists',
+        description: 'Ensure your work meets academic standards at every stage of the process'
+      }
+    ],
+    process: [
+      {
+        icon: Lightbulb,
+        title: 'Define Research Scope',
+        description: 'Develop focused questions and identify knowledge gaps in your field'
+      },
+      {
+        icon: Search,
+        title: 'Conduct Literature Review',
+        description: 'Systematically search, evaluate, and synthesize relevant academic sources'
+      },
+      {
+        icon: Microscope,
+        title: 'Design & Execute Study',
+        description: 'Plan methodology, collect data ethically, and maintain rigorous standards'
+      },
+      {
+        icon: BarChart3,
+        title: 'Analyze & Interpret',
+        description: 'Apply appropriate analytical techniques and draw meaningful conclusions'
+      },
+      {
+        icon: FileText,
+        title: 'Write & Revise',
+        description: 'Structure compelling papers and navigate multiple revision cycles'
+      },
+      {
+        icon: Rocket,
+        title: 'Publish & Share',
+        description: 'Submit to appropriate venues and disseminate your research effectively'
+      }
+    ],
+    testimonials: [
+      {
+        name: 'Dr. Sarah Chen',
+        role: 'Graduate Student, Psychology',
+        content: 'This template transformed my dissertation process. The literature review system alone saved me months of work, and the writing framework helped me structure complex arguments clearly.',
+        rating: 5
+      },
+      {
+        name: 'Marcus Rodriguez',
+        role: 'Postdoc Researcher, Biology',
+        content: 'As someone managing multiple research projects, the timeline and milestone tracking has been invaluable. I finally feel in control of my research pipeline.',
+        rating: 5
+      },
+      {
+        name: 'Prof. Emily Watson',
+        role: 'Assistant Professor, Sociology',
+        content: 'I wish I had this during my PhD! The systematic approach to research planning and the publication strategy guidance are exactly what early-career researchers need.',
+        rating: 5
+      }
+    ],
+    faqs: [
+      {
+        question: 'Is this suitable for undergraduate research projects?',
+        answer: 'Absolutely! The template scales from undergraduate research projects to doctoral dissertations. We provide guidance on adapting the complexity to match your project scope and academic level.'
+      },
+      {
+        question: 'Does this work for qualitative, quantitative, or mixed-methods research?',
+        answer: 'Yes, all three! Our methodology sections provide specific guidance for qualitative interviews, quantitative analysis, and mixed-methods approaches with appropriate tools and techniques.'
+      },
+      {
+        question: 'How does this help with literature reviews?',
+        answer: 'We provide systematic search strategies, database recommendations, source evaluation criteria, citation management workflows, and synthesis frameworks to create comprehensive literature reviews.'
+      },
+      {
+        question: 'What about ethics approval and IRB processes?',
+        answer: 'Our template includes detailed guidance on research ethics, IRB application processes, consent procedures, and ongoing compliance requirements for human subjects research.'
+      },
+      {
+        question: 'Can this help with academic writing and publication?',
+        answer: 'Definitely! We cover academic writing standards, paper structure, argumentation techniques, revision processes, journal selection, and submission strategies for publication success.'
+      },
+      {
+        question: 'How does the project timeline management work?',
+        answer: 'We help you break complex research into phases, set realistic milestones, track progress, and adjust timelines as needed. Includes templates for Gantt charts and progress tracking.'
+      },
+      {
+        question: 'Is this discipline-specific or general?',
+        answer: 'While the core research process is universal, we provide discipline-specific considerations for STEM fields, humanities, social sciences, and interdisciplinary research approaches.'
+      },
+      {
+        question: 'What support is provided for data analysis?',
+        answer: 'We guide you through selecting appropriate analytical methods, statistical software recommendations, ensuring validity and reliability, and interpreting results within your theoretical framework.'
+      }
+    ],
+    ctaTitle: 'Ready to Excel in Academic Research?',
+    ctaDescription: 'Join researchers who transformed their academic productivity with our proven research management system.',
+    finalCtaText: 'Start Research Project',
   }
 };
 

@@ -1,5 +1,5 @@
 import { GuidanceTemplate } from '@/types/template';
-import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, businessLaunchTemplate, fitnessJourneyTemplate, collegePlanningTemplate, budgetPlanningTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate } from '@/data/templates';
+import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, businessLaunchTemplate, fitnessJourneyTemplate, collegePlanningTemplate, budgetPlanningTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate, academicResearchTemplate } from '@/data/templates';
 import { blogRegistry } from '@/registry/blogs';
 
 // Function to sync template resources with blog registry
@@ -159,10 +159,10 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     description: "Organize research projects, track sources, and manage academic workflows.",
     category: "Education",
     icon: "📚",
-    url: "/templates/academic-research",
+    url: "/academic-research/app",
     color: "bg-indigo-50 dark:bg-indigo-950/20 border-indigo-200 dark:border-indigo-800",
     iconColor: "text-indigo-600 dark:text-indigo-400",
-    comingSoon: true
+    template: createTemplateWithSyncedResources(academicResearchTemplate)
   },
   
   // Event & Entertainment Templates
