@@ -7,7 +7,7 @@ import { TemplataContentSidebar } from '@/components/templata-sidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { ThemeSelector } from '@/components/theme-selector';
 import { ResourceViewer } from '@/components/resource/ResourceViewer';
-import { DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Heart } from 'lucide-react';
+import { DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Heart, Home, CreditCard, Search, HandCoins, FileText, Truck, Target } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,6 +29,7 @@ export function TemplateView({ template }: TemplateViewProps) {
 
   const getSectionIcon = (sectionId: string) => {
     switch (sectionId) {
+      // Wedding Planning sections
       case 'budget-finance': return <DollarSign className="w-4 h-4" />;
       case 'venue-selection': return <MapPin className="w-4 h-4" />;
       case 'guest-management': return <UserCheck className="w-4 h-4" />;
@@ -37,7 +38,18 @@ export function TemplateView({ template }: TemplateViewProps) {
       case 'reception-planning': return <Music className="w-4 h-4" />;
       case 'styling-decor': return <Palette className="w-4 h-4" />;
       case 'attire-beauty': return <Shirt className="w-4 h-4" />;
-      default: return <Heart className="w-4 h-4" />;
+      
+      // Home Buying sections
+      case 'financial-readiness': return <DollarSign className="w-4 h-4" />;
+      case 'location-preferences': return <MapPin className="w-4 h-4" />;
+      case 'home-specifications': return <Home className="w-4 h-4" />;
+      case 'mortgage-financing': return <CreditCard className="w-4 h-4" />;
+      case 'house-hunting': return <Search className="w-4 h-4" />;
+      case 'making-offers': return <HandCoins className="w-4 h-4" />;
+      case 'closing-process': return <FileText className="w-4 h-4" />;
+      case 'moving-settling': return <Truck className="w-4 h-4" />;
+      
+      default: return <Target className="w-4 h-4" />;
     }
   };
 

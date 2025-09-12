@@ -513,7 +513,431 @@ export const weddingTemplate: GuidanceTemplate = {
   ]
 };
 
+// Comprehensive home buying guidance with extensive prompts and resources
+export const homeBuyingTemplate: GuidanceTemplate = {
+  id: 'home-buying',
+  title: 'Home Buying Guide',
+  description: 'Complete guidance for first-time and experienced home buyers navigating the purchasing process',
+  category: 'personal-finance',
+  icon: '🏠',
+  sections: [
+    {
+      id: 'financial-readiness',
+      title: 'Financial Readiness & Budget',
+      description: 'Assess your financial situation and establish a realistic home buying budget',
+      order: 1,
+      reflectionPrompts: [
+        {
+          id: 'credit-assessment',
+          prompt: "What's your current credit score and what steps can you take to improve it before applying for a mortgage?",
+          category: 'planning',
+          helpText: 'Credit scores of 740+ get the best rates. Check all three bureaus and dispute errors. Pay down credit cards to under 30% utilization.',
+          relatedResources: ['credit-improvement-guide', 'mortgage-pre-approval-checklist']
+        },
+        {
+          id: 'savings-evaluation',
+          prompt: 'How much do you have saved for down payment, closing costs, and emergency fund?',
+          category: 'planning',
+          helpText: 'Budget for 3-5% down payment (FHA) or 10-20% (conventional), plus 2-5% closing costs, plus 3-6 months expenses for emergencies.'
+        },
+        {
+          id: 'debt-to-income',
+          prompt: 'What\'s your current debt-to-income ratio and monthly budget for housing expenses?',
+          category: 'planning',
+          helpText: 'Lenders prefer DTI under 43%. Housing costs should be 25-30% of gross income including taxes, insurance, HOA fees.'
+        },
+        {
+          id: 'income-stability',
+          prompt: 'How stable is your income and employment situation for the next 3-5 years?',
+          category: 'consideration',
+          helpText: 'Lenders want 2 years employment history. Consider job security, industry stability, potential career changes.'
+        },
+        {
+          id: 'additional-costs',
+          prompt: 'What ongoing homeownership costs beyond mortgage should you budget for?',
+          category: 'planning',
+          helpText: 'Factor in property taxes, homeowners insurance, PMI, HOA fees, maintenance (1-3% of home value annually), utilities.'
+        },
+        {
+          id: 'timeline-flexibility',
+          prompt: 'How flexible is your timeline for buying? Are you in a rush or can you wait for the right opportunity?',
+          category: 'consideration',
+          helpText: 'Rushed purchases often lead to compromises. Having flexibility allows for better negotiations and decision-making.'
+        }
+      ]
+    },
+    {
+      id: 'location-preferences',
+      title: 'Location & Lifestyle Needs',
+      description: 'Define your ideal location and lifestyle requirements',
+      order: 2,
+      reflectionPrompts: [
+        {
+          id: 'commute-priorities',
+          prompt: 'How important is proximity to work, family, and regular activities?',
+          category: 'decision',
+          helpText: 'Calculate commute costs (time, gas, wear-and-tear). Consider remote work flexibility and future job changes.'
+        },
+        {
+          id: 'neighborhood-character',
+          prompt: 'What type of neighborhood atmosphere do you want? Urban, suburban, rural?',
+          category: 'consideration',
+          helpText: 'Consider walkability, noise levels, population density, community amenities, and cultural fit.'
+        },
+        {
+          id: 'school-districts',
+          prompt: 'How important are school district ratings, even if you don\'t currently have children?',
+          category: 'consideration',
+          helpText: 'Good schools maintain property values and expand your buyer pool for resale, even without children.'
+        },
+        {
+          id: 'amenities-services',
+          prompt: 'What amenities and services do you need nearby? Shopping, healthcare, recreation?',
+          category: 'planning',
+          helpText: 'Consider grocery stores, medical facilities, gyms, restaurants, public transportation, libraries, parks.'
+        },
+        {
+          id: 'future-development',
+          prompt: 'What do you know about planned development or changes in potential neighborhoods?',
+          category: 'research',
+          helpText: 'Research zoning changes, planned construction, infrastructure improvements that could affect property values.'
+        },
+        {
+          id: 'safety-security',
+          prompt: 'What are your safety and security priorities for neighborhoods you\'re considering?',
+          category: 'consideration',
+          helpText: 'Check crime statistics, visit at different times, talk to neighbors, look for security systems and lighting.'
+        }
+      ]
+    },
+    {
+      id: 'home-specifications',
+      title: 'Home Features & Requirements',
+      description: 'Determine your must-have features and deal-breakers',
+      order: 3,
+      reflectionPrompts: [
+        {
+          id: 'space-requirements',
+          prompt: 'How much space do you need now and in the next 5-10 years?',
+          category: 'planning',
+          helpText: 'Consider current needs plus family growth, work-from-home space, hobbies, guest accommodations.'
+        },
+        {
+          id: 'home-style',
+          prompt: 'What home styles and architectural features appeal to you?',
+          category: 'consideration',
+          helpText: 'Consider single-family, condo, townhome. Think about maintenance requirements and lifestyle fit.'
+        },
+        {
+          id: 'must-have-features',
+          prompt: 'What features are absolutely non-negotiable for you?',
+          category: 'decision',
+          helpText: 'Common must-haves: number of bedrooms/bathrooms, parking, outdoor space, updated kitchen, storage.'
+        },
+        {
+          id: 'deal-breakers',
+          prompt: 'What would immediately eliminate a property from consideration?',
+          category: 'decision',
+          helpText: 'Examples: busy street, no parking, basement flooding history, structural issues, HOA restrictions.'
+        },
+        {
+          id: 'renovation-appetite',
+          prompt: 'Are you willing and able to take on renovation projects? What\'s your skill and budget level?',
+          category: 'consideration',
+          helpText: 'Fixer-uppers can save money but require time, skills, and extra budget. Consider your realistic capabilities.'
+        },
+        {
+          id: 'maintenance-preferences',
+          prompt: 'How much time and money do you want to spend on home maintenance?',
+          category: 'planning',
+          helpText: 'Newer homes and condos typically require less maintenance. Older homes and large properties need more upkeep.'
+        }
+      ]
+    },
+    {
+      id: 'mortgage-financing',
+      title: 'Mortgage & Financing Options',
+      description: 'Navigate loan types, lenders, and pre-approval process',
+      order: 4,
+      reflectionPrompts: [
+        {
+          id: 'loan-type-research',
+          prompt: 'What types of loans do you qualify for and what are the pros/cons of each?',
+          category: 'research',
+          helpText: 'Compare conventional, FHA, VA, USDA loans. Consider down payment requirements, PMI, interest rates, qualification criteria.'
+        },
+        {
+          id: 'lender-shopping',
+          prompt: 'How will you compare different lenders and mortgage offers?',
+          category: 'planning',
+          helpText: 'Get quotes from banks, credit unions, online lenders. Compare interest rates, fees, closing costs, service quality.'
+        },
+        {
+          id: 'rate-strategy',
+          prompt: 'What\'s your strategy for timing your rate lock and managing interest rate risk?',
+          category: 'consideration',
+          helpText: 'Monitor rate trends, understand rate lock periods, consider points vs. no-points loans based on how long you\'ll stay.'
+        },
+        {
+          id: 'down-payment-source',
+          prompt: 'Where is your down payment coming from and what are the implications?',
+          category: 'planning',
+          helpText: 'Savings, gifts, retirement accounts, other sources. Understand gift letter requirements and seasoning rules.'
+        },
+        {
+          id: 'closing-costs',
+          prompt: 'What closing costs should you expect and how can you minimize them?',
+          category: 'planning',
+          helpText: 'Expect 2-5% of home price. Shop for services like title insurance, negotiate seller concessions, consider no-closing-cost loans.'
+        },
+        {
+          id: 'pre-approval-timing',
+          prompt: 'When will you get pre-approved and how will you maintain it during your search?',
+          category: 'planning',
+          helpText: 'Get pre-approved before house hunting. Avoid new credit, job changes, or major purchases that could affect your qualification.'
+        }
+      ]
+    },
+    {
+      id: 'house-hunting',
+      title: 'House Hunting Strategy',
+      description: 'Develop an effective approach to finding and evaluating properties',
+      order: 5,
+      reflectionPrompts: [
+        {
+          id: 'search-strategy',
+          prompt: 'What tools and resources will you use to find properties?',
+          category: 'planning',
+          helpText: 'MLS through realtor, Zillow, Redfin, local websites. Set up alerts, drive neighborhoods, attend open houses.'
+        },
+        {
+          id: 'realtor-selection',
+          prompt: 'What qualities do you want in a real estate agent and how will you select one?',
+          category: 'decision',
+          helpText: 'Look for local market knowledge, communication style, availability, negotiation skills, client references.'
+        },
+        {
+          id: 'showing-efficiency',
+          prompt: 'How will you efficiently view properties while balancing thoroughness?',
+          category: 'planning',
+          helpText: 'Group showings by area, prepare questions in advance, take photos/notes, bring measuring tape and checklist.'
+        },
+        {
+          id: 'property-evaluation',
+          prompt: 'What criteria will you use to quickly evaluate if a property deserves serious consideration?',
+          category: 'decision',
+          helpText: 'Create scoring system for location, condition, features, price. Trust first impressions but investigate thoroughly.'
+        },
+        {
+          id: 'market-analysis',
+          prompt: 'How will you research comparable sales and market conditions for properties you like?',
+          category: 'research',
+          helpText: 'Review recent sales in neighborhood, understand price trends, days on market, seasonal patterns.'
+        },
+        {
+          id: 'inspection-priorities',
+          prompt: 'What will you look for during initial property visits before making offers?',
+          category: 'planning',
+          helpText: 'Check foundation, roof, HVAC, plumbing, electrical basics. Look for water damage, structural issues, deferred maintenance.'
+        }
+      ]
+    },
+    {
+      id: 'making-offers',
+      title: 'Offers & Negotiations',
+      description: 'Craft competitive offers and navigate negotiations',
+      order: 6,
+      reflectionPrompts: [
+        {
+          id: 'offer-strategy',
+          prompt: 'How will you determine your initial offer amount in different market conditions?',
+          category: 'decision',
+          helpText: 'Consider days on market, comparable sales, list vs. sale price ratios, seller motivation, competition.'
+        },
+        {
+          id: 'contingencies',
+          prompt: 'What contingencies are essential vs. nice-to-have in your offers?',
+          category: 'planning',
+          helpText: 'Financing, inspection, appraisal contingencies are standard. Consider title, HOA review, sale of current home.'
+        },
+        {
+          id: 'competitive-advantages',
+          prompt: 'How can you make your offers more attractive beyond just price?',
+          category: 'consideration',
+          helpText: 'Flexible closing date, larger earnest money, shorter contingency periods, personal letter to seller, proof of funds.'
+        },
+        {
+          id: 'negotiation-limits',
+          prompt: 'What are your walk-away points for price, repairs, and other negotiable terms?',
+          category: 'decision',
+          helpText: 'Set maximum price, minimum required repairs, deal-breaker terms before emotions get involved in negotiations.'
+        },
+        {
+          id: 'multiple-offers',
+          prompt: 'What\'s your strategy if you\'re in a multiple offer situation?',
+          category: 'planning',
+          helpText: 'Understand escalation clauses, be prepared to act quickly, have backup options, know when to walk away.'
+        },
+        {
+          id: 'counter-negotiations',
+          prompt: 'How will you handle counter-offers and repair negotiations after inspection?',
+          category: 'consideration',
+          helpText: 'Prioritize safety issues over cosmetic items, get multiple contractor estimates, consider credits vs. repairs.'
+        }
+      ]
+    },
+    {
+      id: 'closing-process',
+      title: 'Contract to Closing',
+      description: 'Navigate inspections, appraisals, and closing procedures',
+      order: 7,
+      reflectionPrompts: [
+        {
+          id: 'inspection-planning',
+          prompt: 'What type of professional inspections will you order and what will you do with the results?',
+          category: 'planning',
+          helpText: 'Standard home inspection plus pest, radon, septic, well water if applicable. Budget $400-800 per inspection.'
+        },
+        {
+          id: 'appraisal-risks',
+          prompt: 'What\'s your plan if the appraisal comes in below your offer price?',
+          category: 'consideration',
+          helpText: 'Options: renegotiate price, pay difference in cash, get second appraisal, walk away. Plan for gap coverage.'
+        },
+        {
+          id: 'insurance-shopping',
+          prompt: 'When will you shop for homeowners insurance and what coverage do you need?',
+          category: 'planning',
+          helpText: 'Shop early for better rates, compare coverage options, understand replacement cost vs. actual cash value.'
+        },
+        {
+          id: 'final-walkthrough',
+          prompt: 'What will you check during your final walkthrough before closing?',
+          category: 'planning',
+          helpText: 'Verify agreed repairs completed, all systems working, no new damage, seller has moved out, all items included.'
+        },
+        {
+          id: 'closing-preparation',
+          prompt: 'What documents and funds do you need to prepare for closing day?',
+          category: 'planning',
+          helpText: 'Review closing disclosure 3 days prior, arrange certified funds, bring ID and proof of insurance, prepare for delays.'
+        },
+        {
+          id: 'post-closing-tasks',
+          prompt: 'What immediate tasks will you handle after getting your keys?',
+          category: 'planning',
+          helpText: 'Change locks, set up utilities in your name, locate important systems (water/gas shutoffs), plan move logistics.'
+        }
+      ]
+    },
+    {
+      id: 'moving-settling',
+      title: 'Moving In & Getting Settled',
+      description: 'Plan your move and establish your new home',
+      order: 8,
+      reflectionPrompts: [
+        {
+          id: 'moving-logistics',
+          prompt: 'What\'s your strategy for planning and executing your move?',
+          category: 'planning',
+          helpText: 'Decide DIY vs. professional movers, book early for better rates, declutter before packing, label clearly.'
+        },
+        {
+          id: 'utility-setup',
+          prompt: 'What utilities and services need to be set up or transferred to your new address?',
+          category: 'planning',
+          helpText: 'Electric, gas, water, sewer, trash, internet, cable, security system, HVAC maintenance contracts.'
+        },
+        {
+          id: 'address-changes',
+          prompt: 'What address changes do you need to make after moving?',
+          category: 'planning',
+          helpText: 'DMV, voter registration, banks, credit cards, insurance, employer, subscription services, medical providers.'
+        },
+        {
+          id: 'immediate-improvements',
+          prompt: 'What home improvements or repairs are priorities in your first year?',
+          category: 'consideration',
+          helpText: 'Focus on safety and basic functionality first, then comfort improvements. Budget 1-3% of home value annually.'
+        },
+        {
+          id: 'community-integration',
+          prompt: 'How will you get to know your new neighborhood and community?',
+          category: 'consideration',
+          helpText: 'Introduce yourself to neighbors, join local groups, find nearby amenities, explore local businesses.'
+        },
+        {
+          id: 'homeowner-responsibilities',
+          prompt: 'What ongoing maintenance tasks and responsibilities do you need to learn about?',
+          category: 'planning',
+          helpText: 'HVAC filter changes, gutter cleaning, seasonal maintenance, property tax payments, insurance reviews.'
+        }
+      ]
+    }
+  ],
+  resources: [],
+  expertTips: [
+    {
+      id: 'credit-tip-1',
+      tip: 'Check your credit score 6 months before house hunting. Small improvements can save thousands in interest over the loan term.',
+      author: 'Jennifer Martinez, Mortgage Broker (12 years)',
+      category: 'Credit & Financing',
+      importance: 'high'
+    },
+    {
+      id: 'budget-tip-1',
+      tip: 'Use the 28/36 rule: no more than 28% of gross income on housing, 36% on total debt payments including housing.',
+      author: 'Robert Chen, Financial Planner',
+      category: 'Budget Planning',
+      importance: 'high'
+    },
+    {
+      id: 'location-tip-1',
+      tip: 'Buy the worst house in the best neighborhood you can afford. Location affects value more than home features.',
+      author: 'Sarah Williams, Real Estate Agent (18 years)',
+      category: 'Location Strategy',
+      importance: 'high'
+    },
+    {
+      id: 'inspection-tip-1',
+      tip: 'Never skip the home inspection, even in competitive markets. A $500 inspection can save you tens of thousands.',
+      author: 'Mike Thompson, Home Inspector',
+      category: 'Due Diligence',
+      importance: 'high'
+    },
+    {
+      id: 'timing-tip-1',
+      tip: 'The best time to buy is when you\'re financially ready, not when the market seems perfect. Time in market beats timing the market.',
+      author: 'Lisa Chang, Real Estate Economist',
+      category: 'Market Timing',
+      importance: 'medium'
+    },
+    {
+      id: 'negotiation-tip-1',
+      tip: 'In seller\'s markets, consider waiving inspection contingency only if you\'ve done a thorough pre-offer inspection.',
+      author: 'David Rodriguez, Buyer\'s Agent',
+      category: 'Competitive Offers',
+      importance: 'high'
+    },
+    {
+      id: 'financing-tip-1',
+      tip: 'Get pre-approved, not pre-qualified. Pre-approval carries more weight with sellers and shows you\'re serious.',
+      author: 'Amanda Foster, Loan Officer',
+      category: 'Mortgage Process',
+      importance: 'medium'
+    },
+    {
+      id: 'maintenance-tip-1',
+      tip: 'Budget 1-3% of your home\'s value annually for maintenance and repairs. Homes always need something fixed.',
+      author: 'Tom Wilson, Property Manager',
+      category: 'Homeownership',
+      importance: 'medium'
+    }
+  ]
+};
+
 export const templates: GuidanceTemplate[] = [
   weddingTemplate,
+  homeBuyingTemplate,
   // Future templates generated by AI using the same structure
 ];

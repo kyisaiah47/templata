@@ -1,5 +1,5 @@
 import { GuidanceTemplate } from '@/types/template';
-import { weddingTemplate } from '@/data/templates';
+import { weddingTemplate, homeBuyingTemplate } from '@/data/templates';
 import { blogRegistry } from '@/registry/blogs';
 
 // Function to sync template resources with blog registry
@@ -73,11 +73,11 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     description: "Navigate the home buying process with mortgage tracking, property comparisons, and checklists.",
     category: "Personal Life",
     icon: "🏠",
-    url: "/templates/home-buying",
+    url: "/home-buying/app",
     popular: true,
     color: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800",
     iconColor: "text-blue-600 dark:text-blue-400",
-    comingSoon: true
+    template: createTemplateWithSyncedResources(homeBuyingTemplate)
   },
   {
     id: "baby-planning",

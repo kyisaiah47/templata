@@ -8,6 +8,12 @@ import { Badge } from '@/components/ui/badge';
 import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface EmbeddedPromptsProps {
   section: GuidanceSection;
@@ -42,7 +48,8 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], onResponsesCh
   const progressPercentage = Math.round((additionalPrompts.length / section.reflectionPrompts.length) * 100);
 
   return (
-    <div className="space-y-4">
+    <TooltipProvider>
+      <div className="space-y-4">
 
       {/* Main Content */}
       {allPrompts.length === 0 ? (
@@ -68,7 +75,25 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], onResponsesCh
                   </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-medium text-sm line-clamp-2">{prompt.prompt}</h4>
+                      <div className="flex items-start gap-1.5 flex-1 min-w-0">
+                        <h4 className="font-medium text-sm line-clamp-2 flex-1">{prompt.prompt}</h4>
+                        {prompt.helpText && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 w-4 p-0 text-muted-foreground hover:text-foreground flex-shrink-0 mt-0.5"
+                              >
+                                <HelpCircle className="w-3 h-3" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="left" className="max-w-xs">
+                              <p className="text-xs">{prompt.helpText}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
+                      </div>
                       {isAdditional && (
                         <Button
                           variant="ghost"
@@ -99,6 +124,7 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], onResponsesCh
           })}
         </div>
       )}
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
