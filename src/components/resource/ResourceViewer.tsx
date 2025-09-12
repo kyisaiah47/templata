@@ -4,6 +4,7 @@ import { Resource } from '@/types/template';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { X, Clock, BookOpen, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 
 interface ResourceViewerProps {
   resource: Resource;
@@ -63,29 +64,25 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
               </p>
             </div>
 
-            {/* Placeholder content - in a real app, this would be the actual resource content */}
-            <div className="space-y-3">
-              <h3 className="text-base font-medium">Key Points</h3>
-              <ul className="space-y-1 text-sm">
-                <li>Expert guidance on {resource.title.toLowerCase()}</li>
-                <li>Practical tips and actionable advice</li>
-                <li>Real-world examples and case studies</li>
-                <li>Step-by-step implementation guides</li>
-              </ul>
-
-              <h3 className="text-base font-medium">What You&apos;ll Learn</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                This {resource.difficulty} level {resource.type.toLowerCase()} provides comprehensive coverage 
-                of the topic with practical insights you can apply immediately to your planning process.
-              </p>
-
-              <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 text-sm">💡 Pro Tip</h4>
-                <p className="text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
-                  Take notes as you read and refer back to the reflection prompts in the main panel 
-                  to apply what you learn directly to your planning process.
-                </p>
-              </div>
+            {/* Full blog post content */}
+            <div className="space-y-4">
+              {resource.content.split('\n\n').map((paragraph, index) => {
+                if (paragraph.startsWith('##')) {
+                  return (
+                    <h3 key={index} className="text-base font-semibold mt-6 mb-3">
+                      {paragraph.replace('##', '').trim()}
+                    </h3>
+                  );
+                }
+                if (paragraph.trim()) {
+                  return (
+                    <p key={index} className="text-sm leading-6 text-foreground">
+                      {paragraph}
+                    </p>
+                  );
+                }
+                return null;
+              })}
             </div>
           </div>
         </div>
@@ -97,10 +94,19 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
           <div className="text-xs text-muted-foreground">
             Resource • {resource.readTime} read
           </div>
-          <Button variant="outline" size="sm" className="h-7 text-xs">
-            <ExternalLink className="w-3 h-3 mr-1" />
-            Open Full View
-          </Button>
+          {resource.relatedBlogPost ? (
+            <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
+              <Link href={`/blog/${resource.relatedBlogPost}`} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-3 h-3 mr-1" />
+                Open Full View
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" className="h-7 text-xs" disabled>
+              <ExternalLink className="w-3 h-3 mr-1" />
+              Preview Only
+            </Button>
+          )}
         </div>
       </div>
     </div>

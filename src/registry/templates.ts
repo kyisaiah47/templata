@@ -28,13 +28,10 @@ function createTemplateWithSyncedResources(baseTemplate: GuidanceTemplate): Guid
     relatedBlogPost: post.slug
   }));
 
-  // Merge existing resources with dynamic ones (remove duplicates)
-  const existingResourceIds = new Set(baseTemplate.resources.map(r => r.id));
-  const newResources = dynamicResources.filter(r => !existingResourceIds.has(r.id));
-
+  // Replace all resources with ones from blog registry
   return {
     ...baseTemplate,
-    resources: [...baseTemplate.resources, ...newResources]
+    resources: dynamicResources
   };
 }
 
