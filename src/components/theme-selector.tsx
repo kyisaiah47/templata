@@ -108,8 +108,8 @@ export function ThemeSelector() {
     // Revert to previous theme when dismissing alert (except for limited themes)
     if (previousTheme && alertDialog?.title !== 'Limited Time Theme') {
       setCustomTheme(previousTheme)
-      setPreviousTheme(null)
     }
+    setPreviousTheme(null)
     setAlertDialog(null)
   }
 
@@ -125,97 +125,263 @@ export function ThemeSelector() {
   }
 
   // Show popular themes in dropdown
-  const popularThemes = themes.slice(0, 4) // Default, Rose, Neutral, Ocean
+  const popularThemes = themes.slice(0, 6) // Default, Rose, Neutral, Emerald, Magenta, Violet
 
   const ThemeContent = ({ className, isMobile = false }: { className?: string; isMobile?: boolean }) => (
     <div className={className}>
-      {/* Theme Grid */}
-      <div className={`grid gap-4 ${isMobile ? 'grid-cols-3 max-h-[50vh] overflow-y-auto' : 'grid-cols-5'}`}>
-        {themes.map((themeOption) => {
-          const currentModeColors = theme === 'dark' ? themeOption.colors.dark : themeOption.colors.light
-          const isSelected = currentThemeInfo.id === themeOption.id
-          
-          return (
-            <div
-              key={themeOption.id}
-              className={`
-                relative p-4 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md
-                ${isSelected 
-                  ? 'border-primary bg-primary/5 shadow-sm' 
-                  : 'border-border bg-card hover:border-primary/30'
-                }
-                ${themeOption.isPremium ? 'ring-2 ring-yellow-400/30' : ''}
-                ${themeOption.isExclusive ? 'ring-2 ring-blue-400/30' : ''}
-                ${themeOption.isLimited ? 'ring-2 ring-purple-400/30' : ''}
-              `}
-              onClick={() => {
-                const selectedTheme = themes.find(t => t.id === themeOption.id)
-                if (selectedTheme && !selectedTheme.isPremium && !selectedTheme.isExclusive && !selectedTheme.isLimited) {
-                  handleThemeChange(themeOption.id)
-                  setShowAllThemes(false)
-                } else {
-                  handleThemeChange(themeOption.id)
-                }
-              }}
-            >
-              {themeOption.isPremium && (
-                <div className="absolute top-2 left-2">
-                  <Crown className="h-4 w-4 text-yellow-500" />
-                </div>
-              )}
-              {themeOption.isExclusive && (
-                <div className="absolute top-2 left-2">
-                  <Gem className="h-4 w-4 text-blue-500" />
-                </div>
-              )}
-              {themeOption.isLimited && (
-                <div className="absolute top-2 left-2">
-                  <Clock className="h-4 w-4 text-purple-500" />
-                </div>
-              )}
-              {isSelected && (
-                <div className="absolute top-2 right-2">
-                  <Check className="h-4 w-4 text-primary" />
-                </div>
-              )}
+      {/* Theme Categories */}
+      <div className="space-y-6">
+        {/* Free Themes */}
+        <div>
+          <h3 className="text-sm font-medium text-muted-foreground mb-3">Free Themes</h3>
+          <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-4'}`}>
+            {themes.filter(t => !t.isPremium && !t.isExclusive && !t.isLimited).map((themeOption) => {
+              const currentModeColors = theme === 'dark' ? themeOption.colors.dark : themeOption.colors.light
+              const isSelected = currentThemeInfo.id === themeOption.id
               
-              <div className="space-y-3 text-center">
-                {/* Color pills - side by side */}
-                <div className="flex items-center justify-center gap-2">
-                  <div 
-                    className="h-8 w-4 rounded-full border"
-                    style={{ 
-                      backgroundColor: currentModeColors.primary,
-                      borderColor: currentModeColors.border
-                    }}
-                  />
-                  <div 
-                    className="h-8 w-4 rounded-full border"
-                    style={{ 
-                      backgroundColor: currentModeColors.secondary,
-                      borderColor: currentModeColors.border
-                    }}
-                  />
-                  <div 
-                    className="h-8 w-4 rounded-full border"
-                    style={{ 
-                      backgroundColor: currentModeColors.accent,
-                      borderColor: currentModeColors.border
-                    }}
-                  />
-                </div>
-                
-                {/* Theme info */}
-                <div>
-                  <div className="font-semibold text-sm mb-1">{themeOption.name}</div>
-                  <div className="text-xs text-muted-foreground leading-tight">
-                    {themeOption.description}
+              return (
+                <div
+                  key={themeOption.id}
+                  className={`
+                    relative p-3 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md
+                    ${isSelected 
+                      ? 'border-primary bg-primary/5 shadow-sm' 
+                      : 'border-border bg-card hover:border-primary/30'
+                    }
+                  `}
+                  onClick={() => {
+                    handleThemeChange(themeOption.id)
+                    setShowAllThemes(false)
+                  }}
+                >
+                  {isSelected && (
+                    <div className="absolute top-2 right-2">
+                      <Check className="h-3 w-3 text-primary" />
+                    </div>
+                  )}
+                  
+                  <div className="space-y-2 text-center">
+                    {/* Color pills */}
+                    <div className="flex items-center justify-center gap-1">
+                      <div 
+                        className="h-6 w-3 rounded-full border"
+                        style={{ 
+                          backgroundColor: currentModeColors.primary,
+                          borderColor: currentModeColors.border
+                        }}
+                      />
+                      <div 
+                        className="h-6 w-3 rounded-full border"
+                        style={{ 
+                          backgroundColor: currentModeColors.secondary,
+                          borderColor: currentModeColors.border
+                        }}
+                      />
+                      <div 
+                        className="h-6 w-3 rounded-full border"
+                        style={{ 
+                          backgroundColor: currentModeColors.accent,
+                          borderColor: currentModeColors.border
+                        }}
+                      />
+                    </div>
+                    
+                    <div className="font-medium text-xs">{themeOption.name}</div>
                   </div>
                 </div>
-              </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Beta/Limited Themes */}
+        {themes.some(t => t.isLimited) && (
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Beta Themes</h3>
+            <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-4'}`}>
+              {themes.filter(t => t.isLimited).map((themeOption) => {
+                const currentModeColors = theme === 'dark' ? themeOption.colors.dark : themeOption.colors.light
+                const isSelected = currentThemeInfo.id === themeOption.id
+                
+                return (
+                  <div
+                    key={themeOption.id}
+                    className={`
+                      relative p-3 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md ring-1 ring-purple-400/30
+                      ${isSelected 
+                        ? 'border-primary bg-primary/5 shadow-sm' 
+                        : 'border-border bg-card hover:border-primary/30'
+                      }
+                    `}
+                    onClick={() => handleThemeChange(themeOption.id)}
+                  >
+                    <div className="absolute top-2 left-2">
+                      <Clock className="h-3 w-3 text-purple-500" />
+                    </div>
+                    {isSelected && (
+                      <div className="absolute top-2 right-2">
+                        <Check className="h-3 w-3 text-primary" />
+                      </div>
+                    )}
+                    
+                    <div className="space-y-2 text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.primary,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.secondary,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.accent,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                      </div>
+                      <div className="font-medium text-xs">{themeOption.name}</div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-          )
-        })}
+          </div>
+        )}
+
+        {/* Exclusive Themes */}
+        {themes.some(t => t.isExclusive) && (
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Exclusive Themes</h3>
+            <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-4'}`}>
+              {themes.filter(t => t.isExclusive).map((themeOption) => {
+                const currentModeColors = theme === 'dark' ? themeOption.colors.dark : themeOption.colors.light
+                const isSelected = currentThemeInfo.id === themeOption.id
+                
+                return (
+                  <div
+                    key={themeOption.id}
+                    className={`
+                      relative p-3 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md ring-1 ring-blue-400/30
+                      ${isSelected 
+                        ? 'border-primary bg-primary/5 shadow-sm' 
+                        : 'border-border bg-card hover:border-primary/30'
+                      }
+                    `}
+                    onClick={() => handleThemeChange(themeOption.id)}
+                  >
+                    <div className="absolute top-2 left-2">
+                      <Gem className="h-3 w-3 text-blue-500" />
+                    </div>
+                    {isSelected && (
+                      <div className="absolute top-2 right-2">
+                        <Check className="h-3 w-3 text-primary" />
+                      </div>
+                    )}
+                    
+                    <div className="space-y-2 text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.primary,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.secondary,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.accent,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                      </div>
+                      <div className="font-medium text-xs">{themeOption.name}</div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Premium Themes */}
+        {themes.some(t => t.isPremium) && (
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Premium Themes</h3>
+            <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-4'}`}>
+              {themes.filter(t => t.isPremium).map((themeOption) => {
+                const currentModeColors = theme === 'dark' ? themeOption.colors.dark : themeOption.colors.light
+                const isSelected = currentThemeInfo.id === themeOption.id
+                
+                return (
+                  <div
+                    key={themeOption.id}
+                    className={`
+                      relative p-3 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md ring-1 ring-yellow-400/30
+                      ${isSelected 
+                        ? 'border-primary bg-primary/5 shadow-sm' 
+                        : 'border-border bg-card hover:border-primary/30'
+                      }
+                    `}
+                    onClick={() => handleThemeChange(themeOption.id)}
+                  >
+                    <div className="absolute top-2 left-2">
+                      <Crown className="h-3 w-3 text-yellow-500" />
+                    </div>
+                    {isSelected && (
+                      <div className="absolute top-2 right-2">
+                        <Check className="h-3 w-3 text-primary" />
+                      </div>
+                    )}
+                    
+                    <div className="space-y-2 text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.primary,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.secondary,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                        <div 
+                          className="h-6 w-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: currentModeColors.accent,
+                            borderColor: currentModeColors.border
+                          }}
+                        />
+                      </div>
+                      <div className="font-medium text-xs">{themeOption.name}</div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -298,7 +464,7 @@ export function ThemeSelector() {
         </Dialog>
 
         {/* Alert Dialog */}
-        <Dialog open={!!alertDialog} onOpenChange={handleAlertClose}>
+        <Dialog open={!!alertDialog} onOpenChange={(open) => !open && handleAlertClose()}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
@@ -388,7 +554,7 @@ export function ThemeSelector() {
       </DrawerContent>
 
       {/* Alert Dialog */}
-      <Dialog open={!!alertDialog} onOpenChange={handleAlertClose}>
+      <Dialog open={!!alertDialog} onOpenChange={(open) => !open && handleAlertClose()}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">

@@ -1389,8 +1389,8 @@ export const themes: Theme[] = [
   },
   {
     id: 'beta',
-    name: 'Beta Purple',
-    description: 'Exclusive beta theme with purple and magenta accents - limited time only',
+    name: 'Violet',
+    description: 'Rich purple and magenta tones for creative work',
     isLimited: true,
     colors: {
       light: betaThemeLight,
@@ -1399,8 +1399,8 @@ export const themes: Theme[] = [
   },
   {
     id: 'beta-teal',
-    name: 'Beta Teal',
-    description: 'Exclusive beta theme with teal and blue accents - limited time only',
+    name: 'Ocean',
+    description: 'Calming teal and blue hues for focused productivity',
     isLimited: true,
     colors: {
       light: betaTealThemeLight,

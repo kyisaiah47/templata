@@ -124,7 +124,7 @@ export default function TemplatesPage() {
 						</h1>
 
 						<p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-							Get started instantly with expertly designed templates for life's biggest moments.
+							Get started instantly with expertly designed templates for life&apos;s biggest moments.
 						</p>
 					</div>
 				</div>

@@ -69,7 +69,7 @@ export function CustomThemeProvider({ children, defaultTheme = templataThemeLigh
 
   const getThemeById = (themeId: string) => {
     const theme = themes.find(t => t.id === themeId)
-    return theme ? theme.colors : null
+    return theme ? theme.colors.light : null
   }
 
   // Don't render children until theme is loaded

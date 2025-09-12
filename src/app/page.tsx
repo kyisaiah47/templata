@@ -36,35 +36,15 @@ function RotatingWord() {
 	const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
 	useEffect(() => {
-		// Add CSS animation to head
-		const style = document.createElement('style');
-		style.textContent = `
-			@keyframes wordFadeInOut {
-				0% { opacity: 1; }
-				45% { opacity: 1; }
-				50% { opacity: 0; }
-				95% { opacity: 0; }
-				100% { opacity: 1; }
-			}
-			
-			.word-rotating {
-				animation: wordFadeInOut 2s infinite ease-in-out;
-			}
-		`;
-		document.head.appendChild(style);
-
 		const interval = setInterval(() => {
 			setCurrentWordIndex((prev) => (prev + 1) % words.length);
 		}, 2000);
 
-		return () => {
-			clearInterval(interval);
-			document.head.removeChild(style);
-		};
+		return () => clearInterval(interval);
 	}, []);
 
 	return (
-		<span className="inline-block word-rotating">
+		<span className="inline-block">
 			{words[currentWordIndex]}
 		</span>
 	);

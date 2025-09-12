@@ -176,7 +176,7 @@ function WeddingDashboard() {
         <div className="mt-6 text-xs">
           <div className="font-medium mb-2">Reflection Prompts</div>
           <div className="space-y-1">
-            <div className="p-2 bg-background rounded border text-xs">What's your ideal budget range?</div>
+            <div className="p-2 bg-background rounded border text-xs">What&apos;s your ideal budget range?</div>
             <div className="p-2 bg-background rounded border text-xs">What style reflects your vision?</div>
             <div className="p-2 bg-background rounded border text-xs">Who are your must-have vendors?</div>
           </div>
@@ -199,7 +199,7 @@ function WeddingDashboard() {
             <div className="border-b p-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-4 h-4 bg-primary/10 rounded text-xs flex items-center justify-center">1</span>
-                <span className="text-sm font-medium">What's your total wedding budget?</span>
+                <span className="text-sm font-medium">What&apos;s your total wedding budget?</span>
               </div>
               <textarea className="w-full h-12 text-xs border rounded p-2 bg-muted/20" placeholder="Your notes..."></textarea>
             </div>
@@ -247,7 +247,7 @@ function HomeBuyingDashboard() {
         <div className="mt-6 text-xs">
           <div className="font-medium mb-2">Reflection Prompts</div>
           <div className="space-y-1">
-            <div className="p-2 bg-background rounded border text-xs">What's your budget range?</div>
+            <div className="p-2 bg-background rounded border text-xs">What&apos;s your budget range?</div>
             <div className="p-2 bg-background rounded border text-xs">What neighborhoods interest you?</div>
             <div className="p-2 bg-background rounded border text-xs">Must-have features?</div>
           </div>
@@ -270,7 +270,7 @@ function HomeBuyingDashboard() {
             <div className="border-b p-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-4 h-4 bg-primary/10 rounded text-xs flex items-center justify-center">1</span>
-                <span className="text-sm font-medium">What's your target price range?</span>
+                <span className="text-sm font-medium">What&apos;s your target price range?</span>
               </div>
               <textarea className="w-full h-12 text-xs border rounded p-2 bg-muted/20" placeholder="Your notes..."></textarea>
             </div>
@@ -319,7 +319,7 @@ function CareerDashboard() {
           <div className="font-medium mb-2">Reflection Prompts</div>
           <div className="space-y-1">
             <div className="p-2 bg-background rounded border text-xs">What skills do you want to use?</div>
-            <div className="p-2 bg-background rounded border text-xs">What's your ideal work environment?</div>
+            <div className="p-2 bg-background rounded border text-xs">What&apos;s your ideal work environment?</div>
             <div className="p-2 bg-background rounded border text-xs">Target salary range?</div>
           </div>
         </div>
@@ -391,7 +391,7 @@ function BusinessDashboard() {
           <div className="space-y-1">
             <div className="p-2 bg-background rounded border text-xs">What problem are you solving?</div>
             <div className="p-2 bg-background rounded border text-xs">Who is your target market?</div>
-            <div className="p-2 bg-background rounded border text-xs">What's your revenue model?</div>
+            <div className="p-2 bg-background rounded border text-xs">What&apos;s your revenue model?</div>
           </div>
         </div>
       </div>
@@ -412,7 +412,7 @@ function BusinessDashboard() {
             <div className="border-b p-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-4 h-4 bg-primary/10 rounded text-xs flex items-center justify-center">1</span>
-                <span className="text-sm font-medium">What's your business concept in one sentence?</span>
+                <span className="text-sm font-medium">What&apos;s your business concept in one sentence?</span>
               </div>
               <textarea className="w-full h-12 text-xs border rounded p-2 bg-muted/20" placeholder="Your notes..."></textarea>
             </div>
@@ -460,9 +460,9 @@ function EventDashboard() {
         <div className="mt-6 text-xs">
           <div className="font-medium mb-2">Reflection Prompts</div>
           <div className="space-y-1">
-            <div className="p-2 bg-background rounded border text-xs">What's the event purpose?</div>
+            <div className="p-2 bg-background rounded border text-xs">What&apos;s the event purpose?</div>
             <div className="p-2 bg-background rounded border text-xs">How many guests?</div>
-            <div className="p-2 bg-background rounded border text-xs">What's your budget?</div>
+            <div className="p-2 bg-background rounded border text-xs">What&apos;s your budget?</div>
           </div>
         </div>
       </div>

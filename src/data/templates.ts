@@ -402,12 +402,12 @@ export const weddingTemplate: GuidanceTemplate = {
       content: 'Comprehensive checklist covering payment terms, cancellation policies, force majeure clauses, service details, backup plans, overtime rates, and liability coverage. Includes red flags to watch for.',
       tags: ['vendors', 'contracts', 'legal'],
       readTime: '6 min',
-      difficulty: 'advanced'
+      difficulty: 'expert'
     },
     {
       id: 'wedding-timeline-template',
       title: 'Complete Wedding Day Timeline Template',
-      type: 'template',
+      type: 'tool',
       excerpt: 'Hour-by-hour timeline template to keep your wedding day running smoothly',
       content: 'Detailed timeline starting 2 hours before ceremony through last dance, including vendor arrival times, photo opportunities, meal service, and buffer time for delays.',
       tags: ['timeline', 'planning', 'day-of'],

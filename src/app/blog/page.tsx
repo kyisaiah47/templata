@@ -105,7 +105,7 @@ export default function BlogPage() {
             </h1>
 
             <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-              Expert guidance, practical tips, and insights to help you navigate life's biggest moments with confidence.
+              Expert guidance, practical tips, and insights to help you navigate life&apos;s biggest moments with confidence.
             </p>
           </div>
         </div>

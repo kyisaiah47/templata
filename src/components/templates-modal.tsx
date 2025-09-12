@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { WeddingSetupWizard } from "@/components/templates/wedding/wedding-setup-wizard"
 import {
   Dialog,
   DialogContent,

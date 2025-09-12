@@ -73,7 +73,7 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
                 <li>Step-by-step implementation guides</li>
               </ul>
 
-              <h3 className="text-base font-medium">What You'll Learn</h3>
+              <h3 className="text-base font-medium">What You&apos;ll Learn</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 This {resource.difficulty} level {resource.type.toLowerCase()} provides comprehensive coverage 
                 of the topic with practical insights you can apply immediately to your planning process.

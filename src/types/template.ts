@@ -48,7 +48,7 @@ export interface UserGuidanceDocument {
   templateId: string;
   userId: string;
   title: string;
-  content: any; // Tiptap JSON document
+  content: Record<string, unknown>; // Tiptap JSON document
   createdAt: Date;
   updatedAt: Date;
   bookmarkedPrompts: string[];
