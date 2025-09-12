@@ -1,5 +1,5 @@
 import { GuidanceTemplate } from '@/types/template';
-import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, businessLaunchTemplate, fitnessJourneyTemplate, collegePlanningTemplate, budgetPlanningTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate, academicResearchTemplate } from '@/data/templates';
+import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, fitnessAthleticTrainingTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate, academicResearchTemplate } from '@/data/templates';
 import { blogRegistry } from '@/registry/blogs';
 
 // Function to sync template resources with blog registry
@@ -101,7 +101,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     popular: true,
     color: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800",
     iconColor: "text-emerald-600 dark:text-emerald-400",
-    template: createTemplateWithSyncedResources(budgetPlanningTemplate)
+    template: undefined
   },
   {
     id: "productivity-system",
@@ -137,7 +137,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     url: "/business-launch/app",
     color: "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800",
     iconColor: "text-orange-600 dark:text-orange-400",
-    template: createTemplateWithSyncedResources(businessLaunchTemplate)
+    template: undefined
   },
   
   // Education Templates
@@ -151,7 +151,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     popular: true,
     color: "bg-yellow-50 dark:bg-yellow-950/20 border-yellow-200 dark:border-yellow-800",
     iconColor: "text-yellow-600 dark:text-yellow-400",
-    template: createTemplateWithSyncedResources(collegePlanningTemplate)
+    template: undefined
   },
   {
     id: "academic-research",
@@ -218,7 +218,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     popular: true,
     color: "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800",
     iconColor: "text-red-600 dark:text-red-400",
-    template: createTemplateWithSyncedResources(fitnessJourneyTemplate)
+    template: createTemplateWithSyncedResources(fitnessAthleticTrainingTemplate)
   },
   
   // Life Transitions Templates

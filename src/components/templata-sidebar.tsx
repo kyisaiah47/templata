@@ -3,7 +3,7 @@
 import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Heart, FileText, Users, Plus, DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Home, CreditCard, Search, HandCoins, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity, Wallet, Bed, Lightbulb, BarChart, Handshake, Rocket, Zap, Brain, Clock, Dumbbell, Apple, Scale, Camera, Timer, Calculator, BookOpen, GraduationCap, School, Award, Banknote, PiggyBank, Receipt, Focus, Layout, Settings, Package, ClipboardList, ArrowRight, Globe, Plane, Utensils, ChefHat, Microscope, Database, PenSquare, Bookmark, FlaskConical, ShoppingCart } from "lucide-react"
+import { Heart, FileText, Users, Plus, DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Home, CreditCard, Search, HandCoins, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity, Wallet, Bed, Lightbulb, BarChart, Handshake, Rocket, Zap, Brain, Clock, Dumbbell, Apple, Scale, Camera, Timer, Calculator, BookOpen, GraduationCap, School, Award, Banknote, PiggyBank, Receipt, Focus, Layout, Settings, Package, ClipboardList, ArrowRight, Globe, Plane, Utensils, ChefHat, Microscope, Database, PenSquare, Bookmark, FlaskConical, ShoppingCart, Moon } from "lucide-react"
 import { GuidanceTemplate, ReflectionPrompt, Resource } from "@/types/template"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -186,6 +186,134 @@ const getSectionIcon = (sectionId: string) => {
     case 'fundraising-revenue-strategy': return <DollarSign className="w-4 h-4" />;
     case 'operations-management-systems': return <Settings className="w-4 h-4" />;
     case 'marketing-community-engagement': return <Users className="w-4 h-4" />;
+    
+    // Personal Health & Wellness sections
+    case 'health-assessment-baseline': return <Stethoscope className="w-4 h-4" />;
+    case 'nutrition-dietary-planning': return <Apple className="w-4 h-4" />;
+    case 'fitness-physical-activity': return <Dumbbell className="w-4 h-4" />;
+    case 'sleep-recovery-optimization': return <Moon className="w-4 h-4" />;
+    case 'stress-mental-health': return <Brain className="w-4 h-4" />;
+    case 'health-monitoring-maintenance': return <Activity className="w-4 h-4" />;
+    
+    // Sustainable Living sections
+    case 'environmental-impact-assessment': return <BarChart className="w-4 h-4" />;
+    case 'sustainable-home-energy': return <Home className="w-4 h-4" />;
+    case 'sustainable-transportation-mobility': return <Truck className="w-4 h-4" />;
+    case 'sustainable-consumption-purchasing': return <ShoppingCart className="w-4 h-4" />;
+    case 'sustainable-food-nutrition': return <Apple className="w-4 h-4" />;
+    case 'community-advocacy-impact': return <Users className="w-4 h-4" />;
+    
+    // Creative Project sections
+    case 'creative-vision-conceptualization': return <Lightbulb className="w-4 h-4" />;
+    case 'project-planning-timeline': return <Calendar className="w-4 h-4" />;
+    case 'skill-development-technique': return <GraduationCap className="w-4 h-4" />;
+    case 'creative-process-workflow': return <Settings className="w-4 h-4" />;
+    case 'presentation-exhibition-sharing': return <Camera className="w-4 h-4" />;
+    case 'artistic-career-development': return <TrendingUp className="w-4 h-4" />;
+    
+    // Digital Marketing & Brand sections
+    case 'brand-foundation-identity': return <Target className="w-4 h-4" />;
+    case 'digital-marketing-strategy': return <Rocket className="w-4 h-4" />;
+    case 'content-creation-management': return <PenTool className="w-4 h-4" />;
+    case 'social-media-community': return <Users className="w-4 h-4" />;
+    case 'paid-advertising-campaigns': return <DollarSign className="w-4 h-4" />;
+    case 'analytics-performance-optimization': return <BarChart className="w-4 h-4" />;
+    
+    // Remote Work & Digital Nomad sections
+    case 'remote-work-foundation': return <Settings className="w-4 h-4" />;
+    case 'location-independence-planning': return <Globe className="w-4 h-4" />;
+    case 'productivity-time-management': return <Clock className="w-4 h-4" />;
+    case 'work-life-integration': return <Scale className="w-4 h-4" />;
+    case 'financial-management-nomad': return <Wallet className="w-4 h-4" />;
+    case 'career-advancement-scaling': return <TrendingUp className="w-4 h-4" />;
+    
+    // Investment & Wealth Building sections
+    case 'financial-foundation-assessment': return <Calculator className="w-4 h-4" />;
+    case 'investment-strategy-development': return <BarChart className="w-4 h-4" />;
+    case 'retirement-planning-strategy': return <PiggyBank className="w-4 h-4" />;
+    case 'tax-optimization-strategies': return <Receipt className="w-4 h-4" />;
+    case 'alternative-investments-income': return <Banknote className="w-4 h-4" />;
+    case 'wealth-protection-legacy': return <Shield className="w-4 h-4" />;
+    
+    // E-commerce & Online Business sections
+    case 'business-model-validation': return <Target className="w-4 h-4" />;
+    case 'ecommerce-platform-setup': return <Settings className="w-4 h-4" />;
+    case 'digital-marketing-customer-acquisition': return <Network className="w-4 h-4" />;
+    case 'operations-customer-service': return <Users className="w-4 h-4" />;
+    case 'financial-management-scaling': return <TrendingUp className="w-4 h-4" />;
+    case 'advanced-strategies-optimization': return <Zap className="w-4 h-4" />;
+    
+    // Personal Development & Life Coaching sections
+    case 'self-assessment-awareness': return <User className="w-4 h-4" />;
+    case 'vision-goal-setting': return <Target className="w-4 h-4" />;
+    case 'mindset-mental-mastery': return <Brain className="w-4 h-4" />;
+    case 'habits-behavior-change': return <CheckSquare className="w-4 h-4" />;
+    case 'relationships-communication': return <MessageSquare className="w-4 h-4" />;
+    case 'continuous-growth-mastery': return <BookOpen className="w-4 h-4" />;
+    
+    // Retirement Planning & Life Transition sections
+    case 'retirement-vision-lifestyle': return <Home className="w-4 h-4" />;
+    case 'financial-security-planning': return <PiggyBank className="w-4 h-4" />;
+    case 'health-wellness-aging': return <Activity className="w-4 h-4" />;
+    case 'career-transition-identity': return <Briefcase className="w-4 h-4" />;
+    case 'family-relationships-dynamics': return <Users className="w-4 h-4" />;
+    case 'life-transitions-adaptation': return <ArrowRight className="w-4 h-4" />;
+    
+    // Home Renovation & Interior Design sections
+    case 'vision-planning-assessment': return <Layout className="w-4 h-4" />;
+    case 'budgeting-financial-planning': return <Calculator className="w-4 h-4" />;
+    case 'design-development-planning': return <Palette className="w-4 h-4" />;
+    case 'contractor-team-management': return <Users className="w-4 h-4" />;
+    case 'project-execution-management': return <Settings className="w-4 h-4" />;
+    case 'finishing-maintenance-enjoyment': return <Home className="w-4 h-4" />;
+    
+    // Podcast & Content Creation sections
+    case 'concept-niche-development': return <Lightbulb className="w-4 h-4" />;
+    case 'technical-setup-production': return <Settings className="w-4 h-4" />;
+    case 'content-strategy-planning': return <Calendar className="w-4 h-4" />;
+    case 'audience-growth-marketing': return <TrendingUp className="w-4 h-4" />;
+    case 'monetization-business-development': return <DollarSign className="w-4 h-4" />;
+    case 'scaling-long-term-strategy': return <Rocket className="w-4 h-4" />;
+    
+    // Language Learning & Cultural Immersion sections
+    case 'learning-goals-assessment': return <Target className="w-4 h-4" />;
+    case 'learning-methods-resources': return <BookOpen className="w-4 h-4" />;
+    case 'immersion-cultural-understanding': return <Globe className="w-4 h-4" />;
+    case 'practice-skill-development': return <MessageSquare className="w-4 h-4" />;
+    case 'motivation-persistence-strategies': return <TrendingUp className="w-4 h-4" />;
+    case 'assessment-advancement-planning': return <Award className="w-4 h-4" />;
+
+    // Fitness & Athletic Training sections
+    case 'fitness-assessment-goal-setting': return <Target className="w-4 h-4" />;
+    case 'training-program-design': return <Calendar className="w-4 h-4" />;
+    case 'nutrition-supplementation': return <Apple className="w-4 h-4" />;
+    case 'performance-tracking-optimization': return <BarChart className="w-4 h-4" />;
+    case 'mental-performance-psychology': return <Brain className="w-4 h-4" />;
+    case 'injury-prevention-management': return <Shield className="w-4 h-4" />;
+
+    // Travel Planning & Adventure Design sections
+    case 'travel-vision-goals': return <Target className="w-4 h-4" />;
+    case 'destination-research-selection': return <Globe className="w-4 h-4" />;
+    case 'budget-logistics-planning': return <Calculator className="w-4 h-4" />;
+    case 'itinerary-experience-design': return <MapPin className="w-4 h-4" />;
+    case 'safety-health-preparation': return <Shield className="w-4 h-4" />;
+    case 'travel-documentation-reflection': return <Camera className="w-4 h-4" />;
+
+    // Freelance & Gig Economy Success sections
+    case 'skill-assessment-development': return <Award className="w-4 h-4" />;
+    case 'business-setup-legalities': return <FileText className="w-4 h-4" />;
+    case 'pricing-positioning-strategy': return <DollarSign className="w-4 h-4" />;
+    case 'client-acquisition-marketing': return <Users className="w-4 h-4" />;
+    case 'project-delivery-excellence': return <CheckSquare className="w-4 h-4" />;
+    case 'business-growth-scaling': return <TrendingUp className="w-4 h-4" />;
+
+    // Parenting & Child Development sections
+    case 'parenting-philosophy-foundation': return <Heart className="w-4 h-4" />;
+    case 'child-development-understanding': return <User className="w-4 h-4" />;
+    case 'emotional-social-development': return <MessageSquare className="w-4 h-4" />;
+    case 'communication-relationship-building': return <Users className="w-4 h-4" />;
+    case 'education-learning-support': return <BookOpen className="w-4 h-4" />;
+    case 'health-wellness-safety': return <Shield className="w-4 h-4" />;
     
     default: return <Heart className="w-4 h-4" />;
   }
