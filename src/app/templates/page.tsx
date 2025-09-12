@@ -13,157 +13,56 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
-	Heart,
-	Briefcase,
-	GraduationCap,
-	Baby,
 	Search,
-	Home,
-	Zap,
 	Grid3X3,
 	List,
-	Target,
-	Dumbbell,
-	School,
+	Heart,
 } from "lucide-react";
 import { PageLayout } from "@/components/layout";
+import { templates } from "@/data/templates";
+
+// Generate categories dynamically from templates
+const allCategories = templates.reduce((acc, template) => {
+	if (!acc.find(cat => cat.id === template.category)) {
+		acc.push({
+			id: template.category,
+			name: template.category === 'life-events' ? 'Life Events' : 
+				  template.category.charAt(0).toUpperCase() + template.category.slice(1),
+			count: templates.filter(t => t.category === template.category).length
+		});
+	}
+	return acc;
+}, [] as Array<{ id: string, name: string, count: number }>);
 
 const categories = [
-	{ id: "all", name: "All Templates", count: 7 },
-	{ id: "life-events", name: "Life Events", count: 2 },
-	{ id: "career", name: "Career & Education", count: 3 },
-	{ id: "property", name: "Property & Finance", count: 1 },
-	{ id: "health", name: "Health & Wellness", count: 1 },
+	{ id: "all", name: "All Templates", count: templates.length },
+	...allCategories
 ];
 
-const templates = [
-	{
-		id: "wedding-planning",
-		title: "Wedding Planning",
-		description:
-			"Organize your perfect day with vendor management, guest tracking, budget planning, and timeline coordination",
-		category: "life-events",
-		icon: Heart,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: true,
-		features: [
-			"Vendor Directory",
-			"Guest Management",
-			"Budget Tracker",
-			"Task Timeline",
-		],
-		setupTime: "5 min",
-	},
-	{
-		id: "academic-research",
-		title: "Academic Research",
-		description:
-			"Comprehensive research management platform for academics, researchers, and students with literature review, data management, and collaboration tools",
-		category: "career",
-		icon: GraduationCap,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: true,
-		features: [
-			"Literature Review",
-			"Methodology Planning",
-			"Data Management",
-			"Writing Tracker",
-		],
-		setupTime: "4 min",
-	},
-	{
-		id: "job-search",
-		title: "Job Search",
-		description:
-			"Track applications, prepare for interviews, manage networking, and organize your career transition with comprehensive job search tools",
-		category: "career",
-		icon: Briefcase,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: true,
-		features: [
-			"Application Tracker",
-			"Interview Prep",
-			"Network Management",
-			"Salary Tracking",
-		],
-		setupTime: "7 min",
-	},
-	{
-		id: "baby-planning",
-		title: "Baby Planning",
-		description:
-			"Complete pregnancy and baby preparation with milestone tracking, gear checklists, name selection, and parenting resources",
-		category: "life-events",
-		icon: Baby,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: true,
-		features: [
-			"Milestone Tracker",
-			"Gear Checklist",
-			"Name Tracker",
-			"Healthcare Planning",
-		],
-		setupTime: "5 min",
-	},
-	{
-		id: "college-planning",
-		title: "College Planning",
-		description:
-			"Navigate college applications, financial planning, course selection, and academic preparation for higher education success",
-		category: "career",
-		icon: School,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: false,
-		features: [
-			"Application Tracker",
-			"Financial Planning",
-			"Course Selection",
-			"Scholarship Search",
-		],
-		setupTime: "6 min",
-	},
-	{
-		id: "fitness-journey",
-		title: "Fitness Journey",
-		description:
-			"Track workouts, nutrition, goals, and progress with comprehensive fitness planning and health monitoring tools",
-		category: "health",
-		icon: Dumbbell,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: false,
-		features: [
-			"Workout Planner",
-			"Nutrition Tracker",
-			"Goal Setting",
-			"Progress Photos",
-		],
-		setupTime: "4 min",
-	},
-	{
-		id: "home-buying",
-		title: "Home Buying",
-		description:
-			"Navigate the home buying process with property tracking, budget management, inspection checklists, and mortgage planning",
-		category: "property",
-		icon: Home,
-		color: "bg-muted/50 border-border text-foreground",
-		popular: false,
-		features: [
-			"Property Search",
-			"Budget Tracker",
-			"Inspection Checklist",
-			"Mortgage Calculator",
-		],
-		setupTime: "8 min",
-	},
-];
+// Transform template data for display
+const displayTemplates = templates.map(template => ({
+	id: template.id,
+	title: template.title,
+	description: template.description,
+	category: template.category,
+	icon: Heart, // Default icon for now, could be mapped later
+	color: "bg-muted/50 border-border text-foreground",
+	popular: template.id === "wedding-planning", // Mark wedding as popular
+	features: [
+		`${template.sections.length} Planning Sections`,
+		`${template.sections.reduce((acc, s) => acc + s.reflectionPrompts.length, 0)} Reflection Prompts`,
+		`${template.resources.length} Expert Resources`,
+		"Guided Templates"
+	],
+	setupTime: "5 min",
+}));
 
 export default function TemplatesPage() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState("all");
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-	const filteredTemplates = templates.filter((template) => {
+	const filteredTemplates = displayTemplates.filter((template) => {
 		const matchesSearch =
 			template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			template.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -272,7 +171,7 @@ export default function TemplatesPage() {
 									key={template.id}
 									className="group hover:shadow-md transition-all duration-200"
 								>
-									<Link href={`/templates/${template.id}`}>
+									<Link href={`/${template.id}/app`}>
 										<CardContent className="p-6">
 											<div className="flex items-start gap-4">
 												<div
@@ -336,7 +235,7 @@ export default function TemplatesPage() {
 								key={template.id}
 								className="group hover:shadow-md transition-all duration-200"
 							>
-								<Link href={`/templates/${template.id}`}>
+								<Link href={`/${template.id}/app`}>
 									<CardHeader>
 										<div className="flex items-center justify-between mb-2">
 											<div

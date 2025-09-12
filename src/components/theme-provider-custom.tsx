@@ -37,9 +37,13 @@ export function CustomThemeProvider({ children, defaultTheme = templataThemeLigh
       try {
         const theme = JSON.parse(savedTheme)
         setCurrentTheme(theme)
+        applyTheme(theme) // Apply immediately
       } catch (error) {
         console.error('Failed to parse saved theme:', error)
       }
+    } else {
+      // Apply default theme immediately if no saved theme
+      applyTheme(defaultTheme)
     }
     setMounted(true)
   }, [])
