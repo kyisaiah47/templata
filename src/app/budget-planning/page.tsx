@@ -3,11 +3,11 @@ import { TemplateLanding } from '@/components/landing/TemplateLanding';
 import { getLandingPageData } from '@/registry/landing-pages';
 
 export const metadata: Metadata = {
-  title: 'Budget Planning Template | Master Your Finances & Save 30+ Hours | Templata',
-  description: 'Complete budget planning template with expense tracking, debt management, savings goals, and financial insights. Used by 25,000+ individuals. Take control of your finances.',
-  keywords: 'budget planner, personal finance template, budget tracker, expense tracker, debt payoff, savings goals, financial planning, money management, budget spreadsheet, personal budget',
+  title: 'Budget Planning Template | Master Your Finances & Build Wealth | Templata',
+  description: 'Complete budget planning template with debt payoff calculator, expense tracker, savings planner, and financial goals. Used by 25,000+ people. Master your finances in 30 days. Free to start.',
+  keywords: 'budget planning template, debt payoff calculator, expense tracker, financial planning, budget spreadsheet, savings planner, financial goals, money management, budgeting tools, financial freedom',
   openGraph: {
-    title: 'Budget Planning Template - Master Your Finances & Financial Management',
+    title: 'Budget Planning Template - Master Your Finances & Build Wealth',
     description: 'Complete budget planning system with expense tracking, debt elimination, and savings strategies used by 25,000+ people to achieve financial freedom.',
     type: 'website',
     images: ['/budget-planning-preview.jpg'],

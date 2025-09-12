@@ -2409,7 +2409,7 @@ export const travelPlanningAdventureTemplate: GuidanceTemplate = {
       excerpt: 'Discover your travel personality and match destinations to your preferences for more fulfilling adventures.',
       content: 'Understanding your travel style is crucial for creating satisfying travel experiences that align with your personality, interests, and comfort levels. Travel styles can be broadly categorized into several types: luxury travelers who prioritize comfort and high-end experiences; budget travelers who maximize experiences while minimizing costs; adventure travelers seeking thrilling and challenging activities; cultural immersion travelers focused on authentic local experiences; and relaxation travelers prioritizing rest and rejuvenation. Most travelers are a combination of these styles. Your travel style influences every aspect of your trip planning, from destination selection to accommodation choices, activity planning, and budget allocation. Consider your past travel experiences: what energized you versus what drained you? Do you prefer structured itineraries or spontaneous exploration? Are you comfortable with language barriers and cultural differences? Do you need certain amenities or can you rough it? Understanding these preferences helps you choose destinations and plan experiences that will truly fulfill your travel goals rather than leaving you stressed or unsatisfied.',
       tags: ['travel-style', 'destination-matching', 'personality-assessment'],
-      readTime: 8,
+      readTime: '8 min read',
       difficulty: 'beginner' as const
     },
     {
@@ -2419,7 +2419,7 @@ export const travelPlanningAdventureTemplate: GuidanceTemplate = {
       excerpt: 'Master the art of thorough destination research using multiple sources and systematic evaluation.',
       content: 'Effective destination research involves multiple information sources and systematic evaluation criteria. Start with official tourism boards and government travel advisories for current safety and entry requirements. Use travel blogs and forums like Lonely Planet Thorn Tree or TripAdvisor for real traveler experiences, but verify recent information as conditions change. Social media platforms like Instagram and YouTube provide visual inspiration but may not reflect typical experiences. Research seasonal weather patterns, not just average temperatures - consider rainfall, humidity, natural disaster seasons, and how weather affects activities. Investigate local events, festivals, and holidays that might enhance or complicate your visit. Understand the economic situation: currency strength, cost of living, tipping culture, and payment methods accepted. Research transportation infrastructure: how to get around, safety of public transport, road conditions for driving, and domestic flight options. Look into cultural norms: dress codes, social behaviors, business hours, meal times, and religious considerations. Use multiple sources and cross-reference information, as single sources may be outdated or biased.',
       tags: ['destination-research', 'travel-planning', 'research-methodology'],
-      readTime: 10,
+      readTime: '10 min read',
       difficulty: 'intermediate' as const
     },
     {
@@ -2429,7 +2429,7 @@ export const travelPlanningAdventureTemplate: GuidanceTemplate = {
       excerpt: 'Create accurate travel budgets and optimize costs with systematic planning and research strategies.',
       content: 'Creating an accurate travel budget requires research and realistic expectations about destination costs and your spending habits. Start by categorizing expenses into major buckets: transportation (flights, local transport, transfers), accommodation (hotels, Airbnb, hostels), food (restaurants, groceries, street food), activities (tours, attractions, experiences), and miscellaneous (shopping, tips, emergencies). Research actual costs using booking sites, local tourism websites, and recent traveler reports. Add a 15-20% buffer for unexpected expenses and currency fluctuations. Transportation typically represents 25-40% of your budget for international trips. Accommodation costs vary dramatically by location and style - hostels might be $15-30/night while luxury hotels can exceed $300. Food costs depend on your dining preferences: street food and local markets offer authentic experiences at low cost, while tourist restaurants can be expensive. Activity costs add up quickly - research free alternatives like hiking, beaches, markets, and cultural sites. Track spending during travel using apps or simple notebooks. Consider travel rewards credit cards, off-season timing, alternative accommodations, and bundled deals for cost savings.',
       tags: ['budget-planning', 'cost-optimization', 'travel-finance'],
-      readTime: 12,
+      readTime: '12 min read',
       difficulty: 'intermediate' as const
     },
     {
@@ -2439,7 +2439,7 @@ export const travelPlanningAdventureTemplate: GuidanceTemplate = {
       excerpt: 'Travel respectfully with cultural awareness, local customs knowledge, and sustainable practices.',
       content: 'Respectful travel requires preparation, awareness, and ongoing sensitivity to local cultures and customs. Before traveling, research basic cultural norms: greeting customs, appropriate dress codes, religious practices, social hierarchies, and taboo topics or behaviors. Learn basic phrases in the local language - even simple greetings and "thank you" show respect and often improve interactions. Understand tipping culture, bargaining customs, and appropriate ways to photograph people and places. Dress modestly and appropriately, especially when visiting religious sites or conservative cultures. Be aware of non-verbal communication differences: eye contact, personal space, gestures, and touching norms vary significantly across cultures. Show respect for local customs even if you don\'t understand them - observe how locals behave and follow their lead. Support local economies by choosing locally-owned businesses, buying authentic crafts from artisans, and using local guides and services. Be mindful of your environmental impact: follow local guidelines for waste disposal, water usage, and wildlife interaction. Avoid contributing to overtourism by choosing less crowded alternatives when possible. Remember that you are a guest in someone else\'s home - approach new cultures with humility, curiosity, and respect rather than judgment or comparison to your own culture.',
       tags: ['cultural-sensitivity', 'respectful-travel', 'sustainable-tourism'],
-      readTime: 9,
+      readTime: '9 min read',
       difficulty: 'beginner' as const
     },
     {
@@ -2449,7 +2449,7 @@ export const travelPlanningAdventureTemplate: GuidanceTemplate = {
       excerpt: 'Stay safe during adventure travel with comprehensive risk assessment and emergency preparedness.',
       content: 'Adventure travel requires additional safety preparation and risk management beyond typical tourism. Start with honest assessment of your physical fitness, experience level, and risk tolerance. Research specific risks associated with your planned activities: altitude sickness for high-altitude destinations, wildlife encounters, extreme weather, water safety, and equipment requirements. Invest in appropriate travel insurance that covers adventure activities - many standard policies exclude "dangerous" activities like mountaineering, diving, or extreme sports. Get necessary medical clearances and vaccinations, and carry comprehensive first aid supplies appropriate for your activities and destination remoteness. Learn basic emergency procedures relevant to your activities: wilderness first aid, water rescue, or altitude sickness recognition. Research local emergency services and evacuation procedures - how to contact help and how long rescue might take. Pack and understand how to use safety equipment: GPS devices, emergency beacons, water purification, weather protection. Travel with experienced guides for high-risk activities, especially in unfamiliar environments. Inform others of your detailed itinerary and check-in schedule. Consider satellite communication devices for remote areas without cell coverage. Maintain conservative decision-making: turn back if conditions deteriorate, respect local warnings, and don\'t let group pressure override safety judgments.',
       tags: ['adventure-travel', 'safety-preparation', 'risk-management'],
-      readTime: 11,
+      readTime: '11 min read',
       difficulty: 'expert' as const
     }
   ],
@@ -10809,6 +10809,1162 @@ export const languageLearningCulturalImmersionTemplate: GuidanceTemplate = {
   ]
 };
 
+// Comprehensive budget planning and financial management guidance
+export const budgetPlanningTemplate: GuidanceTemplate = {
+  id: 'budget-planning',
+  title: 'Budget Planning & Financial Management',
+  description: 'Master your finances with comprehensive budgeting, debt management, and savings strategies',
+  category: 'personal-finance',
+  icon: '💰',
+  sections: [
+    {
+      id: 'financial-assessment',
+      title: 'Financial Assessment & Goal Setting',
+      description: 'Evaluate your current financial situation and establish clear goals',
+      order: 1,
+      reflectionPrompts: [
+        {
+          id: 'income-evaluation',
+          prompt: 'What is your total monthly income from all sources (salary, freelance, investments, benefits)?',
+          category: 'planning',
+          helpText: 'Include all income sources: primary job, side hustles, rental income, dividends, government benefits.',
+          relatedResources: ['income-tracking-guide', 'multiple-income-streams']
+        },
+        {
+          id: 'expense-analysis',
+          prompt: 'What are all your monthly expenses? List fixed expenses (rent, insurance) and variable expenses (groceries, entertainment).',
+          category: 'research',
+          helpText: 'Track expenses for 2-3 months to get accurate averages. Use bank statements and receipt tracking.',
+          relatedResources: ['expense-tracking-methods']
+        },
+        {
+          id: 'debt-inventory',
+          prompt: 'What debts do you currently have? List each debt with balance, minimum payment, and interest rate.',
+          category: 'research',
+          helpText: 'Include credit cards, student loans, car loans, mortgage, personal loans, and any money owed to family/friends.'
+        },
+        {
+          id: 'financial-goals',
+          prompt: 'What are your short-term (1 year), medium-term (2-5 years), and long-term (5+ years) financial goals?',
+          category: 'decision',
+          helpText: 'Be specific with amounts and timelines. Examples: emergency fund, vacation, down payment, retirement.',
+          relatedResources: ['smart-goal-setting']
+        },
+        {
+          id: 'money-mindset',
+          prompt: 'What is your relationship with money? What financial habits or beliefs from your upbringing affect your spending?',
+          category: 'consideration',
+          helpText: 'Understanding your money psychology helps identify patterns that may sabotage financial success.'
+        },
+        {
+          id: 'risk-tolerance',
+          prompt: 'How comfortable are you with financial risk? What would happen if you lost your primary income for 3-6 months?',
+          category: 'consideration',
+          helpText: 'This affects emergency fund size, investment strategy, and insurance needs.',
+          relatedResources: ['risk-assessment-guide']
+        }
+      ]
+    },
+    {
+      id: 'budget-creation',
+      title: 'Budget Framework & System Design',
+      description: 'Create a sustainable budget system that works for your lifestyle',
+      order: 2,
+      reflectionPrompts: [
+        {
+          id: 'budgeting-method',
+          prompt: 'Which budgeting method appeals to you: 50/30/20 rule, zero-based budgeting, envelope method, or percentage-based?',
+          category: 'decision',
+          helpText: '50/30/20: needs/wants/savings. Zero-based: every dollar assigned. Envelope: cash for categories.',
+          relatedResources: ['budgeting-methods-comparison']
+        },
+        {
+          id: 'needs-vs-wants',
+          prompt: 'How do you distinguish between needs and wants? What expenses feel necessary but might actually be optional?',
+          category: 'consideration',
+          helpText: 'Challenge assumptions. Is the expensive gym membership a need if you could work out at home?'
+        },
+        {
+          id: 'income-allocation',
+          prompt: 'How will you allocate your income across categories: housing, food, transportation, utilities, savings, debt payment, entertainment?',
+          category: 'planning',
+          helpText: 'Start with fixed expenses, then allocate remaining income to priorities and goals.'
+        },
+        {
+          id: 'savings-rate',
+          prompt: 'What percentage of your income can you realistically save each month? Start with a sustainable amount.',
+          category: 'planning',
+          helpText: 'Even 1% is a start. Financial experts recommend 10-20%, but any consistent saving builds the habit.'
+        },
+        {
+          id: 'flexibility-buffer',
+          prompt: 'How much flexibility do you need in your budget for unexpected expenses or income changes?',
+          category: 'consideration',
+          helpText: 'Build in buffer amounts for categories like groceries and entertainment that naturally vary.'
+        },
+        {
+          id: 'tracking-system',
+          prompt: 'How will you track your spending: apps, spreadsheets, or manual methods? What system will you actually use consistently?',
+          category: 'planning',
+          helpText: 'The best system is the one you\'ll use. Consider Mint, YNAB, spreadsheets, or simple notebook tracking.',
+          relatedResources: ['budgeting-tools-comparison']
+        }
+      ]
+    },
+    {
+      id: 'debt-management',
+      title: 'Debt Elimination Strategy',
+      description: 'Develop a strategic plan to eliminate debt efficiently',
+      order: 3,
+      reflectionPrompts: [
+        {
+          id: 'debt-strategy',
+          prompt: 'Will you use the debt snowball (smallest balances first) or debt avalanche (highest interest rates first) method?',
+          category: 'decision',
+          helpText: 'Snowball provides psychological wins; avalanche saves more money. Choose based on your personality.',
+          relatedResources: ['debt-payoff-strategies']
+        },
+        {
+          id: 'minimum-payments',
+          prompt: 'Are you currently making minimum payments on all debts? Can you afford to pay more on any specific debt?',
+          category: 'planning',
+          helpText: 'Always make minimums to avoid penalties, then put extra money toward your priority debt.'
+        },
+        {
+          id: 'debt-consolidation',
+          prompt: 'Would debt consolidation or balance transfers help lower your interest rates and simplify payments?',
+          category: 'research',
+          helpText: 'Consider personal loans, balance transfer credit cards, or home equity loans for consolidation.',
+          relatedResources: ['debt-consolidation-guide']
+        },
+        {
+          id: 'extra-payment-sources',
+          prompt: 'Where can you find extra money for debt payments: tax refunds, bonuses, side income, expense cuts?',
+          category: 'planning',
+          helpText: 'Apply windfalls directly to debt. Even small amounts make a difference with compound interest.'
+        },
+        {
+          id: 'debt-prevention',
+          prompt: 'What spending triggers lead to new debt? How will you prevent accumulating more debt while paying off current balances?',
+          category: 'consideration',
+          helpText: 'Identify emotional spending, remove temptations, and have a plan for unexpected expenses.'
+        },
+        {
+          id: 'debt-free-timeline',
+          prompt: 'Based on your payment plan, when will each debt be paid off? What will you do when you become debt-free?',
+          category: 'planning',
+          helpText: 'Create a timeline to stay motivated. Plan to redirect debt payments to savings and investments.'
+        }
+      ]
+    },
+    {
+      id: 'emergency-fund',
+      title: 'Emergency Fund Building',
+      description: 'Build financial security with an appropriate emergency fund',
+      order: 4,
+      reflectionPrompts: [
+        {
+          id: 'emergency-fund-size',
+          prompt: 'How large should your emergency fund be based on your expenses and income stability?',
+          category: 'planning',
+          helpText: 'General rule: 3-6 months of expenses. Increase if you have variable income or high-risk job.',
+          relatedResources: ['emergency-fund-calculator']
+        },
+        {
+          id: 'fund-priorities',
+          prompt: 'Should you build your emergency fund before paying off debt, or tackle both simultaneously?',
+          category: 'decision',
+          helpText: 'Start with $1,000 mini emergency fund, then focus on debt, then complete full emergency fund.'
+        },
+        {
+          id: 'emergency-definition',
+          prompt: 'What constitutes a true emergency that warrants using your emergency fund?',
+          category: 'consideration',
+          helpText: 'Real emergencies: job loss, major medical bills, essential repairs. Not: vacations or sales.'
+        },
+        {
+          id: 'fund-location',
+          prompt: 'Where will you keep your emergency fund for easy access but avoid temptation to spend it?',
+          category: 'planning',
+          helpText: 'High-yield savings accounts offer accessibility and growth. Avoid checking accounts or investments.'
+        },
+        {
+          id: 'fund-building-strategy',
+          prompt: 'How will you systematically build your emergency fund: automatic transfers, cash windfalls, or gradual increases?',
+          category: 'planning',
+          helpText: 'Automate transfers to make saving effortless. Start small and increase gradually.'
+        },
+        {
+          id: 'fund-replenishment',
+          prompt: 'If you use your emergency fund, what\'s your plan to replenish it quickly?',
+          category: 'consideration',
+          helpText: 'Prioritize rebuilding the fund over other financial goals until it\'s restored to full amount.'
+        }
+      ]
+    },
+    {
+      id: 'savings-investment',
+      title: 'Savings & Investment Planning',
+      description: 'Develop strategies for growing wealth beyond emergency funds',
+      order: 5,
+      reflectionPrompts: [
+        {
+          id: 'savings-goals-timeline',
+          prompt: 'What specific savings goals do you have and when do you need the money?',
+          category: 'planning',
+          helpText: 'Different timeframes require different strategies: short-term (savings), long-term (investments).',
+          relatedResources: ['investment-timeline-guide']
+        },
+        {
+          id: 'retirement-planning',
+          prompt: 'Are you contributing to retirement accounts? Do you have employer matching you\'re not utilizing?',
+          category: 'research',
+          helpText: 'Employer 401k matching is free money. Contribute enough to get full match before other investments.'
+        },
+        {
+          id: 'investment-knowledge',
+          prompt: 'What is your current knowledge level about investing? What do you need to learn before investing?',
+          category: 'consideration',
+          helpText: 'Start with basics: diversification, risk vs return, index funds vs individual stocks.',
+          relatedResources: ['investing-basics-guide']
+        },
+        {
+          id: 'risk-vs-return',
+          prompt: 'How do you balance the desire for investment growth with the need for financial security?',
+          category: 'decision',
+          helpText: 'Younger investors can take more risk; those near retirement need more stability.'
+        },
+        {
+          id: 'automated-investing',
+          prompt: 'How can you automate your savings and investment contributions to ensure consistency?',
+          category: 'planning',
+          helpText: 'Automatic transfers remove emotion and ensure you pay yourself first consistently.'
+        },
+        {
+          id: 'investment-monitoring',
+          prompt: 'How often will you review and rebalance your investment portfolio? What triggers would cause changes?',
+          category: 'planning',
+          helpText: 'Review quarterly, rebalance annually, or when allocations drift 5+ percentage points from targets.'
+        }
+      ]
+    },
+    {
+      id: 'ongoing-optimization',
+      title: 'Ongoing Budget Optimization & Review',
+      description: 'Maintain and improve your financial system over time',
+      order: 6,
+      reflectionPrompts: [
+        {
+          id: 'budget-review-schedule',
+          prompt: 'How often will you review and adjust your budget: monthly, quarterly, or when major life changes occur?',
+          category: 'planning',
+          helpText: 'Regular reviews help catch problems early and adjust for changing circumstances.'
+        },
+        {
+          id: 'expense-optimization',
+          prompt: 'What expenses can you optimize without sacrificing quality of life: subscriptions, insurance, utilities?',
+          category: 'research',
+          helpText: 'Review all recurring charges annually. Negotiate bills, comparison shop, and cancel unused services.',
+          relatedResources: ['expense-reduction-strategies']
+        },
+        {
+          id: 'income-growth',
+          prompt: 'What opportunities exist to increase your income: raises, side hustles, skill development, career changes?',
+          category: 'consideration',
+          helpText: 'Growing income is often easier than cutting expenses and has unlimited potential.'
+        },
+        {
+          id: 'financial-education',
+          prompt: 'How will you continue learning about personal finance and improving your financial literacy?',
+          category: 'planning',
+          helpText: 'Read books, take courses, listen to podcasts, or work with financial advisors as needed.'
+        },
+        {
+          id: 'accountability-system',
+          prompt: 'What accountability systems will help you stick to your budget and financial goals?',
+          category: 'consideration',
+          helpText: 'Partner check-ins, financial apps, automatic systems, or professional guidance.'
+        },
+        {
+          id: 'milestone-celebration',
+          prompt: 'How will you celebrate financial milestones without derailing your progress?',
+          category: 'planning',
+          helpText: 'Plan modest celebrations that align with your values and budget for staying motivated.'
+        }
+      ]
+    }
+  ],
+  resources: [
+    {
+      id: 'comprehensive-budget-template',
+      title: 'Complete Budget Planning Spreadsheet Template',
+      type: 'tool',
+      excerpt: 'Detailed Excel/Google Sheets template with multiple budgeting methods, debt payoff calculators, and goal tracking.',
+      content: 'This comprehensive spreadsheet includes multiple budget frameworks in one file: the 50/30/20 rule, zero-based budgeting, and envelope method tabs. **Income tracking** helps you document all income sources with variability notes for irregular income. **Expense categories** are pre-built but customizable, with average spending guides to help you estimate. **Debt payoff calculator** compares snowball vs avalanche methods with visual timelines and interest savings calculations. **Emergency fund tracker** shows progress toward your goal with automated calculations. **Goal setting section** helps you set SMART financial goals with deadline tracking. **Monthly review template** guides you through assessing budget performance and making adjustments. All formulas are built-in, requiring only data entry.',
+      tags: ['budget-template', 'spreadsheet', 'debt-calculator', 'goal-tracking'],
+      readTime: '15 min',
+      difficulty: 'beginner'
+    },
+    {
+      id: 'debt-elimination-strategy-guide',
+      title: 'Complete Debt Elimination Strategy & Psychology Guide',
+      type: 'guide',
+      excerpt: 'Comprehensive guide to debt payoff methods, psychological strategies, and maintaining motivation throughout the process.',
+      content: 'Debt elimination requires both mathematical strategy and psychological understanding. **Mathematical comparison** of debt snowball (smallest balances first) versus debt avalanche (highest interest rates first) with calculations showing time and interest differences. **Psychological factors** explain why snowball method works despite costing more: quick wins build momentum and confidence. **Hybrid approaches** combine both methods for optimal psychological and financial benefits. **Negotiation strategies** for working with creditors to reduce interest rates, waive fees, or establish payment plans. **Balance transfer and consolidation** guidance including when these strategies help versus hurt your situation. **Staying motivated** through the long payoff process with milestone celebrations and accountability systems. **Preventing new debt** while paying off existing balances through spending triggers identification and management.',
+      tags: ['debt-payoff', 'financial-psychology', 'negotiation', 'motivation'],
+      readTime: '20 min',
+      difficulty: 'intermediate'
+    },
+    {
+      id: 'emergency-fund-optimization-guide',
+      title: 'Emergency Fund Size & Optimization Strategy Guide',
+      type: 'guide',
+      excerpt: 'Determine optimal emergency fund size based on your situation and learn where to keep funds for maximum benefit.',
+      content: 'Emergency fund size isn\'t one-size-fits-all and depends on multiple personal factors. **Size determination factors:** job security, income variability, family dependents, health status, and major expenses like car or home maintenance. **Industry-specific considerations:** freelancers and commission workers need larger funds than salaried employees with stable companies. **Dual-income households** may need less than single-income families, but consider correlation risk if both work in same industry. **Geographic factors** like cost of living and natural disaster frequency affect fund needs. **Fund location strategies:** high-yield savings accounts, money market accounts, and short-term CDs for different portions of your fund. **Laddering approach** keeps portions of fund in different accounts for varying access speeds and yield optimization. **Fund growth strategies** to build your emergency fund faster through automation, windfalls, and gradual increases.',
+      tags: ['emergency-fund', 'financial-security', 'savings-optimization', 'risk-management'],
+      readTime: '18 min',
+      difficulty: 'intermediate'
+    },
+    {
+      id: 'budgeting-method-comparison-tool',
+      title: 'Budgeting Methods Comparison & Selection Tool',
+      type: 'tool',
+      excerpt: 'Interactive tool to help you choose the best budgeting method based on your personality, lifestyle, and financial goals.',
+      content: 'Different budgeting methods work better for different personalities and situations. **50/30/20 Rule** allocates 50% to needs, 30% to wants, 20% to savings and debt payment - simple but may not fit all situations. **Zero-Based Budgeting** assigns every dollar a purpose, providing maximum control but requiring more time and detail orientation. **Envelope Method** uses cash for variable expenses, providing tangible spending limits but less convenient in digital world. **Pay Yourself First** prioritizes savings and debt payment, then budgets remaining income for expenses. **Percentage-Based Budgeting** allocates fixed percentages to each category, providing structure while allowing income scaling. **Assessment tool** helps you evaluate which method fits your personality: detail-oriented vs simple, cash vs digital preference, variable vs fixed income, financial goals complexity.',
+      tags: ['budgeting-methods', 'financial-personality', 'method-selection', 'budget-comparison'],
+      readTime: '12 min',
+      difficulty: 'beginner'
+    },
+    {
+      id: 'financial-goal-setting-framework',
+      title: 'SMART Financial Goal Setting & Achievement Framework',
+      type: 'guide',
+      excerpt: 'Comprehensive framework for setting, tracking, and achieving financial goals with accountability systems.',
+      content: 'Financial goals need structure and strategy to become reality. **SMART goals framework** adapted for finance: Specific amounts and purposes, Measurable progress milestones, Achievable given your income and expenses, Relevant to your values and life plans, Time-bound with clear deadlines. **Goal hierarchy** helps prioritize when you can\'t fund everything: emergency fund first, high-interest debt payoff, employer 401k match, remaining debt payoff, full emergency fund, then other goals. **Breaking down large goals** into smaller milestones maintains motivation and allows course corrections. **Automation strategies** remove willpower from equation through automatic transfers and systematic investing. **Progress tracking systems** help you stay motivated and identify when adjustments are needed. **Accountability methods** including partner check-ins, public commitments, or professional guidance to maintain momentum.',
+      tags: ['goal-setting', 'SMART-goals', 'financial-planning', 'accountability'],
+      readTime: '16 min',
+      difficulty: 'beginner'
+    }
+  ],
+  expertTips: [
+    {
+      id: 'budget-tip-1',
+      tip: 'Pay yourself first by automatically transferring money to savings and debt payments before you have a chance to spend it on other things.',
+      author: 'Ramit Sethi, Author of "I Will Teach You To Be Rich"',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'budget-tip-2',
+      tip: 'Focus on optimizing your big three expenses: housing, transportation, and food. Small changes to these have much bigger impact than cutting $5 coffees.',
+      author: 'Paula Pant, Founder of Afford Anything',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'debt-tip-1',
+      tip: 'Use the debt snowball method if you need psychological wins to stay motivated. The math may favor debt avalanche, but psychology often matters more than math.',
+      author: 'Dave Ramsey, Financial Author and Radio Host',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'emergency-fund-tip',
+      tip: 'Start with a $1,000 starter emergency fund before tackling debt. This prevents new debt when small emergencies arise during your debt payoff journey.',
+      author: 'Chris Hogan, Financial Expert',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'automation-tip',
+      tip: 'Automate everything you can: bill payments, savings transfers, and investments. This removes emotions and ensures consistency in your financial plan.',
+      author: 'David Bach, Author of "The Automatic Millionaire"',
+      category: 'planning',
+      importance: 'medium'
+    },
+    {
+      id: 'budget-review-tip',
+      tip: 'Review your budget monthly but don\'t obsess daily. Give yourself permission to be imperfect as you learn what works for your lifestyle.',
+      author: 'Tiffany Aliche, "The Budgetnista"',
+      category: 'planning',
+      importance: 'medium'
+    }
+  ]
+};
+
+// Comprehensive business launch guidance with market research and validation focus
+export const businessLaunchTemplate: GuidanceTemplate = {
+  id: 'business-launch',
+  title: 'Business Launch Guide',
+  description: 'Launch your business with market research, business planning, and strategic execution',
+  category: 'entrepreneurship',
+  icon: '🚀',
+  sections: [
+    {
+      id: 'idea-validation',
+      title: 'Business Idea Validation & Market Research',
+      description: 'Validate your business concept and understand your market deeply',
+      order: 1,
+      reflectionPrompts: [
+        {
+          id: 'problem-identification',
+          prompt: 'What specific problem does your business solve, and how painful is this problem for potential customers?',
+          category: 'research',
+          helpText: 'The more painful the problem, the more customers will pay to solve it. Validate problem existence through interviews.',
+          relatedResources: ['problem-validation-guide', 'customer-interview-templates']
+        },
+        {
+          id: 'target-customer',
+          prompt: 'Who is your ideal customer? Create detailed customer personas including demographics, behaviors, and pain points.',
+          category: 'research',
+          helpText: 'Be specific: "busy working mothers aged 35-45 with household incomes over $75k" vs "everyone".',
+          relatedResources: ['customer-persona-template']
+        },
+        {
+          id: 'market-size',
+          prompt: 'How large is your addressable market? What percentage would you need to capture to be successful?',
+          category: 'research',
+          helpText: 'Research Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and realistic market share.'
+        },
+        {
+          id: 'competitive-analysis',
+          prompt: 'Who are your direct and indirect competitors? How will you differentiate your offering?',
+          category: 'research',
+          helpText: 'Include businesses solving the same problem differently. Study their pricing, marketing, and customer feedback.',
+          relatedResources: ['competitive-analysis-framework']
+        },
+        {
+          id: 'value-proposition',
+          prompt: 'What unique value do you provide that competitors don\'t? Why would customers choose you over alternatives?',
+          category: 'decision',
+          helpText: 'Your value proposition should be clear, specific, and focused on customer benefits, not features.'
+        },
+        {
+          id: 'mvp-concept',
+          prompt: 'What is the minimum viable product (MVP) you can create to test your concept with real customers?',
+          category: 'planning',
+          helpText: 'Start with the smallest version that solves the core problem. Avoid feature creep in early stages.',
+          relatedResources: ['mvp-development-guide']
+        }
+      ]
+    },
+    {
+      id: 'business-model',
+      title: 'Business Model & Revenue Strategy',
+      description: 'Define how your business will operate and generate revenue',
+      order: 2,
+      reflectionPrompts: [
+        {
+          id: 'revenue-streams',
+          prompt: 'How will your business make money? What are your primary and secondary revenue streams?',
+          category: 'planning',
+          helpText: 'Consider: one-time sales, subscriptions, licensing, advertising, commissions, or service fees.',
+          relatedResources: ['revenue-model-comparison']
+        },
+        {
+          id: 'pricing-strategy',
+          prompt: 'How will you price your product or service? What pricing model makes sense for your customers and market?',
+          category: 'decision',
+          helpText: 'Research competitor pricing, understand customer price sensitivity, and test different price points.',
+          relatedResources: ['pricing-strategy-guide']
+        },
+        {
+          id: 'cost-structure',
+          prompt: 'What are your fixed and variable costs? How do costs change as you scale?',
+          category: 'planning',
+          helpText: 'Include: materials, labor, rent, utilities, marketing, technology, legal, and professional services.'
+        },
+        {
+          id: 'unit-economics',
+          prompt: 'What is your customer acquisition cost (CAC) and customer lifetime value (CLV)? Are the unit economics sustainable?',
+          category: 'research',
+          helpText: 'CLV should be at least 3x higher than CAC for sustainable business. Calculate both conservatively.'
+        },
+        {
+          id: 'scalability',
+          prompt: 'How will your business scale? What needs to change as you grow from 10 to 100 to 1000 customers?',
+          category: 'consideration',
+          helpText: 'Consider operational complexity, staffing needs, technology requirements, and capital needs for growth.'
+        },
+        {
+          id: 'business-model-canvas',
+          prompt: 'Complete a business model canvas covering key partners, activities, resources, value propositions, customer relationships, channels, customer segments, cost structure, and revenue streams.',
+          category: 'planning',
+          helpText: 'The business model canvas provides a comprehensive one-page view of your business model.',
+          relatedResources: ['business-model-canvas-template']
+        }
+      ]
+    },
+    {
+      id: 'legal-structure',
+      title: 'Legal Structure & Compliance',
+      description: 'Establish proper legal foundation for your business',
+      order: 3,
+      reflectionPrompts: [
+        {
+          id: 'business-structure',
+          prompt: 'What legal structure is best for your business: sole proprietorship, LLC, corporation, or partnership?',
+          category: 'decision',
+          helpText: 'Consider liability protection, tax implications, ownership structure, and future investment plans.',
+          relatedResources: ['business-structure-comparison']
+        },
+        {
+          id: 'business-name',
+          prompt: 'What will you name your business? Is the name available for trademark and domain registration?',
+          category: 'planning',
+          helpText: 'Check name availability with state registrar, USPTO trademark database, and domain registrars.'
+        },
+        {
+          id: 'licenses-permits',
+          prompt: 'What licenses and permits do you need for your business type and location?',
+          category: 'research',
+          helpText: 'Requirements vary by industry and location. Check federal, state, and local requirements.',
+          relatedResources: ['business-license-checklist']
+        },
+        {
+          id: 'intellectual-property',
+          prompt: 'What intellectual property do you need to protect: trademarks, copyrights, patents, or trade secrets?',
+          category: 'consideration',
+          helpText: 'File trademark applications early and document your IP development process for protection.'
+        },
+        {
+          id: 'insurance-needs',
+          prompt: 'What insurance coverage does your business need: general liability, professional liability, product liability, or cyber liability?',
+          category: 'planning',
+          helpText: 'Insurance needs depend on business type, location, and risk exposure. Consult with business insurance agent.'
+        },
+        {
+          id: 'contracts-agreements',
+          prompt: 'What standard contracts and agreements do you need: customer terms, vendor agreements, employment contracts?',
+          category: 'planning',
+          helpText: 'Have lawyer review key contract templates. Good contracts prevent disputes and protect interests.',
+          relatedResources: ['essential-business-contracts']
+        }
+      ]
+    },
+    {
+      id: 'financial-planning',
+      title: 'Financial Planning & Funding',
+      description: 'Create financial projections and secure necessary funding',
+      order: 4,
+      reflectionPrompts: [
+        {
+          id: 'startup-costs',
+          prompt: 'What are your one-time startup costs and ongoing monthly expenses for the first year?',
+          category: 'planning',
+          helpText: 'Include: equipment, inventory, professional services, marketing, rent, utilities, insurance, licenses.',
+          relatedResources: ['startup-cost-calculator']
+        },
+        {
+          id: 'financial-projections',
+          prompt: 'Create financial projections for your first three years: revenue, expenses, cash flow, and profitability.',
+          category: 'planning',
+          helpText: 'Be conservative with revenue estimates and realistic with expenses. Model different growth scenarios.'
+        },
+        {
+          id: 'funding-needs',
+          prompt: 'How much capital do you need to launch and sustain the business until profitability?',
+          category: 'planning',
+          helpText: 'Include buffer for unexpected expenses and longer-than-expected time to profitability.'
+        },
+        {
+          id: 'funding-sources',
+          prompt: 'How will you fund your business: personal savings, loans, investors, crowdfunding, or grants?',
+          category: 'decision',
+          helpText: 'Each funding source has different requirements, timelines, and implications for control and equity.',
+          relatedResources: ['funding-options-guide']
+        },
+        {
+          id: 'financial-systems',
+          prompt: 'What accounting and financial management systems will you use to track performance?',
+          category: 'planning',
+          helpText: 'Set up proper bookkeeping, separate business accounts, and regular financial reporting from day one.'
+        },
+        {
+          id: 'break-even-analysis',
+          prompt: 'How many customers or sales do you need to break even? What happens if growth is slower than projected?',
+          category: 'consideration',
+          helpText: 'Understand your break-even point and have contingency plans for different growth scenarios.'
+        }
+      ]
+    },
+    {
+      id: 'marketing-launch',
+      title: 'Marketing Strategy & Launch Planning',
+      description: 'Develop marketing strategy and plan your business launch',
+      order: 5,
+      reflectionPrompts: [
+        {
+          id: 'brand-identity',
+          prompt: 'What is your brand identity: personality, values, visual style, and messaging strategy?',
+          category: 'decision',
+          helpText: 'Your brand should resonate with your target customers and differentiate you from competitors.',
+          relatedResources: ['brand-identity-guide']
+        },
+        {
+          id: 'marketing-channels',
+          prompt: 'Which marketing channels will you use to reach customers: social media, content marketing, paid advertising, partnerships?',
+          category: 'planning',
+          helpText: 'Focus on channels where your target customers spend time. Start with 2-3 channels and do them well.',
+          relatedResources: ['marketing-channel-selection']
+        },
+        {
+          id: 'content-strategy',
+          prompt: 'What content will you create to attract and educate potential customers?',
+          category: 'planning',
+          helpText: 'Create valuable content that addresses customer problems and positions you as a trusted expert.'
+        },
+        {
+          id: 'launch-strategy',
+          prompt: 'How will you launch your business: soft launch to test systems, or big promotional launch?',
+          category: 'decision',
+          helpText: 'Soft launches allow you to work out operational issues before wide promotion and customer influx.'
+        },
+        {
+          id: 'customer-acquisition',
+          prompt: 'What specific strategies will you use to acquire your first 10, 100, and 1000 customers?',
+          category: 'planning',
+          helpText: 'Early customer acquisition often requires hands-on, personal approaches that don\'t scale long-term.'
+        },
+        {
+          id: 'launch-timeline',
+          prompt: 'What is your launch timeline with key milestones and deadlines?',
+          category: 'planning',
+          helpText: 'Create realistic timeline with buffer time. Coordinate legal, operational, and marketing preparation.',
+          relatedResources: ['launch-timeline-template']
+        }
+      ]
+    },
+    {
+      id: 'operations-growth',
+      title: 'Operations Setup & Growth Planning',
+      description: 'Establish operations and plan for sustainable growth',
+      order: 6,
+      reflectionPrompts: [
+        {
+          id: 'operational-processes',
+          prompt: 'What are your core business processes from customer inquiry to delivery and support?',
+          category: 'planning',
+          helpText: 'Document processes early so you can optimize them and train others as you grow.'
+        },
+        {
+          id: 'technology-needs',
+          prompt: 'What technology systems do you need: website, CRM, accounting software, communication tools?',
+          category: 'planning',
+          helpText: 'Choose scalable solutions that can grow with your business. Avoid over-investing in complex systems initially.',
+          relatedResources: ['business-technology-stack']
+        },
+        {
+          id: 'quality-control',
+          prompt: 'How will you ensure consistent quality in your products or services as you scale?',
+          category: 'consideration',
+          helpText: 'Establish quality standards, measurement systems, and improvement processes from the beginning.'
+        },
+        {
+          id: 'team-building',
+          prompt: 'What roles will you need to hire first? How will you find and evaluate potential team members?',
+          category: 'planning',
+          helpText: 'Hire for skills you lack and tasks that free you to focus on highest-value activities.'
+        },
+        {
+          id: 'customer-service',
+          prompt: 'How will you handle customer service, support, and relationship management?',
+          category: 'planning',
+          helpText: 'Excellent customer service differentiates small businesses and drives word-of-mouth marketing.'
+        },
+        {
+          id: 'growth-metrics',
+          prompt: 'What key metrics will you track to measure business health and growth?',
+          category: 'planning',
+          helpText: 'Focus on metrics that drive decisions: revenue, customer acquisition, retention, and profitability.',
+          relatedResources: ['business-metrics-dashboard']
+        }
+      ]
+    }
+  ],
+  resources: [
+    {
+      id: 'comprehensive-business-plan-template',
+      title: 'Complete Business Plan Template with Financial Models',
+      type: 'tool',
+      excerpt: 'Comprehensive business plan template with integrated financial projections, market analysis, and pitch deck components.',
+      content: 'This complete business plan template guides you through every section needed for launch and investment. **Executive Summary** template with compelling overview and key metrics. **Market Analysis** framework with competitor research, customer personas, and market sizing tools. **Business Model** section with revenue model comparison and unit economics calculators. **Marketing Strategy** templates with channel selection, customer acquisition costs, and campaign planning. **Operations Plan** covering processes, technology needs, and quality control systems. **Management Team** section highlighting key personnel and organizational structure. **Financial Projections** with 3-year models, cash flow analysis, and scenario planning. **Risk Analysis** identifying potential challenges and mitigation strategies. All sections include examples, questions to consider, and links to additional resources.',
+      tags: ['business-plan', 'template', 'financial-modeling', 'market-analysis'],
+      readTime: '45 min',
+      difficulty: 'intermediate'
+    },
+    {
+      id: 'customer-validation-interview-guide',
+      title: 'Customer Validation & Problem Interview Framework',
+      type: 'guide',
+      excerpt: 'Systematic approach to validating business ideas through customer interviews and market research.',
+      content: 'Customer validation prevents building products nobody wants through systematic discovery. **Problem Interview Structure:** Start with demographic questions, explore current solutions, uncover pain points, and understand willingness to pay. **Solution Interview Framework:** Present your concept, gather feedback, test pricing sensitivity, and measure genuine interest vs politeness. **Interview Best Practices:** Ask open-ended questions, listen more than you talk, and avoid leading questions that bias responses. **Sample Size Guidelines:** Interview 20-30 potential customers minimum, with representation across different customer segments. **Data Analysis Methods:** Look for patterns in responses, quantify pain levels, and identify common objections or concerns. **Pivot Signals:** When to modify your concept based on feedback versus when to persist through normal resistance. **Documentation Templates:** Structured forms for capturing interview data and synthesizing insights across multiple conversations.',
+      tags: ['customer-validation', 'market-research', 'interviews', 'problem-solution-fit'],
+      readTime: '25 min',
+      difficulty: 'beginner'
+    },
+    {
+      id: 'funding-options-comprehensive-guide',
+      title: 'Complete Small Business Funding Options & Application Guide',
+      type: 'guide',
+      excerpt: 'Detailed overview of funding sources with application requirements, pros/cons, and success strategies.',
+      content: 'Different funding sources suit different business types and growth stages. **Bootstrapping Strategies:** Self-funding approaches, revenue reinvestment, and minimizing initial capital needs. **Small Business Loans:** SBA loans, bank term loans, and equipment financing with qualification requirements and application tips. **Angel Investors:** Finding angels, preparing pitches, and understanding equity implications and investor expectations. **Venture Capital:** When VC makes sense, preparing for due diligence, and managing investor relationships. **Crowdfunding Platforms:** Kickstarter, Indiegogo, and equity crowdfunding with campaign planning and execution strategies. **Grants and Competitions:** Government grants, industry competitions, and accelerator programs with application strategies. **Alternative Financing:** Revenue-based financing, merchant cash advances, and peer-to-peer lending options. Each section includes qualification criteria, application processes, typical terms, and strategic considerations for business control and growth.',
+      tags: ['business-funding', 'startup-capital', 'investors', 'loans', 'grants'],
+      readTime: '35 min',
+      difficulty: 'intermediate'
+    },
+    {
+      id: 'business-launch-timeline-template',
+      title: '90-Day Business Launch Timeline & Checklist',
+      type: 'checklist',
+      excerpt: 'Comprehensive 90-day launch plan with weekly milestones, task priorities, and coordination strategies.',
+      content: 'A systematic 90-day launch timeline prevents overlooking critical tasks and ensures coordinated execution. **Days 1-30 (Foundation Phase):** Complete legal structure formation, business registration, EIN application, business bank account opening, and initial branding decisions. **Days 31-60 (Development Phase):** Finalize product/service development, establish vendor relationships, create operational processes, develop marketing materials, and begin content creation. **Days 61-90 (Launch Phase):** Implement marketing campaigns, conduct final testing, train support staff, coordinate PR efforts, and execute soft launch with select customers. **Weekly Review Process:** Assess progress, identify bottlenecks, adjust timelines, and maintain motivation through milestone celebrations. **Contingency Planning:** Buffer time for unexpected delays, alternative approaches for critical path items, and escalation procedures for major obstacles. **Success Metrics:** Define launch success criteria and measurement systems to evaluate performance against objectives.',
+      tags: ['launch-planning', 'timeline', 'project-management', 'startup-checklist'],
+      readTime: '20 min',
+      difficulty: 'beginner'
+    },
+    {
+      id: 'competitive-analysis-framework',
+      title: 'Comprehensive Competitive Analysis & Positioning Framework',
+      type: 'tool',
+      excerpt: 'Systematic framework for analyzing competitors and developing differentiated positioning strategies.',
+      content: 'Understanding your competitive landscape is crucial for strategic positioning and market success. **Competitor Identification:** Map direct competitors (same solution, same customers), indirect competitors (different solution, same problem), and substitute solutions (completely different approaches). **Analysis Framework:** Evaluate pricing strategies, product/service features, marketing messages, customer reviews, strengths/weaknesses, and market positioning. **SWOT Analysis:** Assess each competitor\'s strengths, weaknesses, opportunities, and threats compared to your business concept. **Positioning Map:** Visual representation of competitive landscape showing price vs quality, features vs simplicity, or other relevant dimensions. **Differentiation Strategy:** Identify white space opportunities where you can position uniquely and develop compelling competitive advantages. **Monitoring System:** Establish ongoing competitive intelligence gathering through alerts, social media monitoring, and industry publications. Regular competitive reviews help you adapt strategy and identify new threats or opportunities.',
+      tags: ['competitive-analysis', 'market-positioning', 'differentiation', 'strategic-planning'],
+      readTime: '30 min',
+      difficulty: 'intermediate'
+    }
+  ],
+  expertTips: [
+    {
+      id: 'validation-tip-1',
+      tip: 'Fall in love with the problem, not your solution. Be willing to pivot your approach based on customer feedback while staying focused on solving a real problem.',
+      author: 'Eric Ries, Author of "The Lean Startup"',
+      category: 'research',
+      importance: 'high'
+    },
+    {
+      id: 'funding-tip-1',
+      tip: 'Bootstrap as long as possible before seeking external funding. Every dollar you raise costs you equity and control over your business decisions.',
+      author: 'Jason Fried, Founder of Basecamp',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'launch-tip-1',
+      tip: 'Launch before you feel ready. Your first version will never be perfect, and customer feedback is more valuable than internal perfection.',
+      author: 'Reid Hoffman, Founder of LinkedIn',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'customer-tip-1',
+      tip: 'Focus on acquiring 100 customers who absolutely love your product rather than 1,000 customers who kind of like it. Passionate customers drive growth.',
+      author: 'Paul Graham, Co-founder of Y Combinator',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'metrics-tip-1',
+      tip: 'Measure what matters for your business stage. Early stage: customer acquisition and retention. Growth stage: unit economics and scalability.',
+      author: 'Dave McClure, Founder of 500 Startups',
+      category: 'planning',
+      importance: 'medium'
+    },
+    {
+      id: 'team-tip-1',
+      tip: 'Hire slowly and fire quickly. Every early employee shapes your company culture and capabilities disproportionately.',
+      author: 'Ben Horowitz, Co-founder of Andreessen Horowitz',
+      category: 'planning',
+      importance: 'medium'
+    }
+  ]
+};
+
+// Comprehensive college planning and application guidance
+export const collegePlanningTemplate: GuidanceTemplate = {
+  id: 'college-planning',
+  title: 'College Planning Guide',
+  description: 'Navigate college applications, track deadlines, and plan your academic future strategically',
+  category: 'education',
+  icon: '🎓',
+  sections: [
+    {
+      id: 'academic-preparation',
+      title: 'Academic Preparation & Course Planning',
+      description: 'Build a strong academic foundation for college admissions',
+      order: 1,
+      reflectionPrompts: [
+        {
+          id: 'current-academic-standing',
+          prompt: 'What is your current GPA and class rank? How do these compare to your target colleges\' admission statistics?',
+          category: 'research',
+          helpText: 'Understand where you stand academically and what improvement is needed for target schools.',
+          relatedResources: ['gpa-improvement-strategies', 'college-admission-statistics']
+        },
+        {
+          id: 'course-rigor',
+          prompt: 'What advanced courses (AP, IB, dual enrollment) are available at your school, and which align with your intended major?',
+          category: 'planning',
+          helpText: 'Colleges value course rigor. Take challenging courses in subjects related to your intended field of study.',
+          relatedResources: ['course-selection-guide']
+        },
+        {
+          id: 'standardized-test-plan',
+          prompt: 'When will you take the SAT/ACT? Do you need subject tests? What\'s your target score range?',
+          category: 'planning',
+          helpText: 'Plan test dates allowing time for retakes. Research target score ranges for your preferred colleges.'
+        },
+        {
+          id: 'academic-interests',
+          prompt: 'What subjects genuinely interest you? How do your interests align with potential college majors?',
+          category: 'consideration',
+          helpText: 'Authentic interest often leads to better performance and more compelling applications.'
+        },
+        {
+          id: 'academic-weaknesses',
+          prompt: 'What are your academic weak spots, and how will you address them before applications?',
+          category: 'planning',
+          helpText: 'Address weaknesses through tutoring, extra practice, or strategic course selection.'
+        },
+        {
+          id: 'teacher-relationships',
+          prompt: 'Which teachers know you well and could write strong recommendation letters?',
+          category: 'consideration',
+          helpText: 'Build relationships with teachers in core subjects who can speak to your character and abilities.',
+          relatedResources: ['recommendation-letter-guide']
+        }
+      ]
+    },
+    {
+      id: 'college-research',
+      title: 'College Research & List Development',
+      description: 'Research and build a balanced list of target colleges',
+      order: 2,
+      reflectionPrompts: [
+        {
+          id: 'college-priorities',
+          prompt: 'What factors are most important to you: academic reputation, location, size, cost, campus culture, specific programs?',
+          category: 'decision',
+          helpText: 'Prioritize factors to guide your college search and avoid being overwhelmed by options.',
+          relatedResources: ['college-selection-criteria']
+        },
+        {
+          id: 'major-exploration',
+          prompt: 'What majors or career paths interest you? Do you need schools with specific programs or flexibility to explore?',
+          category: 'consideration',
+          helpText: 'Research program strength, requirements, and career outcomes for fields of interest.'
+        },
+        {
+          id: 'geographic-preferences',
+          prompt: 'Do you prefer to stay close to home or explore new regions? How does distance affect costs and logistics?',
+          category: 'consideration',
+          helpText: 'Consider travel costs, internship opportunities, and family proximity in location decisions.'
+        },
+        {
+          id: 'campus-size-culture',
+          prompt: 'Do you thrive in large universities with many options or smaller colleges with close-knit communities?',
+          category: 'consideration',
+          helpText: 'Visit different types of schools if possible to understand your preferences.'
+        },
+        {
+          id: 'college-list-strategy',
+          prompt: 'How will you balance reach, match, and safety schools in your application list?',
+          category: 'planning',
+          helpText: 'Apply to 8-12 schools: 2-3 reaches, 4-6 matches, 2-3 safeties that you\'d be happy attending.',
+          relatedResources: ['college-list-strategy-guide']
+        },
+        {
+          id: 'school-research-depth',
+          prompt: 'How will you research each school beyond rankings: visiting, talking to students, attending information sessions?',
+          category: 'research',
+          helpText: 'Demonstrate genuine interest through campus visits, interviews, and connecting with current students.'
+        }
+      ]
+    },
+    {
+      id: 'financial-planning',
+      title: 'College Financial Planning & Aid',
+      description: 'Understand college costs and financial aid options',
+      order: 3,
+      reflectionPrompts: [
+        {
+          id: 'college-budget',
+          prompt: 'What can your family realistically afford to spend on college annually?',
+          category: 'planning',
+          helpText: 'Have honest family discussions about budget constraints and expectations for student contribution.',
+          relatedResources: ['college-cost-calculator', 'family-contribution-guide']
+        },
+        {
+          id: 'financial-aid-understanding',
+          prompt: 'Do you understand the difference between grants, scholarships, work-study, and loans?',
+          category: 'research',
+          helpText: 'Learn financial aid terminology and how different aid types affect your total cost and debt.',
+          relatedResources: ['financial-aid-types-guide']
+        },
+        {
+          id: 'scholarship-strategy',
+          prompt: 'What scholarships might you qualify for: merit-based, need-based, local, or major-specific?',
+          category: 'research',
+          helpText: 'Start scholarship research early. Many have deadlines before college application deadlines.'
+        },
+        {
+          id: 'fafsa-preparation',
+          prompt: 'When will you complete the FAFSA? What financial documents will you need?',
+          category: 'planning',
+          helpText: 'FAFSA opens October 1st. Complete it as early as possible for best aid consideration.'
+        },
+        {
+          id: 'student-loan-understanding',
+          prompt: 'Do you understand how student loans work and the implications of borrowing for your future?',
+          category: 'consideration',
+          helpText: 'Understand interest rates, repayment options, and how loan debt affects post-graduation decisions.'
+        },
+        {
+          id: 'value-assessment',
+          prompt: 'How will you evaluate whether a college\'s cost is worth the potential return on investment?',
+          category: 'decision',
+          helpText: 'Consider graduation rates, job placement statistics, and alumni earning potential for your major.',
+          relatedResources: ['college-roi-analysis']
+        }
+      ]
+    },
+    {
+      id: 'application-strategy',
+      title: 'Application Strategy & Essays',
+      description: 'Develop compelling applications that showcase your unique story',
+      order: 4,
+      reflectionPrompts: [
+        {
+          id: 'personal-story',
+          prompt: 'What is your unique story or perspective that differentiates you from other applicants?',
+          category: 'consideration',
+          helpText: 'Identify experiences, challenges, or interests that make you memorable and authentic.',
+          relatedResources: ['personal-statement-brainstorming']
+        },
+        {
+          id: 'essay-topics',
+          prompt: 'What experiences or insights could make compelling essay topics that reveal your character?',
+          category: 'planning',
+          helpText: 'Choose topics that show growth, resilience, leadership, or unique perspective rather than achievements.',
+          relatedResources: ['essay-topic-selection-guide']
+        },
+        {
+          id: 'extracurricular-narrative',
+          prompt: 'How do your extracurricular activities tell a coherent story about your interests and commitments?',
+          category: 'consideration',
+          helpText: 'Quality over quantity. Deep involvement in fewer activities is better than superficial participation in many.'
+        },
+        {
+          id: 'application-timeline',
+          prompt: 'What is your timeline for completing applications, essays, and gathering recommendations?',
+          category: 'planning',
+          helpText: 'Start early and work backward from deadlines. Allow extra time for essay revisions and unexpected issues.',
+          relatedResources: ['application-timeline-template']
+        },
+        {
+          id: 'essay-feedback-process',
+          prompt: 'Who will review your essays and provide constructive feedback?',
+          category: 'planning',
+          helpText: 'Get feedback from teachers, counselors, and trusted adults, but ensure your voice remains authentic.'
+        },
+        {
+          id: 'application-differentiation',
+          prompt: 'How will you tailor each application to show genuine interest and fit with each specific school?',
+          category: 'planning',
+          helpText: 'Research each school\'s values, programs, and culture to customize your "Why this college?" responses.'
+        }
+      ]
+    },
+    {
+      id: 'extracurricular-development',
+      title: 'Extracurricular Activities & Leadership',
+      description: 'Build meaningful extracurricular involvement and leadership experience',
+      order: 5,
+      reflectionPrompts: [
+        {
+          id: 'current-activities',
+          prompt: 'What extracurricular activities are you currently involved in, and how deeply are you committed?',
+          category: 'research',
+          helpText: 'Evaluate your current involvement level and consider where you can deepen your impact.'
+        },
+        {
+          id: 'leadership-opportunities',
+          prompt: 'Where can you take on leadership roles or create new initiatives?',
+          category: 'planning',
+          helpText: 'Leadership doesn\'t require titles. Consider starting projects, mentoring others, or solving problems.'
+        },
+        {
+          id: 'community-service',
+          prompt: 'What causes do you care about, and how can you make a meaningful contribution?',
+          category: 'consideration',
+          helpText: 'Choose service opportunities aligned with your values for more authentic and sustained involvement.'
+        },
+        {
+          id: 'summer-planning',
+          prompt: 'How will you use summer breaks productively: internships, programs, jobs, or intensive projects?',
+          category: 'planning',
+          helpText: 'Summers offer opportunities for deeper exploration of interests and building impressive experiences.',
+          relatedResources: ['summer-program-guide']
+        },
+        {
+          id: 'skill-development',
+          prompt: 'What skills or talents do you want to develop further, and how will you pursue them?',
+          category: 'planning',
+          helpText: 'Developing expertise in an area shows dedication and can become a distinguishing factor.'
+        },
+        {
+          id: 'impact-measurement',
+          prompt: 'How do you measure the impact of your extracurricular involvement?',
+          category: 'consideration',
+          helpText: 'Quantify your contributions where possible and reflect on personal growth and learning.'
+        }
+      ]
+    },
+    {
+      id: 'decision-preparation',
+      title: 'Decision Making & Transition Planning',
+      description: 'Prepare for college decisions and transition successfully',
+      order: 6,
+      reflectionPrompts: [
+        {
+          id: 'decision-criteria',
+          prompt: 'What criteria will you use to choose between college acceptances?',
+          category: 'decision',
+          helpText: 'Establish decision criteria before receiving acceptances to avoid emotional decision-making.',
+          relatedResources: ['college-decision-matrix']
+        },
+        {
+          id: 'admitted-student-visits',
+          prompt: 'How will you evaluate colleges after acceptance: overnight visits, sitting in on classes, talking to current students?',
+          category: 'planning',
+          helpText: 'Use accepted student days and opportunities to get realistic impressions of campus life.'
+        },
+        {
+          id: 'gap-year-consideration',
+          prompt: 'Have you considered taking a gap year? What would make a gap year valuable for your goals?',
+          category: 'consideration',
+          helpText: 'Gap years can be valuable for maturity, experience, and clarity, but need structured plans.'
+        },
+        {
+          id: 'transition-preparation',
+          prompt: 'How will you prepare for the transition to college independence: life skills, academic skills, emotional preparation?',
+          category: 'planning',
+          helpText: 'Practice independence gradually: managing money, doing laundry, self-advocacy, time management.',
+          relatedResources: ['college-transition-checklist']
+        },
+        {
+          id: 'support-systems',
+          prompt: 'What support systems will you need in college, and how will you build them?',
+          category: 'consideration',
+          helpText: 'Consider academic support, social connections, mental health resources, and family communication.'
+        },
+        {
+          id: 'goal-setting',
+          prompt: 'What goals do you have for your college experience beyond just getting a degree?',
+          category: 'planning',
+          helpText: 'Consider academic goals, personal growth, relationships, experiences, and career preparation.'
+        }
+      ]
+    }
+  ],
+  resources: [
+    {
+      id: 'college-application-timeline-template',
+      title: 'Complete College Application Timeline & Checklist',
+      type: 'checklist',
+      excerpt: 'Comprehensive 4-year timeline with grade-by-grade tasks, deadlines, and preparation strategies.',
+      content: 'College preparation should begin freshman year for best results. **Freshman Year:** Focus on strong grades, explore interests through electives and clubs, build relationships with teachers, and begin thinking about course planning. **Sophomore Year:** Continue grade improvement, take PSAT for practice, increase extracurricular involvement, and start preliminary college research. **Junior Year:** Take challenging courses, prepare for and take SAT/ACT, meet with guidance counselor, begin serious college research, and request recommendation letters. **Senior Year:** Complete applications, write essays, apply for financial aid, make final college decision, and prepare for transition. **Monthly task breakdown** provides specific actions for each time period, **deadline tracking** prevents missing important dates, and **priority levels** help focus on most important tasks when time is limited.',
+      tags: ['college-timeline', 'application-checklist', 'deadline-tracking', 'grade-planning'],
+      readTime: '25 min',
+      difficulty: 'beginner'
+    },
+    {
+      id: 'college-essay-writing-guide',
+      title: 'College Essay Writing & Personal Statement Guide',
+      type: 'guide',
+      excerpt: 'Comprehensive guide to writing compelling college essays with topic selection, structure, and revision strategies.',
+      content: 'Strong college essays reveal character and differentiate applicants beyond grades and test scores. **Topic Selection:** Choose experiences that show growth, resilience, unique perspective, or passion rather than listing achievements. Avoid cliché topics unless you have a unique angle. **Essay Structure:** Use narrative techniques with engaging openings, specific details, and reflective conclusions that connect to your character or goals. **Common Application Prompts:** Detailed analysis of each prompt with successful example approaches and brainstorming techniques. **Supplemental Essays:** Strategies for "Why this college?" essays, major-specific prompts, and diversity statements. **Revision Process:** Multiple draft iterations focusing first on content and story, then structure and flow, finally grammar and word choice. **Voice and Authenticity:** Maintain your authentic voice while meeting admissions officer expectations for maturity and insight.',
+      tags: ['college-essays', 'personal-statement', 'application-writing', 'storytelling'],
+      readTime: '35 min',
+      difficulty: 'intermediate'
+    },
+    {
+      id: 'financial-aid-comprehensive-guide',
+      title: 'Complete College Financial Aid & Scholarship Guide',
+      type: 'guide',
+      excerpt: 'Detailed guide to financial aid types, application processes, and strategies for minimizing college costs.',
+      content: 'Understanding financial aid helps families make informed college decisions and minimize debt. **FAFSA Completion:** Step-by-step guidance for completing the Free Application for Federal Student Aid, including required documents and common mistakes to avoid. **Aid Types Explained:** Grants and scholarships (free money), work-study programs (earn while learning), and loans (borrowed money with repayment obligations). **Merit vs Need-Based Aid:** Understand qualification criteria and application strategies for different aid types. **Scholarship Search Strategy:** Systematic approach to finding scholarships through school counselors, online databases, local organizations, and major-specific opportunities. **Financial Aid Timeline:** Critical deadlines for FAFSA, CSS Profile, and individual college aid applications. **Negotiation Strategies:** How to appeal aid decisions and leverage competing offers ethically. **Cost Comparison Tools:** Methods for comparing total cost of attendance across different schools and aid packages.',
+      tags: ['financial-aid', 'scholarships', 'FAFSA', 'college-costs', 'student-loans'],
+      readTime: '40 min',
+      difficulty: 'intermediate'
+    },
+    {
+      id: 'college-selection-criteria-tool',
+      title: 'College Selection Criteria & Decision Matrix',
+      type: 'tool',
+      excerpt: 'Interactive tool to help prioritize college selection factors and compare schools objectively.',
+      content: 'Choosing colleges requires balancing multiple factors that matter differently to each student. **Selection Criteria:** Academic reputation and program strength, location and distance from home, campus size and culture, cost and financial aid, career services and alumni networks, research opportunities, diversity and inclusion, athletics and recreation, housing and dining options. **Weighting System:** Assign importance levels to different factors based on your priorities and goals. **School Comparison Matrix:** Evaluate each college against your criteria with scoring system for objective comparison. **Financial Comparison:** Tools for comparing total cost of attendance, debt projection, and return on investment analysis. **Fit Assessment:** Evaluate how well each school matches your learning style, social preferences, and career goals. **Decision Framework:** Structured approach to making final college choice that balances emotional and practical considerations.',
+      tags: ['college-selection', 'decision-matrix', 'school-comparison', 'college-fit'],
+      readTime: '20 min',
+      difficulty: 'beginner'
+    },
+    {
+      id: 'standardized-test-prep-strategy',
+      title: 'SAT/ACT Preparation Strategy & Score Improvement Guide',
+      type: 'guide',
+      excerpt: 'Strategic approach to standardized test preparation with study plans, resource recommendations, and test-taking strategies.',
+      content: 'Standardized test scores remain important for college admissions and merit scholarships. **Test Selection:** Choose between SAT and ACT based on your strengths, with diagnostic tests to determine better fit. **Score Goal Setting:** Research target score ranges for your college list and set realistic improvement goals based on starting scores. **Study Plan Development:** Create structured study schedule balancing content review, practice tests, and skill development based on time available. **Resource Recommendations:** Evaluate prep books, online courses, tutoring, and free resources to find best fit for learning style and budget. **Content Strategy:** Subject-specific strategies for math, reading, writing, and science sections with common mistake patterns and improvement techniques. **Test Day Strategy:** Timing management, question prioritization, educated guessing strategies, and anxiety management techniques. **Retake Decisions:** When to retake tests based on score improvement potential and college application timelines.',
+      tags: ['SAT-prep', 'ACT-prep', 'test-strategy', 'score-improvement', 'study-planning'],
+      readTime: '30 min',
+      difficulty: 'intermediate'
+    }
+  ],
+  expertTips: [
+    {
+      id: 'academic-tip-1',
+      tip: 'Focus on depth over breadth in activities. Colleges prefer students who show sustained commitment and leadership in fewer areas rather than surface-level involvement in many.',
+      author: 'Dr. Michele Hernandez, Former Dartmouth Admissions Officer',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'essay-tip-1',
+      tip: 'Show, don\'t tell in your essays. Use specific stories and examples to demonstrate your qualities rather than just stating them.',
+      author: 'Harry Bauld, Former Brown University Admissions Officer',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'financial-tip-1',
+      tip: 'Apply to schools where you\'re in the top 25% of applicants for the best merit scholarship opportunities. Don\'t just focus on the most prestigious schools.',
+      author: 'Kalman Chany, Author of "Paying for College"',
+      category: 'planning',
+      importance: 'high'
+    },
+    {
+      id: 'research-tip-1',
+      tip: 'Visit colleges when classes are in session, not just during special events. Sit in on classes and talk to current students for authentic impressions.',
+      author: 'Loren Pope, Author of "Colleges That Change Lives"',
+      category: 'research',
+      importance: 'high'
+    },
+    {
+      id: 'timeline-tip-1',
+      tip: 'Start your college search sophomore year, not senior year. Early preparation gives you more options and less stress.',
+      author: 'Rachel Toor, Former Duke University Admissions Officer',
+      category: 'planning',
+      importance: 'medium'
+    },
+    {
+      id: 'application-tip-1',
+      tip: 'Demonstrate genuine interest in schools through campus visits, information sessions, and connecting with admissions representatives. Interest matters for admission decisions.',
+      author: 'Jeff Durso-Finley, Former University of Pennsylvania Admissions Officer',
+      category: 'planning',
+      importance: 'medium'
+    }
+  ]
+};
+
 export const templates: GuidanceTemplate[] = [
   weddingTemplate,
   homeBuyingTemplate,
@@ -10843,5 +11999,8 @@ export const templates: GuidanceTemplate[] = [
   homeRenovationInteriorDesignTemplate,
   podcastContentCreationTemplate,
   languageLearningCulturalImmersionTemplate,
+  budgetPlanningTemplate,
+  businessLaunchTemplate,
+  collegePlanningTemplate,
   // Future templates generated by AI using the same structure
 ];

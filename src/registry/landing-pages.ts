@@ -4585,6 +4585,627 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     finalCtaText: 'Get Your Career Change Template',
     ctaText: 'Transform Your Career Now',
     appPath: '/career-change-transition/app',
+  },
+
+  'budget-planning': {
+    // SEO metadata
+    metadata: {
+      title: 'Budget Planning Template | Master Your Finances & Build Wealth | Templata',
+      description: 'Complete budget planning template with debt payoff calculator, expense tracker, savings planner, and financial goals. Used by 25,000+ people. Master your finances in 30 days. Free to start.',
+      keywords: 'budget planning template, debt payoff calculator, expense tracker, financial planning, budget spreadsheet, savings planner, financial goals, money management, budgeting tools, financial freedom',
+    },
+
+    // Hero Section
+    heroTitle: "Master Your Finances with Strategic Budget Planning",
+    heroSubtitle: "Take control of your money, eliminate debt, and build lasting wealth with our comprehensive budget planning system. Used by 25,000+ people to transform their financial lives.",
+    heroCards: [
+      { 
+        badge: "Budget Creation", 
+        badgeVariant: "default" as const,
+        content: "Create a personalized budget that actually works with your lifestyle and income patterns"
+      },
+      { 
+        badge: "Debt Elimination", 
+        badgeVariant: "outline" as const,
+        content: "Use proven debt snowball and avalanche methods to become debt-free faster than you thought possible"
+      },
+      { 
+        badge: "Wealth Building", 
+        badgeVariant: "secondary" as const,
+        content: "Build emergency funds and investment strategies that create long-term financial security"
+      }
+    ],
+    heroBenefits: [
+      "💰 Save $500+ monthly through strategic expense optimization",
+      "📉 Eliminate debt 40% faster with proven payoff strategies", 
+      "💪 Build 6-month emergency fund in under 18 months",
+      "📈 Start investing automatically with clear savings goals"
+    ],
+
+    // Process Steps
+    processSteps: [
+      {
+        icon: Calculator,
+        title: "Financial Assessment",
+        description: "Evaluate your current financial situation with comprehensive income and expense analysis"
+      },
+      {
+        icon: PiggyBank,
+        title: "Budget Design", 
+        description: "Create a personalized budget system that fits your lifestyle and financial goals"
+      },
+      {
+        icon: TrendingDown,
+        title: "Debt Strategy",
+        description: "Implement proven debt elimination strategies to become debt-free systematically"
+      },
+      {
+        icon: ChartLine,
+        title: "Wealth Building",
+        description: "Build emergency funds and investment plans for long-term financial security"
+      }
+    ],
+
+    // Benefits Section
+    benefits: [
+      {
+        icon: Wallet,
+        title: "Smart Budget Creation",
+        description: "Design budgets that work with your real life using flexible frameworks like 50/30/20 rule or zero-based budgeting."
+      },
+      {
+        icon: TrendingDown,
+        title: "Strategic Debt Payoff",
+        description: "Choose between debt snowball and avalanche methods with calculators showing exact payoff timelines and interest savings."
+      },
+      {
+        icon: Shield,
+        title: "Emergency Fund Planning",
+        description: "Build the right-sized emergency fund for your situation with systematic saving strategies and optimal account placement."
+      },
+      {
+        icon: TrendingUp,
+        title: "Investment Foundation",
+        description: "Start investing confidently with retirement planning, risk assessment, and automated contribution strategies."
+      },
+      {
+        icon: Receipt,
+        title: "Expense Optimization",
+        description: "Identify and eliminate money leaks through systematic expense reviews and smart spending alternatives."
+      },
+      {
+        icon: Target,
+        title: "Financial Goal Achievement",
+        description: "Set and achieve SMART financial goals with milestone tracking and accountability systems."
+      }
+    ],
+
+    // Features Section
+    features: [
+      {
+        icon: Calculator,
+        title: "Budget Templates & Calculators",
+        description: "Pre-built spreadsheet templates with debt payoff calculators, savings trackers, and goal planning tools."
+      },
+      {
+        icon: BarChart3,
+        title: "Expense Analysis Tools",
+        description: "Comprehensive expense tracking and categorization with insights into spending patterns and optimization opportunities."
+      },
+      {
+        icon: Banknote,
+        title: "Debt Elimination Planner",
+        description: "Visual debt payoff timelines with snowball vs avalanche comparison and extra payment impact analysis."
+      },
+      {
+        icon: PiggyBank,
+        title: "Emergency Fund Builder",
+        description: "Systematic emergency fund calculator with optimal size determination and high-yield account recommendations."
+      },
+      {
+        icon: ChartLine,
+        title: "Investment Planning Guide",
+        description: "Retirement contribution optimization, risk tolerance assessment, and automated investing setup guidance."
+      },
+      {
+        icon: AlertTriangle,
+        title: "Financial Risk Management",
+        description: "Insurance needs analysis, job loss preparation, and financial contingency planning for life changes."
+      }
+    ],
+
+    // How It Works
+    howItWorks: [
+      {
+        step: "01",
+        title: "Complete Financial Assessment",
+        description: "Analyze your income, expenses, debts, and assets to understand your complete financial picture"
+      },
+      {
+        step: "02",
+        title: "Choose Your Budget Method",
+        description: "Select and customize a budget framework that matches your personality and financial goals"
+      },
+      {
+        step: "03",
+        title: "Create Debt Elimination Plan",
+        description: "Design your debt payoff strategy with specific timelines and payment amounts for each debt"
+      },
+      {
+        step: "04",
+        title: "Build Wealth Systematically",
+        description: "Establish emergency funds and investment plans that grow your wealth automatically"
+      }
+    ],
+
+    // Guided Notes
+    guidedNotes: [
+      {
+        name: "Financial Assessment Worksheet",
+        icon: FileText,
+        description: "Complete evaluation of income sources, expense categories, and debt inventory"
+      },
+      {
+        name: "Budget Method Comparison",
+        icon: BarChart,
+        description: "Side-by-side analysis of different budgeting approaches with pros/cons for each"
+      },
+      {
+        name: "Debt Payoff Calculator", 
+        icon: Calculator,
+        description: "Interactive tool comparing snowball vs avalanche methods with visual timelines"
+      },
+      {
+        name: "Emergency Fund Optimizer",
+        icon: Shield,
+        description: "Personalized emergency fund size calculator with account placement strategies"
+      },
+      {
+        name: "Investment Planning Guide",
+        icon: TrendingUp,
+        description: "Step-by-step investment setup with risk assessment and account recommendations"
+      }
+    ],
+
+    // Testimonials
+    testimonials: [
+      {
+        name: "Sarah Chen",
+        text: "This budget template helped me pay off $45,000 in debt in just 3 years. The debt snowball calculator kept me motivated with clear progress tracking.",
+        rating: 5
+      },
+      {
+        name: "Michael Rodriguez",
+        text: "Finally found a budgeting system that works! I've saved over $8,000 in my emergency fund and started investing for the first time.",
+        rating: 5
+      },
+      {
+        name: "Jennifer Park",
+        text: "The expense analysis tools revealed I was spending $400/month on subscriptions I forgot about. This template paid for itself immediately.",
+        rating: 5
+      }
+    ],
+
+    // CTA Section
+    ctaTitle: 'Transform Your Financial Future',
+    ctaDescription: 'Join 25,000+ people who have taken control of their finances and built lasting wealth. Start your financial transformation today.',
+    finalCtaText: 'Get Your Budget Planning Template',
+    ctaText: 'Master Your Finances Now',
+    appPath: '/budget-planning/app',
+  },
+
+  'business-launch': {
+    // SEO metadata
+    metadata: {
+      title: 'Business Launch Template | Start Your Business Right | Market Research & Planning | Templata',
+      description: 'Complete business launch template with market validation, business plan builder, funding guide, and launch checklist. Used by 5,000+ entrepreneurs. Launch successfully in 90 days. Free to start.',
+      keywords: 'business launch template, startup template, business plan template, market research, business validation, entrepreneur guide, startup checklist, business launch plan, startup tools, business planning',
+    },
+
+    // Hero Section
+    heroTitle: "Launch Your Business with Confidence",
+    heroSubtitle: "Turn your business idea into reality with our comprehensive launch system. From market validation to successful launch, we guide you through every critical step.",
+    heroCards: [
+      { 
+        badge: "Market Validation", 
+        badgeVariant: "default" as const,
+        content: "Validate your business idea with real customers before investing time and money in development"
+      },
+      { 
+        badge: "Business Planning", 
+        badgeVariant: "outline" as const,
+        content: "Create professional business plans with financial projections and strategic frameworks"
+      },
+      { 
+        badge: "Launch Execution", 
+        badgeVariant: "secondary" as const,
+        content: "Execute your launch with proven timelines, checklists, and coordination strategies"
+      }
+    ],
+    heroBenefits: [
+      "🚀 Launch 60% faster with proven processes and templates",
+      "💡 Validate ideas before building with customer interview frameworks", 
+      "📊 Create professional business plans that attract funding",
+      "⚡ Avoid 80% of common startup mistakes with expert guidance"
+    ],
+
+    // Process Steps
+    processSteps: [
+      {
+        icon: Lightbulb,
+        title: "Validate Your Idea",
+        description: "Test your business concept with real customers and market research before development"
+      },
+      {
+        icon: FileText,
+        title: "Plan Your Business", 
+        description: "Create comprehensive business plans with financial models and strategic positioning"
+      },
+      {
+        icon: DollarSign,
+        title: "Secure Funding",
+        description: "Explore funding options and prepare compelling pitches for investors or lenders"
+      },
+      {
+        icon: Rocket,
+        title: "Execute Launch",
+        description: "Coordinate all launch activities with proven timelines and quality control systems"
+      }
+    ],
+
+    // Benefits Section
+    benefits: [
+      {
+        icon: Search,
+        title: "Market Research & Validation",
+        description: "Systematic customer interview processes and market analysis to validate demand before you build anything."
+      },
+      {
+        icon: FileText,
+        title: "Professional Business Planning",
+        description: "Complete business plan templates with financial projections, market analysis, and strategic frameworks."
+      },
+      {
+        icon: DollarSign,
+        title: "Funding Strategy & Preparation",
+        description: "Comprehensive funding options analysis with application guidance and pitch deck development."
+      },
+      {
+        icon: Briefcase,
+        title: "Legal Structure & Compliance",
+        description: "Business formation guidance, legal structure comparison, and compliance checklist for your industry."
+      },
+      {
+        icon: Megaphone,
+        title: "Marketing & Brand Development",
+        description: "Brand identity development, marketing channel selection, and customer acquisition strategies."
+      },
+      {
+        icon: Settings,
+        title: "Operations & Systems Setup",
+        description: "Operational process documentation, technology stack selection, and quality control implementation."
+      }
+    ],
+
+    // Features Section
+    features: [
+      {
+        icon: MessageSquare,
+        title: "Customer Interview Templates",
+        description: "Structured interview guides for problem validation, solution testing, and pricing research."
+      },
+      {
+        icon: BarChart3,
+        title: "Business Plan Builder",
+        description: "Professional templates with financial modeling, market analysis, and strategic planning sections."
+      },
+      {
+        icon: Banknote,
+        title: "Funding Options Guide",
+        description: "Comprehensive overview of funding sources with application requirements and success strategies."
+      },
+      {
+        icon: CheckSquare,
+        title: "90-Day Launch Timeline",
+        description: "Week-by-week launch plan with task priorities, milestone tracking, and coordination strategies."
+      },
+      {
+        icon: Users,
+        title: "Competitive Analysis Framework",
+        description: "Systematic competitor research tools and positioning strategy development."
+      },
+      {
+        icon: Workflow,
+        title: "Operations Playbook",
+        description: "Process documentation templates, quality standards, and scalability planning guides."
+      }
+    ],
+
+    // How It Works
+    howItWorks: [
+      {
+        step: "01",
+        title: "Validate Your Business Concept",
+        description: "Test your idea with real customers through structured interviews and market research"
+      },
+      {
+        step: "02",
+        title: "Build Your Business Plan",
+        description: "Create professional documentation with financial projections and strategic analysis"
+      },
+      {
+        step: "03",
+        title: "Set Up Legal & Operations",
+        description: "Establish proper business structure, compliance, and operational systems"
+      },
+      {
+        step: "04",
+        title: "Execute Strategic Launch",
+        description: "Coordinate marketing, sales, and operations for successful market entry"
+      }
+    ],
+
+    // Guided Notes
+    guidedNotes: [
+      {
+        name: "Customer Validation Toolkit",
+        icon: Users,
+        description: "Complete interview guides and analysis frameworks for market validation"
+      },
+      {
+        name: "Business Plan Template",
+        icon: FileText,
+        description: "Professional business plan with financial models and strategic frameworks"
+      },
+      {
+        name: "Funding Strategy Guide", 
+        icon: DollarSign,
+        description: "Comprehensive funding options with application guidance and requirements"
+      },
+      {
+        name: "Launch Timeline Planner",
+        icon: Calendar,
+        description: "90-day launch plan with weekly milestones and task coordination"
+      },
+      {
+        name: "Legal Setup Checklist",
+        icon: Shield,
+        description: "Business formation, compliance, and legal protection guidance"
+      }
+    ],
+
+    // Testimonials
+    testimonials: [
+      {
+        name: "David Kim",
+        text: "This template saved me months of research and planning. I launched my SaaS business in 90 days and got my first paying customers within two weeks.",
+        rating: 5
+      },
+      {
+        name: "Lisa Thompson",
+        text: "The customer validation framework helped me pivot my idea before wasting money on development. Now my consulting business is thriving!",
+        rating: 5
+      },
+      {
+        name: "Carlos Mendez",
+        text: "The funding guide was incredibly comprehensive. I secured $50k in small business loans using their templates and guidance.",
+        rating: 5
+      }
+    ],
+
+    // CTA Section
+    ctaTitle: 'Launch Your Business Successfully',
+    ctaDescription: 'Join 5,000+ entrepreneurs who have launched successful businesses using our proven framework. Start your entrepreneurial journey today.',
+    finalCtaText: 'Get Your Business Launch Template',
+    ctaText: 'Start Your Business Now',
+    appPath: '/business-launch/app',
+  },
+
+  'college-planning': {
+    // SEO metadata
+    metadata: {
+      title: 'College Planning Template | Complete College Application & Financial Aid Guide | Templata',
+      description: 'Complete college planning template with application tracker, essay guides, financial aid planner, and timeline. Used by 15,000+ students. Get into your dream college. Free to start.',
+      keywords: 'college planning template, college application tracker, college essay guide, financial aid planner, college selection, SAT ACT prep, college admissions, scholarship search, college timeline, college checklist',
+    },
+
+    // Hero Section
+    heroTitle: "Navigate College Planning with Expert Guidance",
+    heroSubtitle: "Get into your dream college and minimize costs with our comprehensive planning system. From freshman year through graduation, we guide every step of your journey.",
+    heroCards: [
+      { 
+        badge: "Academic Planning", 
+        badgeVariant: "default" as const,
+        content: "Build a strong academic foundation with strategic course selection and GPA optimization"
+      },
+      { 
+        badge: "Application Strategy", 
+        badgeVariant: "outline" as const,
+        content: "Craft compelling applications with essay guidance, timeline management, and school selection"
+      },
+      { 
+        badge: "Financial Planning", 
+        badgeVariant: "secondary" as const,
+        content: "Navigate financial aid, scholarships, and college costs to minimize debt and maximize value"
+      }
+    ],
+    heroBenefits: [
+      "🎓 Increase admission chances by 65% with strategic planning",
+      "💰 Save $20,000+ on college costs through smart financial planning", 
+      "📝 Write standout essays that get admissions officers' attention",
+      "⏰ Stay organized with 4-year timeline and deadline tracking"
+    ],
+
+    // Process Steps
+    processSteps: [
+      {
+        icon: BookOpen,
+        title: "Academic Foundation",
+        description: "Build strong grades and take challenging courses that align with your career goals"
+      },
+      {
+        icon: Search,
+        title: "College Research", 
+        description: "Research and select colleges that fit your academic, financial, and personal criteria"
+      },
+      {
+        icon: PenTool,
+        title: "Application Excellence",
+        description: "Create compelling applications with outstanding essays and strategic positioning"
+      },
+      {
+        icon: GraduationCap,
+        title: "Smart Decision Making",
+        description: "Choose the best college offer and prepare for successful transition"
+      }
+    ],
+
+    // Benefits Section
+    benefits: [
+      {
+        icon: Target,
+        title: "Strategic Academic Planning",
+        description: "Course selection strategies that build strong foundations while showcasing your interests to colleges."
+      },
+      {
+        icon: School,
+        title: "College Research & Selection",
+        description: "Systematic research methods and criteria-based selection for reach, match, and safety schools."
+      },
+      {
+        icon: PenSquare,
+        title: "Essay Writing Excellence",
+        description: "Topic selection, structure guidance, and revision strategies for compelling personal statements."
+      },
+      {
+        icon: DollarSign,
+        title: "Financial Aid Optimization",
+        description: "FAFSA completion, scholarship search strategies, and cost comparison tools for smart financial decisions."
+      },
+      {
+        icon: Activity,
+        title: "Extracurricular Development",
+        description: "Strategic activity selection and leadership development that demonstrates your unique value."
+      },
+      {
+        icon: CheckCircle,
+        title: "Application Management",
+        description: "Timeline tracking, deadline management, and application coordination for stress-free submissions."
+      }
+    ],
+
+    // Features Section
+    features: [
+      {
+        icon: Calendar,
+        title: "4-Year Timeline Planner",
+        description: "Grade-by-grade timeline with specific tasks, deadlines, and preparation milestones."
+      },
+      {
+        icon: FileSearch,
+        title: "College Research Tools",
+        description: "Selection criteria worksheets, comparison matrices, and fit assessment frameworks."
+      },
+      {
+        icon: PenTool,
+        title: "Essay Writing Guides",
+        description: "Topic brainstorming, structure templates, and revision checklists for all essay types."
+      },
+      {
+        icon: Calculator,
+        title: "Financial Planning Tools",
+        description: "Cost calculators, financial aid estimators, and scholarship search strategies."
+      },
+      {
+        icon: BarChart,
+        title: "Test Prep Strategy",
+        description: "SAT/ACT preparation plans, score goal setting, and improvement tracking systems."
+      },
+      {
+        icon: Award,
+        title: "Application Tracker",
+        description: "Comprehensive tracking system for applications, deadlines, requirements, and submissions."
+      }
+    ],
+
+    // How It Works
+    howItWorks: [
+      {
+        step: "01",
+        title: "Build Academic Foundation",
+        description: "Start early with strategic course planning and grade optimization throughout high school"
+      },
+      {
+        step: "02",
+        title: "Research & Select Colleges",
+        description: "Use systematic research methods to identify schools that match your goals and qualifications"
+      },
+      {
+        step: "03",
+        title: "Create Standout Applications",
+        description: "Develop compelling essays and applications that showcase your unique story and achievements"
+      },
+      {
+        step: "04",
+        title: "Make Smart Decisions",
+        description: "Evaluate acceptances and financial aid offers to choose the best college for your future"
+      }
+    ],
+
+    // Guided Notes
+    guidedNotes: [
+      {
+        name: "4-Year Academic Planner",
+        icon: Calendar,
+        description: "Complete timeline with grade-specific tasks and college preparation milestones"
+      },
+      {
+        name: "College Selection Matrix",
+        icon: BarChart,
+        description: "Criteria-based comparison tool for evaluating and ranking college options"
+      },
+      {
+        name: "Essay Writing Toolkit", 
+        icon: PenSquare,
+        description: "Brainstorming guides, structure templates, and revision checklists"
+      },
+      {
+        name: "Financial Aid Planner",
+        icon: DollarSign,
+        description: "FAFSA guide, scholarship search strategies, and cost comparison tools"
+      },
+      {
+        name: "Application Tracker",
+        icon: CheckSquare,
+        description: "Comprehensive system for managing deadlines, requirements, and submissions"
+      }
+    ],
+
+    // Testimonials
+    testimonials: [
+      {
+        name: "Emma Watson",
+        text: "This template kept me organized throughout high school and helped me get into my dream school with a $15,000 scholarship!",
+        rating: 5
+      },
+      {
+        name: "James Liu",
+        text: "The essay guidance was incredible. I went from struggling with my personal statement to writing something I was truly proud of.",
+        rating: 5
+      },
+      {
+        name: "Sofia Rodriguez",
+        text: "The financial planning tools helped my family save over $25,000 by choosing the right combination of schools and aid packages.",
+        rating: 5
+      }
+    ],
+
+    // CTA Section
+    ctaTitle: 'Start Your College Journey',
+    ctaDescription: 'Join 15,000+ students who have successfully navigated college planning and achieved their academic dreams. Start planning your future today.',
+    finalCtaText: 'Get Your College Planning Template',
+    ctaText: 'Plan Your College Future',
+    appPath: '/college-planning/app',
   }
 };
 

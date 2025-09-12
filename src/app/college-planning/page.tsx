@@ -3,12 +3,12 @@ import { TemplateLanding } from '@/components/landing/TemplateLanding';
 import { getLandingPageData } from '@/registry/landing-pages';
 
 export const metadata: Metadata = {
-  title: 'College Planning Template | Complete College Admissions Guide | Get Into Your Dream School | Templata',
-  description: 'Complete college planning template with application tracking, essay organization, financial aid guidance, and scholarship management. Used by 18,000+ students. Navigate admissions successfully.',
-  keywords: 'college planning template, college applications, college admissions, college essay, scholarship search, financial aid, FAFSA, college prep, university applications, college planning guide',
+  title: 'College Planning Template | Complete College Application & Financial Aid Guide | Templata',
+  description: 'Complete college planning template with application tracker, essay guides, financial aid planner, and timeline. Used by 15,000+ students. Get into your dream college. Free to start.',
+  keywords: 'college planning template, college application tracker, college essay guide, financial aid planner, college selection, SAT ACT prep, college admissions, scholarship search, college timeline, college checklist',
   openGraph: {
-    title: 'College Planning Template - Complete College Admissions & Application Guide',
-    description: 'Everything you need to navigate college admissions successfully. Comprehensive planning system used by 18,000+ students and families.',
+    title: 'College Planning Template - Complete College Application & Financial Aid Guide',
+    description: 'Navigate college planning with expert guidance. Comprehensive system with application tracking, essay guides, and financial aid planning used by 15,000+ students.',
     type: 'website',
     images: ['/college-planning-preview.jpg'],
   },

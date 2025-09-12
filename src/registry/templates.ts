@@ -1,5 +1,5 @@
 import { GuidanceTemplate } from '@/types/template';
-import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, parentingChildDevelopmentTemplate, fitnessAthleticTrainingTemplate, travelPlanningAdventureTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate, academicResearchTemplate, freelanceGigEconomyTemplate, languageLearningCulturalImmersionTemplate, personalFinanceInvestmentTemplate, digitalMarketingSEOTemplate, remoteWorkProductivityTemplate, careerChangeTransitionTemplate } from '@/data/templates';
+import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, parentingChildDevelopmentTemplate, fitnessAthleticTrainingTemplate, travelPlanningAdventureTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate, academicResearchTemplate, freelanceGigEconomyTemplate, languageLearningCulturalImmersionTemplate, personalFinanceInvestmentTemplate, digitalMarketingSEOTemplate, remoteWorkProductivityTemplate, careerChangeTransitionTemplate, budgetPlanningTemplate, businessLaunchTemplate, collegePlanningTemplate } from '@/data/templates';
 import { blogRegistry } from '@/registry/blogs';
 
 // Function to sync template resources with blog registry
@@ -113,7 +113,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     popular: true,
     color: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800",
     iconColor: "text-emerald-600 dark:text-emerald-400",
-    template: undefined
+    template: createTemplateWithSyncedResources(budgetPlanningTemplate)
   },
   {
     id: "personal-finance-investment",
@@ -185,7 +185,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     url: "/business-launch/app",
     color: "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800",
     iconColor: "text-orange-600 dark:text-orange-400",
-    template: undefined
+    template: createTemplateWithSyncedResources(businessLaunchTemplate)
   },
   {
     id: "digital-marketing-seo",
@@ -223,7 +223,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     popular: true,
     color: "bg-yellow-50 dark:bg-yellow-950/20 border-yellow-200 dark:border-yellow-800",
     iconColor: "text-yellow-600 dark:text-yellow-400",
-    template: undefined
+    template: createTemplateWithSyncedResources(collegePlanningTemplate)
   },
   {
     id: "academic-research",

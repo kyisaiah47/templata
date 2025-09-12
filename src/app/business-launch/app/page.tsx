@@ -1,11 +1,14 @@
 'use client';
 
 import { TemplateView } from '@/components/template/TemplateView';
-import { freelanceGigEconomyTemplate } from '@/data/templates';
-import { createTemplateWithSyncedResources } from '@/registry/templates';
+import { getTemplateById } from '@/registry/templates';
 
-export default function BusinessLaunchAppPage() {
-  const syncedTemplate = createTemplateWithSyncedResources(freelanceGigEconomyTemplate);
+export default function BusinessLaunchApp() {
+  const template = getTemplateById('business-launch');
   
-  return <TemplateView template={syncedTemplate} />;
+  if (!template?.template) {
+    return <div>Template not found</div>;
+  }
+  
+  return <TemplateView template={template.template} />;
 }
