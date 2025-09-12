@@ -1614,10 +1614,350 @@ export const babyPlanningTemplate: GuidanceTemplate = {
   ]
 };
 
+export const businessLaunchTemplate: GuidanceTemplate = {
+  id: 'business-launch',
+  title: 'Business Launch Strategy',
+  description: 'Complete framework for launching a successful business from idea validation to first customers',
+  category: 'career-business',
+  icon: '🚀',
+  sections: [
+    {
+      id: 'business-validation',
+      title: 'Business Idea Validation',
+      description: 'Validate your business concept, assess market demand, and refine your value proposition',
+      order: 1,
+      reflectionPrompts: [
+        {
+          id: 'problem-identification',
+          prompt: "What specific problem does your business solve, and how painful is this problem for your target customers?",
+          category: 'planning',
+          helpText: 'Define the core problem clearly. Talk to potential customers to understand pain points, current solutions they use, and willingness to pay.',
+          relatedResources: ['market-research-guide', 'customer-validation-strategies']
+        },
+        {
+          id: 'market-size-analysis',
+          prompt: 'What is the size of your target market and how will you reach these customers?',
+          category: 'research',
+          helpText: 'Calculate Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Serviceable Obtainable Market (SOM). Research customer acquisition channels.'
+        },
+        {
+          id: 'competitive-analysis',
+          prompt: 'Who are your direct and indirect competitors, and what makes your solution unique?',
+          category: 'research',
+          helpText: 'Identify 5-10 competitors, analyze their strengths/weaknesses, pricing, and market positioning. Define your unique value proposition clearly.'
+        },
+        {
+          id: 'value-proposition-testing',
+          prompt: 'How will you test your value proposition with real potential customers before building your product?',
+          category: 'planning',
+          helpText: 'Create landing pages, surveys, interviews, or MVP tests. Aim for at least 100 data points before making major decisions.'
+        },
+        {
+          id: 'business-model-design',
+          prompt: 'What business model will generate revenue, and how will you price your product or service?',
+          category: 'planning',
+          helpText: 'Consider subscription, one-time payment, freemium, marketplace, or service models. Research competitor pricing and customer willingness to pay.'
+        },
+        {
+          id: 'success-metrics-definition',
+          prompt: 'What key metrics will indicate your business is succeeding, and how will you track them?',
+          category: 'planning',
+          helpText: 'Define 3-5 key metrics like customer acquisition cost, lifetime value, monthly recurring revenue, or conversion rates. Set up tracking early.'
+        }
+      ]
+    },
+    {
+      id: 'legal-structure',
+      title: 'Legal Structure & Compliance',
+      description: 'Establish proper legal foundation, handle registrations, and ensure regulatory compliance',
+      order: 2,
+      reflectionPrompts: [
+        {
+          id: 'business-structure-selection',
+          prompt: "What business structure (LLC, Corporation, Partnership) best fits your needs and goals?",
+          category: 'planning',
+          helpText: 'Consider liability protection, tax implications, funding needs, and growth plans. Consult with attorney or accountant for complex situations.',
+          relatedResources: ['business-structure-guide', 'legal-compliance-checklist']
+        },
+        {
+          id: 'business-registration',
+          prompt: 'What business name will you use, and how will you register it with appropriate authorities?',
+          category: 'planning',
+          helpText: 'Check name availability with state, register with Secretary of State, get EIN from IRS, and consider trademark protection.'
+        },
+        {
+          id: 'licensing-permits',
+          prompt: 'What licenses, permits, or certifications does your business need to operate legally?',
+          category: 'planning',
+          helpText: 'Research federal, state, and local requirements. Common needs include business license, sales tax permit, professional licenses, health permits.'
+        },
+        {
+          id: 'intellectual-property-protection',
+          prompt: 'How will you protect your intellectual property (trademarks, copyrights, patents, trade secrets)?',
+          category: 'consideration',
+          helpText: 'Identify protectable assets, file appropriate applications, create IP policies, and consider confidentiality agreements.'
+        },
+        {
+          id: 'contracts-agreements',
+          prompt: 'What contracts and legal agreements do you need (customer terms, vendor agreements, employment contracts)?',
+          category: 'planning',
+          helpText: 'Draft terms of service, privacy policy, customer contracts, vendor agreements, and employment/contractor agreements. Get legal review.'
+        },
+        {
+          id: 'insurance-risk-management',
+          prompt: 'What insurance coverage and risk management strategies does your business need?',
+          category: 'planning',
+          helpText: 'Consider general liability, professional liability, cyber liability, workers compensation, and industry-specific insurance needs.'
+        }
+      ]
+    },
+    {
+      id: 'financial-planning',
+      title: 'Financial Planning & Funding',
+      description: 'Create financial projections, determine funding needs, and establish accounting systems',
+      order: 3,
+      reflectionPrompts: [
+        {
+          id: 'startup-costs-calculation',
+          prompt: "What are your one-time startup costs and ongoing monthly expenses for the first year?",
+          category: 'planning',
+          helpText: 'Include equipment, inventory, legal fees, marketing, rent, salaries, and 6-month operating expense buffer. Be conservative.',
+          relatedResources: ['business-financial-planning', 'startup-funding-options']
+        },
+        {
+          id: 'revenue-projections',
+          prompt: 'What are your realistic revenue projections for the first 12-24 months?',
+          category: 'planning',
+          helpText: 'Base projections on market research, not wishful thinking. Create conservative, realistic, and optimistic scenarios.'
+        },
+        {
+          id: 'funding-strategy',
+          prompt: 'How will you fund your business (personal savings, loans, investors, grants, revenue)?',
+          category: 'planning',
+          helpText: 'Consider bootstrapping, friends/family, bank loans, SBA loans, angel investors, VCs, crowdfunding, or grants based on your needs.'
+        },
+        {
+          id: 'accounting-system-setup',
+          prompt: 'What accounting system and financial processes will you implement from day one?',
+          category: 'planning',
+          helpText: 'Choose accounting software (QuickBooks, Xero, FreshBooks), set up chart of accounts, establish invoicing and expense tracking processes.'
+        },
+        {
+          id: 'pricing-strategy',
+          prompt: 'How will you price your products or services to ensure profitability and competitiveness?',
+          category: 'planning',
+          helpText: 'Calculate cost of goods sold, desired profit margins, competitor pricing, and customer value perception. Test different price points.'
+        },
+        {
+          id: 'financial-controls',
+          prompt: 'What financial controls and reporting will you implement to monitor business health?',
+          category: 'planning',
+          helpText: 'Set up monthly P&L reviews, cash flow forecasting, budget vs actual tracking, and key performance indicator dashboards.'
+        }
+      ]
+    },
+    {
+      id: 'brand-marketing',
+      title: 'Brand Development & Marketing',
+      description: 'Build your brand identity, create marketing strategy, and establish online presence',
+      order: 4,
+      reflectionPrompts: [
+        {
+          id: 'brand-identity-creation',
+          prompt: "What is your brand's personality, values, and visual identity that will resonate with your target audience?",
+          category: 'planning',
+          helpText: 'Define brand voice, mission, values, and visual elements (logo, colors, fonts). Ensure consistency across all touchpoints.',
+          relatedResources: ['brand-development-guide', 'digital-marketing-strategy']
+        },
+        {
+          id: 'target-customer-definition',
+          prompt: 'Who is your ideal customer, and what are their demographics, psychographics, and buying behaviors?',
+          category: 'research',
+          helpText: 'Create detailed buyer personas including age, income, interests, pain points, media consumption, and decision-making process.'
+        },
+        {
+          id: 'marketing-channel-strategy',
+          prompt: 'Which marketing channels will you use to reach and acquire customers most effectively?',
+          category: 'planning',
+          helpText: 'Consider content marketing, social media, SEO, paid ads, email marketing, partnerships, events, PR based on where your customers are.'
+        },
+        {
+          id: 'website-digital-presence',
+          prompt: 'What website and digital presence do you need to establish credibility and generate leads?',
+          category: 'planning',
+          helpText: 'Plan website structure, content, SEO strategy, social media profiles, Google Business listing, and online review management.'
+        },
+        {
+          id: 'content-marketing-plan',
+          prompt: 'What content will you create to attract, engage, and convert your target audience?',
+          category: 'planning',
+          helpText: 'Plan blog posts, videos, podcasts, social content, email newsletters, lead magnets, and case studies that provide value.'
+        },
+        {
+          id: 'marketing-budget-allocation',
+          prompt: 'How will you allocate your marketing budget across different channels and campaigns?',
+          category: 'planning',
+          helpText: 'Typical startups spend 7-12% of revenue on marketing. Start with lower-cost channels, measure ROI, then scale what works.'
+        }
+      ]
+    },
+    {
+      id: 'operations-systems',
+      title: 'Operations & Systems Setup',
+      description: 'Build operational processes, implement systems, and prepare for scaling',
+      order: 5,
+      reflectionPrompts: [
+        {
+          id: 'core-processes-design',
+          prompt: "What are your core business processes, and how will you document and systematize them?",
+          category: 'planning',
+          helpText: 'Map out customer journey, sales process, service delivery, quality control, and support processes. Create SOPs for consistency.',
+          relatedResources: ['business-operations-guide', 'productivity-tools-comparison']
+        },
+        {
+          id: 'technology-stack-selection',
+          prompt: 'What technology tools and systems do you need for operations, sales, marketing, and customer management?',
+          category: 'planning',
+          helpText: 'Choose CRM, project management, communication, accounting, marketing automation, and industry-specific tools. Start simple.'
+        },
+        {
+          id: 'supplier-vendor-relationships',
+          prompt: 'What suppliers, vendors, or partners do you need, and how will you manage these relationships?',
+          category: 'planning',
+          helpText: 'Identify key suppliers, negotiate terms, establish backup options, create vendor management processes, and build strategic partnerships.'
+        },
+        {
+          id: 'quality-control-standards',
+          prompt: 'How will you ensure consistent quality in your products or services?',
+          category: 'planning',
+          helpText: 'Define quality standards, create checklists, implement review processes, gather customer feedback, and continuously improve.'
+        },
+        {
+          id: 'customer-service-strategy',
+          prompt: 'What customer service and support systems will you implement to exceed customer expectations?',
+          category: 'planning',
+          helpText: 'Plan support channels (phone, email, chat), response time goals, knowledge base, FAQ, and customer success processes.'
+        },
+        {
+          id: 'scaling-preparation',
+          prompt: 'How will you prepare your operations to handle growth and increased demand?',
+          category: 'consideration',
+          helpText: 'Identify bottlenecks, plan for hiring, consider automation opportunities, and design scalable processes and systems.'
+        }
+      ]
+    },
+    {
+      id: 'launch-growth',
+      title: 'Launch Strategy & Growth Planning',
+      description: 'Plan your launch, acquire first customers, and establish growth systems',
+      order: 6,
+      reflectionPrompts: [
+        {
+          id: 'launch-timeline-planning',
+          prompt: "What is your launch timeline, and what key milestones must be completed before going live?",
+          category: 'planning',
+          helpText: 'Create detailed launch plan with legal, financial, marketing, operational, and product readiness checkpoints.',
+          relatedResources: ['business-launch-checklist', 'customer-acquisition-strategies']
+        },
+        {
+          id: 'initial-customer-acquisition',
+          prompt: 'How will you acquire your first 10, 100, and 1000 customers?',
+          category: 'planning',
+          helpText: 'Start with warm network, referral programs, content marketing, partnerships, and direct outreach. Focus on customer success.'
+        },
+        {
+          id: 'feedback-iteration-system',
+          prompt: 'How will you collect customer feedback and iterate on your product or service offering?',
+          category: 'planning',
+          helpText: 'Set up feedback collection systems, regular customer interviews, NPS surveys, and rapid iteration processes.'
+        },
+        {
+          id: 'performance-monitoring',
+          prompt: 'What metrics will you track daily, weekly, and monthly to measure business performance?',
+          category: 'planning',
+          helpText: 'Track revenue, customer acquisition cost, lifetime value, churn rate, conversion rates, and operational efficiency metrics.'
+        },
+        {
+          id: 'growth-strategy-development',
+          prompt: 'What growth strategies will you implement once you validate product-market fit?',
+          category: 'planning',
+          helpText: 'Plan for scaling marketing channels, expanding product lines, entering new markets, building partnerships, or geographic expansion.'
+        },
+        {
+          id: 'contingency-planning',
+          prompt: 'What contingency plans do you have for different scenarios (slow growth, rapid growth, market changes)?',
+          category: 'consideration',
+          helpText: 'Plan for cash flow issues, competitive threats, economic downturns, rapid scaling needs, and pivot scenarios.'
+        }
+      ]
+    }
+  ],
+  resources: [],
+  expertTips: [
+    {
+      id: 'validation-tip-1',
+      tip: 'Talk to at least 100 potential customers before building your product. Most business failures stem from building something nobody wants.',
+      author: 'Steve Blank, Serial Entrepreneur & Author',
+      category: 'Market Validation',
+      importance: 'high'
+    },
+    {
+      id: 'mvp-tip-1',
+      tip: 'Start with a minimum viable product (MVP) that solves one core problem extremely well. You can always add features later.',
+      author: 'Eric Ries, Author of "The Lean Startup"',
+      category: 'Product Development',
+      importance: 'high'
+    },
+    {
+      id: 'cash-flow-tip-1',
+      tip: 'Cash flow is king. Monitor it weekly and always maintain 6+ months of operating expenses in reserve.',
+      author: 'Sarah Chen, Small Business Finance Expert',
+      category: 'Financial Management',
+      importance: 'high'
+    },
+    {
+      id: 'marketing-tip-1',
+      tip: 'Focus on one marketing channel at a time until you master it, then expand. Scattered efforts yield mediocre results.',
+      author: 'Gabriel Weinberg, Author of "Traction"',
+      category: 'Marketing',
+      importance: 'high'
+    },
+    {
+      id: 'hiring-tip-1',
+      tip: 'Hire slowly and fire quickly. One bad hire can destroy culture and productivity in a small business.',
+      author: 'Jennifer Martinez, HR Consultant',
+      category: 'Team Building',
+      importance: 'medium'
+    },
+    {
+      id: 'systems-tip-1',
+      tip: 'Document everything from day one. What seems obvious to you now won\'t be when you\'re busy or hiring help.',
+      author: 'Michael Gerber, Author of "The E-Myth"',
+      category: 'Operations',
+      importance: 'high'
+    },
+    {
+      id: 'customer-tip-1',
+      tip: 'Obsess over customer success, not just customer acquisition. Happy customers become your best sales force.',
+      author: 'Brian Chesky, CEO of Airbnb',
+      category: 'Customer Success',
+      importance: 'high'
+    },
+    {
+      id: 'pivot-tip-1',
+      tip: 'Be willing to pivot when data shows your initial assumptions were wrong. Persistence is good, but stubbornness kills businesses.',
+      author: 'Reid Hoffman, Founder of LinkedIn',
+      category: 'Strategy',
+      importance: 'medium'
+    }
+  ]
+};
+
 export const templates: GuidanceTemplate[] = [
   weddingTemplate,
   homeBuyingTemplate,
   jobSearchTemplate,
   babyPlanningTemplate,
+  businessLaunchTemplate,
   // Future templates generated by AI using the same structure
 ];

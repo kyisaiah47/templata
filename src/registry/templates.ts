@@ -1,5 +1,5 @@
 import { GuidanceTemplate } from '@/types/template';
-import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate } from '@/data/templates';
+import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, businessLaunchTemplate } from '@/data/templates';
 import { blogRegistry } from '@/registry/blogs';
 
 // Function to sync template resources with blog registry
@@ -109,10 +109,10 @@ export const templateRegistry: TemplateRegistryEntry[] = [
     description: "Launch your business with market research, business planning, and launch checklists.",
     category: "Career & Business",
     icon: "🚀",
-    url: "/templates/business-launch",
+    url: "/business-launch/app",
     color: "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800",
     iconColor: "text-orange-600 dark:text-orange-400",
-    comingSoon: true
+    template: createTemplateWithSyncedResources(businessLaunchTemplate)
   },
   
   // Education Templates

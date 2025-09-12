@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: "Templata",
   description: "Organize your life with curated templates and guided setups",
   icons: {
-    icon: "/favicon-black.svg",
+    icon: "/favicon-white.svg",
   },
 };
 
