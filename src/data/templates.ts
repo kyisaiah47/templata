@@ -2177,7 +2177,7 @@ export const travelPlanningAdventureTemplate: GuidanceTemplate = {
   title: 'Travel Planning & Adventure Design',
   description: 'Complete travel planning and adventure design from inspiration to execution',
   category: 'travel-adventure',
-  icon: '✈️',
+  icon: '🗺️',
   sections: [
     {
       id: 'travel-vision-goals',
@@ -2518,7 +2518,7 @@ export const freelanceGigEconomyTemplate: GuidanceTemplate = {
   title: 'Freelance & Gig Economy Success',
   description: 'Build a successful freelance career and thrive in the gig economy',
   category: 'career-business',
-  icon: '💼',
+  icon: '🎯',
   sections: [
     {
       id: 'skill-assessment-development',
@@ -2832,7 +2832,7 @@ export const parentingChildDevelopmentTemplate: GuidanceTemplate = {
   title: 'Parenting & Child Development',
   description: 'Navigate parenting challenges and support your child\'s healthy development',
   category: 'family-parenting',
-  icon: '👶',
+  icon: '👨‍👩‍👧‍👦',
   sections: [
     {
       id: 'parenting-philosophy-foundation',
@@ -4766,7 +4766,7 @@ export const freelanceBusinessTemplate: GuidanceTemplate = {
   title: 'Freelance Business & Independent Consulting',
   description: 'Build and scale a sustainable freelance business and consulting practice',
   category: 'career-business',
-  icon: '💼',
+  icon: '🏢',
   sections: [
     {
       id: 'service-definition',
@@ -7010,7 +7010,7 @@ export const personalHealthWellnessTemplate: GuidanceTemplate = {
   title: 'Personal Health & Wellness Optimization',
   description: 'Optimize your personal health and wellness through comprehensive lifestyle design',
   category: 'health-wellness',
-  icon: '💪',
+  icon: '🌟',
   sections: [
     {
       id: 'health-assessment-baseline',
@@ -7330,7 +7330,7 @@ export const sustainableLivingTemplate: GuidanceTemplate = {
   title: 'Sustainable Living & Environmental Impact',
   description: 'Adopt sustainable living practices and reduce your environmental footprint',
   category: 'consideration',
-  icon: '🌱',
+  icon: '🌍',
   sections: [
     {
       id: 'environmental-impact-assessment',
@@ -7969,7 +7969,7 @@ export const digitalMarketingBrandTemplate: GuidanceTemplate = {
   id: 'digital-marketing-brand',
   title: 'Digital Marketing & Brand Strategy',
   category: 'business-marketing',
-  icon: '📈',
+  icon: '📱',
   sections: [
     {
       id: 'brand-foundation-identity',
@@ -8288,7 +8288,7 @@ export const remoteWorkDigitalNomadTemplate: GuidanceTemplate = {
   id: 'remote-work-digital-nomad',
   title: 'Remote Work & Digital Nomad Lifestyle',
   category: 'lifestyle-career',
-  icon: '🌍',
+  icon: '🏖️',
   sections: [
     {
       id: 'remote-work-foundation',
@@ -9247,7 +9247,7 @@ export const personalDevelopmentLifeCoachingTemplate: GuidanceTemplate = {
   title: 'Personal Development & Life Coaching',
   description: 'Design a comprehensive personal development plan and coaching approach',
   category: 'personal-growth',
-  icon: '🌱',
+  icon: '⚡',
   sections: [
     {
       id: 'self-assessment-awareness',
@@ -9886,7 +9886,7 @@ export const homeRenovationInteriorDesignTemplate: GuidanceTemplate = {
   id: 'home-renovation-interior-design',
   title: 'Home Renovation & Interior Design',
   category: 'home-lifestyle',
-  icon: '🏠',
+  icon: '🔨',
   sections: [
     {
       id: 'vision-planning-assessment',
@@ -12040,7 +12040,7 @@ export const fitnessJourneyTemplate: GuidanceTemplate = {
   title: 'Fitness Journey & Personal Transformation',
   description: 'Transform your health and fitness with sustainable lifestyle changes and goal achievement strategies',
   category: 'health-wellness',
-  icon: '💪',
+  icon: '🎯',
   sections: [
     {
       id: 'fitness-transformation-foundation',
@@ -12427,7 +12427,7 @@ export const personalDevelopmentCoachingTemplate: GuidanceTemplate = {
   title: "Personal Development & Life Coaching",
   description: "Transform your life through structured personal development and coaching strategies",
   category: "personal-development", 
-  icon: "🌱",
+  icon: "⚡",
   sections: [
     {
       id: "self-awareness-assessment",
