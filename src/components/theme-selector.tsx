@@ -73,20 +73,14 @@ export function ThemeSelector({ iconOnly = false }: ThemeSelectorProps) {
           // Create visual swatch based on theme name
           const getThemeSwatch = (name: string) => {
             switch (name.toLowerCase()) {
-              case 'default': return 'bg-gradient-to-r from-black to-gray-600';
-              case 'rose': return 'bg-gradient-to-r from-rose-400 to-rose-600';
-              case 'neutral': return 'bg-gradient-to-r from-neutral-400 to-neutral-600';
-              case 'emerald': return 'bg-gradient-to-r from-emerald-400 to-emerald-600';
-              case 'magenta': return 'bg-gradient-to-r from-fuchsia-400 to-pink-600';
-              case 'violet': return 'bg-gradient-to-r from-violet-400 to-purple-600';
-              case 'ocean': return 'bg-gradient-to-r from-blue-400 to-cyan-600';
-              case 'amber': return 'bg-gradient-to-r from-amber-400 to-orange-600';
-              case 'cyan': return 'bg-gradient-to-r from-cyan-400 to-teal-600';
-              case 'ruby': return 'bg-gradient-to-r from-red-400 to-rose-600';
-              case 'sage': return 'bg-gradient-to-r from-green-400 to-emerald-600';
-              case 'spectrum': return 'bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400';
-              case 'electric': return 'bg-gradient-to-r from-yellow-400 via-green-400 to-blue-400';
-              case 'vintage': return 'bg-gradient-to-r from-yellow-600 to-amber-700';
+              case 'default': return 'bg-gradient-to-r from-white to-gray-200';
+              case 'rose': return 'bg-gradient-to-r from-purple-300 to-purple-400';
+              case 'neutral': return 'bg-gradient-to-r from-orange-300 to-orange-400';
+              case 'emerald': return 'bg-gradient-to-r from-emerald-400 to-emerald-500';
+              case 'magenta': return 'bg-gradient-to-r from-fuchsia-400 to-pink-500';
+              case 'violet': return 'bg-gradient-to-r from-violet-400 to-purple-500';
+              case 'ocean': return 'bg-gradient-to-r from-cyan-400 to-teal-400';
+              case 'amber': return 'bg-gradient-to-r from-orange-400 to-orange-500';
               default: return 'bg-gradient-to-r from-gray-400 to-gray-600';
             }
           };
