@@ -134,16 +134,19 @@ export function TemplateView({ template }: TemplateViewProps) {
                 orientation="vertical"
                 className="mr-2 data-[orientation=vertical]:h-4"
               />
-              <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
                 <Breadcrumb>
                   <BreadcrumbList>
                     <BreadcrumbItem>
-                      <BreadcrumbPage>{template.title}</BreadcrumbPage>
+                      <BreadcrumbPage className="text-sm font-medium">{template.title}</BreadcrumbPage>
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>
                 {templateExperts.length > 0 && (
-                  <ExpertBadgeList experts={templateExperts} variant="inline" maxDisplay={2} />
+                  <>
+                    <span className="text-muted-foreground text-xs">by</span>
+                    <ExpertBadgeList experts={templateExperts} variant="inline" maxDisplay={2} />
+                  </>
                 )}
               </div>
               <div className="ml-auto flex items-center gap-3">
