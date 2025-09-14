@@ -36,13 +36,13 @@ import { PageLayout } from "@/components/layout";
 import BackgroundPaperShaders from "@/components/ui/background-paper-shaders";
 
 function RotatingWord() {
-	const words = ['moments', 'weddings', 'moves', 'careers', 'launches', 'events', 'projects', 'decisions', 'changes', 'milestones', 'transitions', 'goals'];
+	const words = ['moments', 'weddings', 'moves', 'careers', 'launches', 'events', 'projects', 'decisions', 'changes', 'milestones', 'transitions', 'goals', 'adventures', 'journeys', 'challenges', 'achievements', 'dreams', 'plans', 'ventures', 'celebrations', 'opportunities', 'transformations', 'breakthroughs', 'endeavors', 'ambitions', 'aspirations', 'commitments', 'undertakings', 'pursuits', 'accomplishments', 'innovations', 'creations', 'investments', 'purchases', 'relocations', 'graduations', 'startups', 'relationships', 'partnerships', 'collaborations', 'renovations', 'expeditions', 'missions', 'quests', 'initiatives', 'campaigns', 'proposals', 'presentations', 'negotiations', 'acquisitions', 'mergers', 'expansions', 'discoveries', 'inventions', 'experiments', 'explorations', 'productions', 'constructions', 'developments', 'implementations', 'executions', 'deliveries', 'launches'];
 	const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setCurrentWordIndex((prev) => (prev + 1) % words.length);
-		}, 2000);
+		}, 1000);
 
 		return () => clearInterval(interval);
 	}, []);
