@@ -27,7 +27,12 @@
       "Bash(/Users/ikim1/Documents/GitHub/templata/helptext_audit.sh:*)",
       "Bash(/Users/ikim1/Documents/GitHub/templata/section_icon_audit.sh:*)",
       "Bash(rg:*)",
-      "Bash(./section_icon_audit.sh:*)"
+      "Bash(./section_icon_audit.sh:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "WebFetch(domain:21st.dev)",
+      "Bash(cat:*)",
+      "Bash(timeout 5 npx shadcn@latest add \"https://21st.dev/r/reuno-ui/background-paper-shaders\")",
+      "Bash(npm i:*)"
     ],
     "deny": [],
     "ask": []

@@ -33,6 +33,7 @@ import {
 	Crown,
 } from "lucide-react";
 import { PageLayout } from "@/components/layout";
+import BackgroundPaperShaders from "@/components/ui/background-paper-shaders";
 
 function RotatingWord() {
 	const words = ['moments', 'weddings', 'moves', 'careers', 'launches', 'events', 'projects', 'decisions', 'changes', 'milestones', 'transitions', 'goals'];
@@ -58,26 +59,29 @@ export default function LandingPage() {
 		<PageLayout includeHeaderPadding={false}>
 
 			{/* Hero Section */}
-			<section className="h-screen flex items-center justify-center">
-				<div className="container mx-auto max-w-7xl px-4">
+			<section className="h-screen flex items-center justify-center relative overflow-hidden">
+				{/* Shader Background */}
+				<BackgroundPaperShaders />
+
+				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-8">
 						<Badge
 							variant="outline"
-							className="px-4 py-2"
+							className="px-4 py-2 border-white text-white"
 						>
 							<Sparkles className="mr-2 h-4 w-4" />
 							Skip the blank page
 						</Badge>
 
-						<h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+						<h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
 							Organize life&apos;s
 							<br />
-							<span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+							<span className="text-white">
 								biggest <RotatingWord />
 							</span>
 						</h1>
 
-						<p className="mx-auto max-w-2xl text-xl text-muted-foreground">
+						<p className="mx-auto max-w-2xl text-xl text-white">
 							Life shouldn&apos;t start with a blank page. Get expertly crafted
 							templates that guide you through every step of your biggest moments.
 						</p>
@@ -94,9 +98,8 @@ export default function LandingPage() {
 								</Link>
 							</Button>
 							<Button
-								variant="outline"
 								size="lg"
-								className="h-12 px-8 text-base"
+								className="h-12 px-8 text-base bg-transparent text-white hover:bg-white hover:text-black border border-white"
 								asChild
 							>
 								<Link href="/templates/wedding-planning">

@@ -67,6 +67,8 @@
   --shadow-opacity: var(--shadow-opacity);
   --color-shadow-color: var(--shadow-color);
   --color-destructive-foreground: var(--destructive-foreground);
+  --font-geist-mono: var(----font-geist-mono);
+  --font-geist-sans: var(----font-geist-sans);
 }
 
 :root {
@@ -125,6 +127,8 @@
   --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
   --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
   --tracking-normal: 0em;
+  --font-geist-sans: "Geist Sans", sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
 }
 
 .dark {
@@ -200,12 +204,12 @@
     overflow-x: hidden;
     width: 100%;
   }
-  
+
   /* Prevent layout shifts from modals/dropdowns */
   [data-radix-popper-content-wrapper] {
     z-index: 50;
   }
-  
+
   /* Ensure dropdowns don't affect document flow */
   [data-radix-dropdown-menu-content] {
     position: fixed !important;
