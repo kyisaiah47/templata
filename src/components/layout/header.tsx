@@ -94,7 +94,7 @@ export function Header() {
 												href="/preview"
 												className={cn(
 											"text-base font-medium px-4 py-2 rounded-md",
-											!isHomePage && "hover:bg-muted/50 transition-colors"
+											isHomePage && "hover:bg-transparent focus:bg-transparent data-[active=true]:hover:bg-transparent data-[active=true]:focus:bg-transparent"
 										)}
 											>
 												Preview
@@ -108,7 +108,7 @@ export function Header() {
 												href="/partners"
 												className={cn(
 											"text-base font-medium px-4 py-2 rounded-md",
-											!isHomePage && "hover:bg-muted/50 transition-colors"
+											isHomePage && "hover:bg-transparent focus:bg-transparent data-[active=true]:hover:bg-transparent data-[active=true]:focus:bg-transparent"
 										)}
 											>
 												Partners
@@ -122,7 +122,7 @@ export function Header() {
 												href="/about"
 												className={cn(
 											"text-base font-medium px-4 py-2 rounded-md",
-											!isHomePage && "hover:bg-muted/50 transition-colors"
+											isHomePage && "hover:bg-transparent focus:bg-transparent data-[active=true]:hover:bg-transparent data-[active=true]:focus:bg-transparent"
 										)}
 											>
 												About
@@ -136,7 +136,7 @@ export function Header() {
 												href="/faq"
 												className={cn(
 											"text-base font-medium px-4 py-2 rounded-md",
-											!isHomePage && "hover:bg-muted/50 transition-colors"
+											isHomePage && "hover:bg-transparent focus:bg-transparent data-[active=true]:hover:bg-transparent data-[active=true]:focus:bg-transparent"
 										)}
 											>
 												FAQ
