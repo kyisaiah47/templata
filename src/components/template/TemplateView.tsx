@@ -8,6 +8,7 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { ThemeSelector } from '@/components/theme-selector';
 import { ResourceViewer } from '@/components/resource/ResourceViewer';
 import { Progress } from '@/components/ui/progress';
+import { CommandPalette } from '@/components/command-palette';
 import { DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Heart, Home, CreditCard, Search, HandCoins, FileText, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity } from 'lucide-react';
 import {
   Breadcrumb,
@@ -103,6 +104,12 @@ export function TemplateView({ template }: TemplateViewProps) {
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full bg-background text-foreground">
+        <CommandPalette
+          template={template}
+          onSectionChange={setActiveSection}
+          onInsertPrompt={handleInsertPrompt}
+          onOpenResource={handleOpenResource}
+        />
         <TemplataContentSidebar
           template={template}
           activeSection={activeSection}
