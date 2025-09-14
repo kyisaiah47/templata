@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -39,6 +40,8 @@ import { Typewriter } from "@/components/ui/typewriter";
 
 
 export default function LandingPage() {
+	const { isLoggedIn } = useAuth();
+
 	return (
 		<PageLayout includeHeaderPadding={false}>
 
@@ -103,12 +106,17 @@ export default function LandingPage() {
 							<Button
 								size="lg"
 								className="h-12 px-8 text-base bg-white/80 backdrop-blur-sm text-black hover:bg-white/90"
-								asChild
+								onClick={() => {
+									const event = new KeyboardEvent('keydown', {
+										key: 'k',
+										metaKey: true,
+										bubbles: true
+									});
+									document.dispatchEvent(event);
+								}}
 							>
-								<Link href="/templates">
-									Start Free
-									<ArrowRight className="ml-2 h-5 w-5" />
-								</Link>
+								{isLoggedIn ? "Browse Templates" : "Start Free"}
+								<ArrowRight className="ml-2 h-5 w-5" />
 							</Button>
 							<Button
 								size="lg"
@@ -171,7 +179,7 @@ export default function LandingPage() {
 										<Crown className="h-5 w-5 text-amber-600 dark:text-amber-400" />
 									</div>
 									<span className="text-lg">
-										Start free, upgrade for full access to all templates
+										{isLoggedIn ? "Full access to all premium templates" : "Start free, upgrade for full access to all templates"}
 									</span>
 								</div>
 							</div>
@@ -443,7 +451,7 @@ export default function LandingPage() {
 										document.dispatchEvent(event);
 									}}
 								>
-									Get Started Free
+									{isLoggedIn ? "Open Templates" : "Get Started Free"}
 								</Button>
 							</CardContent>
 						</Card>
@@ -577,8 +585,10 @@ export default function LandingPage() {
 							Ready to organize your next big moment?
 						</h2>
 						<p className="text-xl text-muted-foreground">
-							Choose from our curated collection of templates and get started in
-							minutes. Start free or unlock full access with our premium plans.
+							{isLoggedIn
+								? "Choose from our curated collection of templates and start organizing in minutes."
+								: "Choose from our curated collection of templates and get started in minutes. Start free or unlock full access with our premium plans."
+							}
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 							<Button

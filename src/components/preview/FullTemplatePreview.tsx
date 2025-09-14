@@ -266,7 +266,7 @@ export function FullTemplatePreview({ templateType }: FullTemplatePreviewProps) 
                 <Breadcrumb>
                   <BreadcrumbList>
                     <BreadcrumbItem className="hidden md:block">
-                      <BreadcrumbLink href="/templates">
+                      <BreadcrumbLink onClick={() => { const event = new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }); document.dispatchEvent(event); }}>
                         {templateType}
                       </BreadcrumbLink>
                     </BreadcrumbItem>

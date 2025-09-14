@@ -289,7 +289,7 @@ export default function FAQPage() {
 								className="h-12 px-8 text-base"
 								asChild
 							>
-								<Link href="/templates">
+								<Link onClick={() => { const event = new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }); document.dispatchEvent(event); }}>
 									Browse Templates
 									<ArrowRight className="ml-2 h-5 w-5" />
 								</Link>

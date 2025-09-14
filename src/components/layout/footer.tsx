@@ -3,6 +3,15 @@ import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
 import { FeedbackModal } from "@/components/feedback-modal"
 
+const openCommandPalette = () => {
+	const event = new KeyboardEvent('keydown', {
+		key: 'k',
+		metaKey: true,
+		bubbles: true
+	});
+	document.dispatchEvent(event);
+};
+
 export function Footer() {
 	return (
 		<footer className="border-t">
@@ -29,12 +38,12 @@ export function Footer() {
 						<h4 className="font-semibold">Templates</h4>
 						<ul className="space-y-2 text-muted-foreground">
 							<li>
-								<Link
-									href="/templates"
-									className="hover:text-foreground transition-colors"
+								<button
+									onClick={openCommandPalette}
+									className="hover:text-foreground transition-colors text-left"
 								>
 									Browse Templates
-								</Link>
+								</button>
 							</li>
 							<li>
 								<Link
@@ -53,12 +62,12 @@ export function Footer() {
 								</Link>
 							</li>
 							<li>
-								<Link
-									href="/templates"
-									className="hover:text-foreground transition-colors"
+								<button
+									onClick={openCommandPalette}
+									className="hover:text-foreground transition-colors text-left"
 								>
 									View All
-								</Link>
+								</button>
 							</li>
 						</ul>
 					</div>
