@@ -4,7 +4,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Resource } from '@/types/template';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { X, Clock, BookOpen, ExternalLink, Plus, CheckCircle, ArrowLeft, Circle } from 'lucide-react';
+import { X, Clock, BookOpen, ExternalLink, Plus, CheckCircle, ArrowLeft, Circle, Lightbulb, DollarSign, Calendar, Users, Camera } from 'lucide-react';
 import Link from 'next/link';
 import { InteractiveGlow } from '@/components/ui/glow-variants';
 
@@ -262,7 +262,7 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
                   return (
                     <div key={index} className="flex items-center gap-3 my-8">
                       <div className="h-px bg-gradient-to-r from-primary/50 to-transparent flex-1" />
-                      <h3 className="font-bold text-xl bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text px-4">
+                      <h3 className="font-black text-2xl bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text px-4">
                         {trimmedLine.replace('##', '').trim()}
                       </h3>
                       <div className="h-px bg-gradient-to-l from-primary/50 to-transparent flex-1" />
@@ -272,12 +272,30 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
                 
                 // Handle standalone bold lines (subheaders)
                 if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**') && !trimmedLine.includes('**', 2)) {
+                  const subheaderText = trimmedLine.replace(/^\*\*|\*\*$/g, '');
+
+                  // Choose emoji/icon based on subheader content
+                  const getSubheaderIcon = (text: string) => {
+                    const lowerText = text.toLowerCase();
+                    if (lowerText.includes('venue') || lowerText.includes('reception')) return '🎉';
+                    if (lowerText.includes('catering') || lowerText.includes('food') || lowerText.includes('bar')) return '🍽';
+                    if (lowerText.includes('photo') || lowerText.includes('video')) return '📸';
+                    if (lowerText.includes('flower') || lowerText.includes('decor')) return '🌸';
+                    if (lowerText.includes('music') || lowerText.includes('band') || lowerText.includes('dj')) return '🎵';
+                    if (lowerText.includes('dress') || lowerText.includes('attire')) return '👗';
+                    if (lowerText.includes('ring') || lowerText.includes('jewelry')) return '💍';
+                    if (lowerText.includes('transport') || lowerText.includes('car')) return '🚗';
+                    return '✨';
+                  };
+
                   return (
-                    <div key={index} className="flex items-center gap-3 my-6">
-                      <div className="w-1 h-6 bg-gradient-to-b from-primary/80 to-primary/40 rounded-full" />
-                      <h4 className="font-semibold text-lg text-foreground/90">
-                        {trimmedLine.replace(/^\*\*|\*\*$/g, '')}
-                      </h4>
+                    <div key={index} className="my-6 ml-2">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 border-l-2 border-primary/40">
+                        <span className="text-lg">{getSubheaderIcon(subheaderText)}</span>
+                        <h4 className="font-bold text-lg text-foreground/90">
+                          {subheaderText}
+                        </h4>
+                      </div>
                     </div>
                   );
                 }
@@ -359,26 +377,83 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
                 const renderMarkdown = (text: string) => {
                   const parts: (string | React.JSX.Element)[] = [];
                   let currentIndex = 0;
-                  const boldRegex = /\*\*(.*?)\*\*/g;
+
+                  // Combined regex for bold text, percentages, and dollar amounts
+                  const combinedRegex = /(\*\*(.*?)\*\*|(\d+(?:\.\d+)?(?:–|-)\d+(?:\.\d+)?%|\d+(?:\.\d+)?%)|(\$[\d,]+(?:–|-\$[\d,]+)?|\$\d+(?:\.\d+)?(?:k|K|m|M)?(?:–|-\$\d+(?:\.\d+)?(?:k|K|m|M)?)?))/g;
                   let match;
-                  
-                  while ((match = boldRegex.exec(text)) !== null) {
+
+                  while ((match = combinedRegex.exec(text)) !== null) {
                     if (match.index > currentIndex) {
                       parts.push(text.slice(currentIndex, match.index));
                     }
-                    parts.push(<strong key={match.index} className="font-semibold">{match[1]}</strong>);
+
+                    if (match[1].startsWith('**')) {
+                      // Bold text
+                      parts.push(<strong key={match.index} className="font-semibold text-foreground bg-primary/10 px-1 rounded">{match[2]}</strong>);
+                    } else if (match[3]) {
+                      // Percentage or range
+                      const percentage = match[3];
+                      const badgeColor = percentage.includes('–') || percentage.includes('-')
+                        ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-700'
+                        : 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-700';
+
+                      parts.push(
+                        <span key={match.index} className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${badgeColor}`}>
+                          {percentage}
+                        </span>
+                      );
+                    } else if (match[4]) {
+                      // Dollar amount
+                      const dollarAmount = match[4];
+                      const dollarBadgeColor = 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700';
+
+                      parts.push(
+                        <span key={match.index} className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${dollarBadgeColor}`}>
+                          {dollarAmount}
+                        </span>
+                      );
+                    }
+
                     currentIndex = match.index + match[0].length;
                   }
-                  
+
                   if (currentIndex < text.length) {
                     parts.push(text.slice(currentIndex));
                   }
-                  
+
                   return parts.length > 0 ? parts : text;
                 };
                 
+                // Check for Pro Tips or special callouts
+                if (trimmedLine.toLowerCase().includes('pro tip') ||
+                    trimmedLine.includes('💡') ||
+                    trimmedLine.toLowerCase().includes('tip:') ||
+                    trimmedLine.toLowerCase().includes('remember:') ||
+                    trimmedLine.toLowerCase().includes('important:')) {
+
+                  const calloutText = trimmedLine.replace(/💡/g, '').trim();
+                  const calloutType = trimmedLine.toLowerCase().includes('important') ? 'warning' : 'tip';
+
+                  const calloutStyles = calloutType === 'warning'
+                    ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200'
+                    : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200';
+
+                  const calloutIcon = calloutType === 'warning' ? '⚠️' : '💡';
+
+                  return (
+                    <div key={index} className={`my-4 p-4 rounded-lg border-l-4 ${calloutStyles} ml-2`}>
+                      <div className="flex items-start gap-3">
+                        <span className="text-lg flex-shrink-0 mt-0.5">{calloutIcon}</span>
+                        <div className="flex-1" style={{ fontSize: 'var(--font-size)' }}>
+                          {renderMarkdown(calloutText)}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
                 return (
-                  <p key={index} className="text-muted-foreground select-text ml-6 leading-relaxed py-2" style={{ fontSize: 'var(--font-size)' }}>
+                  <p key={index} className="text-muted-foreground/70 select-text ml-6 leading-relaxed py-2" style={{ fontSize: 'calc(var(--font-size) - 1px)' }}>
                     {renderMarkdown(trimmedLine)}
                   </p>
                 );
