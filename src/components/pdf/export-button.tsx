@@ -52,7 +52,7 @@ export function PDFExportButton({ template, responses, className }: PDFExportBut
       type: "guide" as const,
       completed: section.reflectionPrompts.map(prompt => {
         const response = responses[prompt.id]
-        return response && response.trim() !== ""
+        return Boolean(response && response.trim() !== "")
       })
     }))
 
@@ -79,7 +79,7 @@ export function PDFExportButton({ template, responses, className }: PDFExportBut
       setShowSuccessModal(true)
     } catch (error) {
       console.error("PDF export failed:", error)
-      showSuccess("Export failed. Please try again.", "none")
+      showSuccess("Export failed. Please try again.")
     } finally {
       setIsExporting(false)
     }

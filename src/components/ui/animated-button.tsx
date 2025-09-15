@@ -2,9 +2,11 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { Button, ButtonProps } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { VariantProps } from "class-variance-authority"
 
-interface AnimatedButtonProps extends ButtonProps {
+interface AnimatedButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
+  asChild?: boolean
   animation?: "scale" | "bounce" | "pulse" | "slide"
   children: React.ReactNode
 }

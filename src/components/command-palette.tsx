@@ -48,6 +48,7 @@ import {
 import { PremiumGlow, SubtleGlow } from "@/components/ui/glow-variants"
 import { useFavorites } from "@/hooks/use-favorites"
 import { useRecentTemplates } from "@/hooks/use-recent-templates"
+import type { ReflectionPrompt, Resource, GuidanceSection } from "@/types/template"
 import { useSmartRecommendations } from "@/hooks/use-smart-recommendations"
 import { TemplateOfWeekShowcase } from "@/components/template-of-week/showcase"
 import { isCurrentTemplateOfWeek } from "@/lib/template-of-week"
@@ -60,7 +61,7 @@ import { blogRegistry } from "@/registry/blogs"
 interface CommandPaletteProps {
   isOpen: boolean
   onClose: () => void
-  mode?: "templates" | "articles" | "all" | "smart" | "template-mode"
+  mode?: "templates" | "articles" | "all" | "smart" | "template-mode" | "my-work" | "favorites"
   autoFocus?: boolean
   // Template-specific props
   templateMode?: {
@@ -149,7 +150,7 @@ export function CommandPalette({
   const searchableTemplates = useMemo(() => {
     return templateRegistry.map(template => ({
       ...template,
-      searchableText: `${template.name} ${template.description} ${template.category}`.toLowerCase(),
+      searchableText: `${(template as any).name} ${(template as any).description} ${(template as any).category}`.toLowerCase(),
       type: 'template' as const
     }))
   }, [])
@@ -157,7 +158,7 @@ export function CommandPalette({
   const searchableArticles = useMemo(() => {
     return blogRegistry.map(article => ({
       ...article,
-      searchableText: `${article.title} ${article.excerpt} ${article.category}`.toLowerCase(),
+      searchableText: `${(article as any).title} ${(article as any).excerpt} ${(article as any).category}`.toLowerCase(),
       type: 'article' as const
     }))
   }, [])
@@ -223,7 +224,7 @@ export function CommandPalette({
       const queryLower = debouncedQuery.toLowerCase()
 
       const promptResults = templateSpecificData.prompts
-        .map(prompt => {
+        .map((prompt: ReflectionPrompt & { sectionTitle: string; sectionIndex: number }) => {
           let score = 0
           if (prompt.prompt.toLowerCase().includes(queryLower)) score += 10 // High priority for template content
           if (prompt.prompt.toLowerCase().startsWith(queryLower)) score += 5
@@ -231,30 +232,30 @@ export function CommandPalette({
           if (prompt.sectionTitle.toLowerCase().includes(queryLower)) score += 2
           return { ...prompt, relevanceScore: score }
         })
-        .filter(p => p.relevanceScore > 0)
-        .sort((a, b) => b.relevanceScore - a.relevanceScore)
+        .filter((p: any) => p.relevanceScore > 0)
+        .sort((a: any, b: any) => b.relevanceScore - a.relevanceScore)
 
       const resourceResults = templateSpecificData.resources
-        .map(resource => {
+        .map((resource: Resource) => {
           let score = 0
           if (resource.title.toLowerCase().includes(queryLower)) score += 10 // High priority for template content
           if (resource.title.toLowerCase().startsWith(queryLower)) score += 5
           if (resource.type.toLowerCase().includes(queryLower)) score += 3
           return { ...resource, relevanceScore: score }
         })
-        .filter(r => r.relevanceScore > 0)
-        .sort((a, b) => b.relevanceScore - a.relevanceScore)
+        .filter((r: any) => r.relevanceScore > 0)
+        .sort((a: any, b: any) => b.relevanceScore - a.relevanceScore)
 
       const sectionResults = templateSpecificData.sections
-        .map(section => {
+        .map((section: GuidanceSection) => {
           let score = 0
           if (section.title.toLowerCase().includes(queryLower)) score += 10 // High priority for template content
           if (section.title.toLowerCase().startsWith(queryLower)) score += 5
           if ((section.description || '').toLowerCase().includes(queryLower)) score += 2
           return { ...section, relevanceScore: score }
         })
-        .filter(s => s.relevanceScore > 0)
-        .sort((a, b) => b.relevanceScore - a.relevanceScore)
+        .filter((s: any) => s.relevanceScore > 0)
+        .sort((a: any, b: any) => b.relevanceScore - a.relevanceScore)
 
       // Still include global templates and articles but with lower priority
       const templateResults = searchableTemplates
@@ -316,11 +317,11 @@ export function CommandPalette({
         let score = 0
         const queryLower = debouncedQuery.toLowerCase()
 
-        if (article.title.toLowerCase().includes(queryLower)) score += 5
-        if (article.title.toLowerCase().startsWith(queryLower)) score += 3
-        if (article.excerpt.toLowerCase().includes(queryLower)) score += 2
-        if (article.category.toLowerCase().includes(queryLower)) score += 1
-        if (article.featured) score += 1
+        if ((article as any).title.toLowerCase().includes(queryLower)) score += 5
+        if ((article as any).title.toLowerCase().startsWith(queryLower)) score += 3
+        if ((article as any).excerpt.toLowerCase().includes(queryLower)) score += 2
+        if ((article as any).category.toLowerCase().includes(queryLower)) score += 1
+        if ((article as any).featured) score += 1
 
         return { ...article, relevanceScore: score }
       })
@@ -389,7 +390,7 @@ export function CommandPalette({
     addRecentItem({
       id: template.id,
       name: template.name,
-      url: template.url,
+      url: (template as any).url,
       category: template.category,
       type: "template" as const
     })
@@ -400,12 +401,12 @@ export function CommandPalette({
   const handleArticleClick = (article: any) => {
     addRecentItem({
       id: article.id,
-      name: article.title,
-      url: `/blog/${article.slug}`,
-      category: article.category,
+      name: (article as any).title,
+      url: `/blog/${(article as any).slug}`,
+      category: (article as any).category,
       type: "article" as const
     })
-    trackView(article.id, article.category, "article")
+    trackView(article.id, (article as any).category, "article")
     handleClose()
   }
 
@@ -774,7 +775,7 @@ export function CommandPalette({
                   )}
 
                   {/* Featured Templates */}
-                  {templates.length > 0 && (
+                  {templates && templates.length > 0 && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold text-lg">Featured Templates</h3>
@@ -788,24 +789,24 @@ export function CommandPalette({
                           const Icon = getTemplateIcon(template.id)
                           const isStarred = isFavorited(template.id)
                           return (
-                            <Link key={template.id} href={template.url} onClick={() => handleTemplateClick(template)}>
+                            <Link key={template.id} href={(template as any).url} onClick={() => handleTemplateClick(template)}>
                               <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm">
                                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                                   <Icon className="w-4 h-4 text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <h4 className="font-semibold text-sm group-hover:text-primary transition-colors">
-                                    {template.name}
+                                    {(template as any).name}
                                   </h4>
                                   <p className="text-xs text-muted-foreground line-clamp-1">
-                                    {template.description}
+                                    {(template as any).description}
                                   </p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                   <Badge variant="outline" className="text-xs">
-                                    {template.category}
+                                    {(template as any).category}
                                   </Badge>
-                                  {template.popular && (
+                                  {(template as any).popular && (
                                     <Badge variant="secondary" className="text-xs">
                                       Popular
                                     </Badge>
@@ -829,7 +830,7 @@ export function CommandPalette({
                   )}
 
                   {/* Featured Articles */}
-                  {articles.length > 0 && (
+                  {articles && articles.length > 0 && (
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold text-lg">Featured Articles</h3>
@@ -840,24 +841,24 @@ export function CommandPalette({
                       </div>
                       <div className="space-y-2">
                         {articles.slice(0, 4).map((article) => {
-                          const Icon = getCategoryIcon(article.category)
+                          const Icon = getCategoryIcon((article as any).category)
                           const isStarred = isFavorited(article.id)
                           return (
-                            <Link key={article.id} href={`/blog/${article.slug}`} onClick={() => handleArticleClick(article)}>
+                            <Link key={article.id} href={`/blog/${(article as any).slug}`} onClick={() => handleArticleClick(article)}>
                               <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm">
                                 <div className="w-8 h-8 rounded-lg bg-muted/30 flex items-center justify-center">
                                   <Icon className="w-4 h-4" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <h4 className="font-medium text-sm group-hover:text-primary transition-colors line-clamp-1">
-                                    {article.title}
+                                    {(article as any).title}
                                   </h4>
                                   <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                                    <span>{article.author}</span>
+                                    <span>{(article as any).author}</span>
                                     <span>•</span>
-                                    <span>{article.readTime}</span>
+                                    <span>{(article as any).readTime}</span>
                                     <span>•</span>
-                                    <span>{article.category}</span>
+                                    <span>{(article as any).category}</span>
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -1092,22 +1093,22 @@ export function CommandPalette({
                       const Icon = getTemplateIcon(template.id)
                       const isStarred = isFavorited(template.id)
                       return (
-                        <Link key={template.id} href={template.url} onClick={() => handleTemplateClick(template)}>
+                        <Link key={template.id} href={(template as any).url} onClick={() => handleTemplateClick(template)}>
                           <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm">
                             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                               <Icon className="w-4 h-4 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-sm group-hover:text-primary transition-colors">
-                                {template.name}
+                                {(template as any).name}
                               </h4>
                               <p className="text-xs text-muted-foreground line-clamp-1">
-                                {template.description}
+                                {(template as any).description}
                               </p>
                             </div>
                             <div className="flex items-center gap-2">
                               <Badge variant="outline" className="text-xs">
-                                {template.category}
+                                {(template as any).category}
                               </Badge>
                               {template.popular && (
                                 <Badge variant="secondary" className="text-xs">
@@ -1207,24 +1208,24 @@ export function CommandPalette({
                     </div>
                   <div className="space-y-2">
                     {searchableArticles.map((article) => {
-                      const Icon = getCategoryIcon(article.category)
+                      const Icon = getCategoryIcon((article as any).category)
                       const isStarred = isFavorited(article.id)
                       return (
-                        <Link key={article.id} href={`/blog/${article.slug}`} onClick={() => handleArticleClick(article)}>
+                        <Link key={article.id} href={`/blog/${(article as any).slug}`} onClick={() => handleArticleClick(article)}>
                           <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm">
                             <div className="w-8 h-8 rounded-lg bg-muted/30 flex items-center justify-center">
                               <Icon className="w-4 h-4" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-medium text-sm group-hover:text-primary transition-colors line-clamp-1">
-                                {article.title}
+                                {(article as any).title}
                               </h4>
                               <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                                <span>{article.author}</span>
+                                <span>{(article as any).author}</span>
                                 <span>•</span>
-                                <span>{article.readTime}</span>
+                                <span>{(article as any).readTime}</span>
                                 <span>•</span>
-                                <span>{article.category}</span>
+                                <span>{(article as any).category}</span>
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
@@ -1370,22 +1371,22 @@ export function CommandPalette({
                           const Icon = getTemplateIcon(template.id)
                           const isStarred = isFavorited(template.id)
                           return (
-                            <Link key={template.id} href={template.url} onClick={() => handleTemplateClick(template)}>
+                            <Link key={template.id} href={(template as any).url} onClick={() => handleTemplateClick(template)}>
                               <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm">
                                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                                   <Icon className="w-4 h-4 text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <h4 className="font-semibold text-sm group-hover:text-primary transition-colors">
-                                    {template.name}
+                                    {(template as any).name}
                                   </h4>
                                   <p className="text-xs text-muted-foreground line-clamp-1">
-                                    {template.description}
+                                    {(template as any).description}
                                   </p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                   <Badge variant="outline" className="text-xs">
-                                    {template.category}
+                                    {(template as any).category}
                                   </Badge>
                                   <Button
                                     variant="ghost"
@@ -1411,7 +1412,7 @@ export function CommandPalette({
               {mode !== "template-mode" && (
                 <>
                   {/* Templates Results */}
-                  {templates.length > 0 && (
+                  {templates && templates.length > 0 && (
                     <div>
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                     Templates
@@ -1422,7 +1423,7 @@ export function CommandPalette({
                       const isSelected = selectedIndex === index
                       const isStarred = isFavorited(template.id)
                       return (
-                        <Link key={template.id} href={template.url} onClick={() => handleTemplateClick(template)}>
+                        <Link key={template.id} href={(template as any).url} onClick={() => handleTemplateClick(template)}>
                           <div className={`group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm ${
                             isSelected ? 'bg-primary/10 border border-primary/20' : ''
                           }`}>
@@ -1431,15 +1432,15 @@ export function CommandPalette({
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-sm group-hover:text-primary transition-colors">
-                                {template.name}
+                                {(template as any).name}
                               </h4>
                               <p className="text-xs text-muted-foreground line-clamp-1">
-                                {template.description}
+                                {(template as any).description}
                               </p>
                             </div>
                             <div className="flex items-center gap-2">
                               <Badge variant="outline" className="text-xs">
-                                {template.category}
+                                {(template as any).category}
                               </Badge>
                               <Button
                                 variant="ghost"
@@ -1460,19 +1461,19 @@ export function CommandPalette({
               )}
 
               {/* Articles Results */}
-              {articles.length > 0 && (
+              {articles && articles.length > 0 && (
                 <div>
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                     Resources & Articles
                   </h3>
                   <div className="space-y-2">
                     {articles.map((article, index) => {
-                      const Icon = getCategoryIcon(article.category)
-                      const resultIndex = templates.length + index
+                      const Icon = getCategoryIcon((article as any).category)
+                      const resultIndex = (templates?.length || 0) + index
                       const isSelected = selectedIndex === resultIndex
                       const isStarred = isFavorited(article.id)
                       return (
-                        <Link key={article.id} href={`/blog/${article.slug}`} onClick={() => handleArticleClick(article)}>
+                        <Link key={article.id} href={`/blog/${(article as any).slug}`} onClick={() => handleArticleClick(article)}>
                           <div className={`group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm ${
                             isSelected ? 'bg-primary/10 border border-primary/20' : ''
                           }`}>
@@ -1481,14 +1482,14 @@ export function CommandPalette({
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-medium text-sm group-hover:text-primary transition-colors line-clamp-1">
-                                {article.title}
+                                {(article as any).title}
                               </h4>
                               <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                                <span>{article.author}</span>
+                                <span>{(article as any).author}</span>
                                 <span>•</span>
-                                <span>{article.readTime}</span>
+                                <span>{(article as any).readTime}</span>
                                 <span>•</span>
-                                <span>{article.category}</span>
+                                <span>{(article as any).category}</span>
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
@@ -1531,7 +1532,7 @@ export function CommandPalette({
               )}
 
               {/* Regular Mode Empty State */}
-              {templates.length === 0 && articles.length === 0 && mode !== "template-mode" && (
+              {(!templates || templates.length === 0) && (!articles || articles.length === 0) && mode !== "template-mode" && (
                 <div className="text-center py-16">
                   <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 animate-pulse">
                     <Sparkles className="h-8 w-8 text-primary animate-bounce" />
