@@ -5,7 +5,7 @@ import { GuidanceSection, ReflectionPrompt, FreeformNote } from '@/types/templat
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb, Circle, CheckCircle2, FileText, GripVertical, Edit3, Check, Square } from 'lucide-react';
+import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb, Circle, CheckCircle2, FileText, GripVertical, Edit3, Check, Square, CheckSquare, CircleCheckBig, CircleCheck } from 'lucide-react';
 import Prism from '@/components/ui/prism';
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal';
 import { Button } from '@/components/ui/button';
@@ -285,11 +285,7 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
                               onClick={() => onToggleComplete?.(prompt.id)}
                               className="h-6 w-6 p-0 hover:bg-primary/10 rounded-full border-2 border-border hover:border-primary/30 transition-all flex-shrink-0"
                             >
-                              {completedItems.has(prompt.id) ? (
-                                <Check className="w-5 h-5 text-primary" />
-                              ) : (
-                                <Square className="w-5 h-5 text-muted-foreground" />
-                              )}
+                              <CircleCheck className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
                             </Button>
                           )}
                         </div>
@@ -381,11 +377,7 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
                               onClick={() => onToggleComplete?.(note.id)}
                               className="h-6 w-6 p-0 hover:bg-primary/10 rounded-full border-2 border-border hover:border-primary/30 transition-all flex-shrink-0"
                             >
-                              {completedItems.has(note.id) ? (
-                                <Check className="w-5 h-5 text-primary" />
-                              ) : (
-                                <Square className="w-5 h-5 text-muted-foreground" />
-                              )}
+                              <CircleCheck className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
                             </Button>
                           )}
                         </div>
@@ -465,7 +457,7 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
           {completedItemsList.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
                 <h3 className="text-sm font-medium text-muted-foreground">Completed ({completedItemsList.length})</h3>
               </div>
               <div className="space-y-2">
@@ -481,7 +473,7 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
                       onClick={() => onToggleComplete?.(item.id)}
                       className="group flex items-center gap-3 p-3 bg-primary/5 border border-primary/20 rounded-lg cursor-pointer hover:bg-primary/10 transition-colors"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-sm text-foreground">
