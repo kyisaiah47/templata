@@ -4,7 +4,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Resource } from '@/types/template';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { X, Clock, BookOpen, ExternalLink, Plus, CheckCircle, ArrowLeft } from 'lucide-react';
+import { X, Clock, BookOpen, ExternalLink, Plus, CheckCircle, ArrowLeft, Circle } from 'lucide-react';
 import Link from 'next/link';
 import { InteractiveGlow } from '@/components/ui/glow-variants';
 
@@ -308,9 +308,9 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
                   };
 
                   return (
-                    <div key={index} className="flex items-start gap-4 py-3 ml-6 group">
-                      <div className="mt-1 w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-110 transition-transform">
-                        <span className="text-white text-xs font-bold">{number}</span>
+                    <div key={index} className="flex items-center gap-4 py-3 ml-6 group">
+                      <div className="flex items-center justify-center flex-shrink-0">
+                        <Circle className="w-4 h-4 text-primary fill-primary/20" />
                       </div>
                       <div className="flex-1 text-muted-foreground leading-relaxed" style={{ fontSize: 'var(--font-size)' }}>
                         {renderMarkdown(cleanItem)}
@@ -344,9 +344,9 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
                   };
 
                   return (
-                    <div key={index} className="flex items-start gap-4 py-3 ml-6 group">
-                      <div className="mt-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-110 transition-transform">
-                        <CheckCircle className="w-3 h-3 text-white" />
+                    <div key={index} className="flex items-center gap-4 py-3 ml-6 group">
+                      <div className="flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-4 h-4 text-primary fill-primary/20" />
                       </div>
                       <div className="flex-1 text-muted-foreground leading-relaxed" style={{ fontSize: 'var(--font-size)' }}>
                         {renderMarkdown(cleanItem)}
