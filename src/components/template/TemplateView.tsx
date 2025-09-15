@@ -306,6 +306,7 @@ export function TemplateView({ template }: TemplateViewProps) {
           onWorkspaceChange={handleWorkspaceChange}
           onCreateWorkspace={handleCreateWorkspace}
           highlightedItem={highlightedItem}
+          allItems={allItems}
         />
         
         <main className="flex-1 flex overflow-hidden bg-background">
