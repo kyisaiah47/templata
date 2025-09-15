@@ -574,13 +574,13 @@ export function TemplataContentSidebar({
                     id: `note-${Date.now()}`,
                     title: "New Note"
                   })}
-                  className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-2 border-b p-4 text-sm w-full text-left group hover:[&>div]:scale-110 hover:[&>div]:animate-bounce"
+                  className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-2 border-b p-4 text-sm w-full text-left group hover:[&>div]:scale-110 hover:[&>div]:rotate-3 mb-1"
                 >
                   <div className="transition-transform duration-200">
                     <FileText className="w-4 h-4 text-muted-foreground" />
                   </div>
                   <span>Add Note</span>
-                  <Plus className="ml-auto w-3 h-3 opacity-30 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-200" />
+                  <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
                 </button>
               )}
               {activeTab === 'prompts' && filteredPrompts.map((prompt) => (
@@ -594,7 +594,7 @@ export function TemplataContentSidebar({
                       <Badge className={`text-xs ${getCategoryColor(prompt.category)}`}>
                         {prompt.category}
                       </Badge>
-                      <Plus className="ml-auto w-3 h-3 opacity-30 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-200" />
+                      <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
                     </div>
                     <span className="font-medium line-clamp-2">{prompt.prompt}</span>
                     {prompt.helpText && (
