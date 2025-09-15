@@ -150,7 +150,7 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNot
     }
   };
 
-  // Combine prompts and notes for rendering
+  // Combine prompts and notes for rendering in chronological order
   const allPrompts = additionalPrompts;
   const allItems = [...additionalPrompts, ...additionalNotes];
 

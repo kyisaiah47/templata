@@ -569,32 +569,36 @@ export function TemplataContentSidebar({
           <SidebarGroup className="px-0 h-full">
             <SidebarGroupContent className="h-full overflow-y-auto">
               {activeTab === 'prompts' && (
-                <button
-                  onClick={() => onInsertNote?.({
-                    id: `note-${Date.now()}`,
-                    title: "New Note"
-                  })}
-                  className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-2 border-b p-4 text-sm w-full text-left group hover:[&>div]:scale-110 hover:[&>div]:rotate-3 mb-1"
-                >
-                  <div className="transition-transform duration-200">
-                    <FileText className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                  <span>Add Note</span>
-                  <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
-                </button>
+                <div className="px-2 py-1">
+                  <SubtleGlow>
+                    <button
+                      onClick={() => onInsertNote?.({
+                        id: `note-${Date.now()}`,
+                        title: "New Note"
+                      })}
+                      className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-2 p-4 text-sm w-full text-left group/add-note hover:[&>div]:scale-110 hover:[&>div]:rotate-3 overflow-hidden rounded-lg"
+                    >
+                      <div className="transition-transform duration-200">
+                        <FileText className="w-4 h-4 text-muted-foreground" />
+                      </div>
+                      <span>Add Note</span>
+                      <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover/add-note:opacity-100 group-hover/add-note:translate-x-1 transition-all duration-200" />
+                    </button>
+                  </SubtleGlow>
+                </div>
               )}
               {activeTab === 'prompts' && filteredPrompts.map((prompt) => (
                 <div key={prompt.id} className="px-2 py-1">
                   <SubtleGlow>
                     <button
                       onClick={() => onInsertPrompt?.(prompt)}
-                      className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 p-4 text-sm leading-tight w-full text-left group overflow-hidden rounded-lg"
+                      className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 p-4 text-sm leading-tight w-full text-left group/prompt overflow-hidden rounded-lg"
                     >
                     <div className="flex w-full items-center gap-2">
                       <Badge className={`text-xs ${getCategoryColor(prompt.category)}`}>
                         {prompt.category}
                       </Badge>
-                      <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
+                      <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover/prompt:opacity-100 group-hover/prompt:translate-x-1 transition-all duration-200" />
                     </div>
                     <span className="font-medium line-clamp-2">{prompt.prompt}</span>
                     {prompt.helpText && (
