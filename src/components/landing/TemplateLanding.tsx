@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import type { Metadata } from 'next';
+import { HeroBenefit, Testimonial } from '@/registry/landing-pages';
 
 interface ProcessStep {
   icon: LucideIcon;
@@ -45,19 +46,9 @@ interface GuidedNote {
   description: string;
 }
 
-interface Testimonial {
-  name: string;
-  text: string;
-  rating: number;
-}
-
 interface FAQ {
   question: string;
   answer: string;
-}
-
-interface HeroBenefit {
-  text: string;
 }
 
 interface TemplateLandingProps {

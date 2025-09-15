@@ -45,7 +45,7 @@ interface GuidedNote {
   description: string;
 }
 
-interface Testimonial {
+export interface Testimonial {
   name: string;
   text: string;
   rating: number;
@@ -56,7 +56,7 @@ interface FAQ {
   answer: string;
 }
 
-interface HeroBenefit {
+export interface HeroBenefit {
   text: string;
 }
 
@@ -146,27 +146,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Expense Tracking", 
         badgeVariant: "outline" as const,
-        text: "Automatically categorize and track all your expenses to see exactly where your money goes",
-        rating: 5
+        content: "Automatically categorize and track all your expenses to see exactly where your money goes",
       },
       { 
         badge: "Debt Elimination", 
         badgeVariant: "secondary" as const,
-        text: "Strategic debt payoff plans using snowball or avalanche methods to become debt-free faster",
-        rating: 5
+        content: "Strategic debt payoff plans using snowball or avalanche methods to become debt-free faster",
       },
       { 
         badge: "Savings Goals", 
         badgeVariant: "default" as const,
-        text: "Set and achieve financial goals with automatic progress tracking and milestone celebrations",
-        rating: 5
+        content: "Set and achieve financial goals with automatic progress tracking and milestone celebrations",
       }
     ],
     heroBenefits: [
       { text: "💰 Save $2,000+ annually through better spending awareness" },
       { text: "🎯 Achieve financial goals 3x faster with structured planning" },
       { text: "📊 Reduce financial stress by 75% with clear money management" },
-      { text: "🏦 Build emergency fund and eliminate debt systematically" }
+      { text: "🏦 Build emergency fund and eliminate debt systematically" },
     ],
 
     // Hero Section Properties
@@ -307,21 +304,18 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Maria Rodriguez",
-        text: "This budget template completely transformed my finances! I've saved over $5,000 in the past year and finally have an emergency fund. The debt elimination tracker kept me motivated through the entire payoff journey.",,
-        rating: 5
-        rating: 5
+        text: "This budget template completely transformed my finances! I've saved over $5,000 in the past year and finally have an emergency fund. The debt elimination tracker kept me motivated through the entire payoff journey.",
+        rating: 5,
       },
       {
-        name: "David Chen", 
-        text: "As someone who struggled with money management, this template made budgeting actually enjoyable. The visual reports showed me exactly where my money was going. I've increased my savings rate from 5% to 25%!",,
-        rating: 5
-        rating: 5
+        name: "David Chen",
+        text: "As someone who struggled with money management, this template made budgeting actually enjoyable. The visual reports showed me exactly where my money was going. I've increased my savings rate from 5% to 25%!",
+        rating: 5,
       },
       {
         name: "Jennifer Williams",
-        text: "The goal-setting features are incredible. I was able to save for my dream vacation, pay off my credit cards, and start investing all within 18 months. This template keeps me accountable and motivated.",,
-        rating: 5
-        rating: 5
+        text: "The goal-setting features are incredible. I was able to save for my dream vacation, pay off my credit cards, and start investing all within 18 months. This template keeps me accountable and motivated.",
+        rating: 5,
       }
     ],
 
@@ -398,27 +392,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Time Blocking", 
         badgeVariant: "outline" as const,
-        text: "Schedule your entire day with precision time blocks that maximize focus and eliminate decision fatigue",
-        rating: 5
+        content: "Schedule your entire day with precision time blocks that maximize focus and eliminate decision fatigue",
       },
       { 
         badge: "Task Management", 
         badgeVariant: "secondary" as const,
-        text: "Capture, organize, and execute all your tasks with the proven Getting Things Done (GTD) methodology",
-        rating: 5
+        content: "Capture, organize, and execute all your tasks with the proven Getting Things Done (GTD) methodology",
       },
       { 
         badge: "Goal Achievement", 
         badgeVariant: "default" as const,
-        text: "Break down big goals into actionable steps with progress tracking and accountability systems",
-        rating: 5
+        content: "Break down big goals into actionable steps with progress tracking and accountability systems",
       }
     ],
     heroBenefits: [
       { text: "⚡ Get 40+ hours back each month through better time management" },
       { text: "🎯 Complete 2x more meaningful work with focused execution" },
       { text: "📈 Achieve long-term goals 5x faster with systematic planning" },
-      { text: "🧠 Reduce decision fatigue and mental clutter by 80%" }
+      { text: "🧠 Reduce decision fatigue and mental clutter by 80%" },
     ],
 
     // Hero Section Properties
@@ -559,21 +550,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Alex Thompson",
-        text: "This productivity system completely transformed my work life. I went from feeling constantly overwhelmed to having complete control over my time. I'm completing 2x more meaningful work and actually have time for personal projects now.",,
-        rating: 5
-        rating: 5
+        text: "This productivity system completely transformed my work life. I went from feeling constantly overwhelmed to having complete control over my time. I'm completing 2x more meaningful work and actually have time for personal projects now.",
       },
       {
         name: "Sarah Kim", 
-        text: "The time blocking methodology alone saved me 15+ hours per week. No more context switching or wondering what to work on next. My focus and output have never been higher. This system is life-changing.",,
-        rating: 5
-        rating: 5
+        text: "The time blocking methodology alone saved me 15+ hours per week. No more context switching or wondering what to work on next. My focus and output have never been higher. This system is life-changing.",
       },
       {
         name: "Michael Rodriguez",
-        text: "I've tried dozens of productivity systems over the years, but this is the only one that stuck. The combination of GTD and time blocking with clear implementation steps made all the difference. Highly recommended for anyone serious about productivity.",,
-        rating: 5
-        rating: 5
+        text: "I've tried dozens of productivity systems over the years, but this is the only one that stuck. The combination of GTD and time blocking with clear implementation steps made all the difference. Highly recommended for anyone serious about productivity.",
       }
     ],
 
@@ -650,7 +635,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroBenefits: [
       { text: 'Save 50+ hours of planning time' },
       { text: 'Track budgets up to $100K+' },
-      { text: 'Manage 300+ guest weddings' }
+      { text: 'Manage 300+ guest weddings' },
     ],
     processTitle: 'Complete Wedding Planning System',
     processDescription: 'Our comprehensive framework guides you through every aspect of wedding planning with expert guidance.',
@@ -755,21 +740,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Sarah & Michael",
-        text: "This template saved us over 50 hours of planning time and kept us organized throughout the entire 12-month process!",,
-        rating: 5
-        rating: 5
+        text: "This template saved us over 50 hours of planning time and kept us organized throughout the entire 12-month process!",
       },
       {
         name: "Emily & James", 
-        text: "The budget tracker helped us save $3,200 by catching vendor overcharges. We stayed under budget and had our dream wedding.",,
-        rating: 5
-        rating: 5
+        text: "The budget tracker helped us save $3,200 by catching vendor overcharges. We stayed under budget and had our dream wedding.",
       },
       {
         name: "Lisa & David",
-        text: "Managing 15+ vendors became effortless. The contract tracking alone prevented 3 major scheduling conflicts.",,
-        rating: 5
-        rating: 5
+        text: "Managing 15+ vendors became effortless. The contract tracking alone prevented 3 major scheduling conflicts.",
       }
     ],
     faqs: [
@@ -842,25 +821,21 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Market Research',
-        text: 'Validated business idea with clear target market analysis',
-        rating: 5
+        content: 'Validated business idea with clear target market analysis',
       },
       {
         badge: 'Legal Setup',
         badgeVariant: 'secondary',
-        text: 'Proper business structure and compliance framework',
-        rating: 5
+        content: 'Proper business structure and compliance framework',
       },
       {
         badge: 'Funding',
         badgeVariant: 'outline',
-        text: 'Financial plan with clear funding strategy and projections',
-        rating: 5
+        content: 'Financial plan with clear funding strategy and projections',
       },
       {
         badge: 'Marketing',
-        text: 'Brand identity and customer acquisition strategy',
-        rating: 5
+        content: 'Brand identity and customer acquisition strategy',
       }
     ],
     processTitle: 'Complete Business Launch Framework',
@@ -950,25 +925,21 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Resume',
-        text: 'ATS-optimized format with quantified achievements',
-        rating: 5
+        content: 'ATS-optimized format with quantified achievements',
       },
       {
         badge: 'Interview',
         badgeVariant: 'secondary',
-        text: 'STAR method stories prepared for behavioral questions',
-        rating: 5
+        content: 'STAR method stories prepared for behavioral questions',
       },
       {
         badge: 'Network',
         badgeVariant: 'outline',
-        text: 'Strategic connections in target companies',
-        rating: 5
+        content: 'Strategic connections in target companies',
       },
       {
         badge: 'Offer',
-        text: 'Negotiated 25% above initial offer',
-        rating: 5
+        content: 'Negotiated 25% above initial offer',
       }
     ],
     processTitle: 'Strategic Job Search Process',
@@ -1058,25 +1029,21 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Prenatal Care',
-        text: 'Scheduled appointments and health monitoring timeline',
-        rating: 5
+        content: 'Scheduled appointments and health monitoring timeline',
       },
       {
         badge: 'Nursery',
         badgeVariant: 'secondary',
-        text: 'Safe, functional space designed for baby and parents',
-        rating: 5
+        content: 'Safe, functional space designed for baby and parents',
       },
       {
         badge: 'Budget',
         badgeVariant: 'outline',
-        text: 'First-year costs planned and savings strategies in place',
-        rating: 5
+        content: 'First-year costs planned and savings strategies in place',
       },
       {
         badge: 'Birth Plan',
-        text: 'Labor preferences and hospital logistics organized',
-        rating: 5
+        content: 'Labor preferences and hospital logistics organized',
       }
     ],
     processTitle: 'Complete Baby Planning Journey',
@@ -1166,25 +1133,21 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Communication',
-        text: 'Age-appropriate communication strategies that strengthen bonds',
-        rating: 5
+        content: 'Age-appropriate communication strategies that strengthen bonds',
       },
       {
         badge: 'Development',
         badgeVariant: 'secondary',
-        text: 'Understanding milestones and supporting natural growth',
-        rating: 5
+        content: 'Understanding milestones and supporting natural growth',
       },
       {
         badge: 'Learning',
         badgeVariant: 'outline',
-        text: 'Educational approaches that foster curiosity and confidence',
-        rating: 5
+        content: 'Educational approaches that foster curiosity and confidence',
       },
       {
         badge: 'Wellbeing',
-        text: 'Emotional, physical, and mental health strategies for the family',
-        rating: 5
+        content: 'Emotional, physical, and mental health strategies for the family',
       }
     ],
     processTitle: 'Comprehensive Child Development Support',
@@ -1276,25 +1239,21 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Pre-Approval',
-        text: 'Mortgage pre-approved with clear budget boundaries',
-        rating: 5
+        content: 'Mortgage pre-approved with clear budget boundaries',
       },
       {
         badge: 'Home Search',
         badgeVariant: 'secondary',
-        text: 'Strategic search based on location and lifestyle needs',
-        rating: 5
+        content: 'Strategic search based on location and lifestyle needs',
       },
       {
         badge: 'Offer Strategy',
         badgeVariant: 'outline',
-        text: 'Competitive offers that win in today\'s market',
-        rating: 5
+        content: 'Competitive offers that win in today\'s market',
       },
       {
         badge: 'Closing',
-        text: 'Smooth closing process with all paperwork organized',
-        rating: 5
+        content: 'Smooth closing process with all paperwork organized',
       }
     ],
     processTitle: 'Complete Home Buying Process',
@@ -1394,20 +1353,17 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Concept Planning',
-        text: 'Clear event vision with defined goals and target audience',
-        rating: 5
+        content: 'Clear event vision with defined goals and target audience',
       },
       {
         badge: 'Budget Control',
         badgeVariant: 'secondary',
-        text: 'Detailed budget breakdown with cost tracking and savings tips',
-        rating: 5
+        content: 'Detailed budget breakdown with cost tracking and savings tips',
       },
       {
         badge: 'Seamless Execution',
         badgeVariant: 'outline',
-        text: 'Day-of coordination with backup plans and contingencies',
-        rating: 5
+        content: 'Day-of coordination with backup plans and contingencies',
       }
     ],
     heroBenefits: [
@@ -1415,7 +1371,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { text: 'Reduce event planning stress by 80%' },
       { text: 'Stay within budget with smart tracking' },
       { text: 'Professional-level event coordination' },
-      { text: 'Memorable experiences for your guests' }
+      { text: 'Memorable experiences for your guests' },
     ],
     processTitle: 'Your Event Planning Journey',
     processDescription: 'From initial concept to post-event follow-up, our systematic approach ensures nothing is overlooked.',
@@ -1535,21 +1491,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: 'Sarah Chen',
-        text: 'This template helped me plan a 300-person conference with zero stress. The vendor management tools alone saved me 40 hours of work.',,
-        rating: 5
-        rating: 5
+        text: 'This template helped me plan a 300-person conference with zero stress. The vendor management tools alone saved me 40 hours of work.',
       },
       {
         name: 'Michael Rodriguez',
-        text: 'As a professional event planner, I use this system for every event. It ensures consistency and helps me deliver exceptional results for my clients.',,
-        rating: 5
-        rating: 5
+        text: 'As a professional event planner, I use this system for every event. It ensures consistency and helps me deliver exceptional results for my clients.',
       },
       {
         name: 'Jennifer Wu',
-        text: 'Planned my daughter\'s Sweet 16 with this guide. Everything went perfectly and I actually enjoyed the process instead of stressing about it!',,
-        rating: 5
-        rating: 5
+        text: 'Planned my daughter\'s Sweet 16 with this guide. Everything went perfectly and I actually enjoyed the process instead of stressing about it!',
       }
     ],
     faqs: [
@@ -1602,20 +1552,17 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Itinerary Planning',
-        text: 'Detailed day-by-day schedules with activities and reservations',
-        rating: 5
+        content: 'Detailed day-by-day schedules with activities and reservations',
       },
       {
         badge: 'Budget Control',
         badgeVariant: 'secondary',
-        text: 'Smart budget tracking with expense monitoring and savings tips',
-        rating: 5
+        content: 'Smart budget tracking with expense monitoring and savings tips',
       },
       {
         badge: 'Travel Coordination',
         badgeVariant: 'outline',
-        text: 'Seamless booking management and travel document organization',
-        rating: 5
+        content: 'Seamless booking management and travel document organization',
       }
     ],
     heroBenefits: [
@@ -1623,7 +1570,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { text: 'Stay within budget with smart tracking' },
       { text: 'Never miss a reservation or booking' },
       { text: 'Stress-free travel coordination' },
-      { text: 'Memorable experiences every trip' }
+      { text: 'Memorable experiences every trip' },
     ],
     processTitle: 'Your Travel Planning Journey',
     processDescription: 'From destination research to post-trip memories, our systematic approach ensures unforgettable adventures.',
@@ -1744,22 +1691,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Jessica Martinez',
         
-        text: 'This template transformed how I plan trips! I used it for a 3-week European adventure and everything went perfectly. The budget tracking alone saved me $800.',,
-        rating: 5
+        text: 'This template transformed how I plan trips! I used it for a 3-week European adventure and everything went perfectly. The budget tracking alone saved me $800.',
         
       },
       {
         name: 'Robert Kim',
         
-        text: 'As someone who travels frequently for work, this system keeps all my business and personal trips organized. It\'s saved me countless hours and stress.',,
-        rating: 5
+        text: 'As someone who travels frequently for work, this system keeps all my business and personal trips organized. It\'s saved me countless hours and stress.',
         
       },
       {
         name: 'Amanda Foster',
         
-        text: 'Planning family vacations with kids used to be overwhelming. This template made our Disney trip seamless - everyone had an amazing time!',,
-        rating: 5
+        text: 'Planning family vacations with kids used to be overwhelming. This template made our Disney trip seamless - everyone had an amazing time!',
         
       }
     ],
@@ -1813,20 +1757,17 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Meal Planning',
-        text: 'Weekly meal plans with balanced nutrition and variety',
-        rating: 5
+        content: 'Weekly meal plans with balanced nutrition and variety',
       },
       {
         badge: 'Smart Shopping',
         badgeVariant: 'secondary',
-        text: 'Organized grocery lists that save time and money',
-        rating: 5
+        content: 'Organized grocery lists that save time and money',
       },
       {
         badge: 'Healthy Choices',
         badgeVariant: 'outline',
-        text: 'Nutritionally balanced meals for your health goals',
-        rating: 5
+        content: 'Nutritionally balanced meals for your health goals',
       }
     ],
     heroBenefits: [
@@ -1834,7 +1775,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { text: 'Reduce grocery spending by 25-30%' },
       { text: 'Eat healthier with balanced nutrition' },
       { text: 'Eliminate daily "what\'s for dinner?" stress' },
-      { text: 'Reduce food waste and impulse purchases' }
+      { text: 'Reduce food waste and impulse purchases' },
     ],
     processTitle: 'Your Meal Planning Journey',
     processDescription: 'From nutrition goals to grocery shopping, our systematic approach makes healthy eating effortless.',
@@ -1955,22 +1896,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Maria Gonzalez',
         
-        text: 'This system revolutionized our family meals! We\'re eating healthier, saving $200+ monthly on groceries, and I no longer stress about dinner every day.',,
-        rating: 5
+        text: 'This system revolutionized our family meals! We\'re eating healthier, saving $200+ monthly on groceries, and I no longer stress about dinner every day.',
         
       },
       {
         name: 'James Wilson',
         
-        text: 'Perfect for tracking macros and meal prep. I hit my nutrition goals consistently now and save hours each week with organized planning.',,
-        rating: 5
+        text: 'Perfect for tracking macros and meal prep. I hit my nutrition goals consistently now and save hours each week with organized planning.',
         
       },
       {
         name: 'Sarah Chen',
         
-        text: 'As someone with limited cooking time, this template helps me eat healthy home-cooked meals without the daily stress of figuring out what to make.',,
-        rating: 5
+        text: 'As someone with limited cooking time, this template helps me eat healthy home-cooked meals without the daily stress of figuring out what to make.',
         
       }
     ],
@@ -2024,20 +1962,17 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Workout Planning',
-        text: 'Structured exercise routines tailored to your goals and schedule',
-        rating: 5
+        content: 'Structured exercise routines tailored to your goals and schedule',
       },
       {
         badge: 'Progress Tracking',
         badgeVariant: 'secondary',
-        text: 'Comprehensive monitoring of strength, endurance, and body changes',
-        rating: 5
+        content: 'Comprehensive monitoring of strength, endurance, and body changes',
       },
       {
         badge: 'Nutrition Support',
         badgeVariant: 'outline',
-        text: 'Meal planning and macro tracking for optimal performance',
-        rating: 5
+        content: 'Meal planning and macro tracking for optimal performance',
       }
     ],
     heroBenefits: [
@@ -2045,7 +1980,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { text: 'Build sustainable healthy habits' },
       { text: 'Track strength and endurance gains' },
       { text: 'Improve energy and mental clarity' },
-      { text: 'Create lifelong wellness routines' }
+      { text: 'Create lifelong wellness routines' },
     ],
     processTitle: 'Your Fitness Transformation Journey',
     processDescription: 'From goal setting to achievement, our comprehensive system guides you through every step of your fitness journey.',
@@ -2166,22 +2101,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Michael Rodriguez',
         
-        text: 'This system helped me lose 30 pounds and gain strength while working 60-hour weeks. The structured approach made fitness finally sustainable for me.',,
-        rating: 5
+        text: 'This system helped me lose 30 pounds and gain strength while working 60-hour weeks. The structured approach made fitness finally sustainable for me.',
         
       },
       {
         name: 'Sarah Johnson',
         
-        text: 'After having my baby, I thought I\'d never get back in shape. This program helped me rebuild my strength and energy in just 20-minute daily sessions.',,
-        rating: 5
+        text: 'After having my baby, I thought I\'d never get back in shape. This program helped me rebuild my strength and energy in just 20-minute daily sessions.',
         
       },
       {
         name: 'David Park',
         
-        text: 'I went from never exercising to running my first marathon in 18 months. The progressive approach made the impossible feel achievable.',,
-        rating: 5
+        text: 'I went from never exercising to running my first marathon in 18 months. The progressive approach made the impossible feel achievable.',
         
       }
     ],
@@ -2235,20 +2167,17 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Application Tracking',
-        text: 'Organized deadlines and requirements for all college applications',
-        rating: 5
+        content: 'Organized deadlines and requirements for all college applications',
       },
       {
         badge: 'Essay Management',
         badgeVariant: 'secondary',
-        text: 'Streamlined essay writing and editing process with prompts',
-        rating: 5
+        content: 'Streamlined essay writing and editing process with prompts',
       },
       {
         badge: 'Financial Planning',
         badgeVariant: 'outline',
-        text: 'Scholarship search and financial aid application coordination',
-        rating: 5
+        content: 'Scholarship search and financial aid application coordination',
       }
     ],
     heroBenefits: [
@@ -2256,7 +2185,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { text: 'Maximize scholarship and financial aid opportunities' },
       { text: 'Create compelling essays and applications' },
       { text: 'Reduce stress throughout the admissions process' },
-      { text: 'Make informed college selection decisions' }
+      { text: 'Make informed college selection decisions' },
     ],
     processTitle: 'Your College Admissions Journey',
     processDescription: 'From initial research to enrollment, our systematic approach guides you through every step of the college admissions process.',
@@ -2377,22 +2306,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Emma Chen',
         
-        text: 'This system kept me organized through 12 applications and helped me secure $80K in scholarships. I couldn\'t have managed it all without this structure.',,
-        rating: 5
+        text: 'This system kept me organized through 12 applications and helped me secure $80K in scholarships. I couldn\'t have managed it all without this structure.',
         
       },
       {
         name: 'Marcus Johnson',
         
-        text: 'As the first in my family to attend college, this guide was invaluable. It demystified the entire process and helped me get into my dream school with full financial aid.',,
-        rating: 5
+        text: 'As the first in my family to attend college, this guide was invaluable. It demystified the entire process and helped me get into my dream school with full financial aid.',
         
       },
       {
         name: 'Jennifer Lopez',
         
-        text: 'This template saved our family so much stress! Having everything organized in one place made senior year manageable instead of overwhelming.',,
-        rating: 5
+        text: 'This template saved our family so much stress! Having everything organized in one place made senior year manageable instead of overwhelming.',
         
       }
     ],
@@ -2446,20 +2372,17 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     heroCards: [
       {
         badge: 'Moving Timeline',
-        text: '8-week structured timeline with tasks organized by priority and deadline',
-        rating: 5
+        content: '8-week structured timeline with tasks organized by priority and deadline',
       },
       {
         badge: 'Vendor Coordination',
         badgeVariant: 'secondary',
-        text: 'Streamlined management of movers, utilities, and service providers',
-        rating: 5
+        content: 'Streamlined management of movers, utilities, and service providers',
       },
       {
         badge: 'Budget Tracking',
         badgeVariant: 'outline',
-        text: 'Complete cost estimation and expense tracking for all moving expenses',
-        rating: 5
+        content: 'Complete cost estimation and expense tracking for all moving expenses',
       }
     ],
     heroBenefits: [
@@ -2467,7 +2390,7 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { text: 'Reduce moving stress by 80% with organized systems' },
       { text: 'Avoid costly mistakes and forgotten tasks' },
       { text: 'Ensure smooth transition with minimal disruption' },
-      { text: 'Keep track of all important details and deadlines' }
+      { text: 'Keep track of all important details and deadlines' },
     ],
     processTitle: 'Your Moving Journey',
     processDescription: 'From initial planning to settling in, our comprehensive system guides you through every step of relocation.',
@@ -2588,22 +2511,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Lisa Johnson',
         
-        text: 'This system made our cross-country move with three kids incredibly manageable. Everything was organized and we didn\'t forget a single important task.',,
-        rating: 5
+        text: 'This system made our cross-country move with three kids incredibly manageable. Everything was organized and we didn\'t forget a single important task.',
         
       },
       {
         name: 'Carlos Martinez',
         
-        text: 'After 5 military moves, this is the first one that felt completely under control. The timeline and checklists were game-changers for our family.',,
-        rating: 5
+        text: 'After 5 military moves, this is the first one that felt completely under control. The timeline and checklists were game-changers for our family.',
         
       },
       {
         name: 'Sarah Kim',
         
-        text: 'Moving from an apartment to our first house felt overwhelming until I found this system. It broke everything down into manageable steps.',,
-        rating: 5
+        text: 'Moving from an apartment to our first house felt overwhelming until I found this system. It broke everything down into manageable steps.',
         
       }
     ],
@@ -2721,24 +2641,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: 'Dr. Sarah Chen',
-         Psychology',
-        text: 'This template transformed my dissertation process. The literature review system alone saved me months of work, and the writing framework helped me structure complex arguments clearly.',,
-        rating: 5
-        rating: 5
+        text: 'This template transformed my dissertation process. The literature review system alone saved me months of work, and the writing framework helped me structure complex arguments clearly.',
       },
       {
         name: 'Marcus Rodriguez',
-         Biology',
-        text: 'As someone managing multiple research projects, the timeline and milestone tracking has been invaluable. I finally feel in control of my research pipeline.',,
-        rating: 5
-        rating: 5
+        text: 'As someone managing multiple research projects, the timeline and milestone tracking has been invaluable. I finally feel in control of my research pipeline.',
       },
       {
         name: 'Prof. Emily Watson',
-         Sociology',
-        text: 'I wish I had this during my PhD! The systematic approach to research planning and the publication strategy guidance are exactly what early-career researchers need.',,
-        rating: 5
-        rating: 5
+        text: 'I wish I had this during my PhD! The systematic approach to research planning and the publication strategy guidance are exactly what early-career researchers need.',
       }
     ],
     faqs: [
@@ -2879,25 +2790,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Sarah Chen',
         
-        text: 'This program helped me break my 5K PR by 90 seconds in just 4 months. The structured training and nutrition guidance made all the difference.',,
-        rating: 5
-        rating: 5,
+        text: 'This program helped me break my 5K PR by 90 seconds in just 4 months. The structured training and nutrition guidance made all the difference.',
         
       },
       {
         name: 'Michael Rodriguez',
         
-        text: 'Finally a science-based approach to training! My bench press increased 40 lbs while staying injury-free. The recovery protocols are game-changing.',,
-        rating: 5
-        rating: 5,
+        text: 'Finally a science-based approach to training! My bench press increased 40 lbs while staying injury-free. The recovery protocols are game-changing.',
         
       },
       {
         name: 'Emma Thompson',
         
-        text: 'The comprehensive approach to fitness assessment and program design elevated my competitive performance to the next level.',,
-        rating: 5
-        rating: 5,
+        text: 'The comprehensive approach to fitness assessment and program design elevated my competitive performance to the next level.',
         
       }
     ],
@@ -3006,25 +2911,19 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       {
         name: 'Sarah Martinez',
         
-        text: 'This system helped me plan an incredible 3-month backpacking journey through Southeast Asia. The safety protocols and cultural immersion tips made all the difference!',,
-        rating: 5
-        rating: 5,
+        text: 'This system helped me plan an incredible 3-month backpacking journey through Southeast Asia. The safety protocols and cultural immersion tips made all the difference!',
         
       },
       {
         name: 'David Chen',
         
-        text: 'Finally found authentic experiences beyond tourist traps! The local connection strategies helped me discover the real heart of every destination I visited.',,
-        rating: 5
-        rating: 5,
+        text: 'Finally found authentic experiences beyond tourist traps! The local connection strategies helped me discover the real heart of every destination I visited.',
         
       },
       {
         name: 'The Johnson Family',
         
-        text: 'Created amazing memories with our kids using the family-friendly adventure planning approach. Every detail was perfectly organized and so much fun!',,
-        rating: 5
-        rating: 5,
+        text: 'Created amazing memories with our kids using the family-friendly adventure planning approach. Every detail was perfectly organized and so much fun!',
         
       }
     ],
@@ -3098,27 +2997,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Client Acquisition", 
         badgeVariant: "outline" as const,
-        text: "Systematic approach to finding and converting high-quality clients who pay premium rates",
-        rating: 5
+        content: "Systematic approach to finding and converting high-quality clients who pay premium rates",
       },
       { 
         badge: "Premium Pricing", 
         badgeVariant: "secondary" as const,
-        text: "Value-based pricing strategies that maximize income while delivering exceptional client value",
-        rating: 5
+        content: "Value-based pricing strategies that maximize income while delivering exceptional client value",
       },
       { 
         badge: "Business Growth", 
         badgeVariant: "default" as const,
-        text: "Scale beyond trading time for money with systems, processes, and strategic partnerships",
-        rating: 5
+        content: "Scale beyond trading time for money with systems, processes, and strategic partnerships",
       }
     ],
     heroBenefits: [
       { text: "💼 Increase rates by 50-200% through strategic positioning" },
       { text: "🎯 Build consistent client pipeline with proven acquisition methods" },
       { text: "📈 Create scalable income streams beyond hourly billing" },
-      { text: "⚡ Reduce business stress with systematic processes and workflows" }
+      { text: "⚡ Reduce business stress with systematic processes and workflows" },
     ],
 
     // Process Steps
@@ -3259,21 +3155,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Marcus Chen, Digital Marketing Consultant",
-        text: "This template helped me increase my rates by 150% and build a waiting list of clients. The pricing strategies alone were worth it!",,
-        rating: 5
-        rating: 5
+        text: "This template helped me increase my rates by 150% and build a waiting list of clients. The pricing strategies alone were worth it!",
       },
       {
         name: "Sarah Johnson, Graphic Designer", 
-        text: "I went from struggling to find clients to having a consistent pipeline. The client acquisition system is incredibly effective.",,
-        rating: 5
-        rating: 5
+        text: "I went from struggling to find clients to having a consistent pipeline. The client acquisition system is incredibly effective.",
       },
       {
         name: "David Rodriguez, Web Developer",
-        text: "The business scaling section helped me transition from hourly work to project-based pricing. My income doubled in 6 months.",,
-        rating: 5
-        rating: 5
+        text: "The business scaling section helped me transition from hourly work to project-based pricing. My income doubled in 6 months.",
       }
     ],
 
@@ -3348,27 +3238,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Cultural Immersion", 
         badgeVariant: "outline" as const,
-        text: "Authentic cultural experiences that accelerate language acquisition and deepen understanding",
-        rating: 5
+        content: "Authentic cultural experiences that accelerate language acquisition and deepen understanding",
       },
       { 
         badge: "Conversation Practice", 
         badgeVariant: "secondary" as const,
-        text: "Systematic speaking practice with native speakers and conversation partners",
-        rating: 5
+        content: "Systematic speaking practice with native speakers and conversation partners",
       },
       { 
         badge: "Progress Tracking", 
         badgeVariant: "default" as const,
-        text: "Structured milestone system to monitor fluency development and maintain motivation",
-        rating: 5
+        content: "Structured milestone system to monitor fluency development and maintain motivation",
       }
     ],
     heroBenefits: [
       { text: "🗣️ Achieve conversational fluency 3x faster through immersion" },
       { text: "🌍 Develop deep cultural understanding and global perspective" },
       { text: "📈 Track progress with structured milestones and assessments" },
-      { text: "⚡ Maintain long-term retention with proven maintenance strategies" }
+      { text: "⚡ Maintain long-term retention with proven maintenance strategies" },
     ],
 
     // Process Steps
@@ -3509,21 +3396,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Jennifer Martinez, Marketing Executive",
-        text: "This template helped me achieve business-level Spanish fluency in 8 months. The cultural immersion approach made all the difference in my confidence and communication skills.",,
-        rating: 5
-        rating: 5
+        text: "This template helped me achieve business-level Spanish fluency in 8 months. The cultural immersion approach made all the difference in my confidence and communication skills.",
       },
       {
         name: "Thomas Chen, Travel Blogger", 
-        text: "I used this system to learn Italian before my European travels. The conversation practice strategies helped me achieve conversational fluency that enhanced my entire experience.",,
-        rating: 5
-        rating: 5
+        text: "I used this system to learn Italian before my European travels. The conversation practice strategies helped me achieve conversational fluency that enhanced my entire experience.",
       },
       {
         name: "Sarah Kim, University Student",
-        text: "The immersion planning helped me prepare for my study abroad semester in France. I arrived already conversational and could focus on academic success instead of basic communication.",,
-        rating: 5
-        rating: 5
+        text: "The immersion planning helped me prepare for my study abroad semester in France. I arrived already conversational and could focus on academic success instead of basic communication.",
       }
     ],
 
@@ -3604,27 +3485,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Investment Tracking", 
         badgeVariant: "outline" as const,
-        text: "Monitor your entire investment portfolio with real-time performance analysis and asset allocation insights",
-        rating: 5
+        content: "Monitor your entire investment portfolio with real-time performance analysis and asset allocation insights",
       },
       { 
         badge: "Wealth Building", 
         badgeVariant: "secondary" as const,
-        text: "Strategic wealth accumulation plans with goal-based investing and retirement planning frameworks",
-        rating: 5
+        content: "Strategic wealth accumulation plans with goal-based investing and retirement planning frameworks",
       },
       { 
         badge: "Risk Management", 
         badgeVariant: "default" as const,
-        text: "Comprehensive risk assessment and portfolio protection strategies for long-term financial security",
-        rating: 5
+        content: "Comprehensive risk assessment and portfolio protection strategies for long-term financial security",
       }
     ],
     heroBenefits: [
       { text: "💰 Build $1M+ retirement nest egg with strategic planning" },
       { text: "📈 Achieve 8-12% annual returns through diversified investing" },
       { text: "🛡️ Protect wealth with comprehensive insurance and risk management" },
-      { text: "🎯 Reach financial independence 10+ years earlier than average" }
+      { text: "🎯 Reach financial independence 10+ years earlier than average" },
     ],
 
     // Process Section
@@ -3769,21 +3647,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Michael Thompson, Software Engineer",
-        text: "This template transformed my approach to investing. I've built a $250k portfolio in 5 years and I'm on track to retire by 50. The asset allocation guidance was game-changing.",,
-        rating: 5
-        rating: 5
+        text: "This template transformed my approach to investing. I've built a $250k portfolio in 5 years and I'm on track to retire by 50. The asset allocation guidance was game-changing.",
       },
       {
         name: "Lisa Chen, Marketing Director", 
-        text: "Finally, a system that makes investing simple and stress-free. I've doubled my net worth in 3 years and feel confident about my financial future. The retirement planning tools are incredible.",,
-        rating: 5
-        rating: 5
+        text: "Finally, a system that makes investing simple and stress-free. I've doubled my net worth in 3 years and feel confident about my financial future. The retirement planning tools are incredible.",
       },
       {
         name: "David Rodriguez, Small Business Owner",
-        text: "As an entrepreneur, this helped me balance business investment with personal wealth building. I've created multiple income streams and my family's financial security is assured.",,
-        rating: 5
-        rating: 5
+        text: "As an entrepreneur, this helped me balance business investment with personal wealth building. I've created multiple income streams and my family's financial security is assured.",
       }
     ],
 
@@ -3864,27 +3736,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "SEO Optimization", 
         badgeVariant: "outline" as const,
-        text: "Complete SEO audit and optimization strategies to dominate search rankings and drive organic traffic",
-        rating: 5
+        content: "Complete SEO audit and optimization strategies to dominate search rankings and drive organic traffic",
       },
       { 
         badge: "Content Marketing", 
         badgeVariant: "secondary" as const,
-        text: "Strategic content planning and creation frameworks that engage audiences and convert leads",
-        rating: 5
+        content: "Strategic content planning and creation frameworks that engage audiences and convert leads",
       },
       { 
         badge: "Campaign Analytics", 
         badgeVariant: "default" as const,
-        text: "Comprehensive tracking and optimization tools to maximize ROI from all digital marketing efforts",
-        rating: 5
+        content: "Comprehensive tracking and optimization tools to maximize ROI from all digital marketing efforts",
       }
     ],
     heroBenefits: [
       { text: "📈 Increase organic traffic by 300-500% within 6 months" },
       { text: "🎯 Achieve 25-40% higher conversion rates through optimization" },
       { text: "🚀 Build dominant brand presence across all digital channels" },
-      { text: "💰 Generate 10x ROI from digital marketing investments" }
+      { text: "💰 Generate 10x ROI from digital marketing investments" },
     ],
 
     // Process Section
@@ -4019,21 +3888,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Sarah Johnson, E-commerce Owner",
-        text: "This template transformed our online presence! We increased organic traffic by 400% in 6 months and our revenue doubled. The SEO strategies are incredibly effective and easy to follow.",,
-        rating: 5
-        rating: 5
+        text: "This template transformed our online presence! We increased organic traffic by 400% in 6 months and our revenue doubled. The SEO strategies are incredibly effective and easy to follow.",
       },
       {
         name: "Mark Stevens, Marketing Consultant", 
-        text: "As a digital marketing professional, this template saved me hundreds of hours. My clients are seeing amazing results - higher rankings, more traffic, and better conversions across the board.",,
-        rating: 5
-        rating: 5
+        text: "As a digital marketing professional, this template saved me hundreds of hours. My clients are seeing amazing results - higher rankings, more traffic, and better conversions across the board.",
       },
       {
         name: "Jennifer Wu, SaaS Founder",
-        text: "Finally, a system that makes digital marketing manageable for non-experts. We've achieved first-page rankings for our target keywords and our lead generation has increased by 300%.",,
-        rating: 5
-        rating: 5
+        text: "Finally, a system that makes digital marketing manageable for non-experts. We've achieved first-page rankings for our target keywords and our lead generation has increased by 300%.",
       }
     ],
 
@@ -4114,27 +3977,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Workspace Setup", 
         badgeVariant: "outline" as const,
-        text: "Optimize your home office environment for maximum productivity and professional video presence",
-        rating: 5
+        content: "Optimize your home office environment for maximum productivity and professional video presence",
       },
       { 
         badge: "Productivity Systems", 
         badgeVariant: "secondary" as const,
-        text: "Implement proven time management and task organization systems for consistent high performance",
-        rating: 5
+        content: "Implement proven time management and task organization systems for consistent high performance",
       },
       { 
         badge: "Team Collaboration", 
         badgeVariant: "default" as const,
-        text: "Master virtual communication and collaborative workflows that keep remote teams connected and efficient",
-        rating: 5
+        content: "Master virtual communication and collaborative workflows that keep remote teams connected and efficient",
       }
     ],
     heroBenefits: [
       { text: "⚡ Increase productivity by 40% with optimized remote workflows" },
       { text: "🏠 Create perfect work-life balance with flexible scheduling systems" },
       { text: "💰 Save $8,000+ annually on commuting and office expenses" },
-      { text: "🌍 Access global opportunities with location-independent skills" }
+      { text: "🌍 Access global opportunities with location-independent skills" },
     ],
 
     // Process Section
@@ -4269,21 +4129,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Alex Martinez, Software Developer",
-        text: "This template completely transformed my remote work experience. I'm 50% more productive than when I was in the office, and I have amazing work-life balance. The workspace setup guide was game-changing.",,
-        rating: 5
-        rating: 5
+        text: "This template completely transformed my remote work experience. I'm 50% more productive than when I was in the office, and I have amazing work-life balance. The workspace setup guide was game-changing.",
       },
       {
         name: "Rachel Kim, Marketing Manager", 
-        text: "As a remote team leader, this helped me build incredible team collaboration systems. Our team productivity increased by 35% and everyone loves the flexible work structure we've created.",,
-        rating: 5
-        rating: 5
+        text: "As a remote team leader, this helped me build incredible team collaboration systems. Our team productivity increased by 35% and everyone loves the flexible work structure we've created.",
       },
       {
         name: "Thomas Anderson, Consultant",
-        text: "I've been remote for 3 years, but this template took my productivity to the next level. The time management strategies alone saved me 15 hours per week. Highly recommended for any remote worker.",,
-        rating: 5
-        rating: 5
+        text: "I've been remote for 3 years, but this template took my productivity to the next level. The time management strategies alone saved me 15 hours per week. Highly recommended for any remote worker.",
       }
     ],
 
@@ -4364,27 +4218,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Skills Assessment", 
         badgeVariant: "outline" as const,
-        text: "Discover your strengths, identify gaps, and create targeted skill development plans for career advancement",
-        rating: 5
+        content: "Discover your strengths, identify gaps, and create targeted skill development plans for career advancement",
       },
       { 
         badge: "Career Mapping", 
         badgeVariant: "secondary" as const,
-        text: "Strategic career path planning with goal setting and milestone tracking for successful transitions",
-        rating: 5
+        content: "Strategic career path planning with goal setting and milestone tracking for successful transitions",
       },
       { 
         badge: "Job Search Strategy", 
         badgeVariant: "default" as const,
-        text: "Proven networking, application, and interview strategies that land offers in your target industry",
-        rating: 5
+        content: "Proven networking, application, and interview strategies that land offers in your target industry",
       }
     ],
     heroBenefits: [
       { text: "🎯 Identify your ideal career path aligned with personal values and goals" },
       { text: "💼 Increase salary potential by 30-50% through strategic career moves" },
       { text: "🚀 Fast-track career advancement with targeted skill development" },
-      { text: "🤝 Build powerful professional network for ongoing opportunities" }
+      { text: "🤝 Build powerful professional network for ongoing opportunities" },
     ],
 
     // Process Section
@@ -4529,21 +4380,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Michelle Rodriguez, Data Scientist",
-        text: "This template guided my transition from marketing to data science. The skill development roadmap was perfect - I landed my dream job at a tech startup with a 40% salary increase in just 8 months.",,
-        rating: 5
-        rating: 5
+        text: "This template guided my transition from marketing to data science. The skill development roadmap was perfect - I landed my dream job at a tech startup with a 40% salary increase in just 8 months.",
       },
       {
         name: "James Chen, Product Manager", 
-        text: "After 10 years in engineering, I wanted to move into product management. This system helped me identify transferable skills, build a network, and land a PM role at a Fortune 500 company.",,
-        rating: 5
-        rating: 5
+        text: "After 10 years in engineering, I wanted to move into product management. This system helped me identify transferable skills, build a network, and land a PM role at a Fortune 500 company.",
       },
       {
         name: "Sarah Williams, UX Designer",
-        text: "I successfully transitioned from graphic design to UX design using this template. The networking strategies alone were worth it - I got my new job through a connection I made following their framework.",,
-        rating: 5
-        rating: 5
+        text: "I successfully transitioned from graphic design to UX design using this template. The networking strategies alone were worth it - I got my new job through a connection I made following their framework.",
       }
     ],
 
@@ -4598,27 +4443,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Budget Creation", 
         badgeVariant: "default" as const,
-        text: "Create a personalized budget that actually works with your lifestyle and income patterns",
-        rating: 5
+        content: "Create a personalized budget that actually works with your lifestyle and income patterns",
       },
       { 
         badge: "Debt Elimination", 
         badgeVariant: "outline" as const,
-        text: "Use proven debt snowball and avalanche methods to become debt-free faster than you thought possible",
-        rating: 5
+        content: "Use proven debt snowball and avalanche methods to become debt-free faster than you thought possible",
       },
       { 
         badge: "Wealth Building", 
         badgeVariant: "secondary" as const,
-        text: "Build emergency funds and investment strategies that create long-term financial security",
-        rating: 5
+        content: "Build emergency funds and investment strategies that create long-term financial security",
       }
     ],
     heroBenefits: [
       { text: "💰 Save $500+ monthly through strategic expense optimization" },
       { text: "📉 Eliminate debt 40% faster with proven payoff strategies" },
       { text: "💪 Build 6-month emergency fund in under 18 months" },
-      { text: "📈 Start investing automatically with clear savings goals" }
+      { text: "📈 Start investing automatically with clear savings goals" },
     ],
 
     // Process Steps
@@ -4746,21 +4588,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Sarah Chen",
-        text: "This budget template helped me pay off $45,000 in debt in just 3 years. The debt snowball calculator kept me motivated with clear progress tracking.",,
-        rating: 5
-        rating: 5
+        text: "This budget template helped me pay off $45,000 in debt in just 3 years. The debt snowball calculator kept me motivated with clear progress tracking.",
       },
       {
         name: "Michael Rodriguez",
-        text: "Finally found a budgeting system that works! I've saved over $8,000 in my emergency fund and started investing for the first time.",,
-        rating: 5
-        rating: 5
+        text: "Finally found a budgeting system that works! I've saved over $8,000 in my emergency fund and started investing for the first time.",
       },
       {
         name: "Jennifer Park",
-        text: "The expense analysis tools revealed I was spending $400/month on subscriptions I forgot about. This template paid for itself immediately.",,
-        rating: 5
-        rating: 5
+        text: "The expense analysis tools revealed I was spending $400/month on subscriptions I forgot about. This template paid for itself immediately.",
       }
     ],
 
@@ -4787,27 +4623,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Market Validation", 
         badgeVariant: "default" as const,
-        text: "Validate your business idea with real customers before investing time and money in development",
-        rating: 5
+        content: "Validate your business idea with real customers before investing time and money in development",
       },
       { 
         badge: "Business Planning", 
         badgeVariant: "outline" as const,
-        text: "Create professional business plans with financial projections and strategic frameworks",
-        rating: 5
+        content: "Create professional business plans with financial projections and strategic frameworks",
       },
       { 
         badge: "Launch Execution", 
         badgeVariant: "secondary" as const,
-        text: "Execute your launch with proven timelines, checklists, and coordination strategies",
-        rating: 5
+        content: "Execute your launch with proven timelines, checklists, and coordination strategies",
       }
     ],
     heroBenefits: [
       { text: "🚀 Launch 60% faster with proven processes and templates" },
       { text: "💡 Validate ideas before building with customer interview frameworks" },
       { text: "📊 Create professional business plans that attract funding" },
-      { text: "⚡ Avoid 80% of common startup mistakes with expert guidance" }
+      { text: "⚡ Avoid 80% of common startup mistakes with expert guidance" },
     ],
 
     // Process Steps
@@ -4935,21 +4768,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "David Kim",
-        text: "This template saved me months of research and planning. I launched my SaaS business in 90 days and got my first paying customers within two weeks.",,
-        rating: 5
-        rating: 5
+        text: "This template saved me months of research and planning. I launched my SaaS business in 90 days and got my first paying customers within two weeks.",
       },
       {
         name: "Lisa Thompson",
-        text: "The customer validation framework helped me pivot my idea before wasting money on development. Now my consulting business is thriving!",,
-        rating: 5
-        rating: 5
+        text: "The customer validation framework helped me pivot my idea before wasting money on development. Now my consulting business is thriving!",
       },
       {
         name: "Carlos Mendez",
-        text: "The funding guide was incredibly comprehensive. I secured $50k in small business loans using their templates and guidance.",,
-        rating: 5
-        rating: 5
+        text: "The funding guide was incredibly comprehensive. I secured $50k in small business loans using their templates and guidance.",
       }
     ],
 
@@ -4976,27 +4803,24 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
       { 
         badge: "Academic Planning", 
         badgeVariant: "default" as const,
-        text: "Build a strong academic foundation with strategic course selection and GPA optimization",
-        rating: 5
+        content: "Build a strong academic foundation with strategic course selection and GPA optimization",
       },
       { 
         badge: "Application Strategy", 
         badgeVariant: "outline" as const,
-        text: "Craft compelling applications with essay guidance, timeline management, and school selection",
-        rating: 5
+        content: "Craft compelling applications with essay guidance, timeline management, and school selection",
       },
       { 
         badge: "Financial Planning", 
         badgeVariant: "secondary" as const,
-        text: "Navigate financial aid, scholarships, and college costs to minimize debt and maximize value",
-        rating: 5
+        content: "Navigate financial aid, scholarships, and college costs to minimize debt and maximize value",
       }
     ],
     heroBenefits: [
       { text: "🎓 Increase admission chances by 65% with strategic planning" },
       { text: "💰 Save $20,000+ on college costs through smart financial planning" },
       { text: "📝 Write standout essays that get admissions officers' attention" },
-      { text: "⏰ Stay organized with 4-year timeline and deadline tracking" }
+      { text: "⏰ Stay organized with 4-year timeline and deadline tracking" },
     ],
 
     // Process Steps
@@ -5124,21 +4948,15 @@ export const landingPageRegistry: Record<string, LandingPageData> = {
     testimonials: [
       {
         name: "Emma Watson",
-        text: "This template kept me organized throughout high school and helped me get into my dream school with a $15,000 scholarship!",,
-        rating: 5
-        rating: 5
+        text: "This template kept me organized throughout high school and helped me get into my dream school with a $15,000 scholarship!",
       },
       {
         name: "James Liu",
-        text: "The essay guidance was incredible. I went from struggling with my personal statement to writing something I was truly proud of.",,
-        rating: 5
-        rating: 5
+        text: "The essay guidance was incredible. I went from struggling with my personal statement to writing something I was truly proud of.",
       },
       {
         name: "Sofia Rodriguez",
-        text: "The financial planning tools helped my family save over $25,000 by choosing the right combination of schools and aid packages.",,
-        rating: 5
-        rating: 5
+        text: "The financial planning tools helped my family save over $25,000 by choosing the right combination of schools and aid packages.",
       }
     ],
 
