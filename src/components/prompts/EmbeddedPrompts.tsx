@@ -5,8 +5,9 @@ import { GuidanceSection, ReflectionPrompt, FreeformNote } from '@/types/templat
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb, Circle, CheckCircle2, FileText } from 'lucide-react';
+import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb, Circle, CheckCircle2, FileText, GripVertical, Edit3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { Progress } from '@/components/ui/progress';
 import {
   Tooltip,
@@ -23,14 +24,22 @@ interface EmbeddedPromptsProps {
   onRemovePrompt?: (promptId: string) => void;
   onRemoveNote?: (noteId: string) => void;
   onUpdateNote?: (noteId: string, updates: Partial<FreeformNote>) => void;
+  onReorderPrompts?: (prompts: ReflectionPrompt[]) => void;
+  onReorderNotes?: (notes: FreeformNote[]) => void;
   hideHeader?: boolean;
   responses?: Record<string, string>;
+  editMode?: boolean;
+  completedItems?: Set<string>;
+  onToggleComplete?: (itemId: string) => void;
 }
 
-export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNotes = [], onResponsesChange, onRemovePrompt, onRemoveNote, onUpdateNote, hideHeader, responses: externalResponses }: EmbeddedPromptsProps) {
+export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNotes = [], onResponsesChange, onRemovePrompt, onRemoveNote, onUpdateNote, onReorderPrompts, onReorderNotes, hideHeader, responses: externalResponses, editMode: externalEditMode = false, completedItems = new Set(), onToggleComplete }: EmbeddedPromptsProps) {
   const [responses, setResponses] = useState<Record<string, string>>(externalResponses || {});
   const [draggedOver, setDraggedOver] = useState<string | null>(null);
   const [showToast, setShowToast] = useState(false);
+  const [draggedItem, setDraggedItem] = useState<string | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const editMode = externalEditMode;
 
   // Sync external responses
   useEffect(() => {
@@ -55,11 +64,50 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNot
     setDraggedOver(null);
   };
 
+  const handleDropZone = (e: React.DragEvent, insertIndex: number) => {
+    e.preventDefault();
+    const draggedItemId = e.dataTransfer.getData('application/json');
+
+    if (draggedItemId && draggedItem) {
+      const draggedData = JSON.parse(draggedItemId);
+
+      if (draggedData.type === 'prompt') {
+        const draggedIndex = additionalPrompts.findIndex(p => p.id === draggedItem);
+        if (draggedIndex !== -1) {
+          const newPrompts = [...additionalPrompts];
+          const [removed] = newPrompts.splice(draggedIndex, 1);
+
+          // Adjust insert index if dragging down
+          const adjustedIndex = draggedIndex < insertIndex ? insertIndex - 1 : insertIndex;
+          newPrompts.splice(adjustedIndex, 0, removed);
+          onReorderPrompts?.(newPrompts);
+        }
+      } else if (draggedData.type === 'note') {
+        const draggedIndex = additionalNotes.findIndex(n => n.id === draggedItem);
+        if (draggedIndex !== -1) {
+          const newNotes = [...additionalNotes];
+          const [removed] = newNotes.splice(draggedIndex, 1);
+
+          // Calculate insert index within notes array
+          const noteInsertIndex = Math.max(0, insertIndex - additionalPrompts.length);
+          const adjustedIndex = draggedIndex < noteInsertIndex ? noteInsertIndex - 1 : noteInsertIndex;
+          newNotes.splice(adjustedIndex, 0, removed);
+          onReorderNotes?.(newNotes);
+        }
+      }
+    }
+
+    setDraggedItem(null);
+    setDragOverIndex(null);
+  };
+
   const handleDrop = (e: React.DragEvent, promptId: string) => {
     e.preventDefault();
     const text = e.dataTransfer.getData('text/plain');
+    const draggedItemId = e.dataTransfer.getData('application/json');
 
-    if (text) {
+    // Handle text drop (existing functionality) - only if not dragging items
+    if (text && !draggedItemId) {
       const currentText = responses[promptId] || '';
       const newText = currentText ? `${currentText}\n\n${text}` : text;
 
@@ -75,6 +123,23 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNot
     setDraggedOver(null);
   };
 
+  const handleDragStart = (e: React.DragEvent, itemId: string, itemType: 'prompt' | 'note') => {
+    setDraggedItem(itemId);
+    e.dataTransfer.setData('application/json', JSON.stringify({ type: itemType, id: itemId }));
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragEnd = () => {
+    setDraggedItem(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDragOverZone = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOverIndex(index);
+  };
+
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'consideration': return <MessageCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" />;
@@ -88,6 +153,10 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNot
   // Combine prompts and notes for rendering
   const allPrompts = additionalPrompts;
   const allItems = [...additionalPrompts, ...additionalNotes];
+
+  // Separate active and completed items
+  const activeItems = allItems.filter(item => !completedItems.has(item.id));
+  const completedItemsList = allItems.filter(item => completedItems.has(item.id));
 
   const progressPercentage = Math.round((additionalPrompts.length / section.reflectionPrompts.length) * 100);
 
@@ -105,7 +174,7 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNot
         )}
 
       {/* Main Content */}
-      {allItems.length === 0 ? (
+      {activeItems.length === 0 && completedItemsList.length === 0 ? (
         /* Aspirational Empty State */
         <div className="text-center py-12 border-2 border-dashed border-primary/20 bg-gradient-to-br from-primary/5 to-transparent rounded-lg">
           <div className="flex items-center justify-center mb-4">
@@ -124,154 +193,275 @@ export function EmbeddedPrompts({ section, additionalPrompts = [], additionalNot
           </div>
         </div>
       ) : (
-        /* Compact Prompts and Notes */
-        <div className="space-y-0">
-          {allItems.map((item, index) => {
+        /* Enhanced Prompts and Notes with Drop Zones */
+        <div className="p-4 space-y-6">
+          {/* Active Items Section */}
+          {activeItems.length > 0 && (
+            <div>
+              {/* Drop zone before first item */}
+              {editMode && (
+                <div
+                  onDragOver={(e) => handleDragOverZone(e, 0)}
+                  onDrop={(e) => handleDropZone(e, 0)}
+                  className={`h-2 -mb-2 transition-all duration-200 ${
+                    dragOverIndex === 0 && draggedItem ? 'h-8 bg-primary/10 border-2 border-dashed border-primary/50 rounded mb-2' : ''
+                  }`}
+                />
+              )}
+
+              {activeItems.map((item, index) => {
             // Check if this is a prompt or a note
             const isPrompt = 'prompt' in item;
             const isNote = 'title' in item && !('prompt' in item);
 
-            if (isPrompt) {
-              const prompt = item as ReflectionPrompt;
-              const isAdditional = additionalPrompts.some(p => p.id === prompt.id) &&
-                                   !section.reflectionPrompts.some(s => s.id === prompt.id);
-              return (
-              <div key={prompt.id} className="border-b p-4 space-y-3">
-                <div className="flex items-start gap-2">
-                  <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
-                    <span className="w-5 h-5 bg-primary/10 rounded text-xs text-primary font-medium flex items-center justify-center">
-                      {index + 1}
-                    </span>
-                    {responses[prompt.id]?.trim() ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-500" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-muted-foreground" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-1.5 flex-1 min-w-0">
-                        <h4 className="font-medium text-sm line-clamp-2 flex-1">{prompt.prompt}</h4>
-                        {prompt.helpText && (
-                          <Tooltip>
-                            <TooltipTrigger asChild>
+            return (
+              <div key={item.id}>
+                {isPrompt && (() => {
+                  const prompt = item as ReflectionPrompt;
+                  const isAdditional = additionalPrompts.some(p => p.id === prompt.id);
+                  const hasContent = responses[prompt.id]?.trim();
+                  return (
+                    <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-2">
+                      <GlowingEffect
+                        spread={40}
+                        glow={true}
+                        disabled={false}
+                        proximity={64}
+                        inactiveZone={0.01}
+                        borderWidth={3}
+                      />
+                      <div
+                        draggable={editMode}
+                        onDragStart={(e) => handleDragStart(e, prompt.id, 'prompt')}
+                        onDragEnd={handleDragEnd}
+                        className={`group relative bg-background border-[0.75px] rounded-xl p-4 transition-all duration-200 hover:shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] ${
+                          editMode ? 'cursor-move' : ''
+                        } ${
+                          draggedItem === prompt.id ? 'opacity-50 scale-95' : ''
+                        }`}
+                      >
+                      <div className="flex items-start gap-3 mb-3">
+                        {editMode && <GripVertical className="w-4 h-4 text-muted-foreground mt-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing" />}
+                        <span className={`w-6 h-6 rounded-full text-xs font-medium flex items-center justify-center flex-shrink-0 transition-colors bg-primary/10 text-primary group-hover:bg-primary/20`}>
+                          {index + 1}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <div className="flex-1 min-w-0">
+                              <Badge variant="outline" className="text-xs h-5 px-2 opacity-60 mb-2">
+                                {prompt.category}
+                              </Badge>
+                              <h4 className="font-medium text-sm leading-relaxed">{prompt.prompt}</h4>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              {hasContent && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => onToggleComplete?.(prompt.id)}
+                                  className="h-6 w-6 p-0 text-muted-foreground hover:text-primary flex-shrink-0"
+                                >
+                                  <CheckCircle2 className="w-4 h-4" />
+                                </Button>
+                              )}
+                              {prompt.helpText && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-4 w-4 p-0 text-muted-foreground hover:text-foreground flex-shrink-0"
+                                    >
+                                      <HelpCircle className="w-3 h-3" />
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="left" className="max-w-xs">
+                                    <p className="text-xs">{prompt.helpText}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                              {isAdditional && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => onRemovePrompt?.(prompt.id)}
+                                  className="h-4 w-4 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
+                                >
+                                  <X className="w-3 h-3" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <Textarea
+                        placeholder={responses[prompt.id] ? "Type or drag resource text..." : "Drop here to attach →"}
+                        value={responses[prompt.id] || ''}
+                        onChange={(e) => handleResponseChange(prompt.id, e.target.value)}
+                        onDragOver={(e) => handleDragOver(e, prompt.id)}
+                        onDragLeave={handleDragLeave}
+                        onDrop={(e) => handleDrop(e, prompt.id)}
+                        className={`min-h-[80px] text-sm border-dashed resize-none transition-colors ${
+                          draggedOver === prompt.id
+                            ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50/50 dark:bg-blue-900/10'
+                            : 'hover:border-primary/50'
+                        }`}
+                      />
+                      <div className="text-xs text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        💡 Drag resources from the right panel to auto-fill
+                      </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {isNote && (() => {
+                  const note = item as FreeformNote;
+                  const hasContent = responses[note.id]?.trim();
+                  return (
+                    <div
+                      draggable={editMode}
+                      onDragStart={(e) => handleDragStart(e, note.id, 'note')}
+                      onDragEnd={handleDragEnd}
+                      className={`group bg-background border rounded-lg p-4 space-y-3 transition-all duration-200 hover:shadow-sm hover:border-primary/20 ${
+                        editMode ? 'cursor-move' : ''
+                      } ${
+                        draggedItem === note.id ? 'opacity-50 scale-95' : ''
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        {editMode && <GripVertical className="w-4 h-4 text-muted-foreground mt-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing" />}
+                        <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
+                          <span className="w-6 h-6 rounded-full text-xs font-medium flex items-center justify-center transition-colors bg-primary/10 text-primary group-hover:bg-primary/20">
+                            <FileText className="w-3 h-3" />
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex items-start gap-1.5 flex-1 min-w-0">
+                              <input
+                                type="text"
+                                value={note.title}
+                                onChange={(e) => onUpdateNote?.(note.id, { title: e.target.value })}
+                                className="font-medium text-sm flex-1 bg-transparent border-none outline-none focus:ring-0 p-0"
+                                placeholder="Note title..."
+                              />
+                            </div>
+                            <div className="flex items-center gap-1">
+                              {hasContent && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => onToggleComplete?.(note.id)}
+                                  className="h-6 w-6 p-0 text-muted-foreground hover:text-green-600 flex-shrink-0"
+                                >
+                                  <CheckCircle2 className="w-4 h-4" />
+                                </Button>
+                              )}
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-4 w-4 p-0 text-muted-foreground hover:text-foreground flex-shrink-0 mt-0.5"
+                                onClick={() => onRemoveNote?.(note.id)}
+                                className="h-4 w-4 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
                               >
-                                <HelpCircle className="w-3 h-3" />
+                                <X className="w-3 h-3" />
                               </Button>
-                            </TooltipTrigger>
-                            <TooltipContent side="left" className="max-w-xs">
-                              <p className="text-xs">{prompt.helpText}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <input
+                              type="text"
+                              value={note.category || ''}
+                              onChange={(e) => onUpdateNote?.(note.id, { category: e.target.value })}
+                              className="text-xs text-muted-foreground bg-transparent border-none outline-none focus:ring-0 p-0"
+                              placeholder="Add category/tag..."
+                            />
+                          </div>
+                        </div>
                       </div>
-                      {isAdditional && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onRemovePrompt?.(prompt.id)}
-                          className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
-                        >
-                          <X className="w-3 h-3" />
-                        </Button>
-                      )}
+                      <Textarea
+                        placeholder={responses[note.id] ? "Type or add more notes..." : "Drop here to capture ideas →"}
+                        value={responses[note.id] || ''}
+                        onChange={(e) => handleResponseChange(note.id, e.target.value)}
+                        onDragOver={(e) => handleDragOver(e, note.id)}
+                        onDragLeave={handleDragLeave}
+                        onDrop={(e) => handleDrop(e, note.id)}
+                        className={`min-h-[80px] text-sm border-dashed resize-none transition-colors ${
+                          draggedOver === note.id
+                            ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50/50 dark:bg-blue-900/10'
+                            : 'hover:border-primary/50'
+                        }`}
+                      />
+                      <div className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                        💡 Perfect for capturing insights and ideas
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      {getCategoryIcon(prompt.category)}
-                      <Badge variant="outline" className="text-xs h-4 px-1.5">
-                        {prompt.category}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                <div className="relative">
-                  <Textarea
-                    placeholder="Your notes... (drag text from resources to add here)"
-                    value={responses[prompt.id] || ''}
-                    onChange={(e) => handleResponseChange(prompt.id, e.target.value)}
-                    onDragOver={(e) => handleDragOver(e, prompt.id)}
-                    onDragLeave={handleDragLeave}
-                    onDrop={(e) => handleDrop(e, prompt.id)}
-                    className={`min-h-[80px] text-sm transition-all duration-200 ${
-                      draggedOver === prompt.id
-                        ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50/50 dark:bg-blue-900/10 scale-[1.02]'
-                        : 'hover:ring-1 hover:ring-muted-foreground/20'
+                  );
+                })()}
+
+                {/* Drop zone after each item - or spacing when not in edit mode */}
+                {editMode ? (
+                  <div
+                    onDragOver={(e) => handleDragOverZone(e, index + 1)}
+                    onDrop={(e) => handleDropZone(e, index + 1)}
+                    className={`h-2 transition-all duration-200 ${
+                      dragOverIndex === index + 1 && draggedItem ? 'h-8 bg-primary/10 border-2 border-dashed border-primary/50 rounded my-2' : 'my-2'
                     }`}
                   />
-                </div>
+                ) : (
+                  <div className="my-4" />
+                )}
               </div>
-              )
-            } else if (isNote) {
-              const note = item as FreeformNote;
-              return (
-                <div key={note.id} className="border-b p-4 space-y-3">
-                  <div className="flex items-start gap-2">
-                    <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
-                      <span className="w-5 h-5 bg-primary/10 rounded text-xs text-primary font-medium flex items-center justify-center">
-                        <FileText className="w-3 h-3" />
-                      </span>
-                      {responses[note.id]?.trim() ? (
-                        <CheckCircle2 className="w-4 h-4 text-green-500" />
-                      ) : (
-                        <Circle className="w-4 h-4 text-muted-foreground" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-start gap-1.5 flex-1 min-w-0">
-                          <input
-                            type="text"
-                            value={note.title}
-                            onChange={(e) => onUpdateNote?.(note.id, { title: e.target.value })}
-                            className="font-medium text-sm flex-1 bg-transparent border-none outline-none focus:ring-0 p-0"
-                            placeholder="Note title..."
-                          />
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onRemoveNote?.(note.id)}
-                          className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
-                        >
-                          <X className="w-3 h-3" />
-                        </Button>
-                      </div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <FileText className="w-4 h-4 text-muted-foreground" />
-                        <input
-                          type="text"
-                          value={note.category || ''}
-                          onChange={(e) => onUpdateNote?.(note.id, { category: e.target.value })}
-                          className="text-xs text-muted-foreground bg-transparent border-none outline-none focus:ring-0 p-0"
-                          placeholder="Add category/tag..."
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="relative">
-                    <Textarea
-                      placeholder="Add your notes here... (drag text from resources to add here)"
-                      value={responses[note.id] || ''}
-                      onChange={(e) => handleResponseChange(note.id, e.target.value)}
-                      onDragOver={(e) => handleDragOver(e, note.id)}
-                      onDragLeave={handleDragLeave}
-                      onDrop={(e) => handleDrop(e, note.id)}
-                      className={`min-h-[80px] text-sm transition-all duration-200 ${
-                        draggedOver === note.id
-                          ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50/50 dark:bg-blue-900/10 scale-[1.02]'
-                          : 'hover:ring-1 hover:ring-muted-foreground/20'
-                      }`}
-                    />
-                  </div>
-                </div>
-              )
-            }
-            return null;
+            );
           })}
+            </div>
+          )}
+
+          {/* Completed Items Section */}
+          {completedItemsList.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
+                <CheckCircle2 className="w-4 h-4 text-primary" />
+                <h3 className="text-sm font-medium text-muted-foreground">Completed ({completedItemsList.length})</h3>
+              </div>
+              <div className="space-y-2">
+                {completedItemsList.map((item) => {
+                  const isPrompt = 'prompt' in item;
+                  const isNote = 'title' in item && !('prompt' in item);
+                  const content = responses[item.id];
+                  const preview = content ? content.slice(0, 80) + (content.length > 80 ? '...' : '') : '';
+
+                  return (
+                    <div
+                      key={item.id}
+                      onClick={() => onToggleComplete?.(item.id)}
+                      className="group flex items-center gap-3 p-3 bg-primary/5 border border-primary/20 rounded-lg cursor-pointer hover:bg-primary/10 transition-colors"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-sm text-foreground">
+                            {isPrompt ? (item as ReflectionPrompt).prompt : (item as FreeformNote).title}
+                          </span>
+                          {isPrompt && (
+                            <Badge variant="outline" className="text-xs h-4 px-1 opacity-60">
+                              {(item as ReflectionPrompt).category}
+                            </Badge>
+                          )}
+                        </div>
+                        {preview && (
+                          <p className="text-xs text-muted-foreground mt-1 opacity-80">{preview}</p>
+                        )}
+                      </div>
+                      <div className="text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                        Click to reopen
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
       </div>
