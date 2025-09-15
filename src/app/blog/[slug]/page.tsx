@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User, Heart, Home, Briefcase, Target, Lightbulb, ChevronRight } from "lucide-react";
 import { Marquee } from "@/components/ui/marquee";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { Highlighter } from "@/components/ui/highlighter";
 import { PageLayout } from "@/components/layout";
 import { getBlogPostBySlug, getRelatedBlogPosts, getBlogPostsByCategory, blogRegistry } from "@/registry/blogs";
 import { use } from "react";
@@ -212,8 +213,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                       const parts: (string | React.JSX.Element)[] = [];
                       let currentIndex = 0;
 
-                      // Combined regex for bold text, links, percentages, and dollar amounts
-                      const combinedRegex = /(\*\*(.*?)\*\*|\[([^\]]+)\]\(([^)]+)\)|\$[\d,]+(?:\.\d{2})?(?:-\$[\d,]+(?:\.\d{2})?)?|\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?%)/g;
+                      // Combined regex for bold text, links, highlights, underlines, percentages, and dollar amounts
+                      const combinedRegex = /(\*\*(.*?)\*\*|\[([^\]]+)\]\(([^)]+)\)|==(.*?)==|__(.*?)__|\$[\d,]+(?:\.\d{2})?(?:-\$[\d,]+(?:\.\d{2})?)?|\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?%)/g;
                       let match;
 
                       while ((match = combinedRegex.exec(text)) !== null) {
@@ -239,6 +240,35 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                               </Link>
                             );
                           }
+                        } else if (match[0].startsWith('==') && match[0].endsWith('==')) {
+                          // Highlighted text - blue highlight
+                          const highlightedText = match[0].slice(2, -2);
+                          parts.push(
+                            <Highlighter
+                              key={match.index}
+                              action="highlight"
+                              color="#3b82f6"
+                              isView={true}
+                              animationDuration={800}
+                            >
+                              {highlightedText}
+                            </Highlighter>
+                          );
+                        } else if (match[0].startsWith('__') && match[0].endsWith('__')) {
+                          // Underlined text - purple underline
+                          const underlinedText = match[0].slice(2, -2);
+                          parts.push(
+                            <Highlighter
+                              key={match.index}
+                              action="underline"
+                              color="#a855f7"
+                              isView={true}
+                              animationDuration={600}
+                              strokeWidth={2}
+                            >
+                              {underlinedText}
+                            </Highlighter>
+                          );
                         } else if (match[0].startsWith('$')) {
                           // Dollar amounts - emerald for single, purple for ranges
                           const isDollarRange = match[0].includes('-');

@@ -29,9 +29,9 @@ export const blogRegistry: BlogPost[] = [
     slug: "complete-moving-timeline",
     title: "The Complete 8-Week Moving Timeline: Your Step-by-Step Relocation Guide",
     excerpt: "Master your move with this comprehensive 8-week timeline covering everything from initial planning to settling in, with expert tips for a stress-free relocation.",
-    content: `Moving to a new home is one of life's most stressful events, ranking just behind death, divorce, and job loss. But with proper planning and a structured timeline, you can transform this overwhelming experience into a manageable, even exciting journey.
+    content: `Moving to a new home is one of life's most stressful events, ranking just behind death, divorce, and job loss. But with ==proper planning and a structured timeline==, you can transform this overwhelming experience into a manageable, even exciting journey.
 
-After helping thousands of families through successful relocations, I've developed this comprehensive 8-week moving timeline that breaks down every essential task. Whether you're moving across town or across the country, this guide will keep you organized, reduce stress, and ensure nothing falls through the cracks.
+After helping thousands of families through successful relocations, I've developed this comprehensive ==8-week moving timeline== that breaks down every essential task. Whether you're moving across town or across the country, this guide will keep you organized, reduce stress, and ensure nothing falls through the cracks.
 
 ## 8 Weeks Before Moving Day
 
@@ -39,8 +39,8 @@ After helping thousands of families through successful relocations, I've develop
 Create a dedicated moving binder or digital folder to keep all documents, contracts, and lists organized. This becomes your command center for the entire process.
 
 **Key Tasks:**
-- Research and contact at least 3 moving companies for quotes
-- Create a preliminary moving budget with 20% buffer for unexpected costs
+- Research and contact at least __3 moving companies__ for quotes
+- Create a preliminary moving budget with __20% buffer__ for unexpected costs
 - Start decluttering room by room - donate, sell, or discard items you won't need
 - Begin using up frozen and perishable foods
 - Start collecting moving supplies (boxes, tape, bubble wrap, markers)
