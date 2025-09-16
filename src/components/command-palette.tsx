@@ -27,6 +27,7 @@ import {
   GraduationCap,
   BookOpen,
   Dumbbell,
+  Sunset,
   ArrowRight,
   TrendingUp,
   Clock,
@@ -82,6 +83,7 @@ const getTemplateIcon = (templateId: string) => {
     case 'college-planning': return GraduationCap
     case 'academic-research': return BookOpen
     case 'fitness-journey': return Dumbbell
+    case 'retirement-lifestyle-planning': return Sunset
     default: return Target
   }
 }

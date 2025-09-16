@@ -13,7 +13,7 @@ import { PDFExportButton } from '@/components/pdf/export-button';
 import { ExpertBadgeList } from '@/components/expert/expert-badge';
 import { getTemplateExperts } from '@/lib/expert-badges';
 import { SharePanel } from '@/components/collaboration/share-panel';
-import { DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Heart, Home, CreditCard, Search, HandCoins, FileText, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity, ChevronDown, Plus, Edit3, AlertCircle } from 'lucide-react';
+import { DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Heart, Home, CreditCard, Search, HandCoins, FileText, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity, ChevronDown, Plus, Edit3, AlertCircle, Sunset } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -73,47 +73,6 @@ export function TemplateView({ template }: TemplateViewProps) {
   ]);
   const [activeWorkspaceId, setActiveWorkspaceId] = useState<string>('default');
 
-  const getSectionIcon = (sectionId: string) => {
-    switch (sectionId) {
-      // Wedding Planning sections
-      case 'budget-finance': return <DollarSign className="w-4 h-4" />;
-      case 'venue-selection': return <MapPin className="w-4 h-4" />;
-      case 'guest-management': return <UserCheck className="w-4 h-4" />;
-      case 'vendor-selection': return <Briefcase className="w-4 h-4" />;
-      case 'ceremony-planning': return <Church className="w-4 h-4" />;
-      case 'reception-planning': return <Music className="w-4 h-4" />;
-      case 'styling-decor': return <Palette className="w-4 h-4" />;
-      case 'attire-beauty': return <Shirt className="w-4 h-4" />;
-      
-      // Home Buying sections
-      case 'financial-readiness': return <DollarSign className="w-4 h-4" />;
-      case 'location-preferences': return <MapPin className="w-4 h-4" />;
-      case 'home-specifications': return <Home className="w-4 h-4" />;
-      case 'mortgage-financing': return <CreditCard className="w-4 h-4" />;
-      case 'house-hunting': return <Search className="w-4 h-4" />;
-      case 'making-offers': return <HandCoins className="w-4 h-4" />;
-      case 'closing-process': return <FileText className="w-4 h-4" />;
-      case 'moving-settling': return <Truck className="w-4 h-4" />;
-      
-      // Job Search sections
-      case 'career-assessment': return <User className="w-4 h-4" />;
-      case 'application-materials': return <PenTool className="w-4 h-4" />;
-      case 'job-searching': return <Network className="w-4 h-4" />;
-      case 'interview-preparation': return <MessageSquare className="w-4 h-4" />;
-      case 'offer-evaluation': return <CheckSquare className="w-4 h-4" />;
-      case 'career-development': return <TrendingUp className="w-4 h-4" />;
-      
-      // Baby Planning sections
-      case 'pregnancy-preparation': return <Stethoscope className="w-4 h-4" />;
-      case 'financial-planning': return <DollarSign className="w-4 h-4" />;
-      case 'nursery-preparation': return <Home className="w-4 h-4" />;
-      case 'birth-preparation': return <Calendar className="w-4 h-4" />;
-      case 'newborn-care': return <Baby className="w-4 h-4" />;
-      case 'work-life-balance': return <Activity className="w-4 h-4" />;
-      
-      default: return <Target className="w-4 h-4" />;
-    }
-  };
 
   const handleInsertPrompt = (prompt: ReflectionPrompt) => {
     // Check if prompt is already added
@@ -383,6 +342,7 @@ export function TemplateView({ template }: TemplateViewProps) {
               />
             </div>
           )}
+
         </main>
       </div>
     </SidebarProvider>

@@ -15,6 +15,7 @@ export interface GuidanceSection {
   description: string;
   reflectionPrompts: ReflectionPrompt[];
   order: number;
+  icon?: string;
 }
 
 export interface ReflectionPrompt {

@@ -14117,9 +14117,10 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
   sections: [
     {
       id: "retirement-vision-assessment",
-      title: "Retirement Vision & Current Assessment", 
+      title: "Retirement Vision & Current Assessment",
       description: "Envision your ideal retirement lifestyle and assess your current readiness across all dimensions",
       order: 1,
+      icon: "Sunset",
       reflectionPrompts: [
         {
           id: "retirement-lifestyle-vision",
@@ -14151,6 +14152,24 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
           prompt: "What legacy do you want to create during your retirement years? How do you want to impact family, community, or causes you care about?",
           category: "consideration",
           helpText: "Think about knowledge to pass on, causes to support, family relationships to nurture, community contributions, or creative works to complete."
+        },
+        {
+          id: "retirement-timeline-milestones",
+          prompt: "What are your key retirement milestones and when do you want to achieve them?",
+          category: "planning",
+          helpText: "Consider early retirement phases, full retirement timing, major life changes, health milestones, financial independence dates, and bucket list timing. Plan 5, 10, and 20-year goals."
+        },
+        {
+          id: "retirement-role-models",
+          prompt: "Who do you know that's aging or retired well? What can you learn from their approach?",
+          category: "research",
+          helpText: "Identify people whose retirement you admire. Analyze what they did well: financial planning, health maintenance, relationships, activities, mindset. Consider reaching out for advice."
+        },
+        {
+          id: "retirement-identity-exploration",
+          prompt: "How do you want to be known and remembered during your retirement years? What identity will you embrace?",
+          category: "consideration",
+          helpText: "Consider shifting from career identity to retirement identity. Think about roles like mentor, volunteer, artist, adventurer, grandparent, student, or community leader."
         }
       ]
     },
@@ -14159,6 +14178,7 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
       title: "Financial Security & Resource Planning",
       description: "Develop comprehensive financial strategies to support your desired retirement lifestyle",
       order: 2,
+      icon: "DollarSign",
       reflectionPrompts: [
         {
           id: "retirement-expense-calculation",
@@ -14190,6 +14210,24 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
           prompt: "What are your goals for estate planning and leaving an inheritance? How much do you want to spend versus preserve?",
           category: "decision",
           helpText: "Clarify your priorities: maximizing your lifestyle vs. preserving wealth for heirs vs. charitable giving. This affects withdrawal strategies and risk tolerance."
+        },
+        {
+          id: "retirement-account-optimization",
+          prompt: "How will you optimize withdrawals from different retirement accounts to minimize taxes?",
+          category: "planning",
+          helpText: "Plan withdrawal sequence from taxable, tax-deferred (401k, traditional IRA), and tax-free (Roth IRA) accounts. Consider required minimum distributions, tax brackets, and Roth conversions."
+        },
+        {
+          id: "financial-contingency-planning",
+          prompt: "What financial contingencies will you plan for major unexpected expenses or market downturns?",
+          category: "planning",
+          helpText: "Build emergency funds, plan for market volatility, prepare for major home repairs, unexpected medical costs, or family financial emergencies. Consider sequence of returns risk."
+        },
+        {
+          id: "retirement-debt-strategy",
+          prompt: "What debts do you want to pay off before or during retirement, and what's your strategy?",
+          category: "decision",
+          helpText: "Evaluate mortgage payoff vs. investment returns, eliminate high-interest debt, consider the psychological benefits of being debt-free vs. maintaining liquidity."
         }
       ]
     },
@@ -14198,6 +14236,7 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
       title: "Health, Wellness & Aging Gracefully",
       description: "Create strategies to maintain physical, mental, and emotional health throughout retirement",
       order: 3,
+      icon: "Heart",
       reflectionPrompts: [
         {
           id: "health-maintenance-plan",
@@ -14229,14 +14268,33 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
           prompt: "What strategies will you use to maintain emotional health, cope with losses, and find joy throughout retirement?",
           category: "consideration",
           helpText: "Consider support systems, grief counseling resources, purpose and meaning activities, social connections, spiritual practices, or professional mental health support."
+        },
+        {
+          id: "preventive-health-screening",
+          prompt: "What preventive health screenings and check-ups will you prioritize to catch issues early?",
+          category: "planning",
+          helpText: "Plan regular screenings for cancer, heart disease, diabetes, bone density, vision, hearing, and cognitive function. Create tracking system and calendar reminders."
+        },
+        {
+          id: "fitness-adaptation-planning",
+          prompt: "How will you adapt your fitness routine as you age while maintaining strength, balance, and cardiovascular health?",
+          category: "planning",
+          helpText: "Consider low-impact exercises, balance training, strength training, flexibility work, and activities you can do throughout aging. Plan for physical limitations and alternative activities."
+        },
+        {
+          id: "medication-health-management",
+          prompt: "How will you manage medications, health records, and coordinate care between multiple providers?",
+          category: "planning",
+          helpText: "Organize medication schedules, maintain health records, coordinate between specialists, and plan for medication management if cognitive abilities decline."
         }
       ]
     },
     {
       id: "lifestyle-location-housing",
-      title: "Lifestyle Design & Housing Decisions", 
+      title: "Lifestyle Design & Housing Decisions",
       description: "Make strategic decisions about where and how you want to live in retirement",
       order: 4,
+      icon: "Home",
       reflectionPrompts: [
         {
           id: "retirement-location-criteria",
@@ -14268,6 +14326,18 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
           prompt: "How will you handle transportation and mobility needs if you can no longer drive safely?",
           category: "planning",
           helpText: "Consider public transportation, ride services, walkability, family support, community transportation programs, and timeline for transportation transitions."
+        },
+        {
+          id: "home-downsizing-strategy",
+          prompt: "What's your strategy for potentially downsizing or rightsizing your home in retirement?",
+          category: "decision",
+          helpText: "Consider timing, financial implications, emotional attachment, proximity to family, and what size/type of home will best serve your retirement lifestyle."
+        },
+        {
+          id: "daily-routine-structure",
+          prompt: "How will you structure your days and weeks to create meaningful routines without work schedules?",
+          category: "planning",
+          helpText: "Plan daily, weekly, and seasonal routines that provide structure while maintaining flexibility. Balance scheduled activities with spontaneous time."
         }
       ]
     },
@@ -14276,6 +14346,7 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
       title: "Purpose, Engagement & Meaningful Activities",
       description: "Discover and plan meaningful ways to spend your time and contribute during retirement",
       order: 5,
+      icon: "Target",
       reflectionPrompts: [
         {
           id: "retirement-purpose-exploration",
@@ -14307,6 +14378,18 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
           prompt: "What creative projects, personal interests, or 'bucket list' items do you want to pursue?",
           category: "consideration",
           helpText: "Think about artistic projects, writing, gardening, genealogy, collections, travel goals, adventure activities, or other personal interests you've deferred."
+        },
+        {
+          id: "volunteer-contribution-planning",
+          prompt: "What causes or organizations do you want to support through volunteering or board service?",
+          category: "planning",
+          helpText: "Identify causes you're passionate about, research volunteer opportunities, consider your available time commitment, and plan how to make meaningful contributions."
+        },
+        {
+          id: "intellectual-stimulation-goals",
+          prompt: "How will you challenge yourself intellectually and continue growing throughout retirement?",
+          category: "consideration",
+          helpText: "Consider reading goals, formal education, research projects, writing, teaching others, learning new technologies, or engaging in complex problem-solving activities."
         }
       ]
     },
@@ -14315,6 +14398,7 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
       title: "Retirement Transition & Implementation Planning",
       description: "Create actionable plans for transitioning into retirement and adjusting over time",
       order: 6,
+      icon: "Calendar",
       reflectionPrompts: [
         {
           id: "retirement-timeline-strategy",
@@ -14346,6 +14430,126 @@ export const retirementLifestylePlanningTemplate: GuidanceTemplate = {
           prompt: "How will you build flexibility into your retirement plans to adapt to changing health, finances, or interests?",
           category: "planning",
           helpText: "Create Plan A, B, and C scenarios. Build in regular review periods to assess and adjust your retirement plans as circumstances and preferences change."
+        },
+        {
+          id: "workplace-departure-planning",
+          prompt: "How do you want to leave your current workplace? What legacy do you want to leave with colleagues?",
+          category: "consideration",
+          helpText: "Plan knowledge transfer, mentor successors, document important processes, and maintain valued relationships. Consider how you want to be remembered professionally."
+        },
+        {
+          id: "retirement-announcement-strategy",
+          prompt: "When and how will you announce your retirement plans to family, friends, and colleagues?",
+          category: "planning",
+          helpText: "Plan timing for different audiences, prepare for varied reactions, and think about how you want to frame this life transition to others."
+        }
+      ]
+    },
+    {
+      id: "legal-estate-planning",
+      title: "Legal & Estate Planning",
+      description: "Address legal documents, estate planning, and end-of-life preparation for retirement",
+      order: 7,
+      icon: "FileText",
+      reflectionPrompts: [
+        {
+          id: "legal-documents-organization",
+          prompt: "What legal documents do you need to organize or update for retirement, and where will you store them?",
+          category: "planning",
+          helpText: "Consider wills, trusts, power of attorney, advance directives, insurance policies, Social Security documents, pension paperwork, and financial account information. Plan secure storage and access for family."
+        },
+        {
+          id: "estate-planning-strategy",
+          prompt: "How do you want to structure your estate planning to minimize taxes and ensure smooth wealth transfer?",
+          category: "decision",
+          helpText: "Evaluate wills vs. trusts, beneficiary designations, tax-efficient gifting strategies, charitable giving plans, and coordination with retirement account distributions."
+        },
+        {
+          id: "healthcare-directives-planning",
+          prompt: "What healthcare directives and end-of-life preferences do you want to document and communicate?",
+          category: "planning",
+          helpText: "Create advance directives, healthcare power of attorney, HIPAA authorizations, and discuss your preferences with family. Plan for potential incapacity and end-of-life care decisions."
+        },
+        {
+          id: "financial-power-attorney",
+          prompt: "Who will you designate as financial power of attorney, and how will you prepare them for this responsibility?",
+          category: "decision",
+          helpText: "Choose trustworthy individuals, provide them with account information, explain your financial preferences, and ensure they understand their duties and legal responsibilities."
+        },
+        {
+          id: "inheritance-legacy-planning",
+          prompt: "How do you want to structure inheritances and communicate your legacy wishes to beneficiaries?",
+          category: "planning",
+          helpText: "Plan inheritance timing and structure, prepare beneficiaries for wealth responsibility, document family history and values, and consider ethical wills or legacy letters."
+        },
+        {
+          id: "end-of-life-preparations",
+          prompt: "What end-of-life preparations do you want to make to ease the burden on your family?",
+          category: "planning",
+          helpText: "Document funeral/burial preferences, organize important passwords and accounts, create contact lists for family, and prepare instructions for handling your affairs."
+        },
+        {
+          id: "legal-professional-relationships",
+          prompt: "What relationships do you need with legal and financial professionals to support your retirement planning?",
+          category: "planning",
+          helpText: "Consider estate planning attorney, financial advisor, tax professional, insurance agent relationships. Plan for regular reviews and updates of legal documents."
+        }
+      ]
+    },
+    {
+      id: "family-relationship-planning",
+      title: "Family & Relationship Planning",
+      description: "Strengthen family relationships and plan for changing dynamics in retirement",
+      order: 8,
+      icon: "Users",
+      reflectionPrompts: [
+        {
+          id: "spousal-partner-coordination",
+          prompt: "How will you and your spouse/partner coordinate your retirement plans and navigate increased time together?",
+          category: "planning",
+          helpText: "Discuss different retirement timelines, balance individual and shared interests, plan for role changes, and address potential relationship stress from major life transitions."
+        },
+        {
+          id: "adult-children-relationships",
+          prompt: "How do you want your relationships with adult children to evolve during your retirement years?",
+          category: "consideration",
+          helpText: "Respect their independence while staying connected, plan grandparenting involvement, communicate your availability and boundaries, and potentially coordinate caregiving responsibilities."
+        },
+        {
+          id: "aging-parents-caregiving",
+          prompt: "How will you balance your retirement plans with potential caregiving responsibilities for aging parents?",
+          category: "planning",
+          helpText: "Assess current and anticipated care needs, coordinate with siblings, plan financial implications, and develop support strategies including professional services and family involvement."
+        },
+        {
+          id: "friendship-social-networks",
+          prompt: "How will you maintain existing friendships and build new social connections in retirement?",
+          category: "planning",
+          helpText: "Plan regular contact with current friends, develop activity-based friendships, engage in neighborhood and community involvement, and create social accountability systems."
+        },
+        {
+          id: "intergenerational-relationships",
+          prompt: "What role do you want to play in connecting different generations of your family and sharing your wisdom?",
+          category: "consideration",
+          helpText: "Consider mentoring younger family members, documenting family history, sharing life lessons and skills, and creating opportunities for multi-generational bonding and learning."
+        },
+        {
+          id: "grandparenting-role-planning",
+          prompt: "If you have or expect grandchildren, what kind of grandparent do you want to be?",
+          category: "consideration",
+          helpText: "Consider your availability, involvement level, types of activities to share, traditions to create, and how to support without overstepping boundaries with adult children."
+        },
+        {
+          id: "family-communication-strategies",
+          prompt: "How will you maintain open communication with family members about changing needs and expectations?",
+          category: "planning",
+          helpText: "Plan regular family meetings, establish communication preferences, address potential conflicts early, and create systems for sharing important information."
+        },
+        {
+          id: "social-isolation-prevention",
+          prompt: "What strategies will you use to prevent social isolation and maintain meaningful connections?",
+          category: "planning",
+          helpText: "Plan regular social activities, maintain diverse friendships, stay involved in community, use technology to connect, and recognize early warning signs of isolation."
         }
       ]
     }

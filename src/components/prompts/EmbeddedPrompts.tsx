@@ -5,7 +5,7 @@ import { GuidanceSection, ReflectionPrompt, FreeformNote } from '@/types/templat
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb, Circle, CheckCircle2, FileText, GripVertical, Edit3, Check, Square, CheckSquare, CircleCheckBig, CircleCheck } from 'lucide-react';
+import { MessageCircle, HelpCircle, X, ArrowLeft, Plus, Target, BookOpen, Lightbulb, Circle, CheckCircle2, FileText, GripVertical, Edit3, Check, Square, CheckSquare, CircleCheckBig, CircleCheck, Clipboard, CheckCircle, Compass, MessageSquare } from 'lucide-react';
 import Prism from '@/components/ui/prism';
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal';
 import { Button } from '@/components/ui/button';
