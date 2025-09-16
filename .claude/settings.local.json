@@ -56,7 +56,13 @@
       "Read(//Users/ikim1/Documents/GitHub/templata-home-buying/**)",
       "Bash(pkill:*)",
       "Bash(awk:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(for template in home-buying wedding-planning baby-planning job-search college-planning budget-planning fitness-journey travel-planning moving-relocation retirement-planning small-business)",
+      "Bash(do echo \"Processing $template...\")",
+      "Bash(if [ -d \"../templata-$template\" ])",
+      "Bash(then cd \"../templata-$template\")",
+      "Bash(echo:*)",
+      "Bash(else echo \"❌ Worktree ../templata-$template not found\")"
     ],
     "deny": [],
     "ask": []
