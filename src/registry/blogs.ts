@@ -7994,6 +7994,217 @@ Your research matters. Your voice adds something unique to the scholarly convers
 import { getResourcesAsBlogPosts } from './templates';
 
 export const blogRegistry: BlogPost[] = [
+  {
+    id: "home-inspection-guide-2024",
+    slug: "home-inspection-guide-2024",
+    title: "Complete Home Inspection Guide: What to Look For in 2024",
+    excerpt: "Master home inspections with our comprehensive guide covering structural issues, electrical systems, plumbing, HVAC, and negotiation strategies after inspection findings.",
+    content: `A thorough home inspection is your best defense against costly surprises after purchase. This comprehensive guide covers everything you need to know about the inspection process, from scheduling to negotiating repairs.
+
+## Understanding the Home Inspection Process
+
+**Timeline and Scheduling**
+Schedule your inspection within 7-10 days of offer acceptance. Most inspections take 2-4 hours depending on home size and age. Always attend the inspection personally - this is your chance to ask questions and understand maintenance needs.
+
+**Choosing the Right Inspector**
+Look for certified inspectors with ASHI (American Society of Home Inspectors) or InterNACHI credentials. Request recent inspection reports as samples and verify their insurance coverage. Avoid inspectors recommended solely by your real estate agent to prevent conflicts of interest.
+
+## Critical Areas to Inspect
+
+**Structural Elements**
+Foundation cracks wider than 1/4 inch require professional evaluation. Check for signs of settling like doors that don't close properly or cracks where walls meet ceilings. Examine load-bearing walls for modifications and verify proper support beams in basements.
+
+**Electrical Systems**
+Outdated electrical panels (especially Federal Pacific or Zinsco brands) pose safety risks. Count outlets per room - modern homes need GFCI protection in bathrooms and kitchens. Check for aluminum wiring, which increases fire risk and affects insurance coverage.
+
+**Plumbing Infrastructure**
+Test water pressure in multiple locations simultaneously. Galvanized steel pipes from the 1960s often need replacement within 5-10 years. Check for leaks around fixtures and verify proper venting for all drains.
+
+**HVAC Systems**
+Request maintenance records and verify filter types. Systems over 15 years old may need replacement soon. Check ductwork for leaks and proper insulation. Ensure adequate ventilation in bathrooms and kitchens.
+
+**Roofing and Exterior**
+Missing or damaged shingles, especially around flashings and penetrations. Check gutters for proper slope and secure fastening. Examine siding for gaps that allow water penetration.
+
+## Red Flags That Require Professional Follow-Up
+
+**Immediate Safety Concerns**
+- Exposed electrical wires or overloaded circuits
+- Gas leaks or carbon monoxide issues
+- Structural damage affecting home stability
+- Mold or water damage indicating ongoing problems
+
+**Expensive Future Repairs**
+- Roof replacement needs (typically $15,000-40,000)
+- HVAC system replacement ($8,000-20,000)
+- Electrical panel upgrades ($2,000-5,000)
+- Plumbing repiping ($8,000-15,000)
+
+## Post-Inspection Negotiation Strategies
+
+**Prioritizing Repair Requests**
+Focus on safety issues and items affecting habitability. Separate needs from wants - don't request repairs for cosmetic issues or normal wear. Bundle related repairs for more effective negotiation.
+
+**Financial Options**
+Request seller credits toward closing costs for repairs you'll handle yourself. This often works better than asking sellers to complete repairs. For major issues, consider requesting price reductions equal to repair costs plus 10-20% contingency.
+
+**Professional Estimates**
+Get written estimates from licensed contractors for major repairs before negotiating. This provides concrete numbers and demonstrates the scope of work needed.
+
+## Common Inspection Myths Debunked
+
+**Myth: New Homes Don't Need Inspections**
+New construction often has more defects than older homes due to rushed timelines. Building codes are minimum standards, not quality standards.
+
+**Myth: Cosmetic Issues Don't Matter**
+Fresh paint and new flooring can hide serious problems. Look beyond surface improvements to underlying systems.
+
+**Myth: You Can Skip Specialized Inspections**
+Sewer line inspections ($200-400) can prevent $5,000-15,000 in future costs. Chimney inspections are essential for homes with fireplaces.
+
+## Making the Final Decision
+
+**Creating a Decision Matrix**
+List all issues by category: safety, functionality, and cosmetic. Assign estimated costs and urgency levels. This helps you make objective decisions about proceeding with the purchase.
+
+**Understanding Your Rights**
+Most inspection contingencies allow you to withdraw your offer for any reason during the inspection period. You're not obligated to negotiate - you can simply walk away if issues are too extensive.
+
+**Moving Forward Confidently**
+A good inspection report becomes your home maintenance roadmap. Keep it for future reference when planning improvements and budgeting for replacements.
+
+Home inspection is an investment in your peace of mind and financial security. The few hundred dollars spent upfront can save thousands in unexpected repairs and help you make an informed purchase decision.`,
+    author: "Sarah Martinez, Licensed Home Inspector",
+    publishedAt: "2024-01-15",
+    readTime: "12 min read",
+    category: "Home Buying",
+    type: "guide",
+    difficulty: "intermediate",
+    tags: ["home-inspection", "structural-assessment", "electrical-systems", "plumbing", "HVAC", "negotiation"],
+    relatedTemplates: ["home-buying"]
+  },
+  {
+    id: "mortgage-application-process-2024",
+    slug: "mortgage-application-process-2024",
+    title: "Mortgage Application Process: Complete Guide for 2024",
+    excerpt: "Navigate the mortgage application process with confidence. Learn about documentation requirements, credit score impact, loan types, and approval timelines.",
+    content: `The mortgage application process can feel overwhelming, but understanding each step helps ensure smooth approval and closing. This guide walks you through the entire process from pre-qualification to closing day.
+
+## Pre-Application Preparation
+
+**Credit Score Optimization**
+Check your credit reports 6-12 months before applying. Scores above 740 typically qualify for the best rates, while 620 is often the minimum for conventional loans. Pay down credit card balances to below 30% of limits, ideally under 10%.
+
+**Financial Documentation Gathering**
+Organize two years of tax returns, recent pay stubs, bank statements for all accounts, investment account statements, and documentation for any additional income sources like rental properties or alimony.
+
+**Down Payment Planning**
+Conventional loans typically require 5-20% down, FHA loans need 3.5%, and VA loans can be zero down for eligible veterans. Factor in closing costs (2-5% of purchase price) and moving expenses when calculating total cash needed.
+
+## Understanding Loan Types
+
+**Conventional Loans**
+Best rates for borrowers with good credit and stable income. Require private mortgage insurance (PMI) if down payment is less than 20%. PMI can be removed once equity reaches 20%.
+
+**FHA Loans**
+Designed for first-time buyers with lower credit scores or limited down payment funds. Require both upfront and annual mortgage insurance premiums. More flexible debt-to-income ratios.
+
+**VA Loans**
+Available to eligible veterans, active military, and surviving spouses. No down payment required and no private mortgage insurance. Competitive rates and flexible qualification standards.
+
+**USDA Loans**
+Zero down payment loans for eligible rural and suburban areas. Income limits apply based on local median income. Property must meet USDA eligibility requirements.
+
+## The Application Process Step-by-Step
+
+**Step 1: Pre-Qualification (1-3 Days)**
+Quick assessment based on basic financial information. Provides rough estimate of loan amount but isn't a guarantee. Useful for initial house hunting budget.
+
+**Step 2: Pre-Approval (1-10 Days)**
+Comprehensive review including credit check and income verification. Results in conditional approval letter that strengthens your offer. Valid for 60-90 days typically.
+
+**Step 3: Home Selection and Contract**
+Your pre-approval amount guides your search parameters. Include financing contingency in your offer to protect yourself if loan terms change significantly.
+
+**Step 4: Full Application Submission**
+Complete formal application with chosen lender. Submit all required documentation. Lock in your interest rate if satisfied with terms.
+
+**Step 5: Processing and Underwriting (20-45 Days)**
+Lender verifies all information and orders appraisal. Underwriter reviews file for compliance with lending guidelines. May request additional documentation.
+
+**Step 6: Final Approval and Closing**
+Clear to close notification typically comes 2-3 days before closing. Final walkthrough confirms property condition. Sign loan documents and receive keys.
+
+## Required Documentation Checklist
+
+**Income Verification**
+- Last 2 years of tax returns with all schedules
+- Recent pay stubs covering 30-day period
+- Year-to-date profit and loss for self-employed
+- Employment verification letters
+- Social Security or pension award letters
+
+**Asset Documentation**
+- 2-3 months of bank statements for all accounts
+- Investment account statements
+- Gift letters for down payment assistance
+- Documentation of sale proceeds from other properties
+
+**Additional Requirements**
+- Government-issued photo ID
+- Social Security card
+- Homeowner's insurance declaration page
+- Purchase contract and any amendments
+
+## Common Application Pitfalls to Avoid
+
+**Credit Score Damage**
+Avoid opening new credit accounts or making large purchases during the application process. Don't close existing credit cards, as this can lower your credit score.
+
+**Employment Changes**
+Changing jobs during the process can delay or derail approval. If unavoidable, ensure new employment is in the same field with equal or higher compensation.
+
+**Large Deposits**
+Bank deposits over $1,000 require documentation. Gift money needs proper paper trail with donor bank statements and gift letters.
+
+## Managing the Timeline
+
+**Typical Timeline Breakdown**
+- Pre-approval: 1-10 days
+- Home shopping: Varies by market
+- Processing: 20-30 days
+- Underwriting: 5-10 days
+- Closing preparation: 2-3 days
+
+**Potential Delays**
+Appraisal issues, title problems, or income verification complications can extend timelines. Build buffer time into your contract closing date.
+
+## Rate Lock Strategies
+
+**When to Lock**
+Lock rates when satisfied with terms and confident in closing timeline. Rate locks typically last 30-60 days with extensions available for fees.
+
+**Float vs. Lock Decision**
+Consider market trends and your risk tolerance. Floating allows you to benefit from rate decreases but exposes you to increases.
+
+## Working with Your Lender
+
+**Communication Best Practices**
+Respond promptly to all requests for additional documentation. Ask questions about anything you don't understand. Keep your loan officer updated on any changes in your situation.
+
+**Understanding Loan Estimates**
+Compare Loan Estimates from multiple lenders within 14-45 days to avoid credit score impact. Focus on annual percentage rate (APR) rather than just interest rate.
+
+The mortgage application process requires patience and organization, but proper preparation leads to smoother approval and better loan terms. Start gathering documents early and maintain open communication with your lender throughout the process.`,
+    author: "Michael Chen, Senior Mortgage Advisor",
+    publishedAt: "2024-01-20",
+    readTime: "10 min read",
+    category: "Home Buying",
+    type: "guide",
+    difficulty: "intermediate",
+    tags: ["mortgage-application", "loan-approval", "credit-score", "documentation", "pre-approval", "closing"],
+    relatedTemplates: ["home-buying", "personal-finance-investment"]
+  }
 ];
 
 // Blog registry helper functions

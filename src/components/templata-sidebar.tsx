@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Heart, FileText, Users, Plus, DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Home, CreditCard, Search, HandCoins, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity, Wallet, Bed, Lightbulb, BarChart, Handshake, Rocket, Zap, Brain, Clock, Dumbbell, Apple, Scale, Camera, Timer, Calculator, BookOpen, GraduationCap, School, Award, Banknote, PiggyBank, Receipt, Focus, Layout, Settings, Package, ClipboardList, ArrowRight, Globe, Plane, Utensils, ChefHat, Microscope, Database, PenSquare, Bookmark, FlaskConical, ShoppingCart, Moon, ExternalLink, Ban, HelpCircle, CheckCircle, Compass, Clipboard, Sunset } from "lucide-react"
 import { GuidanceTemplate, ReflectionPrompt, Resource } from "@/types/template"
+import { getBlogPostsByTemplate } from "@/registry/blogs"
 import { Badge } from "@/components/ui/badge"
 import { ThemeSelector } from "@/components/theme-selector"
 import { RelatedTemplates } from "@/components/template/related-templates"
@@ -86,7 +87,8 @@ export function TemplataContentSidebar({
     prompt.helpText?.toLowerCase().includes(searchQuery.toLowerCase())
   ) || []
 
-  const filteredResources = template.resources.filter(resource =>
+  const templateResources = getBlogPostsByTemplate(template.id)
+  const filteredResources = templateResources.filter(resource =>
     resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     resource.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
   )
