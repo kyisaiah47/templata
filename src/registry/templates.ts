@@ -1,6 +1,5 @@
 import { GuidanceTemplate } from '@/types/template';
 import { weddingTemplate, homeBuyingTemplate, jobSearchTemplate, babyPlanningTemplate, parentingChildDevelopmentTemplate, fitnessAthleticTrainingTemplate, fitnessJourneyTemplate, personalDevelopmentCoachingTemplate, retirementLifestylePlanningTemplate, travelPlanningAdventureTemplate, productivitySystemTemplate, movingRelocationTemplate, eventPlanningTemplate, travelPlanningTemplate, mealPlanningTemplate, academicResearchTemplate, freelanceGigEconomyTemplate, languageLearningCulturalImmersionTemplate, personalFinanceInvestmentTemplate, digitalMarketingSEOTemplate, remoteWorkProductivityTemplate, careerChangeTransitionTemplate, budgetPlanningTemplate, businessLaunchTemplate, collegePlanningTemplate } from '@/data/templates';
-import { blogRegistry } from '@/registry/blogs';
 import { getTemplateExperts } from '@/lib/expert-badges';
 
 // Unified content system - blog registry gets populated from template resources
@@ -9,6 +8,8 @@ export function getTemplate(baseTemplate: GuidanceTemplate): GuidanceTemplate {
 }
 
 // Convert blog registry to resources format for /blog/abc
+// Note: This function now returns empty array to avoid circular imports
+// Blog content is now managed directly in the blogs registry
 export function getResourcesAsBlogPosts(): Array<{
   slug: string;
   title: string;
@@ -23,21 +24,9 @@ export function getResourcesAsBlogPosts(): Array<{
   date: string;
   author: string;
 }> {
-  // Pull directly from the unified blog registry
-  return blogRegistry.map(blog => ({
-    slug: blog.id,
-    title: blog.title,
-    excerpt: blog.excerpt,
-    content: blog.content,
-    tags: blog.tags,
-    readTime: blog.readTime,
-    difficulty: blog.difficulty,
-    type: blog.type,
-    category: blog.category,
-    templateId: blog.relatedTemplates?.[0], // Use first related template
-    date: blog.publishedAt,
-    author: blog.author
-  }));
+  // Return empty array to avoid circular imports
+  // Blog content is now managed directly in manualBlogPosts
+  return [];
 }
 
 export interface TemplateRegistryEntry {
