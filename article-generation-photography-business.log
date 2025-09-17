@@ -1,0 +1,135 @@
+[0;34m2025-09-16 19:29:26 - Starting Article Generation Cycle for template: photography-business[0m
+[0;32m2025-09-16 19:29:26 - Using existing worktree: ../templata-photography-business[0m
+[0;34m2025-09-16 19:29:26 - Starting generation for: 1[0m
+[1;33m2025-09-16 19:29:26 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #1
+[0;32m2025-09-16 19:32:07 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:32:07 - Completed: 1[0m
+[0;34m2025-09-16 19:32:13 - Starting generation for: 2[0m
+[1;33m2025-09-16 19:32:13 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #2
+[0;32m2025-09-16 19:33:40 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:33:40 - Completed: 2[0m
+[0;34m2025-09-16 19:33:46 - Starting generation for: 3[0m
+[1;33m2025-09-16 19:33:46 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #3
+[0;32m2025-09-16 19:36:50 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:36:50 - Completed: 3[0m
+[0;34m2025-09-16 19:36:55 - Starting generation for: 4[0m
+[1;33m2025-09-16 19:36:55 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #4
+[0;32m2025-09-16 19:39:28 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:39:28 - Completed: 4[0m
+[0;34m2025-09-16 19:39:33 - Starting generation for: 5[0m
+[1;33m2025-09-16 19:39:33 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #5
+[0;32m2025-09-16 19:42:11 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:42:11 - Completed: 5[0m
+[0;34m2025-09-16 19:42:16 - Starting generation for: 6[0m
+[1;33m2025-09-16 19:42:16 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #6
+[0;32m2025-09-16 19:43:57 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:43:57 - Completed: 6[0m
+[0;34m2025-09-16 19:44:02 - Starting generation for: 7[0m
+[1;33m2025-09-16 19:44:03 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #7
+[0;32m2025-09-16 19:45:52 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:45:52 - Completed: 7[0m
+[0;34m2025-09-16 19:45:57 - Starting generation for: 8[0m
+[1;33m2025-09-16 19:45:57 - Running article generation...[0m
+Perfect! I have successfully generated and added Article #8 to the photography business template. The article "The Psychology of Photography Pricing: Why Charging What You're Worth Attracts Better Clients" is a comprehensive 1,400+ word guide that follows all the master prompt guidelines:
+
+- ✅ 1,200-1,600 words (approximately 1,400 words)
+- ✅ Author: "Templata" 
+- ✅ Category: "Personal Life"
+- ✅ Added to manualBlogPosts array in src/registry/blogs.ts
+- ✅ Includes proper SEO metadata
+- ✅ Type: "guide", Difficulty: "intermediate"
+- ✅ Photography business focused content
+- ✅ Sophisticated, caring voice without bullet points
+- ✅ Flowing, engaging paragraphs
+- ✅ No first person usage
+- ✅ Relevant tags and related posts
+
+The article covers the crucial topic of pricing psychology for photography businesses, providing actionable insights on why premium pricing attracts better clients and how to implement strategic pricing with confidence.
+
+ARTICLE GENERATION COMPLETE - Article #8
+[0;32m2025-09-16 19:47:53 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:47:53 - Completed: 8[0m
+[0;34m2025-09-16 19:47:58 - Starting generation for: 9[0m
+[1;33m2025-09-16 19:47:58 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #9
+[0;32m2025-09-16 19:49:55 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:49:55 - Completed: 9[0m
+[0;34m2025-09-16 19:50:00 - Starting generation for: 10[0m
+[1;33m2025-09-16 19:50:00 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #10
+[0;32m2025-09-16 19:52:06 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:52:06 - Completed: 10[0m
+[0;34m2025-09-16 19:52:11 - Starting generation for: 11[0m
+[1;33m2025-09-16 19:52:11 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #11
+[0;32m2025-09-16 19:55:43 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:55:43 - Completed: 11[0m
+[0;34m2025-09-16 19:55:48 - Starting generation for: 12[0m
+[1;33m2025-09-16 19:55:48 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #12
+[0;32m2025-09-16 19:57:34 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 19:57:34 - Completed: 12[0m
+[0;34m2025-09-16 19:57:39 - Starting generation for: 13[0m
+[1;33m2025-09-16 19:57:39 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #13
+[0;32m2025-09-16 20:00:44 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:00:44 - Completed: 13[0m
+[0;34m2025-09-16 20:00:49 - Starting generation for: 14[0m
+[1;33m2025-09-16 20:00:49 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #14
+[0;32m2025-09-16 20:02:45 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:02:45 - Completed: 14[0m
+[0;34m2025-09-16 20:02:50 - Starting generation for: 15[0m
+[1;33m2025-09-16 20:02:50 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #15
+[0;32m2025-09-16 20:05:17 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:05:17 - Completed: 15[0m
+[0;34m2025-09-16 20:05:22 - Starting generation for: 16[0m
+[1;33m2025-09-16 20:05:22 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #16
+[0;32m2025-09-16 20:08:53 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:08:53 - Completed: 16[0m
+[0;34m2025-09-16 20:08:58 - Starting generation for: 17[0m
+[1;33m2025-09-16 20:08:58 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #17
+[0;32m2025-09-16 20:12:49 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:12:49 - Completed: 17[0m
+[0;34m2025-09-16 20:12:54 - Starting generation for: 18[0m
+[1;33m2025-09-16 20:12:54 - Running article generation...[0m
+5-hour limit reached ∙ resets 10pm
+[0;32m2025-09-16 20:14:51 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:14:51 - Completed: 18[0m
+[0;34m2025-09-16 20:14:56 - Starting generation for: 19[0m
+[1;33m2025-09-16 20:14:56 - Running article generation...[0m
+5-hour limit reached ∙ resets 10pm
+[0;32m2025-09-16 20:15:01 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:15:01 - Completed: 19[0m
+[0;34m2025-09-16 20:15:06 - Starting generation for: 20[0m
+[1;33m2025-09-16 20:15:06 - Running article generation...[0m
+5-hour limit reached ∙ resets 10pm
+[0;32m2025-09-16 20:15:12 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 20:15:12 - Completed: 20[0m
+[0;34m2025-09-16 22:03:59 - Starting Article Generation Cycle for template: photography-business[0m
+[0;32m2025-09-16 22:03:59 - Using existing worktree: ../templata-photography-business[0m
+[0;34m2025-09-16 22:04:00 - Starting generation for: 18[0m
+[1;33m2025-09-16 22:04:00 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #18
+[0;32m2025-09-16 22:05:50 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 22:05:50 - Completed: 18[0m
+[0;34m2025-09-16 22:05:55 - Starting generation for: 19[0m
+[1;33m2025-09-16 22:05:55 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #19
+[0;32m2025-09-16 22:07:54 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 22:07:54 - Completed: 19[0m
+[0;34m2025-09-16 22:07:59 - Starting generation for: 20[0m
+[1;33m2025-09-16 22:07:59 - Running article generation...[0m
+ARTICLE GENERATION COMPLETE - Article #20
+[0;32m2025-09-16 22:09:29 - Skipping review - moving to next article[0m
+[0;32m2025-09-16 22:09:29 - Completed: 20[0m

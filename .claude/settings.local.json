@@ -66,7 +66,9 @@
       "Bash(git merge:*)",
       "Bash(mkdir:*)",
       "Bash(for template in home-buying wedding-planning baby-planning job-search college-planning budget-planning fitness-journey travel-planning moving-relocation retirement-planning)",
-      "Bash(do echo \"=== Removing worktree: $template ===\")"
+      "Bash(do echo \"=== Removing worktree: $template ===\")",
+      "Bash(for template in book-writing divorce-coordination event-planning freelance-business garden-planning hobby-project investment-portfolio language-learning meal-planning medical-treatment music-production nonprofit-management personal-branding photography-business podcast-creation skill-development small-business-launch social-media-management)",
+      "Bash(do)"
     ],
     "deny": [],
     "ask": []
