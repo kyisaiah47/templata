@@ -84,6 +84,12 @@ export async function searchTemplateImages(
   count: number = 12
 ): Promise<UnsplashImage[]> {
   try {
+    // Check if access key is configured
+    if (!process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY) {
+      console.warn('Unsplash access key not configured');
+      return [];
+    }
+
     const query = templateSearchQueries[templateName] || templateName.replace(/-/g, ' ');
 
     const result = await unsplash.search.getPhotos({
