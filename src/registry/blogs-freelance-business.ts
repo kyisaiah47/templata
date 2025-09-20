@@ -147,7 +147,7 @@ The freelancers who master these revenue systems don't just survive the inevitab
     author: "Templata",
     publishedAt: "2025-09-16",
     readTime: "12 min read",
-    category: "Personal Life",
+    category: "Business & Entrepreneurship",
     featured: false,
     tags: ["freelance income", "revenue systems", "financial stability", "business development", "cash flow management"],
     type: "guide",
@@ -262,7 +262,7 @@ Sophisticated freelancers implement **systematic relationship management** that 
 **Strategic planning** for **major client relationships** includes **growth opportunity identification**, **service expansion possibilities**, and **long-term collaboration planning** that positions freelancers for **sustained business growth**. **Account planning** approaches **major clients** as **strategic partnerships** rather than **transactional relationships**.
 
 Understanding that **relationship management** is a **strategic business function** rather than an **administrative task** separates **successful freelancers** from those who **constantly struggle** with **client acquisition** and **retention challenges**. **Systematic relationship investments** create **sustainable competitive advantages** that compound over time.`,
-    category: "Personal Life",
+    category: "Business & Entrepreneurship",
     type: "guide",
     difficulty: "intermediate",
     readTime: "14 min read",
@@ -389,7 +389,7 @@ The most successful freelancers view tax optimization as an ongoing business pro
 Smart tax planning transforms freelance businesses from high-stress, high-tax operations into efficient, profitable enterprises that provide both financial security and personal freedom. The strategies outlined here require initial investment of time and potentially professional guidance, but the long-term benefits justify the effort for any serious freelance business.
 
 Understanding that tax optimization is a skill that improves with practice and knowledge, successful freelancers commit to ongoing education and strategic thinking about their tax obligations. This approach not only reduces current tax burdens but builds foundations for long-term financial success and business growth.`,
-    category: "Personal Life",
+    category: "Business & Entrepreneurship",
     type: "guide",
     difficulty: "intermediate",
     readTime: "12 min read",

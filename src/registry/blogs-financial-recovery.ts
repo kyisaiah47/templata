@@ -98,7 +98,7 @@ Recovery from financial crisis provides a unique opportunity to build something 
     author: "Templata",
     publishedAt: "2024-03-18",
     readTime: "11 min read",
-    category: "Personal Life",
+    category: "Financial Recovery",
     featured: false,
     tags: [
       "financial recovery",
@@ -207,7 +207,7 @@ Rebuilding credit after financial setback represents both a practical necessity 
     author: "Templata",
     publishedAt: "2024-03-19",
     readTime: "12 min read",
-    category: "Personal Life",
+    category: "Financial Recovery",
     featured: false,
     tags: [
       "credit repair",
@@ -324,7 +324,7 @@ Career decisions during financial recovery represent some of the most challengin
     author: "Templata",
     publishedAt: "2024-03-20",
     readTime: "10 min read",
-    category: "Personal Life",
+    category: "Financial Recovery",
     featured: false,
     tags: [
       "career planning",
@@ -473,7 +473,7 @@ Recovery from financial crisis provides an opportunity to rebuild social connect
     author: "Templata",
     publishedAt: "2024-03-21",
     readTime: "12 min read",
-    category: "Personal Life",
+    category: "Financial Recovery",
     featured: false,
     tags: [
       "financial recovery",

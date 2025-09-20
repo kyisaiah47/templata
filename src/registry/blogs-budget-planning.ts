@@ -952,7 +952,7 @@ Start today with simple awareness of one spending decision, one category, or one
     relatedPosts: ["50-30-20-budget-rule-modern-approach", "budget-automation-technology-tools", "seasonal-budget-planning-strategies"]
   },
   {
-    id: "budget-flexibility-life-changes",
+    id: "budget-flexibility-life-changes-2",
     title: "Flexible Budgeting: How to Adapt Your Financial Plan When Life Throws Curveballs",
     excerpt: "Master the art of budget flexibility to handle job changes, family transitions, health emergencies, and economic uncertainty while staying on track toward your financial goals.",
     content: `# Flexible Budgeting: How to Adapt Your Financial Plan When Life Throws Curveballs
@@ -1158,7 +1158,7 @@ Your budget should serve your life, not control it. When life changes, your budg
     category: "Personal Finance",
     featured: false,
     tags: ["budget flexibility", "financial planning", "life changes", "adaptive budgeting", "income volatility", "emergency planning"],
-    slug: "budget-flexibility-life-changes",
+    slug: "budget-flexibility-life-changes-2",
     type: "guide",
     difficulty: "intermediate",
     seo: {
@@ -2151,7 +2151,7 @@ Your debt freedom journey starts with a single extra payment applied strategical
     relatedPosts: ["emergency-fund-foundation", "50-30-20-budget-rule-modern-approach", "building-financial-confidence-small-wins"]
   },
   {
-    id: "financial-goal-setting-budget-alignment",
+    id: "financial-goal-setting-budget-alignment-2",
     title: "Financial Goal Setting That Actually Works: How to Align Your Budget with Your Life Vision",
     excerpt: "Transform vague financial dreams into achievable reality through strategic goal setting that integrates seamlessly with your budget. Learn the proven framework for turning aspirations into actionable plans.",
     content: `# Financial Goal Setting That Actually Works: How to Align Your Budget with Your Life Vision
@@ -2261,7 +2261,7 @@ The difference between financial dreams and financial reality lies not in the si
     category: "Personal Finance",
     featured: false,
     tags: ["goal setting", "budget planning", "financial strategy", "life planning", "wealth building"],
-    slug: "financial-goal-setting-budget-alignment",
+    slug: "financial-goal-setting-budget-alignment-2",
     type: "guide",
     difficulty: "intermediate",
     seo: {

@@ -175,12 +175,12 @@ export function useSmartRecommendations() {
 
       // Time-based recommendations
       if (context.timeOfDay === "morning") {
-        if (item.category.includes("Planning") || item.category.includes("Productivity")) {
+        if (item.category?.includes("Planning") || item.category?.includes("Productivity")) {
           score += 8
           reason = reason || "Great for morning planning"
         }
       } else if (context.timeOfDay === "evening") {
-        if (item.category.includes("Personal") || item.category.includes("Wellness")) {
+        if (item.category?.includes("Personal") || item.category?.includes("Wellness")) {
           score += 8
           reason = reason || "Perfect for evening reflection"
         }
@@ -188,12 +188,12 @@ export function useSmartRecommendations() {
 
       // Day of week patterns
       if (context.dayOfWeek === 1) { // Monday
-        if (item.category.includes("Career") || item.category.includes("Business")) {
+        if (item.category?.includes("Career") || item.category?.includes("Business")) {
           score += 6
           reason = reason || "Start your week strong"
         }
       } else if ([6, 0].includes(context.dayOfWeek)) { // Weekend
-        if (item.category.includes("Personal") || item.category.includes("Wellness") || item.category.includes("Travel")) {
+        if (item.category?.includes("Personal") || item.category?.includes("Wellness") || item.category?.includes("Travel")) {
           score += 6
           reason = reason || "Perfect weekend project"
         }
@@ -242,11 +242,11 @@ export function useSmartRecommendations() {
 
       // Seasonal/trending boost (this could be enhanced with real trends)
       const currentMonth = new Date().getMonth()
-      if (currentMonth >= 2 && currentMonth <= 4 && item.category.includes("Wedding")) {
+      if (currentMonth >= 2 && currentMonth <= 4 && item.category?.includes("Wedding")) {
         score += 5
         reason = reason || "Popular this season"
       }
-      if ([8, 9].includes(currentMonth) && item.category.includes("Career")) {
+      if ([8, 9].includes(currentMonth) && item.category?.includes("Career")) {
         score += 5
         reason = reason || "Back-to-school season boost"
       }

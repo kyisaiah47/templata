@@ -1226,11 +1226,11 @@ export function CommandPalette({
                       </div>
                     </div>
                   <div className="space-y-2">
-                    {searchableArticles.slice(0, 20).map((article) => {
+                    {searchableArticles.map((article, index) => {
                       const Icon = getCategoryIcon((article as any).category)
                       const isStarred = isFavorited(article.id)
                       return (
-                        <Link key={article.id} href={`/blog/${(article as any).slug}`} onClick={() => handleArticleClick(article)}>
+                        <Link key={`${article.id}-${index}`} href={`/blog/${(article as any).slug}`} onClick={() => handleArticleClick(article)}>
                           <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50 hover:scale-[1.01] hover:shadow-sm">
                             <div className="w-8 h-8 rounded-lg bg-muted/30 flex items-center justify-center">
                               <Icon className="w-4 h-4" />

@@ -408,7 +408,7 @@ export const getRelatedBlogPosts = (postId: string, limit: number = 3): BlogPost
   const relatedPosts = blogRegistry.filter(post =>
     post.id !== postId && (
       post.category === currentPost.category ||
-      post.tags.some(tag => currentPost.tags.includes(tag)) ||
+      (post.tags && currentPost.tags && post.tags.some(tag => currentPost.tags.includes(tag))) ||
       (currentPost.relatedPosts && currentPost.relatedPosts.includes(post.id))
     )
   );

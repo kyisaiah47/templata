@@ -104,7 +104,7 @@ This guide cuts through marketing hype and internet debates to focus on practica
 **Community resource utilization** through local EV owner groups, online forums, and dealer service networks provides ongoing support and problem-solving assistance. **Technology update management** includes software updates, charging network app maintenance, and staying informed about infrastructure improvements in frequently traveled areas.
 
 Electric vehicle transition success depends more on honest assessment of personal driving patterns and infrastructure access than on embracing the latest automotive technology. For buyers whose daily routines align well with electric vehicle capabilities, the transition often exceeds expectations while providing both environmental benefits and reduced operating costs. Understanding the practical implications before purchase ensures the electric vehicle experience enhances rather than complicates daily transportation needs.`,
-    category: "Personal Life",
+    category: "Transportation & Automotive",
     author: "Templata",
     publishedAt: "2024-09-16",
     readTime: "12 min read",
@@ -192,7 +192,7 @@ Car negotiation doesn't have to be theatrical or unpleasant. The buyers who get 
 Your confidence comes from preparation, not aggression. When you understand market pricing, dealer motivations, and your own alternatives, you can negotiate from a position of strength while maintaining respect for everyone involved.
 
 The psychology of car buying ultimately favors informed, patient buyers who approach negotiation as a collaborative process. Skip the games, do your homework, and focus on finding a deal that works for everyone. You'll drive away with both a great car and a great experience.`,
-    category: "Personal Life",
+    category: "Transportation & Automotive",
     author: "Templata",
     publishedAt: "2024-09-16",
     readTime: "10 min read",
@@ -284,7 +284,7 @@ This comprehensive inspection guide provides the knowledge and confidence needed
 Car inspection transforms uncertain purchases into confident decisions based on complete information. **Systematic evaluation** using professional techniques reveals hidden problems and validates vehicle condition for informed negotiation and purchase planning. **Documentation and professional support** provide additional confidence and protection for significant automotive investments.
 
 The difference between casual car shopping and professional evaluation often measures in thousands of dollars and years of reliable transportation. **Thorough inspection** ensures every car purchase decision is based on facts rather than hope, protecting both immediate finances and long-term satisfaction with the ownership experience.`,
-    category: "Personal Life",
+    category: "Transportation & Automotive",
     author: "Templata",
     publishedAt: "2024-09-16",
     readTime: "12 min read",
@@ -388,7 +388,7 @@ Future financial plans affect current financing decisions through considerations
 The relationship between financing and overall vehicle ownership strategy influences decision-making beyond immediate cost considerations. Buyers planning to keep vehicles long-term might prioritize different financing features than those planning to trade or sell within a few years. Align financing terms with ownership intentions for optimal outcomes.
 
 Car financing success comes from understanding options, doing research, and making strategic decisions that align with your financial goals. The buyers who save the most money treat financing as a separate negotiation from vehicle purchase, compare multiple options systematically, and choose terms that provide both cost efficiency and financial flexibility. Smart financing transforms car buying from expensive necessity into strategic financial planning that supports long-term wealth building and transportation needs.`,
-    category: "Personal Life",
+    category: "Transportation & Automotive",
     author: "Templata",
     publishedAt: "2024-09-16",
     readTime: "11 min read",
@@ -487,7 +487,7 @@ Car depreciation mastery transforms vehicle purchasing from expensive necessity 
     author: "Templata",
     publishedAt: "2024-09-16",
     readingTime: "12 min read",
-    category: "Personal Life",
+    category: "Transportation & Automotive",
     tags: ["Car Buying", "Vehicle Depreciation", "Auto Finance", "Value Retention", "Car Timing", "Used Cars"],
     featured: false,
     type: "guide",
@@ -588,7 +588,7 @@ The difference between a smart first car purchase and an expensive mistake usual
     author: "Templata",
     publishedAt: "2024-09-16",
     readTime: "12 min read",
-    category: "Personal Life",
+    category: "Transportation & Automotive",
     tags: ["first-time buyer", "car shopping", "financing", "insurance", "budgeting", "mistakes", "dealer negotiation"],
     relatedTemplates: ["car-buying"],
     featured: false,
