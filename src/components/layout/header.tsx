@@ -225,7 +225,7 @@ export function Header() {
 														<Link href="/workspaces">
 															<div className="text-sm leading-none font-medium">Workspaces</div>
 															<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-																Split-screen planning interface
+																Three progressive workspace modes
 															</p>
 														</Link>
 													</NavigationMenuLink>

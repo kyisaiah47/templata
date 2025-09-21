@@ -2,26 +2,26 @@
 
 > Skip the blank page. Start with abundant guidance for life's biggest moments.
 
-Templata is a guidance-first platform that provides tons of Axiom Engine insights, reflection prompts, and resources for life's most important decisions. Rather than gamified task lists, we focus on helping you think through complex decisions with AI-powered guidance and abundant ideas.
+Templata is the first encyclopedia for living - a complete evolution from guided templates to autonomous life management. We provide 15,000+ action prompts, 3,000+ articles, and three progressive workspace modes to take you from structured guidance to complete life mastery.
 
 ## 🌟 Philosophy: The Abundance Mindset
 
-Life's biggest moments deserve more than task lists and empty templates. When planning a wedding, buying a home, or making major decisions, you need **abundant guidance, Axiom Engine insights, and thoughtful reflection prompts** - not just checkboxes to complete.
+The blank page era is dead. Instead of starting with emptiness, you get abundance: action-oriented prompts that drive decisions, contextual articles that provide insights, and a complete workspace evolution that grows with your expertise.
 
-Templata provides:
-- **15,000+ reflection prompts** to guide your thinking
-- **Axiom Engine insights** generated through specialized AI designed for life guidance
-- **3,000+ articles** covering every angle of your decision
-- **Guidance over gamification** - we help you think, not just do
+Our three-mode progression system:
+- **Template Workspace** - Split-screen guided experience with 15,000+ action prompts
+- **Reflection Mode** - Daily immersive environment for processing your journey
+- **Aggregate Workspace** - Unified life management system like Notion, built from your structured foundation
+- **Complete Evolution** - From guided learning to autonomous life mastery
 
 ## ✨ Core Features
 
 - **150+ Templates** - Comprehensive workspaces for life's biggest moments
-- **Split Screen Interface** - Categorized prompts on one side, articles on the other
-- **15,000+ Prompts** - Categorized reflection prompts powered by the Axiom Engine
+- **Three Workspace Modes** - Template (guided), Reflection (immersive), Aggregate (autonomous)
+- **15,000+ Action Prompts** - Tactical, practical prompts that drive decision-making
 - **3,000+ Articles** - In-depth guidance and insights for every situation
-- **Simple Workspaces** - Clean, focused interface for organizing your thoughts
-- **Theme-Aware Design** - Beautiful scrollbars and consistent theming across all pages
+- **Progressive Evolution** - Learn structure, then graduate to complete autonomy
+- **Drag & Drop Integration** - Pull insights from articles directly into prompt answers
 
 ## 📂 Template Categories
 
