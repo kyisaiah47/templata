@@ -1,6 +1,6 @@
 "use client"
 
-// Expert badge system for templates
+// Codex Engine attribution system for templates
 export interface ExpertBadge {
   id: string
   name: string
@@ -16,84 +16,85 @@ export interface ExpertBadge {
   templateCount?: number
 }
 
-// Expert registry - in real app this would come from a database
+// Codex Engine registry - specialized AI guidance attribution
 export const expertRegistry: Record<string, ExpertBadge> = {
-  "sarah-johnson-wedding": {
-    id: "sarah-johnson-wedding",
-    name: "Sarah Johnson",
-    title: "Certified Wedding Planner",
-    organization: "Elegant Events Co.",
-    bio: "15+ years planning luxury weddings. Featured in Martha Stewart Weddings and The Knot.",
+  "codex-wedding": {
+    id: "codex-wedding",
+    name: "Codex Engine",
+    title: "Wedding Planning Specialist",
+    organization: "Templata AI",
+    bio: "Specialized AI system trained specifically for wedding planning guidance. Generates comprehensive prompts and insights through advanced prompt engineering.",
     expertise: ["Wedding Planning", "Event Coordination", "Vendor Management"],
-    credentials: ["Certified Wedding Planner (CWP)", "International Live Events Association Member"],
-    linkedIn: "https://linkedin.com/in/sarahjohnson",
+    credentials: ["AI-Generated Content", "Specialized Prompt Engineering", "Human-Curated Output"],
+    website: "/codex-engine",
     verified: true,
     templateCount: 12
   },
-  "david-chen-finance": {
-    id: "david-chen-finance",
-    name: "David Chen",
-    title: "Certified Financial Planner",
-    organization: "Chen Financial Advisory",
-    bio: "Helping families achieve financial security for over 20 years. Specialized in home buying and investment strategies.",
-    expertise: ["Financial Planning", "Real Estate Investment", "Mortgage Advisory"],
-    credentials: ["CFP®", "ChFC®", "RICP®"],
-    website: "https://chenfinancial.com",
+  "codex-finance": {
+    id: "codex-finance",
+    name: "Codex Engine",
+    title: "Financial Planning Specialist",
+    organization: "Templata AI",
+    bio: "AI system designed for financial guidance and decision-making. Generates thoughtful prompts for budgeting, home buying, and investment planning.",
+    expertise: ["Financial Planning", "Real Estate Investment", "Budget Management"],
+    credentials: ["AI-Generated Content", "Financial Decision Framework", "Comprehensive Analysis"],
+    website: "/codex-engine",
     verified: true,
     templateCount: 8
   },
-  "dr-emily-roberts-parenting": {
-    id: "dr-emily-roberts-parenting",
-    name: "Dr. Emily Roberts",
-    title: "Pediatric Psychologist",
-    organization: "Children's Development Center",
-    bio: "Board-certified pediatric psychologist with expertise in child development and parenting strategies.",
-    expertise: ["Child Psychology", "Parenting", "Development Milestones"],
-    credentials: ["Ph.D. in Psychology", "Licensed Clinical Psychologist", "Board Certified"],
+  "codex-parenting": {
+    id: "codex-parenting",
+    name: "Codex Engine",
+    title: "Parenting & Development Specialist",
+    organization: "Templata AI",
+    bio: "Specialized AI for parenting guidance and child development planning. Creates comprehensive reflection prompts for family decisions.",
+    expertise: ["Parenting Guidance", "Child Development", "Family Planning"],
+    credentials: ["AI-Generated Content", "Family Decision Framework", "Development Planning"],
+    website: "/codex-engine",
     verified: true,
     templateCount: 6
   },
-  "michael-torres-career": {
-    id: "michael-torres-career",
-    name: "Michael Torres",
-    title: "Senior HR Director",
-    organization: "Fortune 500 Recruiting",
-    bio: "25 years in talent acquisition and career development. Helped 1000+ professionals land their dream jobs.",
-    expertise: ["Career Development", "Job Search Strategy", "Interview Coaching"],
-    credentials: ["SHRM-SCP", "Certified Career Coach", "MBA in Human Resources"],
-    linkedIn: "https://linkedin.com/in/michaeltorres",
+  "codex-career": {
+    id: "codex-career",
+    name: "Codex Engine",
+    title: "Career Development Specialist",
+    organization: "Templata AI",
+    bio: "AI system focused on career guidance and professional development. Generates strategic prompts for job searches and career transitions.",
+    expertise: ["Career Development", "Job Search Strategy", "Professional Growth"],
+    credentials: ["AI-Generated Content", "Career Decision Framework", "Strategic Planning"],
+    website: "/codex-engine",
     verified: true,
     templateCount: 10
   },
-  "lisa-morgan-fitness": {
-    id: "lisa-morgan-fitness",
-    name: "Lisa Morgan",
-    title: "Certified Personal Trainer",
-    organization: "Elite Fitness Solutions",
-    bio: "NASM-certified trainer specializing in sustainable fitness journeys and nutrition coaching.",
-    expertise: ["Personal Training", "Nutrition Coaching", "Fitness Planning"],
-    credentials: ["NASM-CPT", "Precision Nutrition Level 1", "Fitness Nutrition Specialist"],
-    website: "https://elitefitnesssolutions.com",
+  "codex-health": {
+    id: "codex-health",
+    name: "Codex Engine",
+    title: "Health & Wellness Specialist",
+    organization: "Templata AI",
+    bio: "Specialized AI for health and fitness guidance. Creates comprehensive frameworks for wellness planning and health decisions.",
+    expertise: ["Health Planning", "Fitness Strategy", "Wellness Decisions"],
+    credentials: ["AI-Generated Content", "Health Decision Framework", "Wellness Planning"],
+    website: "/codex-engine",
     verified: true,
     templateCount: 4
   }
 }
 
-// Template-to-expert mapping
+// Template-to-codex mapping
 export const templateExpertMapping: Record<string, string[]> = {
-  "wedding-planning": ["sarah-johnson-wedding"],
-  "home-buying": ["david-chen-finance"],
-  "baby-planning": ["dr-emily-roberts-parenting"],
-  "parenting-child-development": ["dr-emily-roberts-parenting"],
-  "job-search": ["michael-torres-career"],
-  "career-change-transition": ["michael-torres-career"],
-  "budget-planning": ["david-chen-finance"],
-  "personal-finance-investment": ["david-chen-finance"],
-  "fitness-journey": ["lisa-morgan-fitness"],
-  "fitness-athletic-training": ["lisa-morgan-fitness"]
+  "wedding-planning": ["codex-wedding"],
+  "home-buying": ["codex-finance"],
+  "baby-planning": ["codex-parenting"],
+  "parenting-child-development": ["codex-parenting"],
+  "job-search": ["codex-career"],
+  "career-change-transition": ["codex-career"],
+  "budget-planning": ["codex-finance"],
+  "personal-finance-investment": ["codex-finance"],
+  "fitness-journey": ["codex-health"],
+  "fitness-athletic-training": ["codex-health"]
 }
 
-// Function to get experts for a template
+// Function to get codex specialists for a template
 export function getTemplateExperts(templateId: string): ExpertBadge[] {
   const expertIds = templateExpertMapping[templateId] || []
   return expertIds
@@ -101,12 +102,12 @@ export function getTemplateExperts(templateId: string): ExpertBadge[] {
     .filter(Boolean)
 }
 
-// Function to get expert by ID
+// Function to get codex specialist by ID
 export function getExpert(expertId: string): ExpertBadge | null {
   return expertRegistry[expertId] || null
 }
 
-// Function to check if template is expert-verified
+// Function to check if template is codex-verified
 export function isTemplateExpertVerified(templateId: string): boolean {
   const experts = getTemplateExperts(templateId)
   return experts.length > 0 && experts.some(expert => expert.verified)

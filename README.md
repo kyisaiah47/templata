@@ -10,7 +10,7 @@ Life's biggest moments deserve more than task lists and empty templates. When pl
 
 Templata provides:
 - **Tons of reflection prompts** to guide your thinking
-- **Expert insights** from professionals with 15+ years of experience  
+- **Codex Engine insights** generated through specialized AI designed for life guidance  
 - **Comprehensive resources** covering every angle of your decision
 - **Guidance over gamification** - we help you think, not just do
 
@@ -93,7 +93,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **Icons**: Lucide React
 - **Theme System**: CSS custom properties with OKLCH color space + custom scrollbars
 - **State Management**: React Context API for template data
-- **Content**: Abundant reflection prompts and expert resources
+- **Content**: Abundant reflection prompts and Codex Engine resources
+
+## 🧠 The Codex Engine
+
+Templata's content is powered by the **Codex Engine** - a specialized AI system designed exclusively for life guidance. Unlike generic AI, the Codex Engine uses:
+
+- **Purpose-built intelligence** specifically trained for life decision-making scenarios
+- **Specialized prompt engineering** refined through multiple iterations for quality and depth
+- **Human oversight and curation** to ensure relevance and helpfulness
+- **Comprehensive coverage** generating 48+ unique prompts per life situation
+- **Thoughtful frameworks** designed for reflection rather than task completion
+
+Every template, prompt, and resource you see has been generated through carefully crafted AI intelligence, refined specifically for helping you navigate life's biggest decisions. [Learn more about the Codex Engine](/codex-engine).
 
 ## 🏗 New Guidance-Focused Architecture
 
@@ -139,7 +151,7 @@ Dual sidebar system inspired by modern email clients:
 ### Guidance-Focused Templates  
 Built around reflection and expert insights:
 - **48+ Reflection Prompts** per template with detailed help text
-- **Professional Expert Tips** from 15+ year veterans
+- **Codex Engine guidance** powered by specialized AI for thoughtful decision-making
 - **Comprehensive Resources** covering every angle
 - **Insertable Prompt System** - Add relevant prompts to any section
 - **No Task Gamification** - Focus on thinking, not checking boxes
