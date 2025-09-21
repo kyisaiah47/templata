@@ -161,15 +161,15 @@ export default function AboutPage() {
 							What if every life moment came with
 							<span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
 								{" "}
-								expert guidance
+								intelligent guidance
 							</span>
 							?
 						</h2>
 
 						<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
 							That&apos;s exactly what Templata provides. We&apos;ve taken the
-							complexity out of life&apos;s biggest moments by giving you proven
-							templates created by domain experts.
+							complexity out of life&apos;s biggest moments by giving you systematically
+							designed templates powered by specialized AI.
 						</p>
 					</div>
 
@@ -180,11 +180,11 @@ export default function AboutPage() {
 									<PenTool className="h-8 w-8 text-primary" />
 								</div>
 								<CardTitle className="text-xl">
-									Expert-Crafted Templates
+									Systematically Designed Templates
 								</CardTitle>
 								<CardDescription className="text-base">
-									Created by wedding planners, real estate agents, career
-									coaches, and other domain experts who know what you need to
+									Intelligently generated with specialized knowledge from wedding
+									planning, real estate, career coaching, and other domains to help you
 									succeed.
 								</CardDescription>
 							</CardHeader>

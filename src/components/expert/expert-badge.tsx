@@ -150,7 +150,7 @@ export function ExpertBadge({ expert, variant = "minimal", className }: ExpertBa
             </ExpertProfileDialog>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Expert: {expert.title}</p>
+            <p>Guide: {expert.title}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -208,7 +208,7 @@ export function ExpertBadge({ expert, variant = "minimal", className }: ExpertBa
                   {expert.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-xs">Expert: {expert.name}</span>
+              <span className="text-xs">Guide: {expert.name}</span>
               {expert.verified && (
                 <Verified className="w-3 h-3 ml-1 text-blue-500 fill-blue-500" />
               )}
@@ -256,7 +256,7 @@ export function ExpertBadgeList({
           ))}
           {remainingCount > 0 && (
             <Badge variant="outline" className="text-xs">
-              +{remainingCount} more expert{remainingCount > 1 ? 's' : ''}
+              +{remainingCount} more guide{remainingCount > 1 ? 's' : ''}
             </Badge>
           )}
         </div>

@@ -98,7 +98,7 @@ export default function LandingPage() {
 						</h1>
 
 						<p className="mx-auto max-w-2xl text-xl text-white">
-							Life shouldn&apos;t start with a blank page. Get expertly crafted
+							Life shouldn&apos;t start with a blank page. Get intelligently designed
 							templates that guide you through every step of your biggest moments.
 						</p>
 
@@ -153,7 +153,7 @@ export default function LandingPage() {
 								</h2>
 								<p className="text-xl text-muted-foreground">
 									From life planning to career changes, goal setting to starting a
-									business - we have expertly crafted templates for it all.
+									business - we have systematically generated templates for it all.
 								</p>
 							</div>
 
@@ -338,7 +338,7 @@ export default function LandingPage() {
 							Every template comes with
 							<br />
 							<span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-								expert frameworks
+								intelligent frameworks
 							</span>
 						</h2>
 
@@ -355,7 +355,7 @@ export default function LandingPage() {
 								</div>
 								<h3 className="text-xl font-semibold">Choose Template</h3>
 								<p className="text-muted-foreground">
-									Select from expertly crafted templates designed for
+									Select from purpose-built templates systematically designed for
 									your specific life moment or goal.
 								</p>
 							</div>
@@ -405,7 +405,7 @@ export default function LandingPage() {
 							</span>
 						</h2>
 						<p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-							Start free and upgrade as you grow. All plans include our expert
+							Start free and upgrade as you grow. All plans include our intelligent
 							guidance and step-by-step setup.
 						</p>
 					</div>

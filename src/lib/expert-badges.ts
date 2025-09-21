@@ -1,6 +1,6 @@
 "use client"
 
-// Codex Engine attribution system for templates
+// Axiom Engine attribution system for templates
 export interface ExpertBadge {
   id: string
   name: string
@@ -16,85 +16,85 @@ export interface ExpertBadge {
   templateCount?: number
 }
 
-// Codex Engine registry - specialized AI guidance attribution
+// Axiom Engine registry - specialized AI guidance attribution
 export const expertRegistry: Record<string, ExpertBadge> = {
-  "codex-wedding": {
-    id: "codex-wedding",
-    name: "Codex Engine",
+  "axiom-wedding": {
+    id: "axiom-wedding",
+    name: "Axiom Engine",
     title: "Wedding Planning Specialist",
     organization: "Templata AI",
     bio: "Specialized AI system trained specifically for wedding planning guidance. Generates comprehensive prompts and insights through advanced prompt engineering.",
     expertise: ["Wedding Planning", "Event Coordination", "Vendor Management"],
     credentials: ["AI-Generated Content", "Specialized Prompt Engineering", "Human-Curated Output"],
-    website: "/codex-engine",
+    website: "/axiom-engine",
     verified: true,
     templateCount: 12
   },
-  "codex-finance": {
-    id: "codex-finance",
-    name: "Codex Engine",
+  "axiom-finance": {
+    id: "axiom-finance",
+    name: "Axiom Engine",
     title: "Financial Planning Specialist",
     organization: "Templata AI",
     bio: "AI system designed for financial guidance and decision-making. Generates thoughtful prompts for budgeting, home buying, and investment planning.",
     expertise: ["Financial Planning", "Real Estate Investment", "Budget Management"],
     credentials: ["AI-Generated Content", "Financial Decision Framework", "Comprehensive Analysis"],
-    website: "/codex-engine",
+    website: "/axiom-engine",
     verified: true,
     templateCount: 8
   },
-  "codex-parenting": {
-    id: "codex-parenting",
-    name: "Codex Engine",
+  "axiom-parenting": {
+    id: "axiom-parenting",
+    name: "Axiom Engine",
     title: "Parenting & Development Specialist",
     organization: "Templata AI",
     bio: "Specialized AI for parenting guidance and child development planning. Creates comprehensive reflection prompts for family decisions.",
     expertise: ["Parenting Guidance", "Child Development", "Family Planning"],
     credentials: ["AI-Generated Content", "Family Decision Framework", "Development Planning"],
-    website: "/codex-engine",
+    website: "/axiom-engine",
     verified: true,
     templateCount: 6
   },
-  "codex-career": {
-    id: "codex-career",
-    name: "Codex Engine",
+  "axiom-career": {
+    id: "axiom-career",
+    name: "Axiom Engine",
     title: "Career Development Specialist",
     organization: "Templata AI",
     bio: "AI system focused on career guidance and professional development. Generates strategic prompts for job searches and career transitions.",
     expertise: ["Career Development", "Job Search Strategy", "Professional Growth"],
     credentials: ["AI-Generated Content", "Career Decision Framework", "Strategic Planning"],
-    website: "/codex-engine",
+    website: "/axiom-engine",
     verified: true,
     templateCount: 10
   },
-  "codex-health": {
-    id: "codex-health",
-    name: "Codex Engine",
+  "axiom-health": {
+    id: "axiom-health",
+    name: "Axiom Engine",
     title: "Health & Wellness Specialist",
     organization: "Templata AI",
     bio: "Specialized AI for health and fitness guidance. Creates comprehensive frameworks for wellness planning and health decisions.",
     expertise: ["Health Planning", "Fitness Strategy", "Wellness Decisions"],
     credentials: ["AI-Generated Content", "Health Decision Framework", "Wellness Planning"],
-    website: "/codex-engine",
+    website: "/axiom-engine",
     verified: true,
     templateCount: 4
   }
 }
 
-// Template-to-codex mapping
+// Template-to-axiom mapping
 export const templateExpertMapping: Record<string, string[]> = {
-  "wedding-planning": ["codex-wedding"],
-  "home-buying": ["codex-finance"],
-  "baby-planning": ["codex-parenting"],
-  "parenting-child-development": ["codex-parenting"],
-  "job-search": ["codex-career"],
-  "career-change-transition": ["codex-career"],
-  "budget-planning": ["codex-finance"],
-  "personal-finance-investment": ["codex-finance"],
-  "fitness-journey": ["codex-health"],
-  "fitness-athletic-training": ["codex-health"]
+  "wedding-planning": ["axiom-wedding"],
+  "home-buying": ["axiom-finance"],
+  "baby-planning": ["axiom-parenting"],
+  "parenting-child-development": ["axiom-parenting"],
+  "job-search": ["axiom-career"],
+  "career-change-transition": ["axiom-career"],
+  "budget-planning": ["axiom-finance"],
+  "personal-finance-investment": ["axiom-finance"],
+  "fitness-journey": ["axiom-health"],
+  "fitness-athletic-training": ["axiom-health"]
 }
 
-// Function to get codex specialists for a template
+// Function to get axiom specialists for a template
 export function getTemplateExperts(templateId: string): ExpertBadge[] {
   const expertIds = templateExpertMapping[templateId] || []
   return expertIds
@@ -102,12 +102,12 @@ export function getTemplateExperts(templateId: string): ExpertBadge[] {
     .filter(Boolean)
 }
 
-// Function to get codex specialist by ID
+// Function to get axiom specialist by ID
 export function getExpert(expertId: string): ExpertBadge | null {
   return expertRegistry[expertId] || null
 }
 
-// Function to check if template is codex-verified
+// Function to check if template is axiom-verified
 export function isTemplateExpertVerified(templateId: string): boolean {
   const experts = getTemplateExperts(templateId)
   return experts.length > 0 && experts.some(expert => expert.verified)

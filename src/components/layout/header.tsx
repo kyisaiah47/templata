@@ -143,13 +143,13 @@ export function Header() {
 									<NavigationMenuItem>
 										<NavigationMenuLink asChild>
 											<Link
-												href="/codex-engine"
+												href="/axiom-engine"
 												className={cn(
 											"text-base font-medium px-4 py-2 rounded-md",
 											isHomePage && "hover:bg-transparent focus:bg-transparent data-[active=true]:hover:bg-transparent data-[active=true]:focus:bg-transparent"
 										)}
 											>
-												Codex Engine
+												Axiom Engine
 											</Link>
 										</NavigationMenuLink>
 									</NavigationMenuItem>
