@@ -1,67 +1,30 @@
-/* Drag Handle Styles */
+/* TipTap Official Drag Handle Styles */
 .simple-editor-content {
   position: relative;
 
-  /* Block hover effects */
   .ProseMirror {
+    /* Minimal spacing between blocks */
     p, h1, h2, h3, h4, h5, h6, blockquote, pre, li {
       position: relative;
-      transition: all 0.15s ease;
       border-radius: 6px;
-      margin: 4px 0;
-      padding: 8px 12px 8px 60px;
+      margin: 0;
+      padding: 8px 12px;
       min-height: 1.5em;
 
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.03);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      /* Prevent text selection during drag */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
 
-        .dark & {
-          background-color: rgba(255, 255, 255, 0.03);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        &::before {
-          content: '⋮⋮';
-          position: absolute;
-          left: 12px;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 16px;
-          height: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 12px;
-          color: #666;
-          cursor: grab;
-          z-index: 10;
-          border-radius: 3px;
-          background: rgba(0,0,0,0.1);
-        }
-
-        &::after {
-          content: '+';
-          position: absolute;
-          left: 32px;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 16px;
-          height: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 14px;
-          color: #666;
-          cursor: pointer;
-          z-index: 10;
-          border-radius: 3px;
-          background: rgba(0,0,0,0.1);
-        }
+      /* Re-enable text selection when not dragging */
+      &:not(.ProseMirror-dragging) {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
       }
-
     }
-
 
     /* Active block indicator */
     .ProseMirror-focused {
@@ -77,6 +40,56 @@
           background-color: transparent !important;
         }
       }
+    }
+
+    /* Hide tooltips during drag */
+    .ProseMirror-dragging {
+      * {
+        pointer-events: none !important;
+      }
+    }
+  }
+}
+
+/* Official TipTap Drag Handle Styling */
+.drag-handle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: rgba(55, 53, 47, 0.08);
+  border: none;
+  border-radius: 3px;
+  color: rgba(55, 53, 47, 0.6);
+  cursor: grab;
+  font-size: 10px;
+  user-select: none;
+  transition: all 0.1s ease;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+
+  &:hover {
+    background: rgba(55, 53, 47, 0.12);
+    color: rgba(55, 53, 47, 0.8);
+  }
+
+  &:active {
+    cursor: grabbing;
+    background: rgba(55, 53, 47, 0.16);
+  }
+
+  .dark & {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.14);
     }
   }
 }

@@ -13,6 +13,7 @@ import { Highlight } from "@tiptap/extension-highlight"
 import { Subscript } from "@tiptap/extension-subscript"
 import { Superscript } from "@tiptap/extension-superscript"
 import { Selection } from "@tiptap/extensions"
+import { DragHandle } from "@tiptap/extension-drag-handle-react"
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button"
@@ -58,6 +59,7 @@ import { UndoRedoButton } from "@/components/tiptap-ui/undo-redo-button"
 import { SlashCommand } from "@/components/tiptap-ui/slash-command/slash-command"
 import { SimpleDragHandle } from "@/components/tiptap-ui/drag-handle/simple-drag-handle"
 import { FloatingToolbar } from "@/components/tiptap-ui/floating-toolbar/floating-toolbar"
+import { BlockWrapper } from "@/components/tiptap-ui/block-wrapper/block-wrapper"
 
 // --- Icons ---
 import { ArrowLeftIcon } from "@/components/tiptap-icons/arrow-left-icon"
@@ -327,6 +329,14 @@ export function SimpleEditor({ content = "", onUpdate, onSwitchMode, templateId 
           />
         )}
 
+        {/* Drag Handle */}
+        {editor && (
+          <DragHandle editor={editor}>
+            <div className="drag-handle-icon">
+              ⋮⋮
+            </div>
+          </DragHandle>
+        )}
 
         {/* Floating Toolbar */}
         {editor && (
@@ -334,6 +344,7 @@ export function SimpleEditor({ content = "", onUpdate, onSwitchMode, templateId 
             editor={editor}
           />
         )}
+
       </EditorContext.Provider>
     </div>
   )
