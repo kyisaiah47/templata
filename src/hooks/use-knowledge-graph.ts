@@ -7,9 +7,17 @@ import {
   getRelatedTemplates,
   getConflictingTemplates,
   getPersonalizedRecommendations,
+  getRelatedArticles,
+  getArticlesForTemplate,
+  getRelatedPrompts,
+  getPromptsForTemplate,
+  getCrossRecommendations,
   type TemplateRelationships,
   type UserRecommendation,
-  type AnalysisReport
+  type AnalysisReport,
+  type ArticleConnection,
+  type PromptConnection,
+  type CrossConnection
 } from '@/lib/knowledge-graph';
 
 // User profile interface
@@ -67,6 +75,13 @@ export interface UseKnowledgeGraphReturn {
   // Utility functions
   isTemplateRecommended: (templateId: string, userProfile: UserProfile) => boolean;
   getTemplateStrength: (template1: string, template2: string) => number;
+
+  // Article and prompt recommendations
+  getRelatedArticles: (articleId: string, limit?: number) => ArticleConnection[];
+  getArticlesForTemplate: (templateId: string, limit?: number) => ArticleConnection[];
+  getRelatedPrompts: (promptId: string, limit?: number) => PromptConnection[];
+  getPromptsForTemplate: (templateId: string, limit?: number) => PromptConnection[];
+  getCrossRecommendations: (contentType: 'template' | 'article' | 'prompt', contentId: string) => CrossConnection[];
 }
 
 export function useKnowledgeGraph(): UseKnowledgeGraphReturn {
@@ -271,6 +286,13 @@ export function useKnowledgeGraph(): UseKnowledgeGraphReturn {
     // Utility functions
     isTemplateRecommended,
     getTemplateStrength,
+
+    // Article and prompt recommendations
+    getRelatedArticles,
+    getArticlesForTemplate,
+    getRelatedPrompts,
+    getPromptsForTemplate,
+    getCrossRecommendations,
   }), [
     getTemplateRelationshipsSafe,
     getRelatedTemplatesMemo,

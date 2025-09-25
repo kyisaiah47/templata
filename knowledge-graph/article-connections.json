@@ -1,0 +1,153 @@
+{
+  "home-buying-guide": {
+    "related_articles": [
+      { "id": "mortgage-basics", "strength": 95, "reason": "Essential financial preparation" },
+      { "id": "credit-score-improvement", "strength": 90, "reason": "Critical for loan approval" },
+      { "id": "real-estate-market-trends", "strength": 85, "reason": "Market timing insights" },
+      { "id": "home-inspection-checklist", "strength": 80, "reason": "Due diligence process" }
+    ],
+    "related_templates": [
+      { "id": "home-buying", "strength": 100, "reason": "Direct template connection" },
+      { "id": "personal-finance", "strength": 90, "reason": "Financial planning required" },
+      { "id": "moving-relocation", "strength": 75, "reason": "Follows home purchase" }
+    ],
+    "related_prompts": [
+      { "id": "budget-calculator", "strength": 95, "reason": "Calculate affordability" },
+      { "id": "neighborhood-research", "strength": 85, "reason": "Location analysis" },
+      { "id": "mortgage-comparison", "strength": 90, "reason": "Loan options" }
+    ]
+  },
+
+  "wedding-planning-timeline": {
+    "related_articles": [
+      { "id": "wedding-budget-breakdown", "strength": 95, "reason": "Budget planning essential" },
+      { "id": "venue-selection-guide", "strength": 90, "reason": "Major planning component" },
+      { "id": "wedding-vendor-tips", "strength": 85, "reason": "Vendor management" },
+      { "id": "honeymoon-planning", "strength": 70, "reason": "Post-wedding planning" }
+    ],
+    "related_templates": [
+      { "id": "wedding-planning", "strength": 100, "reason": "Direct template connection" },
+      { "id": "personal-finance", "strength": 80, "reason": "Budget management" },
+      { "id": "event-planning", "strength": 75, "reason": "Similar planning skills" }
+    ],
+    "related_prompts": [
+      { "id": "guest-list-optimizer", "strength": 90, "reason": "Guest management" },
+      { "id": "vendor-comparison", "strength": 85, "reason": "Vendor selection" },
+      { "id": "timeline-planner", "strength": 95, "reason": "Schedule coordination" }
+    ]
+  },
+
+  "career-change-strategies": {
+    "related_articles": [
+      { "id": "resume-writing-tips", "strength": 90, "reason": "Job application essentials" },
+      { "id": "interview-preparation", "strength": 85, "reason": "Interview success" },
+      { "id": "networking-strategies", "strength": 80, "reason": "Career connections" },
+      { "id": "salary-negotiation", "strength": 75, "reason": "Compensation planning" }
+    ],
+    "related_templates": [
+      { "id": "career-change", "strength": 100, "reason": "Direct template connection" },
+      { "id": "job-search", "strength": 90, "reason": "Job hunting process" },
+      { "id": "skill-development", "strength": 80, "reason": "Capability building" }
+    ],
+    "related_prompts": [
+      { "id": "career-assessment", "strength": 95, "reason": "Self-evaluation" },
+      { "id": "industry-research", "strength": 85, "reason": "Market analysis" },
+      { "id": "skill-gap-analysis", "strength": 80, "reason": "Development planning" }
+    ]
+  },
+
+  "startup-funding-guide": {
+    "related_articles": [
+      { "id": "business-plan-essentials", "strength": 95, "reason": "Investor requirements" },
+      { "id": "pitch-deck-creation", "strength": 90, "reason": "Presentation materials" },
+      { "id": "investor-relations", "strength": 85, "reason": "Ongoing communication" },
+      { "id": "equity-distribution", "strength": 80, "reason": "Ownership planning" }
+    ],
+    "related_templates": [
+      { "id": "business-launch", "strength": 95, "reason": "Startup planning" },
+      { "id": "saas-startup", "strength": 90, "reason": "Tech startup focus" },
+      { "id": "personal-finance", "strength": 75, "reason": "Financial planning" }
+    ],
+    "related_prompts": [
+      { "id": "funding-calculator", "strength": 95, "reason": "Capital requirements" },
+      { "id": "investor-matcher", "strength": 85, "reason": "Investor targeting" },
+      { "id": "valuation-estimator", "strength": 80, "reason": "Company valuation" }
+    ]
+  },
+
+  "divorce-recovery-guide": {
+    "related_articles": [
+      { "id": "co-parenting-strategies", "strength": 90, "reason": "Child custody planning" },
+      { "id": "financial-separation", "strength": 85, "reason": "Asset division" },
+      { "id": "emotional-healing", "strength": 80, "reason": "Mental health support" },
+      { "id": "single-parent-tips", "strength": 75, "reason": "Solo parenting" }
+    ],
+    "related_templates": [
+      { "id": "divorce-coordination", "strength": 100, "reason": "Direct template connection" },
+      { "id": "personal-finance", "strength": 85, "reason": "Financial restructuring" },
+      { "id": "mental-health-support", "strength": 80, "reason": "Emotional support" }
+    ],
+    "related_prompts": [
+      { "id": "asset-division-calculator", "strength": 90, "reason": "Property splitting" },
+      { "id": "co-parenting-scheduler", "strength": 85, "reason": "Custody coordination" },
+      { "id": "support-group-finder", "strength": 75, "reason": "Community support" }
+    ]
+  },
+
+  "retirement-planning-basics": {
+    "related_articles": [
+      { "id": "401k-optimization", "strength": 95, "reason": "Retirement savings" },
+      { "id": "social-security-planning", "strength": 90, "reason": "Government benefits" },
+      { "id": "healthcare-in-retirement", "strength": 85, "reason": "Medical planning" },
+      { "id": "estate-planning-basics", "strength": 80, "reason": "Legacy planning" }
+    ],
+    "related_templates": [
+      { "id": "retirement-planning", "strength": 100, "reason": "Direct template connection" },
+      { "id": "personal-finance", "strength": 90, "reason": "Financial planning" },
+      { "id": "estate-planning", "strength": 80, "reason": "Inheritance planning" }
+    ],
+    "related_prompts": [
+      { "id": "retirement-calculator", "strength": 95, "reason": "Savings requirements" },
+      { "id": "withdrawal-planner", "strength": 85, "reason": "Income planning" },
+      { "id": "healthcare-estimator", "strength": 80, "reason": "Medical costs" }
+    ]
+  },
+
+  "fitness-goal-setting": {
+    "related_articles": [
+      { "id": "workout-planning", "strength": 90, "reason": "Exercise programming" },
+      { "id": "nutrition-basics", "strength": 85, "reason": "Diet planning" },
+      { "id": "habit-formation", "strength": 80, "reason": "Behavior change" },
+      { "id": "injury-prevention", "strength": 75, "reason": "Safe training" }
+    ],
+    "related_templates": [
+      { "id": "fitness-journey", "strength": 100, "reason": "Direct template connection" },
+      { "id": "habit-tracking", "strength": 85, "reason": "Routine building" },
+      { "id": "meal-planning", "strength": 80, "reason": "Nutrition support" }
+    ],
+    "related_prompts": [
+      { "id": "workout-generator", "strength": 90, "reason": "Exercise routines" },
+      { "id": "progress-tracker", "strength": 85, "reason": "Goal monitoring" },
+      { "id": "nutrition-planner", "strength": 80, "reason": "Meal planning" }
+    ]
+  },
+
+  "college-selection-guide": {
+    "related_articles": [
+      { "id": "financial-aid-strategies", "strength": 95, "reason": "Funding education" },
+      { "id": "campus-visit-tips", "strength": 85, "reason": "School evaluation" },
+      { "id": "application-essay-writing", "strength": 80, "reason": "Admission process" },
+      { "id": "student-loan-planning", "strength": 90, "reason": "Education financing" }
+    ],
+    "related_templates": [
+      { "id": "college-planning", "strength": 100, "reason": "Direct template connection" },
+      { "id": "personal-finance", "strength": 85, "reason": "Education budgeting" },
+      { "id": "student-loan-strategy", "strength": 90, "reason": "Debt planning" }
+    ],
+    "related_prompts": [
+      { "id": "college-matcher", "strength": 90, "reason": "School recommendations" },
+      { "id": "cost-calculator", "strength": 95, "reason": "Financial planning" },
+      { "id": "application-tracker", "strength": 85, "reason": "Deadline management" }
+    ]
+  }
+}

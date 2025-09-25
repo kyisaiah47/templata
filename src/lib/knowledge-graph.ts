@@ -7,6 +7,8 @@ import microClustersData from '../../knowledge-graph/micro-clusters.json';
 import advancedConnectionsData from '../../knowledge-graph/advanced-connections.json';
 import lifeSequencesData from '../../knowledge-graph/life-sequences-detailed.json';
 import contextualPromptsData from '../../knowledge-graph/context-specific-prompts.json';
+import articleConnectionsData from '../../knowledge-graph/article-connections.json';
+import promptConnectionsData from '../../knowledge-graph/prompt-connections.json';
 
 // TypeScript interfaces
 export interface TemplateConnection {
@@ -44,6 +46,26 @@ export interface TemplateRelationships {
   weighted_connections: TemplateConnection[];
   negative_connections: ConflictConnection[];
   total_relationship_strength: number;
+}
+
+// New interfaces for articles and prompts
+export interface ArticleConnection {
+  id: string;
+  strength: number;
+  reason: string;
+}
+
+export interface PromptConnection {
+  id: string;
+  strength: number;
+  reason: string;
+}
+
+export interface CrossConnection {
+  type: 'template' | 'article' | 'prompt';
+  id: string;
+  strength: number;
+  reason: string;
 }
 
 export interface UserRecommendation {
@@ -393,4 +415,143 @@ export const getPersonalizedRecommendations = (userProfile: {
 
   // Filter out current templates
   return ageRecs.filter(rec => !currentTemplates.includes(rec.templateId));
+};
+
+// Article recommendation functions
+export const getRelatedArticles = (articleId: string, limit: number = 4): ArticleConnection[] => {
+  const articleData = (articleConnectionsData as any)[articleId];
+  if (!articleData?.related_articles) return [];
+
+  return articleData.related_articles.slice(0, limit);
+};
+
+export const getArticlesForTemplate = (templateId: string, limit: number = 4): ArticleConnection[] => {
+  const articles: ArticleConnection[] = [];
+
+  // Find articles that reference this template
+  Object.entries(articleConnectionsData as any).forEach(([articleId, data]: [string, any]) => {
+    if (data.related_templates) {
+      const templateMatch = data.related_templates.find((t: any) => t.id === templateId);
+      if (templateMatch) {
+        articles.push({
+          id: articleId,
+          strength: templateMatch.strength,
+          reason: templateMatch.reason
+        });
+      }
+    }
+  });
+
+  return articles.sort((a, b) => b.strength - a.strength).slice(0, limit);
+};
+
+// Prompt recommendation functions
+export const getRelatedPrompts = (promptId: string, limit: number = 4): PromptConnection[] => {
+  const promptData = (promptConnectionsData as any)[promptId];
+  if (!promptData?.related_prompts) return [];
+
+  return promptData.related_prompts.slice(0, limit);
+};
+
+export const getPromptsForTemplate = (templateId: string, limit: number = 4): PromptConnection[] => {
+  const prompts: PromptConnection[] = [];
+
+  // Find prompts that reference this template
+  Object.entries(promptConnectionsData as any).forEach(([promptId, data]: [string, any]) => {
+    if (data.related_templates) {
+      const templateMatch = data.related_templates.find((t: any) => t.id === templateId);
+      if (templateMatch) {
+        prompts.push({
+          id: promptId,
+          strength: templateMatch.strength,
+          reason: templateMatch.reason
+        });
+      }
+    }
+  });
+
+  return prompts.sort((a, b) => b.strength - a.strength).slice(0, limit);
+};
+
+// Cross-content recommendations
+export const getCrossRecommendations = (contentType: 'template' | 'article' | 'prompt', contentId: string): CrossConnection[] => {
+  const recommendations: CrossConnection[] = [];
+
+  switch (contentType) {
+    case 'template':
+      // Get related articles for this template
+      const relatedArticles = getArticlesForTemplate(contentId, 3);
+      relatedArticles.forEach(article => {
+        recommendations.push({
+          type: 'article',
+          id: article.id,
+          strength: article.strength,
+          reason: article.reason
+        });
+      });
+
+      // Get related prompts for this template
+      const relatedPrompts = getPromptsForTemplate(contentId, 3);
+      relatedPrompts.forEach(prompt => {
+        recommendations.push({
+          type: 'prompt',
+          id: prompt.id,
+          strength: prompt.strength,
+          reason: prompt.reason
+        });
+      });
+      break;
+
+    case 'article':
+      // Get related templates and prompts for this article
+      const articleData = (articleConnectionsData as any)[contentId];
+      if (articleData?.related_templates) {
+        articleData.related_templates.slice(0, 3).forEach((template: any) => {
+          recommendations.push({
+            type: 'template',
+            id: template.id,
+            strength: template.strength,
+            reason: template.reason
+          });
+        });
+      }
+      if (articleData?.related_prompts) {
+        articleData.related_prompts.slice(0, 3).forEach((prompt: any) => {
+          recommendations.push({
+            type: 'prompt',
+            id: prompt.id,
+            strength: prompt.strength,
+            reason: prompt.reason
+          });
+        });
+      }
+      break;
+
+    case 'prompt':
+      // Get related templates and articles for this prompt
+      const promptData = (promptConnectionsData as any)[contentId];
+      if (promptData?.related_templates) {
+        promptData.related_templates.slice(0, 3).forEach((template: any) => {
+          recommendations.push({
+            type: 'template',
+            id: template.id,
+            strength: template.strength,
+            reason: template.reason
+          });
+        });
+      }
+      if (promptData?.related_articles) {
+        promptData.related_articles.slice(0, 3).forEach((article: any) => {
+          recommendations.push({
+            type: 'article',
+            id: article.id,
+            strength: article.strength,
+            reason: article.reason
+          });
+        });
+      }
+      break;
+  }
+
+  return recommendations.sort((a, b) => b.strength - a.strength);
 };

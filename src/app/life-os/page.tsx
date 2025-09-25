@@ -21,7 +21,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { ContextualPrompts } from "@/components/knowledge-graph/ContextualPrompts"
 import {
   Brain,
   AlertTriangle,
@@ -198,32 +197,26 @@ function RecommendationsWidget() {
   )
 }
 
-function ContextualPromptsWidget({ activeTemplates, userProfile }: {
-  activeTemplates: string[];
-  userProfile: any;
-}) {
-  const handlePromptAction = (action: string, promptId: string, data?: any) => {
-    console.log('Prompt action:', action, promptId, data);
-    // Here you would handle the specific action
-    // e.g., navigate to template, open modal, etc.
-  };
-
-  const handlePromptDismiss = (promptId: string) => {
-    console.log('Dismissed prompt:', promptId);
-    // Handle dismissing prompts (e.g., save to user preferences)
-  };
-
+function SimpleTemplateOverview({ activeTemplates }: { activeTemplates: string[] }) {
   return (
-    <div className="md:col-span-2">
-      <ContextualPrompts
-        activeTemplates={activeTemplates}
-        userProfile={userProfile}
-        variant="full"
-        maxPrompts={4}
-        onPromptAction={handlePromptAction}
-        onPromptDismiss={handlePromptDismiss}
-      />
-    </div>
+    <Card className="md:col-span-2">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Brain className="w-5 h-5 text-indigo-500" />
+          Active Templates
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-3">
+          {activeTemplates.map(templateId => (
+            <div key={templateId} className="flex items-center justify-between p-3 rounded-lg border">
+              <span className="font-medium">{templateId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>
+              <Badge variant="secondary">Active</Badge>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -271,10 +264,7 @@ export default function LifeOSPage() {
 
           {/* Bottom Row - Cross-Template Intelligence */}
           <div className="grid gap-6 md:grid-cols-3">
-            <ContextualPromptsWidget
-              activeTemplates={MOCK_ACTIVE_TEMPLATES}
-              userProfile={MOCK_USER_PROFILE}
-            />
+            <SimpleTemplateOverview activeTemplates={MOCK_ACTIVE_TEMPLATES} />
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Next Actions</CardTitle>
