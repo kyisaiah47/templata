@@ -55,6 +55,9 @@ import {
 import { MarkButton } from "@/components/tiptap-ui/mark-button"
 import { TextAlignButton } from "@/components/tiptap-ui/text-align-button"
 import { UndoRedoButton } from "@/components/tiptap-ui/undo-redo-button"
+import { SlashCommand } from "@/components/tiptap-ui/slash-command/slash-command"
+import { SimpleDragHandle } from "@/components/tiptap-ui/drag-handle/simple-drag-handle"
+import { FloatingToolbar } from "@/components/tiptap-ui/floating-toolbar/floating-toolbar"
 
 // --- Icons ---
 import { ArrowLeftIcon } from "@/components/tiptap-icons/arrow-left-icon"
@@ -70,9 +73,11 @@ import { useCursorVisibility } from "@/hooks/use-cursor-visibility"
 
 // --- Lib ---
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
+import { getPromptsByTemplate } from "@/registry/prompts"
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss"
+import "@/components/tiptap-ui/drag-handle/drag-handle.scss"
 
 // import content from "@/components/tiptap-templates/simple/data/content.json"
 
@@ -187,9 +192,10 @@ interface SimpleEditorProps {
   content?: string | object;
   onUpdate?: (content: string) => void;
   onSwitchMode?: (mode: 'template' | 'reflection' | 'master') => void;
+  templateId?: string;
 }
 
-export function SimpleEditor({ content = "", onUpdate, onSwitchMode }: SimpleEditorProps = {}) {
+export function SimpleEditor({ content = "", onUpdate, onSwitchMode, templateId }: SimpleEditorProps = {}) {
   const isMobile = useIsMobile()
   const { height } = useWindowSize()
   const [mobileView, setMobileView] = React.useState<
@@ -257,6 +263,18 @@ export function SimpleEditor({ content = "", onUpdate, onSwitchMode }: SimpleEdi
     }
   }, [isMobile, mobileView])
 
+  // Get prompts for slash command
+  const prompts = React.useMemo(() => {
+    if (!templateId) return []
+    const templatePrompts = getPromptsByTemplate(templateId)
+    return templatePrompts.map(p => ({
+      id: p.id,
+      prompt: p.prompt,
+      category: p.category,
+      helpText: p.helpText
+    }))
+  }, [templateId])
+
   // Expose editor globally for prompt insertion
   React.useEffect(() => {
     if (editor) {
@@ -300,6 +318,22 @@ export function SimpleEditor({ content = "", onUpdate, onSwitchMode }: SimpleEdi
           role="presentation"
           className="simple-editor-content"
         />
+
+        {/* Slash Command Menu */}
+        {editor && (
+          <SlashCommand
+            editor={editor}
+            prompts={prompts}
+          />
+        )}
+
+
+        {/* Floating Toolbar */}
+        {editor && (
+          <FloatingToolbar
+            editor={editor}
+          />
+        )}
       </EditorContext.Provider>
     </div>
   )

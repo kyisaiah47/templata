@@ -131,7 +131,9 @@
       "Bash(./simple-prompt-generation.sh:*)",
       "Bash(./batch-prompt-generation.sh:*)",
       "Bash(rm:*)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "WebFetch(domain:tiptap.dev)",
+      "Bash(npx @tiptap/cli@latest:*)"
     ],
     "deny": [],
     "ask": []

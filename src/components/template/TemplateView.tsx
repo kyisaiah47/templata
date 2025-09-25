@@ -347,27 +347,27 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
                 )}
               </div>
             </header>
-            {/* Always-Visible Prism Background */}
-            <div className="absolute inset-0 rounded-lg overflow-hidden">
-              <Prism
-                height={3.5}
-                baseWidth={5.5}
-                animationType="rotate"
-                glow={0.8}
-                noise={0.3}
-                transparent={true}
-                scale={2.8}
-                hueShift={0.5}
-                colorFrequency={1.2}
-                timeScale={0.3}
-                suspendWhenOffscreen={true}
-              />
-            </div>
 
             {/* Simple Editor with Prism Background */}
-            <div className="relative z-10 transparent-editor">
+            <div className="relative z-10 transparent-editor h-full">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <Prism
+                  height={3.5}
+                  baseWidth={5.5}
+                  animationType="rotate"
+                  glow={0.8}
+                  noise={0.3}
+                  transparent={true}
+                  scale={2.8}
+                  hueShift={0.5}
+                  colorFrequency={1.2}
+                  timeScale={0.3}
+                  suspendWhenOffscreen={true}
+                />
+              </div>
               <SimpleEditor
                 content=""
+                templateId={template.id}
                 onUpdate={(content) => {
                   console.log('Content updated:', content)
                 }}

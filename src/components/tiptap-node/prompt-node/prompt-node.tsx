@@ -46,7 +46,7 @@ export const PromptNode: React.FC<PromptNodeProps> = ({
         }}
       >
         <motion.div
-          className="relative bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5 backdrop-blur-md border border-white/10 rounded-xl p-3 my-3 shadow-lg shadow-black/5"
+          className="relative bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5 backdrop-blur-md border border-white/10 rounded-xl p-2 my-2 shadow-lg shadow-black/5"
         >
           {/* Subtle glow effect */}
           <motion.div
