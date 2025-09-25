@@ -1,0 +1,341 @@
+{
+  "semantic_clusters": {
+    "young_adult_foundation": {
+      "templates": [
+        "college-selection",
+        "job-search",
+        "apartment-hunting",
+        "first-serious-relationship",
+        "first-job-transition",
+        "roommate-navigation",
+        "student-loan-strategy",
+        "quarter-life-crisis"
+      ],
+      "reasoning": "Core decisions young adults make when establishing independence and identity"
+    },
+    "financial_security_building": {
+      "templates": [
+        "personal-finance",
+        "debt-payoff",
+        "investment-portfolio",
+        "personal-finance-mastery",
+        "investing-finance",
+        "crypto-portfolio",
+        "stock-trading",
+        "insurance-optimization"
+      ],
+      "reasoning": "Progressive financial planning and wealth building across life stages"
+    },
+    "family_life_transitions": {
+      "templates": [
+        "first-serious-relationship",
+        "wedding-planning",
+        "home-buying",
+        "baby-planning",
+        "first-time-parent",
+        "marriage-maintenance",
+        "parenting-guidance",
+        "caring-for-aging-parents",
+        "sandwich-generation"
+      ],
+      "reasoning": "Major family formation and relationship decisions that shape life structure"
+    },
+    "career_development_path": {
+      "templates": [
+        "job-search",
+        "early-career-advancement",
+        "skill-development",
+        "career-plateau",
+        "first-management-role",
+        "executive-leadership-transition",
+        "professional-networking",
+        "public-speaking"
+      ],
+      "reasoning": "Professional growth and career advancement decisions"
+    },
+    "entrepreneurship_business": {
+      "templates": [
+        "business-launch",
+        "freelance-business",
+        "side-hustle-development",
+        "online-business-launch",
+        "content-creation-business",
+        "coaching-business",
+        "consulting-business",
+        "tech-startup-guide",
+        "saas-startup",
+        "small-business-launch"
+      ],
+      "reasoning": "Building and running businesses across different models and stages"
+    },
+    "health_wellness_journey": {
+      "templates": [
+        "mental-health",
+        "fitness-journey",
+        "weight-loss",
+        "meditation-journey",
+        "mindfulness-meditation",
+        "yoga-practice",
+        "marathon-training",
+        "habit-tracking",
+        "stress-management"
+      ],
+      "reasoning": "Physical and mental health optimization and wellness maintenance"
+    },
+    "major_life_crises": {
+      "templates": [
+        "divorce-coordination",
+        "job-loss-recovery",
+        "grief-loss",
+        "health-crisis-management",
+        "bankruptcy-recovery",
+        "addiction-recovery",
+        "midlife-crisis",
+        "natural-disaster-recovery"
+      ],
+      "reasoning": "Navigating significant life disruptions and recovery processes"
+    },
+    "creative_expression": {
+      "templates": [
+        "creative-writing",
+        "art-portfolio",
+        "music-production",
+        "photography-business",
+        "fashion-design",
+        "content-creation",
+        "youtube-channel",
+        "podcast-creation"
+      ],
+      "reasoning": "Artistic and creative pursuits for expression and potential income"
+    },
+    "retirement_aging": {
+      "templates": [
+        "retirement-planning",
+        "retirement-transition",
+        "retirement-lifestyle",
+        "elder-care",
+        "end-of-life-planning",
+        "estate-planning",
+        "fixed-income-management",
+        "downsizing-decisions"
+      ],
+      "reasoning": "Later-life planning and aging-related decisions"
+    },
+    "housing_location": {
+      "templates": [
+        "apartment-hunting",
+        "home-buying",
+        "moving-relocation",
+        "geographic-relocation",
+        "mortgage-management",
+        "home-renovation",
+        "rental-management",
+        "real-estate-investing"
+      ],
+      "reasoning": "Housing and location decisions that affect life stability"
+    }
+  },
+  "cross_connections": {
+    "home-buying": {
+      "strongly_connected": [
+        "mortgage-management",
+        "personal-finance",
+        "wedding-planning",
+        "baby-planning",
+        "job-search"
+      ],
+      "reasoning": "Home buying requires financial stability, often coincides with relationship milestones, and affects job location flexibility"
+    },
+    "wedding-planning": {
+      "strongly_connected": [
+        "personal-finance",
+        "home-buying",
+        "baby-planning",
+        "relationship-therapy",
+        "event-planning"
+      ],
+      "reasoning": "Wedding planning involves major financial decisions and often leads to other life changes like housing and children"
+    },
+    "job-search": {
+      "strongly_connected": [
+        "apartment-hunting",
+        "skill-development",
+        "career-plateau",
+        "personal-finance",
+        "geographic-relocation"
+      ],
+      "reasoning": "Job changes affect location, income, and require skill development"
+    },
+    "baby-planning": {
+      "strongly_connected": [
+        "personal-finance",
+        "home-buying",
+        "wedding-planning",
+        "first-time-parent",
+        "parenting-guidance"
+      ],
+      "reasoning": "Having children requires financial planning, housing considerations, and relationship stability"
+    },
+    "divorce-coordination": {
+      "strongly_connected": [
+        "personal-finance",
+        "apartment-hunting",
+        "legal-issue-management",
+        "mental-health",
+        "parenting-guidance"
+      ],
+      "reasoning": "Divorce affects finances, housing, legal matters, mental health, and children"
+    },
+    "retirement-planning": {
+      "strongly_connected": [
+        "investment-portfolio",
+        "estate-planning",
+        "health-crisis-management",
+        "downsizing-decisions",
+        "elder-care"
+      ],
+      "reasoning": "Retirement involves financial planning, health considerations, and lifestyle changes"
+    },
+    "business-launch": {
+      "strongly_connected": [
+        "personal-finance",
+        "freelance-business",
+        "skill-development",
+        "legal-issue-management",
+        "stress-management"
+      ],
+      "reasoning": "Starting a business requires financial planning, skills, legal setup, and stress management"
+    },
+    "mental-health": {
+      "strongly_connected": [
+        "relationship-therapy",
+        "stress-management",
+        "addiction-recovery",
+        "job-search",
+        "divorce-coordination"
+      ],
+      "reasoning": "Mental health affects and is affected by relationships, work, and major life changes"
+    }
+  },
+  "life_sequences": [
+    {
+      "name": "Young Adult Independence",
+      "sequence": [
+        "college-selection",
+        "student-loan-strategy",
+        "first-job-transition",
+        "apartment-hunting",
+        "personal-finance"
+      ],
+      "reasoning": "Natural progression from education to financial independence"
+    },
+    {
+      "name": "Family Formation Journey",
+      "sequence": [
+        "first-serious-relationship",
+        "wedding-planning",
+        "home-buying",
+        "baby-planning",
+        "first-time-parent"
+      ],
+      "reasoning": "Common sequence of relationship and family development"
+    },
+    {
+      "name": "Career Advancement Path",
+      "sequence": [
+        "job-search",
+        "skill-development",
+        "early-career-advancement",
+        "first-management-role",
+        "executive-leadership-transition"
+      ],
+      "reasoning": "Progressive career development and leadership growth"
+    },
+    {
+      "name": "Entrepreneurship Evolution",
+      "sequence": [
+        "side-hustle-development",
+        "freelance-business",
+        "business-launch",
+        "small-business-launch",
+        "tech-startup-guide"
+      ],
+      "reasoning": "Evolution from side projects to full business ownership"
+    },
+    {
+      "name": "Financial Independence Path",
+      "sequence": [
+        "personal-finance",
+        "debt-payoff",
+        "investment-portfolio",
+        "real-estate-investing",
+        "retirement-planning"
+      ],
+      "reasoning": "Building wealth and achieving financial independence"
+    },
+    {
+      "name": "Retirement Transition",
+      "sequence": [
+        "retirement-planning",
+        "retirement-transition",
+        "downsizing-decisions",
+        "retirement-lifestyle",
+        "estate-planning"
+      ],
+      "reasoning": "Transition from working life to retirement and legacy planning"
+    }
+  ],
+  "influence_relationships": {
+    "divorce-coordination": {
+      "triggers": [
+        "home-buying",
+        "retirement-planning",
+        "personal-finance",
+        "baby-planning",
+        "job-search",
+        "apartment-hunting"
+      ],
+      "reasoning": "Divorce significantly impacts all major financial and life decisions"
+    },
+    "job-loss-recovery": {
+      "triggers": [
+        "personal-finance",
+        "apartment-hunting",
+        "debt-payoff",
+        "career-plateau",
+        "relationship-therapy"
+      ],
+      "reasoning": "Job loss forces reconsideration of finances, housing, and relationships"
+    },
+    "chronic-illness": {
+      "triggers": [
+        "personal-finance",
+        "career-plateau",
+        "relationship-therapy",
+        "retirement-planning",
+        "estate-planning"
+      ],
+      "reasoning": "Chronic illness affects work capacity, finances, and long-term planning"
+    },
+    "natural-disaster-recovery": {
+      "triggers": [
+        "home-buying",
+        "apartment-hunting",
+        "personal-finance",
+        "insurance-optimization",
+        "geographic-relocation"
+      ],
+      "reasoning": "Natural disasters force housing, financial, and location reconsiderations"
+    },
+    "addiction-recovery": {
+      "triggers": [
+        "relationship-therapy",
+        "job-search",
+        "personal-finance",
+        "mental-health",
+        "parenting-guidance"
+      ],
+      "reasoning": "Recovery affects relationships, work capacity, and financial stability"
+    }
+  }
+}
