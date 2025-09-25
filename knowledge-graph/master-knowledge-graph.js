@@ -18,26 +18,30 @@ class MasterKnowledgeGraph {
     try {
       console.log('🧠 Loading Master Knowledge Graph...');
 
+      // Get the directory of this script
+      const path = require('path');
+      const scriptDir = __dirname;
+
       // Load semantic clusters
-      const comprehensiveConnections = JSON.parse(fs.readFileSync('./template-connections-comprehensive.json', 'utf8'));
+      const comprehensiveConnections = JSON.parse(fs.readFileSync(path.join(scriptDir, 'template-connections-comprehensive.json'), 'utf8'));
       this.semanticClusters = comprehensiveConnections.semantic_clusters;
 
       // Load micro-clusters
-      const microClusters = JSON.parse(fs.readFileSync('./micro-clusters.json', 'utf8'));
+      const microClusters = JSON.parse(fs.readFileSync(path.join(scriptDir, 'micro-clusters.json'), 'utf8'));
       this.microClusters = microClusters.micro_clusters;
 
       // Load weighted connections
-      const advancedConnections = JSON.parse(fs.readFileSync('./advanced-connections.json', 'utf8'));
+      const advancedConnections = JSON.parse(fs.readFileSync(path.join(scriptDir, 'advanced-connections.json'), 'utf8'));
       this.weightedConnections = advancedConnections.weighted_cross_connections;
       this.negativeConnections = advancedConnections.negative_connections;
 
       // Load life sequences
-      const lifeSequences = JSON.parse(fs.readFileSync('./life-sequences-detailed.json', 'utf8'));
+      const lifeSequences = JSON.parse(fs.readFileSync(path.join(scriptDir, 'life-sequences-detailed.json'), 'utf8'));
       this.lifeSequences = lifeSequences.comprehensive_life_sequences;
       this.lifecyclePatterns = lifeSequences.lifecycle_timing_patterns;
 
       // Load contextual prompts
-      const contextualPrompts = JSON.parse(fs.readFileSync('./context-specific-prompts.json', 'utf8'));
+      const contextualPrompts = JSON.parse(fs.readFileSync(path.join(scriptDir, 'context-specific-prompts.json'), 'utf8'));
       this.contextualPrompts = contextualPrompts.scenario_based_prompts;
       this.promptTriggers = contextualPrompts.contextual_prompt_triggers;
 
