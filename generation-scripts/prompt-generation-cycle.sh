@@ -49,10 +49,10 @@ for ((i=$START_INDEX; i<$TOTAL && BATCH_COUNT<$NUM_BATCHES; i+=BATCH_SIZE)); do
 
         template=$(basename "$worktree" | sed 's/templata-//')
 
-        # Skip if file exists and has content (>100 words)
+        # Skip if file exists and has content (>300 words)
         if [ -f "$worktree/${template}-prompts.txt" ]; then
             word_count=$(wc -w < "$worktree/${template}-prompts.txt")
-            if [ "$word_count" -gt 100 ]; then
+            if [ "$word_count" -gt 300 ]; then
                 echo "✅ Skipping $template (already has $word_count words)"
                 continue
             fi
@@ -109,7 +109,7 @@ for worktree in "${WORKTREES[@]}"; do
 
     if [ -f "$worktree/${template}-prompts.txt" ]; then
         word_count=$(wc -w < "$worktree/${template}-prompts.txt")
-        if [ "$word_count" -gt 100 ]; then
+        if [ "$word_count" -gt 300 ]; then
             echo "✅ $template ($word_count words)"
         else
             echo "❌ $template (only $word_count words)"

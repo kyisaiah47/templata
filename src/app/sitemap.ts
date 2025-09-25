@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { manualBlogPosts } from '@/registry/blogs';
+import { articles } from '@/registry/blogs';
 
 const ARTICLES_PER_PAGE = 25;
 
@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://templata.com';
 
   // Calculate total pages for articles
-  const totalArticlePages = Math.ceil(manualBlogPosts.length / ARTICLES_PER_PAGE);
+  const totalArticlePages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -61,7 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   // Individual articles
-  const articleDetailPages: MetadataRoute.Sitemap = manualBlogPosts.map((post) => {
+  const articleDetailPages: MetadataRoute.Sitemap = articles.map((post) => {
     const dateString = post.updatedAt || post.publishedAt;
     const lastModified = new Date(dateString);
 

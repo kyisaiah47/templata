@@ -1,7 +1,9 @@
-import React from 'react';
-import type { Metadata } from 'next';
+"use client";
+
+import React, { useState, useEffect, useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ArticlesClient from './articles-client';
-import { manualBlogPosts } from '@/registry/blogs';
+import { articles } from '@/registry/blogs';
 import { TemplateImage } from '@/components/ui/template-image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -33,8 +35,8 @@ export default function ArticlesPage() {
     const pageTitle = currentPage > 1 ? `Articles - Page ${currentPage}` : 'Articles';
     const title = hasFilters ? `${pageTitle} - Filtered Results` : pageTitle;
     const description = hasFilters
-      ? `Browse filtered articles from our collection of ${manualBlogPosts.length}+ expert guides on life decisions and planning.`
-      : `Discover ${manualBlogPosts.length}+ expert articles and guides for life's biggest decisions. From career changes to family planning, find practical insights from industry professionals.`;
+      ? `Browse filtered articles from our collection of ${articles.length}+ expert guides on life decisions and planning.`
+      : `Discover ${articles.length}+ expert articles and guides for life's biggest decisions. From career changes to family planning, find practical insights from industry professionals.`;
 
     return {
       title: `${title} | Templata`,
@@ -48,7 +50,7 @@ export default function ArticlesPage() {
 
   // Get unique categories for filtering
   const categories = useMemo(() => {
-    const uniqueCategories = [...new Set(manualBlogPosts.map(post => post.category))];
+    const uniqueCategories = [...new Set(articles.map(post => post.category))];
     return uniqueCategories.sort();
   }, []);
 
@@ -62,16 +64,16 @@ export default function ArticlesPage() {
     ];
 
     const featured = featuredSlugs.map(slug =>
-      manualBlogPosts.find(post => post.slug === slug)
+      articles.find(post => post.slug === slug)
     ).filter(Boolean);
 
     // Fallback to first 3 if curated articles not found
-    return featured.length === FEATURED_COUNT ? featured : manualBlogPosts.slice(0, FEATURED_COUNT);
+    return featured.length === FEATURED_COUNT ? featured : articles.slice(0, FEATURED_COUNT);
   }, []);
 
   // Filter articles based on search and filters
   const filteredArticles = useMemo(() => {
-    return manualBlogPosts.filter(post => {
+    return articles.filter(post => {
       const matchesSearch = searchQuery === '' ||
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -159,7 +161,7 @@ export default function ArticlesPage() {
               {currentPage > 1 ? `All Articles - Page ${currentPage}` : 'All Articles'}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              Expert insights and practical guides for life's biggest decisions. Over {manualBlogPosts.length} articles to help you navigate complex situations with confidence.
+              Expert insights and practical guides for life's biggest decisions. Over {articles.length} articles to help you navigate complex situations with confidence.
             </p>
           </div>
         </header>
@@ -276,8 +278,8 @@ export default function ArticlesPage() {
           {/* Results count */}
           <div className="mt-4 text-sm text-muted-foreground">
             Showing {startIndex + 1}-{Math.min(endIndex, filteredArticles.length)} of {filteredArticles.length} articles
-            {filteredArticles.length !== manualBlogPosts.length && (
-              <span className="ml-1">({manualBlogPosts.length} total)</span>
+            {filteredArticles.length !== articles.length && (
+              <span className="ml-1">({articles.length} total)</span>
             )}
           </div>
         </div>

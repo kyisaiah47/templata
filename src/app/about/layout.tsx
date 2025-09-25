@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About Templata | Life Shouldn\'t Start with a Blank Page',
-  description: 'Learn how Templata is revolutionizing life organization by providing expert-crafted templates for major life moments. Discover our mission to make the complex simple and the overwhelming manageable.',
-  keywords: 'about templata, life organization platform, expert templates, guided planning, life planning philosophy, structured approach to major decisions',
+  title: 'About Templata - Our Philosophy & Mission | AI Life Planning Templates',
+  description: 'Learn why life shouldn\'t start with a blank page. Discover how Templata transforms life\'s biggest moments with intelligent templates, just like Notion did for notes and Canva for design.',
+  keywords: 'about templata, life organization philosophy, template design, AI life planning, productivity tools, structured planning, life management mission',
   openGraph: {
     title: 'About Templata | Life Shouldn\'t Start with a Blank Page',
     description: 'Learn how Templata is revolutionizing life organization by providing expert-crafted templates for major life moments.',

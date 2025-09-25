@@ -134,7 +134,10 @@
       "Bash(lsof:*)",
       "WebFetch(domain:tiptap.dev)",
       "Bash(npx @tiptap/cli@latest:*)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(./audit-template-prompts.sh:*)",
+      "Bash(./create-new-template-worktrees.sh:*)",
+      "Bash(./template-generation-cycle.sh:*)"
     ],
     "deny": [],
     "ask": []
