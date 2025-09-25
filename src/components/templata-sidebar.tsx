@@ -203,6 +203,26 @@ export function TemplataContentSidebar({
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     tooltip={{
+                      children: "Action Prompts",
+                      hidden: false,
+                    }}
+                    onClick={() => {
+                      setActiveTab('prompts')
+                      setOpen(true)
+                    }}
+                    isActive={activeTab === 'prompts'}
+                    className="px-2.5 md:px-2 hover:[&>div]:scale-110 hover:[&>div]:animate-bounce"
+                  >
+                    <div className="transition-transform duration-200">
+                      <MessageSquare className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs">Prompts</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    tooltip={{
                       children: "Resources",
                       hidden: false,
                     }}

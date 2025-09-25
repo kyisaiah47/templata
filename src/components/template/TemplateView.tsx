@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { GuidanceTemplate, Resource, ReflectionPrompt, FreeformNote, Workspace } from '@/types/template';
-import { EmbeddedPrompts } from '@/components/prompts/EmbeddedPrompts';
+import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
 import { TemplataContentSidebar } from '@/components/templata-sidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/template-sidebar';
 import { ThemeSelector } from '@/components/theme-selector';
@@ -13,6 +13,7 @@ import { PDFExportButton } from '@/components/pdf/export-button';
 import { ExpertBadgeList } from '@/components/expert/expert-badge';
 import { getTemplateExperts } from '@/lib/expert-badges';
 import { SharePanel } from '@/components/collaboration/share-panel';
+import Prism from '@/components/ui/prism';
 import { DollarSign, MapPin, UserCheck, Briefcase, Church, Music, Palette, Shirt, Heart, Home, CreditCard, Search, HandCoins, FileText, Truck, Target, User, PenTool, Network, MessageSquare, CheckSquare, TrendingUp, Stethoscope, Baby, Calendar, Shield, Activity, ChevronDown, Plus, Edit3, AlertCircle, Sunset, Moon, Layout } from 'lucide-react';
 import {
   Breadcrumb,
@@ -77,22 +78,23 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
 
 
   const handleInsertPrompt = (prompt: ReflectionPrompt) => {
-    // Check if prompt is already added
-    if (allItems.some(item => item.id === prompt.id)) {
-      // Highlight existing item with error state
-      setHighlightedItem(prompt.id);
-
-      // Clear highlight after 1.5 seconds
-      setTimeout(() => {
-        setHighlightedItem(null);
-      }, 1500);
-
-      return; // Don't add duplicates
+    // Insert prompt into TipTap editor
+    if ((window as any).templateEditor) {
+      (window as any).templateEditor
+        .chain()
+        .focus()
+        .insertPrompt({
+          id: prompt.id,
+          text: prompt.prompt,
+          category: prompt.category || 'General',
+          helpText: prompt.helpText,
+        })
+        .run();
     }
 
+    // Keep track for legacy compatibility if needed
     const newItems = [prompt, ...allItems];
     setAllItems(newItems);
-
 
     // Update current workspace
     setWorkspaces(prev => prev.map(workspace =>
@@ -345,21 +347,64 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
                 )}
               </div>
             </header>
-            <EmbeddedPrompts
-              section={template.sections[activeSection]}
-              allItems={allItems}
-              onRemovePrompt={handleRemovePrompt}
-              onRemoveNote={handleRemoveNote}
-              onUpdateNote={handleUpdateNote}
-              onReorderItems={handleReorderItems}
-              onResponsesChange={handleResponsesChange}
-              responses={responses}
-              hideHeader={true}
-              editMode={editMode}
-              completedItems={completedItems}
-              onToggleComplete={handleToggleComplete}
-              highlightedItem={highlightedItem}
-            />
+            {/* Always-Visible Prism Background */}
+            <div className="absolute inset-0 rounded-lg overflow-hidden">
+              <Prism
+                height={3.5}
+                baseWidth={5.5}
+                animationType="rotate"
+                glow={0.8}
+                noise={0.3}
+                transparent={true}
+                scale={2.8}
+                hueShift={0.5}
+                colorFrequency={1.2}
+                timeScale={0.3}
+                suspendWhenOffscreen={true}
+              />
+            </div>
+
+            {/* Simple Editor with Prism Background */}
+            <div className="relative z-10 transparent-editor">
+              <SimpleEditor
+                content=""
+                onUpdate={(content) => {
+                  console.log('Content updated:', content)
+                }}
+              />
+            </div>
+
+            <style jsx>{`
+              :global(.transparent-editor .simple-editor-wrapper) {
+                background: transparent !important;
+              }
+
+              :global(.transparent-editor .simple-editor-content) {
+                background: transparent !important;
+              }
+
+              :global(.transparent-editor .tiptap.ProseMirror.simple-editor) {
+                background: transparent !important;
+                color: inherit !important;
+              }
+
+              :global(.transparent-editor .tiptap-toolbar) {
+                background: rgba(255, 255, 255, 0.05) !important;
+                backdrop-filter: blur(8px) !important;
+                border-color: rgba(255, 255, 255, 0.1) !important;
+              }
+
+              :global(.transparent-editor .simple-editor-content) {
+                max-width: none !important;
+                width: 100% !important;
+                padding: 0 !important;
+              }
+
+              :global(.transparent-editor .simple-editor-wrapper) {
+                width: 100% !important;
+                height: 100% !important;
+              }
+            `}</style>
           </div>
 
           {/* Resource Panel */}

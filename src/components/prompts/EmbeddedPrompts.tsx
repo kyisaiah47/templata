@@ -177,25 +177,26 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
 
       {/* Main Content */}
       <div className="relative">
+        {/* Always-Visible Prism Background */}
+        <div className="absolute inset-0 rounded-lg overflow-hidden">
+          <Prism
+            height={3.5}
+            baseWidth={5.5}
+            animationType="rotate"
+            glow={0.8}
+            noise={0.3}
+            transparent={true}
+            scale={2.8}
+            hueShift={0.5}
+            colorFrequency={1.2}
+            timeScale={0.3}
+            suspendWhenOffscreen={true}
+          />
+        </div>
+
         {activeItems.length === 0 && completedItemsList.length === 0 ? (
-          /* Empty State with Prism Background */
+          /* Empty State */
           <div className="relative h-[93vh]">
-            {/* Prism Background - Only in Empty State */}
-            <div className="absolute inset-0 rounded-lg overflow-hidden">
-              <Prism
-                height={3.5}
-                baseWidth={5.5}
-                animationType="rotate"
-                glow={0.8}
-                noise={0.3}
-                transparent={true}
-                scale={2.8}
-                hueShift={0.5}
-                colorFrequency={1.2}
-                timeScale={0.3}
-                suspendWhenOffscreen={true}
-              />
-            </div>
             <div className="relative flex flex-col items-center justify-center h-full z-10 bg-background/10 backdrop-blur-[1px]">
             <div className="text-center p-8">
               <div className="flex items-center justify-start mb-4">
@@ -232,8 +233,8 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
             </div>
           </div>
         ) : (
-        /* Enhanced Prompts and Notes with Drop Zones */
-        <div className="relative p-4 space-y-6 z-10 bg-background/20 backdrop-blur-[2px]">
+        /* Embedded Prompts in Backdrop */
+        <div className="relative p-8 space-y-8 z-10">
           {/* Active Items Section */}
           {activeItems.length > 0 && (
             <div>
@@ -260,94 +261,89 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
                   const isAdditional = additionalPrompts.some(p => p.id === prompt.id);
                   const hasContent = responses[prompt.id]?.trim();
                   return (
-                    <PremiumGlow>
-                      <div
-                        data-item-id={prompt.id}
-                        draggable={editMode}
-                        onDragStart={(e) => handleDragStart(e, prompt.id, 'prompt')}
-                        onDragEnd={handleDragEnd}
-                        className={`group p-4 transition-all duration-200 ${
-                          editMode ? 'cursor-move' : ''
-                        } ${
-                          draggedItem === prompt.id ? 'opacity-50 scale-95' : ''
-                        } ${
-                          highlightedItem === prompt.id ? 'animate-pulse border-2 border-blue-500 bg-blue-50/50 dark:bg-blue-950/30 shadow-lg shadow-blue-500/20 rounded-xl' : ''
-                        }`}
-                      >
-                      <div className="flex items-start gap-3 mb-3">
-                        {editMode && <GripVertical className="w-4 h-4 text-muted-foreground mt-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing" />}
-                        <div className="flex flex-col items-center gap-2">
-                          <span className={`w-6 h-6 rounded-full text-xs font-medium flex items-center justify-center flex-shrink-0 transition-colors bg-primary/10 text-primary group-hover:bg-primary/20`}>
-                            {index + 1}
-                          </span>
-                          {hasContent && (
+                    <div
+                      key={prompt.id}
+                      data-item-id={prompt.id}
+                      draggable={editMode}
+                      onDragStart={(e) => handleDragStart(e, prompt.id, 'prompt')}
+                      onDragEnd={handleDragEnd}
+                      className={`group space-y-4 transition-all duration-300 ${
+                        editMode ? 'cursor-move' : ''
+                      } ${
+                        draggedItem === prompt.id ? 'opacity-50 scale-95' : ''
+                      } ${
+                        highlightedItem === prompt.id ? 'animate-pulse' : ''
+                      }`}
+                    >
+                      {/* Embedded Prompt Question */}
+                      <div className="text-center">
+                        <VerticalCutReveal
+                          staggerDuration={0.08}
+                          staggerFrom="center"
+                          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                          containerClassName="text-lg font-semibold mb-2 text-foreground"
+                        >
+                          {prompt.prompt}
+                        </VerticalCutReveal>
+                        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-4">
+                          <Badge variant="outline" className="text-xs opacity-60">
+                            {prompt.category}
+                          </Badge>
+                          {prompt.helpText && (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button variant="ghost" size="sm" className="h-4 w-4 p-0 text-muted-foreground hover:text-foreground">
+                                  <HelpCircle className="w-3 h-3" />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-xs">
+                                <p className="text-xs">{prompt.helpText}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
+                          {isAdditional && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => onRemovePrompt?.(prompt.id)}
+                              className="h-4 w-4 p-0 text-muted-foreground hover:text-destructive"
+                            >
+                              <X className="w-3 h-3" />
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Embedded Textarea */}
+                      <div className="max-w-2xl mx-auto">
+                        <Textarea
+                          placeholder="Share your thoughts here..."
+                          value={responses[prompt.id] || ''}
+                          onChange={(e) => handleResponseChange(prompt.id, e.target.value)}
+                          onDragOver={(e) => handleDragOver(e, prompt.id)}
+                          onDragLeave={handleDragLeave}
+                          onDrop={(e) => handleDrop(e, prompt.id)}
+                          className={`min-h-[120px] text-sm resize-none transition-all duration-300 backdrop-blur-sm bg-background/10 border-white/10 text-foreground placeholder:text-muted-foreground/70 focus:bg-background/20 focus:border-white/20 focus:backdrop-blur-md ${
+                            draggedOver === prompt.id
+                              ? 'ring-2 ring-blue-500/30 bg-blue-500/5'
+                              : ''
+                          }`}
+                        />
+                        {hasContent && (
+                          <div className="flex justify-center mt-3">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => onToggleComplete?.(prompt.id)}
-                              className="h-6 w-6 p-0 hover:bg-primary/10 rounded-full border-2 border-border hover:border-primary/30 transition-all flex-shrink-0"
+                              className="text-xs text-muted-foreground hover:text-primary transition-colors"
                             >
-                              <CircleCheck className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
+                              <CircleCheck className="w-4 h-4 mr-2" />
+                              Mark Complete
                             </Button>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <div className="flex-1 min-w-0">
-                              <Badge variant="outline" className="text-xs h-5 px-2 opacity-60 mb-2">
-                                {prompt.category}
-                              </Badge>
-                              <h4 className="font-medium text-sm leading-relaxed">{prompt.prompt}</h4>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              {prompt.helpText && (
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      className="h-4 w-4 p-0 text-muted-foreground hover:text-foreground flex-shrink-0"
-                                    >
-                                      <HelpCircle className="w-3 h-3" />
-                                    </Button>
-                                  </TooltipTrigger>
-                                  <TooltipContent side="left" className="max-w-xs">
-                                    <p className="text-xs">{prompt.helpText}</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              )}
-                              {isAdditional && (
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => onRemovePrompt?.(prompt.id)}
-                                  className="h-4 w-4 p-0 text-muted-foreground hover:text-destructive flex-shrink-0"
-                                >
-                                  <X className="w-3 h-3" />
-                                </Button>
-                              )}
-                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
-                      <Textarea
-                        placeholder={responses[prompt.id] ? "Type or drag resource text..." : "Drop here to attach →"}
-                        value={responses[prompt.id] || ''}
-                        onChange={(e) => handleResponseChange(prompt.id, e.target.value)}
-                        onDragOver={(e) => handleDragOver(e, prompt.id)}
-                        onDragLeave={handleDragLeave}
-                        onDrop={(e) => handleDrop(e, prompt.id)}
-                        className={`min-h-[80px] text-sm border-dashed resize-none transition-colors ${
-                          draggedOver === prompt.id
-                            ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50/50 dark:bg-blue-900/10'
-                            : 'hover:border-primary/50'
-                        }`}
-                      />
-                      <div className="text-xs text-muted-foreground mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        💡 Drag resources from the right panel to auto-fill
-                      </div>
-                      </div>
-                    </PremiumGlow>
+                    </div>
                   );
                 })()}
 
