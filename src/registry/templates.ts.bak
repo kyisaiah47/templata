@@ -218,7 +218,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "academic-struggles",
-    name: capitalizeTemplateName("academic struggles"),
+    name: "academic struggles",
     description: "Comprehensive guidance and tools for academic struggles.",
     category: "Education & Learning",
     icon: "BookOpen",
@@ -230,7 +230,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "addiction-family-support",
-    name: capitalizeTemplateName("addiction family support"),
+    name: "addiction family support",
     description: "Comprehensive guidance and tools for addiction family support.",
     category: "Health & Wellness",
     icon: "Users",
@@ -242,7 +242,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "addiction-recovery",
-    name: capitalizeTemplateName("addiction recovery"),
+    name: "addiction recovery",
     description: "Comprehensive guidance and tools for addiction recovery.",
     category: "Health & Wellness",
     icon: "Shield",
@@ -254,7 +254,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "affiliate-marketing",
-    name: capitalizeTemplateName("affiliate marketing"),
+    name: "affiliate marketing",
     description: "Comprehensive guidance and tools for affiliate marketing.",
     category: "Business & Career",
     icon: "Link",
@@ -266,7 +266,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "aging-parent-care",
-    name: capitalizeTemplateName("aging parent care"),
+    name: "aging parent care",
     description: "Comprehensive guidance and tools for aging parent care.",
     category: "Family & Relationships",
     icon: "Users",
@@ -278,7 +278,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "antique-collecting",
-    name: capitalizeTemplateName("antique collecting"),
+    name: "antique collecting",
     description: "Comprehensive guidance and tools for antique collecting.",
     category: "Hobbies & Interests",
     icon: "Clock",
@@ -290,7 +290,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "apartment-hunting",
-    name: capitalizeTemplateName("apartment hunting"),
+    name: "apartment hunting",
     description: "Comprehensive guidance and tools for apartment hunting.",
     category: "Creative & Arts",
     icon: "Palette",
@@ -302,7 +302,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "app-development",
-    name: capitalizeTemplateName("app development"),
+    name: "app development",
     description: "Comprehensive guidance and tools for app development.",
     category: "Technology & Development",
     icon: "Code",
@@ -314,7 +314,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "arduino-programming",
-    name: capitalizeTemplateName("arduino programming"),
+    name: "arduino programming",
     description: "Comprehensive guidance and tools for arduino programming.",
     category: "Technology & Development",
     icon: "Circle",
@@ -326,7 +326,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "art-collecting",
-    name: capitalizeTemplateName("art collecting"),
+    name: "art collecting",
     description: "Comprehensive guidance and tools for art collecting.",
     category: "Creative & Arts",
     icon: "Palette",
@@ -338,7 +338,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "art-portfolio",
-    name: capitalizeTemplateName("art portfolio"),
+    name: "art portfolio",
     description: "Comprehensive guidance and tools for art portfolio.",
     category: "Creative & Arts",
     icon: "Palette",
@@ -350,7 +350,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "astronomy-hobby",
-    name: capitalizeTemplateName("astronomy hobby"),
+    name: "astronomy hobby",
     description: "Comprehensive guidance and tools for astronomy hobby.",
     category: "Hobbies & Interests",
     icon: "Star",
@@ -362,7 +362,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "baby-planning",
-    name: capitalizeTemplateName("baby planning"),
+    name: "baby planning",
     description: "Comprehensive guidance and tools for baby planning.",
     category: "Family & Relationships",
     icon: "Users",
@@ -374,7 +374,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "bankruptcy-recovery",
-    name: capitalizeTemplateName("bankruptcy recovery"),
+    name: "bankruptcy recovery",
     description: "Comprehensive guidance and tools for bankruptcy recovery.",
     category: "Personal Life",
     icon: "AlertTriangle",
@@ -386,7 +386,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "birdwatching",
-    name: capitalizeTemplateName("birdwatching"),
+    name: "birdwatching",
     description: "Comprehensive guidance and tools for birdwatching.",
     category: "Hobbies & Interests",
     icon: "Eye",
@@ -398,7 +398,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "blended-family-creation",
-    name: capitalizeTemplateName("blended family creation"),
+    name: "blended family creation",
     description: "Comprehensive guidance and tools for blended family creation.",
     category: "Family & Relationships",
     icon: "Users",
@@ -410,7 +410,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "blended-family",
-    name: capitalizeTemplateName("blended family"),
+    name: "blended family",
     description: "Comprehensive guidance and tools for blended family.",
     category: "Family & Relationships",
     icon: "Users",
@@ -422,7 +422,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "boat-maintenance",
-    name: capitalizeTemplateName("boat maintenance"),
+    name: "boat maintenance",
     description: "Comprehensive guidance and tools for boat maintenance.",
     category: "Travel & Transportation",
     icon: "Anchor",
@@ -434,7 +434,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "book-club",
-    name: capitalizeTemplateName("book club"),
+    name: "book club",
     description: "Comprehensive guidance and tools for book club.",
     category: "Creative & Arts",
     icon: "BookOpen",
@@ -446,7 +446,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "book-collecting",
-    name: capitalizeTemplateName("book collecting"),
+    name: "book collecting",
     description: "Comprehensive guidance and tools for book collecting.",
     category: "Creative & Arts",
     icon: "BookOpen",
@@ -458,7 +458,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "book-writing",
-    name: capitalizeTemplateName("book writing"),
+    name: "book writing",
     description: "Comprehensive guidance and tools for book writing.",
     category: "Creative & Arts",
     icon: "BookOpen",
@@ -470,7 +470,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "business-launch",
-    name: capitalizeTemplateName("business launch"),
+    name: "business launch",
     description: "Comprehensive guidance and tools for business launch.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -482,7 +482,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "business-succession",
-    name: capitalizeTemplateName("business succession"),
+    name: "business succession",
     description: "Comprehensive guidance and tools for business succession.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -494,7 +494,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "camping-trips",
-    name: capitalizeTemplateName("camping trips"),
+    name: "camping trips",
     description: "Comprehensive guidance and tools for camping trips.",
     category: "Hobbies & Interests",
     icon: "Tent",
@@ -506,7 +506,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "car-buying",
-    name: capitalizeTemplateName("car buying"),
+    name: "car buying",
     description: "Comprehensive guidance and tools for car buying.",
     category: "Travel & Transportation",
     icon: "Car",
@@ -518,7 +518,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "car-maintenance",
-    name: capitalizeTemplateName("car maintenance"),
+    name: "car maintenance",
     description: "Comprehensive guidance and tools for car maintenance.",
     category: "Travel & Transportation",
     icon: "Car",
@@ -530,7 +530,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "career-plateau",
-    name: capitalizeTemplateName("career plateau"),
+    name: "career plateau",
     description: "Comprehensive guidance and tools for career plateau.",
     category: "Career Development",
     icon: "Target",
@@ -542,7 +542,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "caring-for-aging-parents",
-    name: capitalizeTemplateName("caring for aging parents"),
+    name: "caring for aging parents",
     description: "Comprehensive guidance and tools for caring for aging parents.",
     category: "Family & Relationships",
     icon: "Users",
@@ -554,7 +554,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "chronic-illness",
-    name: capitalizeTemplateName("chronic illness"),
+    name: "chronic illness",
     description: "Comprehensive guidance and tools for chronic illness.",
     category: "Health & Wellness",
     icon: "Circle",
@@ -566,7 +566,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "climate-action",
-    name: capitalizeTemplateName("climate action"),
+    name: "climate action",
     description: "Comprehensive guidance and tools for climate action.",
     category: "Personal Life",
     icon: "Leaf",
@@ -578,7 +578,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "coaching-business",
-    name: capitalizeTemplateName("coaching business"),
+    name: "coaching business",
     description: "Comprehensive guidance and tools for coaching business.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -590,7 +590,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "college-selection",
-    name: capitalizeTemplateName("college selection"),
+    name: "college selection",
     description: "Comprehensive guidance and tools for college selection.",
     category: "Education & Learning",
     icon: "GraduationCap",
@@ -602,7 +602,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "college-to-career-transition",
-    name: capitalizeTemplateName("college to career transition"),
+    name: "college to career transition",
     description: "Comprehensive guidance and tools for college to career transition.",
     category: "Career Development",
     icon: "Target",
@@ -614,7 +614,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "coming-out",
-    name: capitalizeTemplateName("coming out"),
+    name: "coming out",
     description: "Comprehensive guidance and tools for coming out.",
     category: "Personal Growth",
     icon: "Circle",
@@ -626,7 +626,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "consulting-business",
-    name: capitalizeTemplateName("consulting business"),
+    name: "consulting business",
     description: "Comprehensive guidance and tools for consulting business.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -638,7 +638,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "content-creation-business",
-    name: capitalizeTemplateName("content creation business"),
+    name: "content creation business",
     description: "Comprehensive guidance and tools for content creation business.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -650,7 +650,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "content-creation",
-    name: capitalizeTemplateName("content creation"),
+    name: "content creation",
     description: "Comprehensive guidance and tools for content creation.",
     category: "Creative & Arts",
     icon: "Circle",
@@ -662,7 +662,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "cooking-mastery",
-    name: capitalizeTemplateName("cooking mastery"),
+    name: "cooking mastery",
     description: "Comprehensive guidance and tools for cooking mastery.",
     category: "Personal Life",
     icon: "ChefHat",
@@ -674,7 +674,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "creative-freelancing",
-    name: capitalizeTemplateName("creative freelancing"),
+    name: "creative freelancing",
     description: "Comprehensive guidance and tools for creative freelancing.",
     category: "Creative & Arts",
     icon: "Palette",
@@ -686,7 +686,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "creative-writing",
-    name: capitalizeTemplateName("creative writing"),
+    name: "creative writing",
     description: "Comprehensive guidance and tools for creative writing.",
     category: "Creative & Arts",
     icon: "Palette",
@@ -698,7 +698,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "crypto-portfolio",
-    name: capitalizeTemplateName("crypto portfolio"),
+    name: "crypto portfolio",
     description: "Comprehensive guidance and tools for crypto portfolio.",
     category: "Finance & Money",
     icon: "Coins",
@@ -710,7 +710,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "dance-training",
-    name: capitalizeTemplateName("dance training"),
+    name: "dance training",
     description: "Comprehensive guidance and tools for dance training.",
     category: "Hobbies & Interests",
     icon: "Circle",
@@ -722,7 +722,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "death-of-spouse",
-    name: capitalizeTemplateName("death of spouse"),
+    name: "death of spouse",
     description: "Comprehensive guidance and tools for death of spouse.",
     category: "Life Transitions",
     icon: "Circle",
@@ -734,7 +734,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "debt-payoff",
-    name: capitalizeTemplateName("debt payoff"),
+    name: "debt payoff",
     description: "Comprehensive guidance and tools for debt payoff.",
     category: "Finance & Money",
     icon: "DollarSign",
@@ -746,7 +746,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "digital-detox",
-    name: capitalizeTemplateName("digital detox"),
+    name: "digital detox",
     description: "Comprehensive guidance and tools for digital detox.",
     category: "Personal Life",
     icon: "Smartphone",
@@ -758,7 +758,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "digital-nomad-planning",
-    name: capitalizeTemplateName("digital nomad planning"),
+    name: "digital nomad planning",
     description: "Comprehensive guidance and tools for digital nomad planning.",
     category: "Travel & Transportation",
     icon: "Circle",
@@ -770,7 +770,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "disability-accommodation",
-    name: capitalizeTemplateName("disability accommodation"),
+    name: "disability accommodation",
     description: "Comprehensive guidance and tools for disability accommodation.",
     category: "Crisis & Support",
     icon: "Accessibility",
@@ -782,7 +782,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "divorce-coordination",
-    name: capitalizeTemplateName("divorce coordination"),
+    name: "divorce coordination",
     description: "Comprehensive guidance and tools for divorce coordination.",
     category: "Family & Relationships",
     icon: "UserX",
@@ -794,7 +794,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "divorce-process",
-    name: capitalizeTemplateName("divorce process"),
+    name: "divorce process",
     description: "Comprehensive guidance and tools for divorce process.",
     category: "Family & Relationships",
     icon: "UserX",
@@ -806,7 +806,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "downsizing-decisions",
-    name: capitalizeTemplateName("downsizing decisions"),
+    name: "downsizing decisions",
     description: "Comprehensive guidance and tools for downsizing decisions.",
     category: "Personal Life",
     icon: "Circle",
@@ -818,7 +818,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "dropshipping",
-    name: capitalizeTemplateName("dropshipping"),
+    name: "dropshipping",
     description: "Comprehensive guidance and tools for dropshipping.",
     category: "Business & Career",
     icon: "Package",
@@ -830,7 +830,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "e-commerce-store",
-    name: capitalizeTemplateName("e commerce store"),
+    name: "e commerce store",
     description: "Comprehensive guidance and tools for e commerce store.",
     category: "Business & Career",
     icon: "ShoppingCart",
@@ -842,7 +842,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "early-career-advancement",
-    name: capitalizeTemplateName("early career advancement"),
+    name: "early career advancement",
     description: "Comprehensive guidance and tools for early career advancement.",
     category: "Career Development",
     icon: "Target",
@@ -854,7 +854,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "elder-care",
-    name: capitalizeTemplateName("elder care"),
+    name: "elder care",
     description: "Comprehensive guidance and tools for elder care.",
     category: "Family & Relationships",
     icon: "Car",
@@ -866,7 +866,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "empty-nest-syndrome",
-    name: capitalizeTemplateName("empty nest syndrome"),
+    name: "empty nest syndrome",
     description: "Comprehensive guidance and tools for empty nest syndrome.",
     category: "Life Transitions",
     icon: "Home",
@@ -878,7 +878,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "empty-nest",
-    name: capitalizeTemplateName("empty nest"),
+    name: "empty nest",
     description: "Comprehensive guidance and tools for empty nest.",
     category: "Life Transitions",
     icon: "Home",
@@ -890,7 +890,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "end-of-life-planning",
-    name: capitalizeTemplateName("end of life planning"),
+    name: "end of life planning",
     description: "Comprehensive guidance and tools for end of life planning.",
     category: "Life Transitions",
     icon: "Circle",
@@ -902,7 +902,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "estate-planning",
-    name: capitalizeTemplateName("estate planning"),
+    name: "estate planning",
     description: "Comprehensive guidance and tools for estate planning.",
     category: "Life Transitions",
     icon: "Circle",
@@ -914,7 +914,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "event-planning",
-    name: capitalizeTemplateName("event planning"),
+    name: "event planning",
     description: "Comprehensive guidance and tools for event planning.",
     category: "Personal Life",
     icon: "Circle",
@@ -926,7 +926,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "executive-leadership-transition",
-    name: capitalizeTemplateName("executive leadership transition"),
+    name: "executive leadership transition",
     description: "Comprehensive guidance and tools for executive leadership transition.",
     category: "Personal Life",
     icon: "Crown",
@@ -938,7 +938,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "family-crisis-management",
-    name: capitalizeTemplateName("family crisis management"),
+    name: "family crisis management",
     description: "Comprehensive guidance and tools for family crisis management.",
     category: "Family & Relationships",
     icon: "Users",
@@ -950,7 +950,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "family-estrangement",
-    name: capitalizeTemplateName("family estrangement"),
+    name: "family estrangement",
     description: "Comprehensive guidance and tools for family estrangement.",
     category: "Family & Relationships",
     icon: "Users",
@@ -962,7 +962,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "family-therapy",
-    name: capitalizeTemplateName("family therapy"),
+    name: "family therapy",
     description: "Comprehensive guidance and tools for family therapy.",
     category: "Family & Relationships",
     icon: "Users",
@@ -974,7 +974,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "fashion-design",
-    name: capitalizeTemplateName("fashion design"),
+    name: "fashion design",
     description: "Comprehensive guidance and tools for fashion design.",
     category: "Creative & Arts",
     icon: "Shirt",
@@ -986,7 +986,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "financial-independence-college",
-    name: capitalizeTemplateName("financial independence college"),
+    name: "financial independence college",
     description: "Comprehensive guidance and tools for financial independence college.",
     category: "Finance & Money",
     icon: "GraduationCap",
@@ -998,7 +998,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "financial-independence",
-    name: capitalizeTemplateName("financial independence"),
+    name: "financial independence",
     description: "Comprehensive guidance and tools for financial independence.",
     category: "Finance & Money",
     icon: "Circle",
@@ -1010,7 +1010,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "financial-recovery",
-    name: capitalizeTemplateName("financial recovery"),
+    name: "financial recovery",
     description: "Comprehensive guidance and tools for financial recovery.",
     category: "Finance & Money",
     icon: "Circle",
@@ -1022,7 +1022,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "first-job-transition",
-    name: capitalizeTemplateName("first job transition"),
+    name: "first job transition",
     description: "Comprehensive guidance and tools for first job transition.",
     category: "Career Development",
     icon: "Target",
@@ -1034,7 +1034,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "first-management-role",
-    name: capitalizeTemplateName("first management role"),
+    name: "first management role",
     description: "Comprehensive guidance and tools for first management role.",
     category: "Career Development",
     icon: "Circle",
@@ -1046,7 +1046,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "first-serious-relationship",
-    name: capitalizeTemplateName("first serious relationship"),
+    name: "first serious relationship",
     description: "Comprehensive guidance and tools for first serious relationship.",
     category: "Family & Relationships",
     icon: "Circle",
@@ -1058,7 +1058,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "first-time-parent",
-    name: capitalizeTemplateName("first time parent"),
+    name: "first time parent",
     description: "Comprehensive guidance and tools for first time parent.",
     category: "Family & Relationships",
     icon: "Users",
@@ -1070,7 +1070,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "fitness-journey",
-    name: capitalizeTemplateName("fitness journey"),
+    name: "fitness journey",
     description: "Comprehensive guidance and tools for fitness journey.",
     category: "Health & Wellness",
     icon: "Activity",
@@ -1082,7 +1082,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "fixed-income-management",
-    name: capitalizeTemplateName("fixed income management"),
+    name: "fixed income management",
     description: "Comprehensive guidance and tools for fixed income management.",
     category: "Personal Life",
     icon: "DollarSign",
@@ -1094,7 +1094,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "fraternity-sorority-decisions",
-    name: capitalizeTemplateName("fraternity sorority decisions"),
+    name: "fraternity sorority decisions",
     description: "Comprehensive guidance and tools for fraternity sorority decisions.",
     category: "Education & Learning",
     icon: "Users",
@@ -1106,7 +1106,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "freelance-business",
-    name: capitalizeTemplateName("freelance business"),
+    name: "freelance business",
     description: "Comprehensive guidance and tools for freelance business.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -1118,7 +1118,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "garden-planning",
-    name: capitalizeTemplateName("garden planning"),
+    name: "garden planning",
     description: "Comprehensive guidance and tools for garden planning.",
     category: "Home & Living",
     icon: "Leaf",
@@ -1130,7 +1130,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "geographic-relocation",
-    name: capitalizeTemplateName("geographic relocation"),
+    name: "geographic relocation",
     description: "Comprehensive guidance and tools for geographic relocation.",
     category: "Home & Living",
     icon: "Circle",
@@ -1142,7 +1142,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "graduate-school-decisions",
-    name: capitalizeTemplateName("graduate school decisions"),
+    name: "graduate school decisions",
     description: "Comprehensive guidance and tools for graduate school decisions.",
     category: "Education & Learning",
     icon: "GraduationCap",
@@ -1154,7 +1154,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "grandparent-role",
-    name: capitalizeTemplateName("grandparent role"),
+    name: "grandparent role",
     description: "Comprehensive guidance and tools for grandparent role.",
     category: "Family & Relationships",
     icon: "Users",
@@ -1166,7 +1166,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "grief-loss",
-    name: capitalizeTemplateName("grief loss"),
+    name: "grief loss",
     description: "Comprehensive guidance and tools for grief loss.",
     category: "Life Transitions",
     icon: "Heart",
@@ -1178,7 +1178,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "habit-tracking",
-    name: capitalizeTemplateName("habit tracking"),
+    name: "habit tracking",
     description: "Comprehensive guidance and tools for habit tracking.",
     category: "Personal Life",
     icon: "CheckCircle",
@@ -1190,7 +1190,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "health-crisis-management",
-    name: capitalizeTemplateName("health crisis management"),
+    name: "health crisis management",
     description: "Comprehensive guidance and tools for health crisis management.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1202,7 +1202,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "health-decline-navigation",
-    name: capitalizeTemplateName("health decline navigation"),
+    name: "health decline navigation",
     description: "Comprehensive guidance and tools for health decline navigation.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1214,7 +1214,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "hobby-photography",
-    name: capitalizeTemplateName("hobby photography"),
+    name: "hobby photography",
     description: "Comprehensive guidance and tools for hobby photography.",
     category: "Creative & Arts",
     icon: "Camera",
@@ -1226,7 +1226,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "hobby-project",
-    name: capitalizeTemplateName("hobby project"),
+    name: "hobby project",
     description: "Comprehensive guidance and tools for hobby project.",
     category: "Hobbies & Interests",
     icon: "Circle",
@@ -1238,7 +1238,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "home-automation",
-    name: capitalizeTemplateName("home automation"),
+    name: "home automation",
     description: "Comprehensive guidance and tools for home automation.",
     category: "Home & Living",
     icon: "Home",
@@ -1250,7 +1250,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "home-buying",
-    name: capitalizeTemplateName("home buying"),
+    name: "home buying",
     description: "Comprehensive guidance and tools for home buying.",
     category: "Home & Living",
     icon: "Home",
@@ -1262,7 +1262,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "home-renovation",
-    name: capitalizeTemplateName("home renovation"),
+    name: "home renovation",
     description: "Comprehensive guidance and tools for home renovation.",
     category: "Home & Living",
     icon: "Home",
@@ -1274,7 +1274,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "identity-theft-recovery",
-    name: capitalizeTemplateName("identity theft recovery"),
+    name: "identity theft recovery",
     description: "Comprehensive guidance and tools for identity theft recovery.",
     category: "Crisis & Support",
     icon: "Shield",
@@ -1286,7 +1286,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "identity-theft",
-    name: capitalizeTemplateName("identity theft"),
+    name: "identity theft",
     description: "Comprehensive guidance and tools for identity theft.",
     category: "Crisis & Support",
     icon: "Shield",
@@ -1298,7 +1298,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "immigration-journey",
-    name: capitalizeTemplateName("immigration journey"),
+    name: "immigration journey",
     description: "Comprehensive guidance and tools for immigration journey.",
     category: "Crisis & Support",
     icon: "Globe",
@@ -1310,7 +1310,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "insurance-optimization",
-    name: capitalizeTemplateName("insurance optimization"),
+    name: "insurance optimization",
     description: "Comprehensive guidance and tools for insurance optimization.",
     category: "Finance & Money",
     icon: "Shield",
@@ -1322,7 +1322,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "interior-design",
-    name: capitalizeTemplateName("interior design"),
+    name: "interior design",
     description: "Comprehensive guidance and tools for interior design.",
     category: "Personal Life",
     icon: "PaintBucket",
@@ -1334,7 +1334,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "internship-competition",
-    name: capitalizeTemplateName("internship competition"),
+    name: "internship competition",
     description: "Comprehensive guidance and tools for internship competition.",
     category: "Career Development",
     icon: "PawPrint",
@@ -1346,7 +1346,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "investing-finance",
-    name: capitalizeTemplateName("investing finance"),
+    name: "investing finance",
     description: "Comprehensive guidance and tools for investing finance.",
     category: "Finance & Money",
     icon: "DollarSign",
@@ -1358,7 +1358,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "investment-portfolio",
-    name: capitalizeTemplateName("investment portfolio"),
+    name: "investment portfolio",
     description: "Comprehensive guidance and tools for investment portfolio.",
     category: "Finance & Money",
     icon: "DollarSign",
@@ -1370,7 +1370,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "investment-property",
-    name: capitalizeTemplateName("investment property"),
+    name: "investment property",
     description: "Comprehensive guidance and tools for investment property.",
     category: "Finance & Money",
     icon: "DollarSign",
@@ -1382,7 +1382,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "job-loss-navigation",
-    name: capitalizeTemplateName("job loss navigation"),
+    name: "job loss navigation",
     description: "Comprehensive guidance and tools for job loss navigation.",
     category: "Career Development",
     icon: "Target",
@@ -1394,7 +1394,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "job-loss-recovery",
-    name: capitalizeTemplateName("job loss recovery"),
+    name: "job loss recovery",
     description: "Comprehensive guidance and tools for job loss recovery.",
     category: "Career Development",
     icon: "Target",
@@ -1406,7 +1406,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "job-search",
-    name: capitalizeTemplateName("job search"),
+    name: "job search",
     description: "Comprehensive guidance and tools for job search.",
     category: "Career Development",
     icon: "Target",
@@ -1418,7 +1418,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "job-transition",
-    name: capitalizeTemplateName("job transition"),
+    name: "job transition",
     description: "Comprehensive guidance and tools for job transition.",
     category: "Career Development",
     icon: "Target",
@@ -1430,7 +1430,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "language-learning",
-    name: capitalizeTemplateName("language learning"),
+    name: "language learning",
     description: "Comprehensive guidance and tools for language learning.",
     category: "Education & Learning",
     icon: "GraduationCap",
@@ -1442,7 +1442,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "legal-issue-management",
-    name: capitalizeTemplateName("legal issue management"),
+    name: "legal issue management",
     description: "Comprehensive guidance and tools for legal issue management.",
     category: "Crisis & Support",
     icon: "Scale",
@@ -1454,7 +1454,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "long-distance-relationship",
-    name: capitalizeTemplateName("long distance relationship"),
+    name: "long distance relationship",
     description: "Comprehensive guidance and tools for long distance relationship.",
     category: "Family & Relationships",
     icon: "Circle",
@@ -1466,7 +1466,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "marathon-training",
-    name: capitalizeTemplateName("marathon training"),
+    name: "marathon training",
     description: "Comprehensive guidance and tools for marathon training.",
     category: "Health & Wellness",
     icon: "Activity",
@@ -1478,7 +1478,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "marriage-maintenance",
-    name: capitalizeTemplateName("marriage maintenance"),
+    name: "marriage maintenance",
     description: "Comprehensive guidance and tools for marriage maintenance.",
     category: "Family & Relationships",
     icon: "Circle",
@@ -1490,7 +1490,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "meal-planning",
-    name: capitalizeTemplateName("meal planning"),
+    name: "meal planning",
     description: "Comprehensive guidance and tools for meal planning.",
     category: "Personal Life",
     icon: "ChefHat",
@@ -1502,7 +1502,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "medical-treatment",
-    name: capitalizeTemplateName("medical treatment"),
+    name: "medical treatment",
     description: "Comprehensive guidance and tools for medical treatment.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1514,7 +1514,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "meditation-journey",
-    name: capitalizeTemplateName("meditation journey"),
+    name: "meditation journey",
     description: "Comprehensive guidance and tools for meditation journey.",
     category: "Health & Wellness",
     icon: "Sun",
@@ -1526,7 +1526,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "mental-health-college",
-    name: capitalizeTemplateName("mental health college"),
+    name: "mental health college",
     description: "Comprehensive guidance and tools for mental health college.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1538,7 +1538,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "mental-health-support",
-    name: capitalizeTemplateName("mental health support"),
+    name: "mental health support",
     description: "Comprehensive guidance and tools for mental health support.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1550,7 +1550,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "mental-health",
-    name: capitalizeTemplateName("mental health"),
+    name: "mental health",
     description: "Comprehensive guidance and tools for mental health.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1562,7 +1562,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "midlife-crisis",
-    name: capitalizeTemplateName("midlife crisis"),
+    name: "midlife crisis",
     description: "Comprehensive guidance and tools for midlife crisis.",
     category: "Life Transitions",
     icon: "Shield",
@@ -1574,7 +1574,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "midlife-health-changes",
-    name: capitalizeTemplateName("midlife health changes"),
+    name: "midlife health changes",
     description: "Comprehensive guidance and tools for midlife health changes.",
     category: "Health & Wellness",
     icon: "Heart",
@@ -1586,7 +1586,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "military-veteran-transition",
-    name: capitalizeTemplateName("military veteran transition"),
+    name: "military veteran transition",
     description: "Comprehensive guidance and tools for military veteran transition.",
     category: "Career Development",
     icon: "Shield",
@@ -1598,7 +1598,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "mindfulness-meditation",
-    name: capitalizeTemplateName("mindfulness meditation"),
+    name: "mindfulness meditation",
     description: "Comprehensive guidance and tools for mindfulness meditation.",
     category: "Health & Wellness",
     icon: "Sun",
@@ -1610,7 +1610,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "mobile-app-startup",
-    name: capitalizeTemplateName("mobile app startup"),
+    name: "mobile app startup",
     description: "Comprehensive guidance and tools for mobile app startup.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -1622,7 +1622,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "mortgage-management",
-    name: capitalizeTemplateName("mortgage management"),
+    name: "mortgage management",
     description: "Comprehensive guidance and tools for mortgage management.",
     category: "Finance & Money",
     icon: "Key",
@@ -1634,7 +1634,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "moving-relocation",
-    name: capitalizeTemplateName("moving relocation"),
+    name: "moving relocation",
     description: "Comprehensive guidance and tools for moving relocation.",
     category: "Home & Living",
     icon: "Truck",
@@ -1646,7 +1646,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "music-learning",
-    name: capitalizeTemplateName("music learning"),
+    name: "music learning",
     description: "Comprehensive guidance and tools for music learning.",
     category: "Education & Learning",
     icon: "GraduationCap",
@@ -1658,7 +1658,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "music-production",
-    name: capitalizeTemplateName("music production"),
+    name: "music production",
     description: "Comprehensive guidance and tools for music production.",
     category: "Creative & Arts",
     icon: "Music",
@@ -1670,7 +1670,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "natural-disaster-recovery",
-    name: capitalizeTemplateName("natural disaster recovery"),
+    name: "natural disaster recovery",
     description: "Comprehensive guidance and tools for natural disaster recovery.",
     category: "Crisis & Support",
     icon: "Shield",
@@ -1682,7 +1682,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "nonprofit-management",
-    name: capitalizeTemplateName("nonprofit management"),
+    name: "nonprofit management",
     description: "Comprehensive guidance and tools for nonprofit management.",
     category: "Business & Career",
     icon: "Heart",
@@ -1694,7 +1694,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "nonprofit-startup",
-    name: capitalizeTemplateName("nonprofit startup"),
+    name: "nonprofit startup",
     description: "Comprehensive guidance and tools for nonprofit startup.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -1706,7 +1706,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "online-business-launch",
-    name: capitalizeTemplateName("online business launch"),
+    name: "online business launch",
     description: "Comprehensive guidance and tools for online business launch.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -1718,7 +1718,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "online-course",
-    name: capitalizeTemplateName("online course"),
+    name: "online course",
     description: "Comprehensive guidance and tools for online course.",
     category: "Personal Life",
     icon: "Circle",
@@ -1730,7 +1730,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "parenting-guidance",
-    name: capitalizeTemplateName("parenting guidance"),
+    name: "parenting guidance",
     description: "Comprehensive guidance and tools for parenting guidance.",
     category: "Family & Relationships",
     icon: "Users",
@@ -1742,7 +1742,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "peak-earning-optimization",
-    name: capitalizeTemplateName("peak earning optimization"),
+    name: "peak earning optimization",
     description: "Comprehensive guidance and tools for peak earning optimization.",
     category: "Personal Life",
     icon: "TrendingUp",
@@ -1754,7 +1754,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "personal-branding",
-    name: capitalizeTemplateName("personal branding"),
+    name: "personal branding",
     description: "Comprehensive guidance and tools for personal branding.",
     category: "Personal Life",
     icon: "Circle",
@@ -1766,7 +1766,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "personal-finance-mastery",
-    name: capitalizeTemplateName("personal finance mastery"),
+    name: "personal finance mastery",
     description: "Comprehensive guidance and tools for personal finance mastery.",
     category: "Finance & Money",
     icon: "DollarSign",
@@ -1778,7 +1778,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "personal-finance",
-    name: capitalizeTemplateName("personal finance"),
+    name: "personal finance",
     description: "Comprehensive guidance and tools for personal finance.",
     category: "Finance & Money",
     icon: "DollarSign",
@@ -1790,7 +1790,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "personal-training",
-    name: capitalizeTemplateName("personal training"),
+    name: "personal training",
     description: "Comprehensive guidance and tools for personal training.",
     category: "Personal Life",
     icon: "Circle",
@@ -1802,7 +1802,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "pet-care",
-    name: capitalizeTemplateName("pet care"),
+    name: "pet care",
     description: "Comprehensive guidance and tools for pet care.",
     category: "Travel & Transportation",
     icon: "Car",
@@ -1814,7 +1814,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "photography-business",
-    name: capitalizeTemplateName("photography business"),
+    name: "photography business",
     description: "Comprehensive guidance and tools for photography business.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -1826,7 +1826,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "podcast-creation",
-    name: capitalizeTemplateName("podcast creation"),
+    name: "podcast creation",
     description: "Comprehensive guidance and tools for podcast creation.",
     category: "Creative & Arts",
     icon: "Mic",
@@ -1838,7 +1838,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "professional-networking",
-    name: capitalizeTemplateName("professional networking"),
+    name: "professional networking",
     description: "Comprehensive guidance and tools for professional networking.",
     category: "Career Development",
     icon: "Users",
@@ -1850,7 +1850,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "public-speaking",
-    name: capitalizeTemplateName("public speaking"),
+    name: "public speaking",
     description: "Comprehensive guidance and tools for public speaking.",
     category: "Career Development",
     icon: "Mic",
@@ -1862,7 +1862,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "quarter-life-crisis",
-    name: capitalizeTemplateName("quarter life crisis"),
+    name: "quarter life crisis",
     description: "Comprehensive guidance and tools for quarter life crisis.",
     category: "Creative & Arts",
     icon: "Palette",
@@ -1874,7 +1874,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "reading-challenge",
-    name: capitalizeTemplateName("reading challenge"),
+    name: "reading challenge",
     description: "Comprehensive guidance and tools for reading challenge.",
     category: "Hobbies & Interests",
     icon: "BookOpen",
@@ -1886,7 +1886,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "real-estate-investing",
-    name: capitalizeTemplateName("real estate investing"),
+    name: "real estate investing",
     description: "Comprehensive guidance and tools for real estate investing.",
     category: "Finance & Money",
     icon: "Building",
@@ -1898,7 +1898,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "relationship-breakup",
-    name: capitalizeTemplateName("relationship breakup"),
+    name: "relationship breakup",
     description: "Comprehensive guidance and tools for relationship breakup.",
     category: "Family & Relationships",
     icon: "Circle",
@@ -1910,7 +1910,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "relationship-coaching",
-    name: capitalizeTemplateName("relationship coaching"),
+    name: "relationship coaching",
     description: "Comprehensive guidance and tools for relationship coaching.",
     category: "Business & Career",
     icon: "Users",
@@ -1922,7 +1922,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "relationship-therapy",
-    name: capitalizeTemplateName("relationship therapy"),
+    name: "relationship therapy",
     description: "Comprehensive guidance and tools for relationship therapy.",
     category: "Family & Relationships",
     icon: "Circle",
@@ -1934,7 +1934,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "rental-management",
-    name: capitalizeTemplateName("rental management"),
+    name: "rental management",
     description: "Comprehensive guidance and tools for rental management.",
     category: "Finance & Money",
     icon: "KeyRound",
@@ -1946,7 +1946,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "restaurant-opening",
-    name: capitalizeTemplateName("restaurant opening"),
+    name: "restaurant opening",
     description: "Comprehensive guidance and tools for restaurant opening.",
     category: "Business & Career",
     icon: "UtensilsCrossed",
@@ -1958,7 +1958,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "retirement-lifestyle",
-    name: capitalizeTemplateName("retirement lifestyle"),
+    name: "retirement lifestyle",
     description: "Comprehensive guidance and tools for retirement lifestyle.",
     category: "Life Transitions",
     icon: "Clock",
@@ -1970,7 +1970,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "retirement-transition",
-    name: capitalizeTemplateName("retirement transition"),
+    name: "retirement transition",
     description: "Comprehensive guidance and tools for retirement transition.",
     category: "Life Transitions",
     icon: "Clock",
@@ -1982,7 +1982,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "roommate-navigation",
-    name: capitalizeTemplateName("roommate navigation"),
+    name: "roommate navigation",
     description: "Comprehensive guidance and tools for roommate navigation.",
     category: "Personal Life",
     icon: "Circle",
@@ -1994,7 +1994,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "saas-startup",
-    name: capitalizeTemplateName("saas startup"),
+    name: "saas startup",
     description: "Comprehensive guidance and tools for saas startup.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -2006,7 +2006,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "sandwich-generation",
-    name: capitalizeTemplateName("sandwich generation"),
+    name: "sandwich generation",
     description: "Comprehensive guidance and tools for sandwich generation.",
     category: "Personal Life",
     icon: "Users",
@@ -2018,7 +2018,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "side-hustle-development",
-    name: capitalizeTemplateName("side hustle development"),
+    name: "side hustle development",
     description: "Comprehensive guidance and tools for side hustle development.",
     category: "Personal Life",
     icon: "Zap",
@@ -2030,7 +2030,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "skill-development",
-    name: capitalizeTemplateName("skill development"),
+    name: "skill development",
     description: "Comprehensive guidance and tools for skill development.",
     category: "Career Development",
     icon: "Award",
@@ -2042,7 +2042,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "small-business-launch",
-    name: capitalizeTemplateName("small business launch"),
+    name: "small business launch",
     description: "Comprehensive guidance and tools for small business launch.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -2054,7 +2054,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "small-business",
-    name: capitalizeTemplateName("small business"),
+    name: "small business",
     description: "Comprehensive guidance and tools for small business.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -2066,7 +2066,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "smart-garden",
-    name: capitalizeTemplateName("smart garden"),
+    name: "smart garden",
     description: "Comprehensive guidance and tools for smart garden.",
     category: "Home & Living",
     icon: "Palette",
@@ -2078,7 +2078,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "social-entrepreneurship",
-    name: capitalizeTemplateName("social entrepreneurship"),
+    name: "social entrepreneurship",
     description: "Comprehensive guidance and tools for social entrepreneurship.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -2090,7 +2090,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "social-media-management",
-    name: capitalizeTemplateName("social media management"),
+    name: "social media management",
     description: "Comprehensive guidance and tools for social media management.",
     category: "Personal Life",
     icon: "Share2",
@@ -2102,7 +2102,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "spiritual-awakening",
-    name: capitalizeTemplateName("spiritual awakening"),
+    name: "spiritual awakening",
     description: "Comprehensive guidance and tools for spiritual awakening.",
     category: "Personal Growth",
     icon: "Sun",
@@ -2114,7 +2114,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "spiritual-growth",
-    name: capitalizeTemplateName("spiritual growth"),
+    name: "spiritual growth",
     description: "Comprehensive guidance and tools for spiritual growth.",
     category: "Personal Growth",
     icon: "Sun",
@@ -2126,7 +2126,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "sports-team",
-    name: capitalizeTemplateName("sports team"),
+    name: "sports team",
     description: "Comprehensive guidance and tools for sports team.",
     category: "Hobbies & Interests",
     icon: "Trophy",
@@ -2138,7 +2138,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "stock-trading",
-    name: capitalizeTemplateName("stock trading"),
+    name: "stock trading",
     description: "Comprehensive guidance and tools for stock trading.",
     category: "Finance & Money",
     icon: "TrendingUp",
@@ -2150,7 +2150,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "stress-management",
-    name: capitalizeTemplateName("stress management"),
+    name: "stress management",
     description: "Comprehensive guidance and tools for stress management.",
     category: "Health & Wellness",
     icon: "Brain",
@@ -2162,7 +2162,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "student-loan-strategy",
-    name: capitalizeTemplateName("student loan strategy"),
+    name: "student loan strategy",
     description: "Comprehensive guidance and tools for student loan strategy.",
     category: "Education & Learning",
     icon: "GraduationCap",
@@ -2174,7 +2174,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "study-abroad-planning",
-    name: capitalizeTemplateName("study abroad planning"),
+    name: "study abroad planning",
     description: "Comprehensive guidance and tools for study abroad planning.",
     category: "Education & Learning",
     icon: "Globe",
@@ -2186,7 +2186,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "sustainable-living",
-    name: capitalizeTemplateName("sustainable living"),
+    name: "sustainable living",
     description: "Comprehensive guidance and tools for sustainable living.",
     category: "Personal Life",
     icon: "Recycle",
@@ -2198,7 +2198,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "tech-startup-guide",
-    name: capitalizeTemplateName("tech startup guide"),
+    name: "tech startup guide",
     description: "Comprehensive guidance and tools for tech startup guide.",
     category: "Business & Career",
     icon: "Briefcase",
@@ -2210,7 +2210,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "technology-digital",
-    name: capitalizeTemplateName("technology digital"),
+    name: "technology digital",
     description: "Comprehensive guidance and tools for technology digital.",
     category: "Technology & Development",
     icon: "Code",
@@ -2222,7 +2222,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "teenage-parenting",
-    name: capitalizeTemplateName("teenage parenting"),
+    name: "teenage parenting",
     description: "Comprehensive guidance and tools for teenage parenting.",
     category: "Family & Relationships",
     icon: "Users",
@@ -2234,7 +2234,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "test-template",
-    name: capitalizeTemplateName("test template"),
+    name: "test template",
     description: "Comprehensive guidance and tools for test template.",
     category: "Personal Life",
     icon: "TestTube",
@@ -2246,7 +2246,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "transportation-planning",
-    name: capitalizeTemplateName("transportation planning"),
+    name: "transportation planning",
     description: "Comprehensive guidance and tools for transportation planning.",
     category: "Travel & Transportation",
     icon: "Car",
@@ -2258,7 +2258,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "urban-gardening",
-    name: capitalizeTemplateName("urban gardening"),
+    name: "urban gardening",
     description: "Comprehensive guidance and tools for urban gardening.",
     category: "Home & Living",
     icon: "Leaf",
@@ -2270,7 +2270,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "weight-loss",
-    name: capitalizeTemplateName("weight loss"),
+    name: "weight loss",
     description: "Comprehensive guidance and tools for weight loss.",
     category: "Health & Wellness",
     icon: "Circle",
@@ -2282,7 +2282,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "wine-collection",
-    name: capitalizeTemplateName("wine collection"),
+    name: "wine collection",
     description: "Comprehensive guidance and tools for wine collection.",
     category: "Hobbies & Interests",
     icon: "Wine",
@@ -2294,7 +2294,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "workforce-reentry",
-    name: capitalizeTemplateName("workforce reentry"),
+    name: "workforce reentry",
     description: "Comprehensive guidance and tools for workforce reentry.",
     category: "Career Development",
     icon: "Circle",
@@ -2306,7 +2306,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "yoga-practice",
-    name: capitalizeTemplateName("yoga practice"),
+    name: "yoga practice",
     description: "Comprehensive guidance and tools for yoga practice.",
     category: "Health & Wellness",
     icon: "Activity",
@@ -2318,7 +2318,7 @@ export const templateRegistry: TemplateRegistryEntry[] = [
   },
   {
     id: "youtube-channel",
-    name: capitalizeTemplateName("youtube channel"),
+    name: "youtube channel",
     description: "Comprehensive guidance and tools for youtube channel.",
     category: "Creative & Arts",
     icon: "Play",
