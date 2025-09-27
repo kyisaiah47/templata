@@ -1,6 +1,3 @@
-// Auto-generated index file for all templates
-// This file exports all templates from the templates directory
-
 export * from "./3d-printing-template";
 export * from "./academic-struggles-template";
 export * from "./addiction-family-support-template";

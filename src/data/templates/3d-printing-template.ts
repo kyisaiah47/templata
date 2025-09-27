@@ -1,6 +1,6 @@
 import { GuidanceTemplate } from '@/types/template';
 
-export const 3dPrintingTemplate: GuidanceTemplate = {
+export const threeDPrintingTemplate: GuidanceTemplate = {
   id: "3d-printing",
   title: "Template",
   description: "Template description",
