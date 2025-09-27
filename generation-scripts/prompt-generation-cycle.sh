@@ -21,8 +21,8 @@ log_colored() {
     echo -e "${color}$message${NC}"
 }
 
-# Get all worktrees
-WORKTREES=($(ls -d ../../templata-* | sort))
+# Get all template directories
+TEMPLATE_DIRS=($(ls -d ../templata-* | sort))
 
 log_colored "$BLUE" "🔍 AUDIT PHASE: Checking ${#WORKTREES[@]} worktrees for prompt completion status..."
 
@@ -95,55 +95,69 @@ for ((i=$START_INDEX; i<$TOTAL && BATCH_COUNT<$NUM_BATCHES; i+=BATCH_SIZE)); do
         cd "$worktree"
 
         (
-            # Check existing prompts and resume from where we left off
-            existing_categories=0
-            if [ -f "${template}-prompts.txt" ]; then
-                existing_categories=$(grep -c "^CATEGORY [0-9]*:" "${template}-prompts.txt" 2>/dev/null || echo "0")
-            fi
+            # Generate categories 1-5, only create missing ones
+            for category_num in {1..5}; do
+                category_file="${template}-prompt-category-${category_num}.txt"
 
-            if [ "$existing_categories" -eq 0 ]; then
-                # Start fresh
-                claude --print --dangerously-skip-permissions --add-dir . -p "Create 5 logical categories for a ${template_readable} journey and write 10 simple one-sentence action prompts for each category (50 total).
-
-Format as plain text:
-CATEGORY 1: [name]
-1. [one sentence prompt]
-2. [one sentence prompt]
-...
-10. [one sentence prompt]
-
-CATEGORY 2: [name]
-1. [one sentence prompt]
-...
-
-Make each prompt a concrete actionable task for someone navigating ${template_readable}." > ${template}-prompts.txt 2>&1
-            else
-                # Resume from where we left off - read existing content to avoid duplicates
-                existing_content=""
-                if [ -f "${template}-prompts.txt" ]; then
-                    existing_content=$(cat "${template}-prompts.txt")
+                # Skip if this category already exists with enough content
+                if [ -f "$category_file" ]; then
+                    word_count=$(wc -w < "$category_file" 2>/dev/null || echo "0")
+                    if [ "$word_count" -gt 100 ]; then
+                        echo "✅ $template: Category $category_num already complete ($word_count words)"
+                        continue
+                    fi
                 fi
 
-                # Rewrite from the last category (in case it was incomplete)
-                start_category=$existing_categories
-                if [ "$start_category" -eq 0 ]; then
-                    start_category=1
+                # Collect existing category names to avoid duplicates
+                existing_categories=""
+                for i in {1..5}; do
+                    if [ -f "${template}-prompt-category-${i}.txt" ] && [ "$i" -ne "$category_num" ]; then
+                        category_name=$(grep "^CATEGORY:" "${template}-prompt-category-${i}.txt" 2>/dev/null | head -1)
+                        if [ -n "$category_name" ]; then
+                            existing_categories="$existing_categories\n$category_name"
+                        fi
+                    fi
+                done
+
+                log_colored "$YELLOW" "Generating category $category_num for: $template"
+
+                claude --print --dangerously-skip-permissions --add-dir . -p "Create ONE logical category for a ${template_readable} journey with 10 simple one-sentence action prompts.
+
+CATEGORY #$category_num for $template_readable
+
+EXISTING CATEGORY NAMES TO AVOID DUPLICATING:
+$existing_categories
+
+REQUIREMENTS:
+- Create a unique category name different from existing ones above
+- Write exactly 10 actionable one-sentence prompts for this category
+- Each prompt should be a concrete task someone can do
+
+OUTPUT FORMAT:
+CATEGORY: [Your unique category name - make sure it's different from existing categories above]
+1. [one sentence actionable prompt]
+2. [one sentence actionable prompt]
+3. [one sentence actionable prompt]
+4. [one sentence actionable prompt]
+5. [one sentence actionable prompt]
+6. [one sentence actionable prompt]
+7. [one sentence actionable prompt]
+8. [one sentence actionable prompt]
+9. [one sentence actionable prompt]
+10. [one sentence actionable prompt]
+
+When complete, respond exactly: 'PROMPT GENERATION COMPLETE - Category #$category_num'" > "$category_file" 2>&1
+
+                if [ $? -eq 0 ]; then
+                    word_count=$(wc -w < "$category_file" 2>/dev/null || echo "0")
+                    echo "✅ $template: Category $category_num success ($word_count words)"
+                else
+                    echo "❌ $template: Category $category_num failed"
                 fi
-                log_colored "$BLUE" "Found $existing_categories existing categories, rewriting from category $start_category"
-                claude --print --dangerously-skip-permissions --add-dir . -p "Continue creating categories for a ${template_readable} journey. You need to create categories $start_category through 5, with 10 simple one-sentence action prompts for each remaining category.
 
-EXISTING CATEGORIES TO AVOID DUPLICATING:
-$existing_content
-
-Format as plain text (continue from existing file):
-CATEGORY $start_category: [name - make sure it's different from existing categories above]
-1. [one sentence prompt]
-2. [one sentence prompt]
-...
-10. [one sentence prompt]
-
-Continue until you have completed all 5 categories total. Make each prompt a concrete actionable task for someone navigating ${template_readable}. Ensure all new categories and prompts are DIFFERENT from the existing ones shown above." >> ${template}-prompts.txt 2>&1
-            fi
+                # Brief pause between categories
+                sleep 2
+            done
 
             if [ $? -eq 0 ]; then
                 echo "✅ $template: Success"

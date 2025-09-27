@@ -41,34 +41,34 @@ log_colored() {
     echo -e "${color}$message${NC}"
 }
 
-# Get all worktrees
-WORKTREES=($(ls -d ../../templata-* | sort))
+# Get all template directories
+TEMPLATE_DIRS=($(ls -d ../templata-* | sort))
 
-log_colored "$BLUE" "🔍 AUDIT PHASE: Checking ${#WORKTREES[@]} worktrees for template completion status..."
+log_colored "$BLUE" "🔍 AUDIT PHASE: Checking ${#TEMPLATE_DIRS[@]} template directories for completion status..."
 
-# Phase 1: Fast audit - identify incomplete worktrees
-INCOMPLETE_WORKTREES=()
+# Phase 1: Fast audit - identify incomplete directories
+INCOMPLETE_DIRS=()
 COMPLETE_COUNT=0
 INCOMPLETE_COUNT=0
 
-for worktree in "${WORKTREES[@]}"; do
-    if [ ! -d "$worktree" ]; then
+for template_dir in "${TEMPLATE_DIRS[@]}"; do
+    if [ ! -d "$template_dir" ]; then
         continue
     fi
 
-    template=$(basename "$worktree" | sed 's/templata-//')
+    template=$(basename "$template_dir" | sed 's/templata-//')
 
-    # Check if template txt file exists in worktree
-    if [ -f "$worktree/${template}-template.txt" ]; then
-        word_count=$(wc -w < "$worktree/${template}-template.txt" 2>/dev/null || echo "0")
+    # Check if template txt file exists in directory
+    if [ -f "$template_dir/${template}-template.txt" ]; then
+        word_count=$(wc -w < "$template_dir/${template}-template.txt" 2>/dev/null || echo "0")
         if [ "$word_count" -gt 150 ]; then
             ((COMPLETE_COUNT++))
             continue
         fi
     fi
 
-    # This worktree needs work
-    INCOMPLETE_WORKTREES+=("$worktree")
+    # This directory needs work
+    INCOMPLETE_DIRS+=("$template_dir")
     ((INCOMPLETE_COUNT++))
 done
 
@@ -76,16 +76,16 @@ log_colored "$GREEN" "📊 AUDIT RESULTS:"
 log_colored "$GREEN" "  ✅ Complete: $COMPLETE_COUNT templates"
 log_colored "$YELLOW" "  ❌ Incomplete: $INCOMPLETE_COUNT templates"
 
-if [ ${#INCOMPLETE_WORKTREES[@]} -eq 0 ]; then
+if [ ${#INCOMPLETE_DIRS[@]} -eq 0 ]; then
     log_colored "$GREEN" "🎉 All template files already complete!"
     exit 0
 fi
 
-log_colored "$BLUE" "🚀 GENERATION PHASE: Processing ${#INCOMPLETE_WORKTREES[@]} incomplete templates..."
+log_colored "$BLUE" "🚀 GENERATION PHASE: Processing ${#INCOMPLETE_DIRS[@]} incomplete templates..."
 
-# Phase 2: Process only incomplete worktrees in batches
+# Phase 2: Process only incomplete directories in batches
 BATCH_SIZE=20
-TOTAL=${#INCOMPLETE_WORKTREES[@]}
+TOTAL=${#INCOMPLETE_DIRS[@]}
 
 # Create progress tracking file
 PROGRESS_FILE=".template-generation-progress"
@@ -105,16 +105,16 @@ for ((i=$START_INDEX; i<$TOTAL && BATCH_COUNT<$NUM_BATCHES; i+=BATCH_SIZE)); do
 
     # Start batch of parallel jobs
     for ((j=i; j<=BATCH_END; j++)); do
-        worktree="${INCOMPLETE_WORKTREES[j]}"
-        template=$(basename "$worktree" | sed 's/templata-//')
+        template_dir="${INCOMPLETE_DIRS[j]}"
+        template=$(basename "$template_dir" | sed 's/templata-//')
         template_readable=$(echo "$template" | sed 's/-/ /g' | sed 's/\b\w/\U&/g')
 
         log_colored "$YELLOW" "Generating template for: $template"
 
-        cd "$worktree"
+        cd "$template_dir"
 
         (
-            claude --print --dangerously-skip-permissions --add-dir . -p "Generate ONE comprehensive template structure for ${template_readable}.
+            claude --print --dangerously-skip-permissions -p "Generate ONE comprehensive template structure for ${template_readable}.
 
 TEMPLATE for $template_readable
 
