@@ -22,7 +22,7 @@ export interface Article {
   relatedPosts?: string[];
 }
 
-// Blog registry for template-specific articles
+// Article registry for template-specific articles
 export const articles: Article[] = [
-  // Articles will be added here by the generation script
+
 ];

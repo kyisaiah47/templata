@@ -88,7 +88,7 @@ def parse_article_text(text_file):
     # Split articles by separator (assuming --- separates articles)
     articles = re.split(r'\n---+\n', content)
 
-    blog_posts = []
+    articles = []
 
     for i, article_text in enumerate(articles, 1):
         if not article_text.strip():
@@ -147,7 +147,7 @@ def parse_article_text(text_file):
         tags = extract_tags(title, article_content, category)
         current_date = datetime.now().strftime('%Y-%m-%d')
 
-        blog_post = {
+        article = {
             "id": f"article-{i}",
             "title": title,
             "excerpt": excerpt,
@@ -168,13 +168,13 @@ def parse_article_text(text_file):
             }
         }
 
-        blog_posts.append(blog_post)
+        articles.append(article)
 
-    return blog_posts
+    return articles
 
-def generate_typescript_output(blog_posts):
+def generate_typescript_output(articles):
     """Generate TypeScript export format"""
-    output = """export interface BlogPost {
+    output = """export interface Article {
   id: string;
   title: string;
   excerpt: string;
@@ -198,10 +198,10 @@ def generate_typescript_output(blog_posts):
   relatedPosts?: string[];
 }
 
-// Blog registry for template-specific articles
-export const manualBlogPosts: BlogPost[] = [\n"""
+// Article registry for template-specific articles
+export const articles: Article[] = [\n"""
 
-    for i, post in enumerate(blog_posts):
+    for i, post in enumerate(articles):
         if i > 0:
             output += ",\n"
 
@@ -231,20 +231,61 @@ export const manualBlogPosts: BlogPost[] = [\n"""
     return output
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 convert-articles.py <text_file>")
-        print("Example: python3 convert-articles.py home-buying-articles.txt")
-        sys.exit(1)
+    # Check if we're doing batch processing (no arguments) or single file
+    if len(sys.argv) == 1:
+        # Batch processing mode
+        import os
+        import glob
 
-    text_file = sys.argv[1]
+        print("🚀 Batch converting all template article files...")
 
-    try:
-        blog_posts = parse_article_text(text_file)
-        typescript_output = generate_typescript_output(blog_posts)
-        print(typescript_output)
-    except FileNotFoundError:
-        print(f"Error: File '{text_file}' not found")
-        sys.exit(1)
-    except Exception as e:
-        print(f"Error processing file: {e}")
+        # Find all templata-* directories with their article files
+        worktree_dirs = glob.glob('../../templata-*')
+        converted = 0
+
+        for worktree_dir in sorted(worktree_dirs):
+            if not os.path.isdir(worktree_dir):
+                continue
+
+            template_name = os.path.basename(worktree_dir).replace('templata-', '')
+            article_file = f"{worktree_dir}/{template_name}-articles.txt"
+            output_file = f"../src/data/articles/articles-{template_name}.ts"
+
+            if os.path.isfile(article_file):
+                try:
+                    articles = parse_article_text(article_file)
+                    typescript_output = generate_typescript_output(articles)
+
+                    with open(output_file, 'w') as f:
+                        f.write(typescript_output)
+
+                    print(f"✅ {template_name}")
+                    converted += 1
+
+                except Exception as e:
+                    print(f"❌ {template_name}: {e}")
+            else:
+                print(f"⚠️  {template_name}: No article file found")
+
+        print(f"\n🎉 Converted {converted} article files to TypeScript!")
+
+    elif len(sys.argv) == 2:
+        # Single file mode (original behavior)
+        text_file = sys.argv[1]
+
+        try:
+            articles = parse_article_text(text_file)
+            typescript_output = generate_typescript_output(articles)
+            print(typescript_output)
+        except FileNotFoundError:
+            print(f"Error: File '{text_file}' not found")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Error processing file: {e}")
+            sys.exit(1)
+
+    else:
+        print("Usage: python3 convert-articles.py [text_file]")
+        print("  - No arguments: Batch convert all template articles")
+        print("  - One argument: Convert single file to stdout")
         sys.exit(1)

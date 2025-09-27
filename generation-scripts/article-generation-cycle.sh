@@ -55,13 +55,10 @@ for worktree in "${WORKTREES[@]}"; do
 
     template=$(basename "$worktree" | sed 's/templata-//')
 
-    # Check if TypeScript blog file exists with substantial content
-    if [ -f "$worktree/src/registry/blogs-${template}.ts" ]; then
-        word_count=$(wc -w < "$worktree/src/registry/blogs-${template}.ts" 2>/dev/null || echo "0")
-        if [ "$word_count" -gt 25000 ]; then
-            ((COMPLETE_COUNT++))
-            continue
-        fi
+    # Check if articles file exists (either in main repo or as text file with >25k words in worktree)
+    if [ -f "../src/data/articles/articles-${template}.ts" ] || ([ -f "$worktree/${template}-articles.txt" ] && [ $(wc -w < "$worktree/${template}-articles.txt" 2>/dev/null || echo "0") -gt 25000 ]); then
+        ((COMPLETE_COUNT++))
+        continue
     fi
 
     # This worktree needs work
@@ -164,16 +161,10 @@ for worktree in "${WORKTREES[@]}"; do
 
     template=$(basename "$worktree" | sed 's/templata-//')
 
-    if [ -f "$worktree/src/registry/blogs-${template}.ts" ]; then
-        word_count=$(wc -w < "$worktree/src/registry/blogs-${template}.ts" 2>/dev/null || echo "0")
-        if [ "$word_count" -gt 25000 ]; then
-            continue
-        else
-            echo "❌ $template (TS file too small: $word_count words)"
-            ((incomplete_count++))
-        fi
+    if [ -f "../src/data/articles/articles-${template}.ts" ] || ([ -f "$worktree/${template}-articles.txt" ] && [ $(wc -w < "$worktree/${template}-articles.txt" 2>/dev/null || echo "0") -gt 25000 ]); then
+        continue
     else
-        echo "❌ $template (missing TS blog file)"
+        echo "❌ $template (missing articles file or insufficient content)"
         ((incomplete_count++))
     fi
 done
