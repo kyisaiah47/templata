@@ -61,7 +61,13 @@ for template_dir in "${TEMPLATE_DIRS[@]}"; do
     # Check if template txt file exists in directory
     if [ -f "$template_dir/${template}-template.txt" ]; then
         word_count=$(wc -w < "$template_dir/${template}-template.txt" 2>/dev/null || echo "0")
-        if [ "$word_count" -gt 150 ]; then
+        # Check for AI generation artifacts (both straight and curly apostrophes, both create/generate)
+        if grep -q "I'll create\|I'll create\|I will create\|I'll generate\|I'll generate\|I will generate" "$template_dir/${template}-template.txt" 2>/dev/null; then
+            has_artifacts=1
+        else
+            has_artifacts=0
+        fi
+        if [ "$word_count" -gt 150 ] && [ "$has_artifacts" -eq 0 ]; then
             ((COMPLETE_COUNT++))
             continue
         fi

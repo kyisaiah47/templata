@@ -3,7 +3,7 @@ import { getArticleBySlug } from '@/registry/articles';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     return {
@@ -17,12 +17,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const title = `${article.title} | Templata`;
-  const description = article.description || `${article.excerpt} Expert guidance and insights for ${article.category.toLowerCase()}.`;
+  const description = (article as any).description || `${article.excerpt} Expert guidance and insights for ${article.category?.toLowerCase() || 'life planning'}.`;
 
   return {
     title,
     description,
-    keywords: `${article.title.toLowerCase()}, ${article.category.toLowerCase()}, life planning, ${article.tags?.join(', ')}, templata articles, expert guidance`,
+    keywords: `${article.title?.toLowerCase() || 'article'}, ${article.category?.toLowerCase() || 'planning'}, life planning, ${article.tags?.join(', ') || ''}, templata articles, expert guidance`,
     authors: [{ name: 'Templata Team' }],
     creator: 'Templata',
     publisher: 'Templata',

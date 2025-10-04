@@ -150,7 +150,20 @@
       "Bash(git pull:*)",
       "Bash(git reset:*)",
       "Bash(git clean:*)",
-      "Bash(__NEW_LINE__ echo \"Let me continue creating the remaining worktrees...\")"
+      "Bash(__NEW_LINE__ echo \"Let me continue creating the remaining worktrees...\")",
+      "Read(//Users/ikim1/Documents/**)",
+      "Bash(if grep -q \"I''ll create\\|I will create\" ../../templata-advertising-creative-career/advertising-creative-career-article-5.txt)",
+      "Bash(then echo \"HAS ARTIFACTS\")",
+      "Bash(else echo \"CLEAN\")",
+      "Bash(do if grep -q \"I''ll create\\|I will create\" ../../templata-advertising-creative-career/advertising-creative-career-article-$i.txt)",
+      "Bash(then echo \"Article $i: HAS ARTIFACTS\")",
+      "Bash(timeout:*)",
+      "Bash(pip3 install:*)",
+      "Bash(npx supabase db push:*)",
+      "Bash(PGPASSWORD=040796yh psql -h db.uvcstcajctqbxddosdbf.supabase.co -U postgres -d postgres -c \"SELECT COUNT(*) as total_articles FROM templata_articles;\")",
+      "Bash(PGPASSWORD=040796yh psql -h db.uvcstcajctqbxddosdbf.supabase.co -U postgres -d postgres -c \"SELECT \n  (SELECT COUNT(*) FROM templata_articles) as articles,\n  (SELECT COUNT(*) FROM templata_prompts) as prompts,\n  (SELECT COUNT(*) FROM templata_marketing_pages) as marketing,\n  (SELECT COUNT(*) FROM templata_templates) as templates;\")",
+      "Bash(PGPASSWORD=040796yh psql -h db.uvcstcajctqbxddosdbf.supabase.co -U postgres -d postgres -c \"SELECT slug, title FROM templata_articles WHERE title LIKE ''%First%Home%'' LIMIT 5;\")",
+      "WebFetch(domain:supabase.com)"
     ],
     "deny": [],
     "ask": []

@@ -75,12 +75,18 @@ for template_dir in "${TEMPLATE_DIRS[@]}"; do
 
     template=$(basename "$template_dir" | sed 's/templata-//')
 
-    # Check if all 20 article files exist with enough content (1,250 words each)
+    # Check if all 20 article files exist with enough content (1,250 words each) and no AI artifacts
     complete_articles=0
     for i in {1..20}; do
         if [ -f "$template_dir/${template}-article-${i}.txt" ]; then
             word_count=$(wc -w < "$template_dir/${template}-article-${i}.txt" 2>/dev/null || echo "0")
-            if [ "$word_count" -gt 1250 ]; then
+            # Check for AI generation artifacts (both straight and curly apostrophes, both create/generate)
+            if grep -q "I'll create\|I'll create\|I will create\|I'll generate\|I'll generate\|I will generate" "$template_dir/${template}-article-${i}.txt" 2>/dev/null; then
+                has_artifacts=1
+            else
+                has_artifacts=0
+            fi
+            if [ "$word_count" -gt 1100 ] && [ "$has_artifacts" -eq 0 ]; then
                 ((complete_articles++))
             fi
         fi
@@ -137,10 +143,16 @@ for ((i=$START_INDEX; i<$TOTAL && BATCH_COUNT<$NUM_BATCHES; i+=BATCH_SIZE)); do
             for article_num in {1..20}; do
                 article_file="${template}-article-${article_num}.txt"
 
-                # Skip if this article already exists with enough content
+                # Skip if this article already exists with enough content and no AI artifacts
                 if [ -f "$article_file" ]; then
                     word_count=$(wc -w < "$article_file" 2>/dev/null || echo "0")
-                    if [ "$word_count" -gt 1250 ]; then
+                    # Check for AI generation artifacts (both straight and curly apostrophes, both create/generate)
+                    if grep -q "I'll create\|I'll create\|I will create\|I'll generate\|I'll generate\|I will generate" "$article_file" 2>/dev/null; then
+                        has_artifacts=1
+                    else
+                        has_artifacts=0
+                    fi
+                    if [ "$word_count" -gt 1100 ] && [ "$has_artifacts" -eq 0 ]; then
                         echo "✅ $template: Article $article_num already complete ($word_count words)"
                         continue
                     fi
@@ -223,7 +235,7 @@ for worktree in "${TEMPLATE_DIRS[@]}"; do
     for i in {1..20}; do
         if [ -f "$worktree/${template}-article-${i}.txt" ]; then
             word_count=$(wc -w < "$worktree/${template}-article-${i}.txt" 2>/dev/null || echo "0")
-            if [ "$word_count" -gt 1250 ]; then
+            if [ "$word_count" -gt 1100 ]; then
                 ((complete_articles++))
             fi
         fi
@@ -242,4 +254,11 @@ if [ "$incomplete_count" -gt 0 ]; then
     exec "$0" "$@"
 else
     log_colored "$GREEN" "🎉 All article files complete!"
+
+    # Process articles to Supabase and optionally delete text files
+    if [ -f "process-articles-to-db.js" ]; then
+        log_colored "$BLUE" "🔄 Processing articles to Supabase..."
+        node process-articles-to-db.js --delete
+        log_colored "$GREEN" "✅ Articles uploaded to Supabase and text files deleted!"
+    fi
 fi

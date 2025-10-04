@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomThemeProvider } from "@/components/theme-provider-custom"
-import { AuthProvider } from "@/contexts/auth-context"
+import { SessionProvider } from "@/components/providers/session-provider"
 import { UIProvider } from "@/components/providers/ui-provider"
 import { ErrorBoundary } from "@/components/error-boundary"
 
@@ -128,11 +128,11 @@ export default function RootLayout({
       >
         <ErrorBoundary>
           <CustomThemeProvider>
-            <AuthProvider>
+            <SessionProvider>
               <UIProvider>
                 {children}
               </UIProvider>
-            </AuthProvider>
+            </SessionProvider>
           </CustomThemeProvider>
         </ErrorBoundary>
       </body>

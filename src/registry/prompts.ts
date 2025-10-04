@@ -5,13 +5,8 @@ export interface PromptEntry {
   type: 'research' | 'action' | 'decision' | 'planning';
 }
 
-// Import all prompts from index
-import * as promptModules from '../data/prompts/index';
-
-// Combine all prompts using Object.values().flat() pattern like the others
-export const allPrompts: PromptEntry[] = Object.values(promptModules)
-  .filter((module: any) => module && Array.isArray(module.prompts))
-  .flatMap((module: any) => module.prompts);
+// Prompts registry - will be populated below
+export const allPrompts: PromptEntry[] = [];
 
 // Generate template prompts mapping dynamically
 const generateTemplatePrompts = () => {

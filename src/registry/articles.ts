@@ -1,43 +1,164 @@
-// Import all articles from index
-import * as articleModules from '../data/articles/index';
+import { supabase } from '@/lib/supabase';
 
-// Simple registry using Object.values().flat() pattern like the others
-export const articleRegistry: any[] = Object.values(articleModules)
-  .filter((module: any) => module && Array.isArray(module.articles) && module.articles.length > 0)
-  .flatMap((module: any) => module.articles);
+// Article registry - empty by default, will be populated from Supabase
+export const articleRegistry: any[] = [];
 
 // Export all articles as array for backward compatibility
 export const articles = articleRegistry;
 
 // Helper function to get article by ID
-export const getArticleById = (id: string) => {
-  return articleRegistry.find((article: any) => article.id === id) || null;
-};
+export async function getArticleById(id: string) {
+  const { data, error } = await supabase
+    .from('templata_articles')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error || !data) return null;
+
+  return {
+    id: data.id,
+    title: data.title,
+    excerpt: data.excerpt,
+    content: data.content,
+    author: data.author,
+    publishedAt: data.published_at,
+    updatedAt: data.updated_at,
+    readTime: data.read_time,
+    category: data.category,
+    featured: data.featured,
+    tags: data.tags,
+    slug: data.slug,
+    type: data.type,
+    difficulty: data.difficulty,
+    seo: {
+      metaTitle: data.meta_title,
+      metaDescription: data.meta_description,
+      ogImage: data.og_image
+    },
+    relatedTemplates: data.related_templates,
+    relatedPosts: data.related_posts
+  };
+}
 
 // Helper function to get article by slug
-export const getArticleBySlug = (slug: string) => {
-  return articleRegistry.find((article: any) => article.slug === slug) || null;
-};
+export async function getArticleBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('templata_articles')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !data) return null;
+
+  return {
+    id: data.id,
+    title: data.title,
+    excerpt: data.excerpt,
+    content: data.content,
+    author: data.author,
+    publishedAt: data.published_at,
+    updatedAt: data.updated_at,
+    readTime: data.read_time,
+    category: data.category,
+    featured: data.featured,
+    tags: data.tags,
+    slug: data.slug,
+    type: data.type,
+    difficulty: data.difficulty,
+    seo: {
+      metaTitle: data.meta_title,
+      metaDescription: data.meta_description,
+      ogImage: data.og_image
+    },
+    relatedTemplates: data.related_templates,
+    relatedPosts: data.related_posts
+  };
+}
 
 // Helper function to get articles by category
-export const getArticlesByCategory = (category: string) => {
-  return articleRegistry.filter((article: any) => article.category === category);
-};
+export async function getArticlesByCategory(category: string) {
+  const { data, error } = await supabase
+    .from('templata_articles')
+    .select('*')
+    .eq('category', category);
+
+  if (error || !data) return [];
+  return data;
+}
 
 // Helper function to get related articles
-export const getRelatedArticles = (articleId: string, count = 3) => {
-  return articleRegistry.filter((article: any) => article.id !== articleId).slice(0, count);
-};
+export async function getRelatedArticles(articleId: string, count = 3) {
+  const { data, error } = await supabase
+    .from('templata_articles')
+    .select('*')
+    .neq('id', articleId)
+    .limit(count);
+
+  if (error || !data) return [];
+  return data;
+}
 
 // Helper function to get articles by template (for component compatibility)
-export const getArticlesByTemplate = (templateId: string) => {
-  return articleRegistry.filter((article: any) =>
-    article.relatedTemplates?.includes(templateId) ||
-    article.tags?.some((tag: string) => templateId.includes(tag))
-  );
-};
+export async function getArticlesByTemplate(templateId: string) {
+  const { data, error } = await supabase
+    .from('templata_articles')
+    .select('*')
+    .contains('related_templates', [templateId]);
+
+  if (error || !data) return [];
+  return data;
+}
 
 // Helper function to get all available article IDs
-export const getArticleIds = (): string[] => {
-  return articleRegistry.map((article: any) => article.id);
-};
+export async function getArticleIds(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('templata_articles')
+    .select('id');
+
+  if (error || !data) return [];
+  return data.map((article: any) => article.id);
+}
+
+// Helper function to get paginated articles
+export async function getArticles(page = 1, pageSize = 50) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  const { data, error, count } = await supabase
+    .from('templata_articles')
+    .select('*', { count: 'exact' })
+    .order('published_at', { ascending: false })
+    .range(from, to);
+
+  if (error || !data) {
+    console.error('[getArticles] Supabase error:', error);
+    return { articles: [], total: 0 };
+  }
+
+  const articles = data.map((article: any) => ({
+    id: article.id,
+    title: article.title,
+    excerpt: article.excerpt,
+    content: article.content,
+    author: article.author,
+    publishedAt: article.published_at,
+    updatedAt: article.updated_at,
+    readTime: article.read_time,
+    category: article.category,
+    featured: article.featured,
+    tags: article.tags,
+    slug: article.slug,
+    type: article.type,
+    difficulty: article.difficulty,
+    seo: {
+      metaTitle: article.meta_title,
+      metaDescription: article.meta_description,
+      ogImage: article.og_image
+    },
+    relatedTemplates: article.related_templates,
+    relatedPosts: article.related_posts
+  }));
+
+  return { articles, total: count || 0 };
+}

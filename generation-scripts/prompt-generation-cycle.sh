@@ -55,7 +55,13 @@ for worktree in "${TEMPLATE_DIRS[@]}"; do
         for i in {1..8}; do
             if [ -f "$worktree/${template}-prompt-category-${i}.txt" ]; then
                 word_count=$(wc -w < "$worktree/${template}-prompt-category-${i}.txt" 2>/dev/null || echo "0")
-                if [ "$word_count" -gt 100 ]; then
+                # Check for AI generation artifacts (both straight and curly apostrophes, both create/generate)
+                if grep -q "I'll create\|I'll create\|I will create\|I'll generate\|I'll generate\|I will generate" "$worktree/${template}-prompt-category-${i}.txt" 2>/dev/null; then
+                    has_artifacts=1
+                else
+                    has_artifacts=0
+                fi
+                if [ "$word_count" -gt 100 ] && [ "$has_artifacts" -eq 0 ]; then
                     ((complete_categories++))
                 fi
             fi

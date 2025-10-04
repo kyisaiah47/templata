@@ -113,10 +113,16 @@ def parse_single_article_file(text_file):
             article_type = line[6:].strip()
         elif line.startswith('DIFFICULTY: '):
             difficulty = line[12:].strip()
-        elif line.startswith('CONTENT: '):
-            article_content = line[9:].strip()
-            content_started = True
-        elif content_started or (not any(line.startswith(prefix) for prefix in ['TITLE:', 'CATEGORY:', 'TYPE:', 'DIFFICULTY:'])):
+        elif line.strip() == 'CONTENT:' or line.startswith('CONTENT: '):
+            # Handle both "CONTENT:" alone and "CONTENT: text"
+            if line.strip() == 'CONTENT:':
+                content_started = True
+            else:
+                article_content = line[9:].strip()
+                content_started = True
+        elif content_started:
+            content_lines.append(line)
+        elif not any(line.startswith(prefix) for prefix in ['TITLE:', 'CATEGORY:', 'TYPE:', 'DIFFICULTY:', 'CONTENT:']):
             content_lines.append(line)
 
     # If no explicit content marker, treat everything after metadata as content
@@ -133,9 +139,19 @@ def parse_single_article_file(text_file):
     if difficulty == "beginner":
         difficulty = determine_difficulty(article_content)
 
-    # Create excerpt (first 160 characters)
-    excerpt = article_content[:160].strip()
-    if len(article_content) > 160:
+    # Create excerpt (first 160 characters, skip markdown headers)
+    content_for_excerpt = article_content.strip()
+    # Skip any leading markdown headers (lines starting with #)
+    lines = content_for_excerpt.split('\n')
+    start_index = 0
+    for i, line in enumerate(lines):
+        if not line.strip().startswith('#') and line.strip():
+            start_index = i
+            break
+    content_for_excerpt = '\n'.join(lines[start_index:]).strip()
+
+    excerpt = content_for_excerpt[:160].strip()
+    if len(content_for_excerpt) > 160:
         excerpt += "..."
 
     # Generate metadata
@@ -203,10 +219,16 @@ def parse_article_text(text_file):
                 article_type = line[6:].strip()
             elif line.startswith('DIFFICULTY: '):
                 difficulty = line[12:].strip()
-            elif line.startswith('CONTENT: '):
-                article_content = line[9:].strip()
-                content_started = True
-            elif content_started or (not any(line.startswith(prefix) for prefix in ['TITLE:', 'CATEGORY:', 'TYPE:', 'DIFFICULTY:'])):
+            elif line.strip() == 'CONTENT:' or line.startswith('CONTENT: '):
+                # Handle both "CONTENT:" alone and "CONTENT: text"
+                if line.strip() == 'CONTENT:':
+                    content_started = True
+                else:
+                    article_content = line[9:].strip()
+                    content_started = True
+            elif content_started:
+                content_lines.append(line)
+            elif not any(line.startswith(prefix) for prefix in ['TITLE:', 'CATEGORY:', 'TYPE:', 'DIFFICULTY:', 'CONTENT:']):
                 content_lines.append(line)
 
         # If no explicit content marker, treat everything after metadata as content
@@ -223,9 +245,19 @@ def parse_article_text(text_file):
         if difficulty == "beginner":
             difficulty = determine_difficulty(article_content)
 
-        # Create excerpt (first 160 characters)
-        excerpt = article_content[:160].strip()
-        if len(article_content) > 160:
+        # Create excerpt (first 160 characters, skip markdown headers)
+        content_for_excerpt = article_content.strip()
+        # Skip any leading markdown headers (lines starting with #)
+        lines = content_for_excerpt.split('\n')
+        start_index = 0
+        for idx, line in enumerate(lines):
+            if not line.strip().startswith('#') and line.strip():
+                start_index = idx
+                break
+        content_for_excerpt = '\n'.join(lines[start_index:]).strip()
+
+        excerpt = content_for_excerpt[:160].strip()
+        if len(content_for_excerpt) > 160:
             excerpt += "..."
 
         # Generate metadata
@@ -293,25 +325,33 @@ export const articles: Article[] = [
         if i > 0:
             output += ",\n"
 
+        # Escape quotes, backslashes, and newlines in strings
+        def escape_string(s):
+            return s.replace('\\', '\\\\').replace('"', '\\"').replace('\n', '\\n').replace('\r', '\\r')
+
+        # Escape backticks and ${} in template literals
+        def escape_template_literal(s):
+            return s.replace('\\', '\\\\').replace('`', '\\`').replace('${', '\\${')
+
         output += "  {\n"
-        output += f'    id: "{post["id"]}",\n'
-        output += f'    title: "{post["title"]}",\n'
-        output += f'    excerpt: "{post["excerpt"]}",\n'
-        output += f'    content: `{post["content"]}`,\n'
-        output += f'    author: "{post["author"]}",\n'
+        output += f'    id: "{escape_string(post["id"])}",\n'
+        output += f'    title: "{escape_string(post["title"])}",\n'
+        output += f'    excerpt: "{escape_string(post["excerpt"])}",\n'
+        output += f'    content: `{escape_template_literal(post["content"])}`,\n'
+        output += f'    author: "{escape_string(post["author"])}",\n'
         output += f'    publishedAt: "{post["publishedAt"]}",\n'
         output += f'    readTime: "{post["readTime"]}",\n'
-        output += f'    category: "{post["category"]}",\n'
+        output += f'    category: "{escape_string(post["category"])}",\n'
         if post.get("featured"):
             output += f'    featured: {str(post["featured"]).lower()},\n'
         output += f'    tags: {json.dumps(post["tags"])},\n'
-        output += f'    slug: "{post["slug"]}",\n'
+        output += f'    slug: "{escape_string(post["slug"])}",\n'
         output += f'    type: "{post["type"]}",\n'
         output += f'    difficulty: "{post["difficulty"]}",\n'
         output += f'    seo: {{\n'
-        output += f'      metaTitle: "{post["seo"]["metaTitle"]}",\n'
-        output += f'      metaDescription: "{post["seo"]["metaDescription"]}",\n'
-        output += f'      ogImage: "{post["seo"]["ogImage"]}"\n'
+        output += f'      metaTitle: "{escape_string(post["seo"]["metaTitle"])}",\n'
+        output += f'      metaDescription: "{escape_string(post["seo"]["metaDescription"])}",\n'
+        output += f'      ogImage: "{escape_string(post["seo"]["ogImage"])}"\n'
         output += f'    }}\n'
         output += "  }"
 
@@ -693,7 +733,7 @@ def convert_all_templates():
 
         # 4. Convert Prompts (individual files)
         prompts_converted = 0
-        for i in range(1, 6):  # Categories 1-5
+        for i in range(1, 9):  # Categories 1-8
             prompt_file = f"{worktree_dir}/{template_name}-prompt-category-{i}.txt"
             prompts_output = f"../src/data/prompts/{template_name}-prompts-{i}.ts"
 

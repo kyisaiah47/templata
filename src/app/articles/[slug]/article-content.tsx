@@ -1,0 +1,239 @@
+"use client";
+
+import Link from "next/link";
+import React from "react";
+import { Lightbulb } from "lucide-react";
+import { Highlighter } from "@/components/ui/highlighter";
+
+interface ArticleContentProps {
+  content: string;
+}
+
+export function ArticleContent({ content }: ArticleContentProps) {
+  return (
+    <div className="prose prose-lg max-w-none">
+      {content.split('\n\n').map((paragraph, index) => {
+
+        // Main headings with IDs for navigation
+        if (paragraph.startsWith('## ')) {
+          const headingText = paragraph.replace('## ', '');
+          const id = headingText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+          return (
+            <h2 key={index} id={id} className="text-3xl font-bold mt-16 mb-6 text-foreground scroll-mt-24">
+              {headingText}
+            </h2>
+          );
+        }
+
+        // Sub headings with IDs
+        if (paragraph.startsWith('### ')) {
+          const headingText = paragraph.replace('### ', '');
+          const id = headingText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+          return (
+            <h3 key={index} id={id} className="text-2xl font-semibold mt-12 mb-4 text-foreground scroll-mt-24">
+              {headingText}
+            </h3>
+          );
+        }
+
+        if (paragraph.trim()) {
+          // Enhanced markdown parsing with links, percentages, and dollar amounts
+          const renderText = (text: string) => {
+            const parts: (string | React.JSX.Element)[] = [];
+            let currentIndex = 0;
+
+            // Combined regex for bold text, links, highlights, underlines, percentages, and dollar amounts
+            const combinedRegex = /(\*\*(.*?)\*\*|\[([^\]]+)\]\(([^)]+)\)|==(.*?)==|__(.*?)__|\$[\d,]+(?:\.\d{2})?(?:-\$[\d,]+(?:\.\d{2})?)?|\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?%)/g;
+            let match;
+
+            while ((match = combinedRegex.exec(text)) !== null) {
+              if (match.index > currentIndex) {
+                parts.push(text.slice(currentIndex, match.index));
+              }
+
+              if (match[0].startsWith('**')) {
+                // Bold text - extract text between **
+                const boldText = match[0].slice(2, -2);
+                parts.push(<strong key={match.index} className="font-semibold">{boldText}</strong>);
+              } else if (match[0].startsWith('[')) {
+                // Link - extract from full match
+                const linkMatch = match[0].match(/\[([^\]]+)\]\(([^)]+)\)/);
+                if (linkMatch) {
+                  parts.push(
+                    <Link
+                      key={match.index}
+                      href={linkMatch[2]}
+                      className="text-primary hover:text-primary/80 underline underline-offset-2"
+                    >
+                      {linkMatch[1]}
+                    </Link>
+                  );
+                }
+              } else if (match[0].startsWith('==') && match[0].endsWith('==')) {
+                // Highlighted text - blue highlight
+                const highlightedText = match[0].slice(2, -2);
+                parts.push(
+                  <Highlighter
+                    key={match.index}
+                    action="highlight"
+                    color="#3b82f6"
+                    isView={true}
+                    animationDuration={800}
+                  >
+                    {highlightedText}
+                  </Highlighter>
+                );
+              } else if (match[0].startsWith('__') && match[0].endsWith('__')) {
+                // Underlined text - purple underline
+                const underlinedText = match[0].slice(2, -2);
+                parts.push(
+                  <Highlighter
+                    key={match.index}
+                    action="underline"
+                    color="#a855f7"
+                    isView={true}
+                    animationDuration={600}
+                    strokeWidth={2}
+                  >
+                    {underlinedText}
+                  </Highlighter>
+                );
+              } else if (match[0].startsWith('$')) {
+                // Dollar amounts - emerald for single, purple for ranges
+                const isDollarRange = match[0].includes('-');
+                parts.push(
+                  <span
+                    key={match.index}
+                    className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium mx-1 ${
+                      isDollarRange
+                        ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300'
+                        : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-300'
+                    }`}
+                  >
+                    {match[0]}
+                  </span>
+                );
+              } else if (match[0].includes('%')) {
+                // Percentages - green for single, purple for ranges
+                const isPercentRange = match[0].includes('-');
+                parts.push(
+                  <span
+                    key={match.index}
+                    className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium mx-1 ${
+                      isPercentRange
+                        ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300'
+                        : 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
+                    }`}
+                  >
+                    {match[0]}
+                  </span>
+                );
+              }
+
+              currentIndex = match.index + match[0].length;
+            }
+
+            if (currentIndex < text.length) {
+              parts.push(text.slice(currentIndex));
+            }
+
+            return parts.length > 0 ? parts : text;
+          };
+
+          // Pull quotes (text starting with >)
+          if (paragraph.startsWith('> ')) {
+            return (
+              <blockquote key={index} className="bg-muted/50 border-l-4 border-primary/30 p-6 my-8 rounded-r-lg">
+                <p className="text-lg italic text-foreground/80 leading-relaxed">
+                  {renderText(paragraph.replace('> ', ''))}
+                </p>
+              </blockquote>
+            );
+          }
+
+          // Tables (simple pipe-separated format)
+          if (paragraph.includes('|') && paragraph.split('\n').length > 1) {
+            const rows = paragraph.split('\n').filter(row => row.includes('|'));
+            const headerRow = rows[0];
+            const dataRows = rows.slice(2); // Skip header and separator
+
+            if (headerRow && dataRows.length > 0) {
+              const headers = headerRow.split('|').map(h => h.trim()).filter(h => h);
+
+              return (
+                <div key={index} className="my-8 overflow-x-auto">
+                  <table className="w-full border-collapse border border-border rounded-lg">
+                    <thead>
+                      <tr className="bg-muted/50">
+                        {headers.map((header, headerIndex) => (
+                          <th key={headerIndex} className="border border-border px-4 py-3 text-left text-sm font-semibold">
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dataRows.map((row, rowIndex) => {
+                        const cells = row.split('|').map(c => c.trim()).filter(c => c);
+                        return (
+                          <tr key={rowIndex} className="hover:bg-muted/30">
+                            {cells.map((cell, cellIndex) => (
+                              <td key={cellIndex} className="border border-border px-4 py-3 text-sm">
+                                {renderText(cell)}
+                              </td>
+                            ))}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            }
+          }
+
+          // Pro Tip callouts with lightbulb
+          if (paragraph.includes('Pro Tip:') || paragraph.includes('**Pro Tip:**')) {
+            return (
+              <div key={index} className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 my-8">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Lightbulb className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Pro Tip!</h4>
+                    <p className="text-blue-800 dark:text-blue-200 leading-relaxed text-sm">
+                      {renderText(paragraph.replace('**Pro Tip:** ', '').replace('Pro Tip: ', ''))}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          // Bullet points
+          if (paragraph.startsWith('- ') || paragraph.startsWith('• ')) {
+            const items = paragraph.split('\n').filter(line => line.trim().startsWith('-') || line.trim().startsWith('•'));
+            return (
+              <ul key={index} className="space-y-2 my-6 ml-6">
+                {items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-lg leading-relaxed text-foreground/90">
+                    {renderText(item.replace(/^[-•]\s*/, ''))}
+                  </li>
+                ))}
+              </ul>
+            );
+          }
+
+          // Regular paragraphs
+          return (
+            <p key={index} className="text-lg leading-relaxed mb-6 text-foreground/90">
+              {renderText(paragraph)}
+            </p>
+          );
+        }
+        return null;
+      })}
+    </div>
+  );
+}

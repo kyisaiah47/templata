@@ -57,7 +57,7 @@ import { ChangelogWidget } from "@/components/changelog/changelog-widget"
 
 // Import data
 import { templateRegistry } from "@/registry/templates"
-import { articleRegistry } from "@/registry/articles"
+import { useArticles } from "@/hooks/use-articles"
 
 interface CommandPaletteProps {
   isOpen: boolean
@@ -127,6 +127,9 @@ export function CommandPalette({
     trackSearch
   } = useSmartRecommendations()
 
+  // Fetch articles from Supabase
+  const { articles: fetchedArticles, loading: articlesLoading } = useArticles(100)
+
   // Debounce search query for better performance
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -157,18 +160,13 @@ export function CommandPalette({
     }))
   }, [])
 
-  // Lazy load articles - only load first 50 initially, load more on demand
-  const [articlesLimit, setArticlesLimit] = useState(50)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
-
   const searchableArticles = useMemo(() => {
-    const limitedArticles = articleRegistry.slice(0, articlesLimit)
-    return limitedArticles.map(article => ({
+    return fetchedArticles.map(article => ({
       ...article,
-      searchableText: `${(article as any).title} ${(article as any).excerpt} ${(article as any).category}`.toLowerCase(),
+      searchableText: `${article.title} ${article.excerpt} ${article.category}`.toLowerCase(),
       type: 'article' as const
     }))
-  }, [articlesLimit])
+  }, [fetchedArticles])
 
   // Template-specific data when in template mode
   const templateSpecificData = useMemo(() => {
@@ -389,7 +387,6 @@ export function CommandPalette({
   const handleClose = () => {
     setQuery("")
     setSelectedIndex(0)
-    setArticlesLimit(50) // Reset to initial limit
     onClose()
   }
 
@@ -451,15 +448,6 @@ export function CommandPalette({
     })
   }
 
-  const loadMoreArticles = async () => {
-    if (isLoadingMore || articlesLimit >= articleRegistry.length) return
-
-    setIsLoadingMore(true)
-    // Simulate loading delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 300))
-    setArticlesLimit(prev => Math.min(prev + 50, articleRegistry.length))
-    setIsLoadingMore(false)
-  }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -1265,32 +1253,6 @@ export function CommandPalette({
                       )
                     })}
                   </div>
-
-                  {/* Load More Button */}
-                  {articlesLimit < articleRegistry.length && (
-                    <div className="text-center pt-4">
-                      <Button
-                        variant="outline"
-                        onClick={loadMoreArticles}
-                        disabled={isLoadingMore}
-                        className="w-full"
-                      >
-                        {isLoadingMore ? (
-                          <>
-                            <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin mr-2" />
-                            Loading more articles...
-                          </>
-                        ) : (
-                          <>
-                            Load {Math.min(50, articleRegistry.length - articlesLimit)} more articles
-                            <span className="ml-2 text-muted-foreground">
-                              ({articlesLimit} of {articleRegistry.length})
-                            </span>
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
                 </div>
                 </>
               )}

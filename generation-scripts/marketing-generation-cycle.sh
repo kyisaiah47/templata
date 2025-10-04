@@ -41,7 +41,13 @@ for worktree in "${TEMPLATE_DIRS[@]}"; do
     # Check if marketing txt file exists in worktree
     if [ -f "$worktree/${template}-landing-page.txt" ]; then
         word_count=$(wc -w < "$worktree/${template}-landing-page.txt" 2>/dev/null || echo "0")
-        if [ "$word_count" -gt 300 ]; then
+        # Check for AI generation artifacts (both straight and curly apostrophes, both create/generate)
+        if grep -q "I'll create\|I'll create\|I will create\|I'll generate\|I'll generate\|I will generate" "$worktree/${template}-landing-page.txt" 2>/dev/null; then
+            has_artifacts=1
+        else
+            has_artifacts=0
+        fi
+        if [ "$word_count" -gt 300 ] && [ "$has_artifacts" -eq 0 ]; then
             ((COMPLETE_COUNT++))
             continue
         fi

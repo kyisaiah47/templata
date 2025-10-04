@@ -2,33 +2,45 @@
 
 import { GalleryVerticalEnd } from "lucide-react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useAuth } from "@/contexts/auth-context"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [email, setEmail] = useState("");
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const { login } = useAuth();
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setIsLoggingIn(true);
-      login(email);
+    if (!email) return;
 
-      // Show success message briefly before redirecting
-      setTimeout(() => {
-        router.push('/');
-      }, 1500);
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const result = await signIn("email", {
+        email,
+        redirect: false,
+        callbackUrl: "/",
+      });
+
+      if (result?.error) {
+        setError("Failed to send magic link. Please try again.");
+        setIsLoading(false);
+      } else {
+        setEmailSent(true);
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+      setIsLoading(false);
     }
   };
 
@@ -38,7 +50,7 @@ export function LoginForm({
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <a
-              href="#"
+              href="/"
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
@@ -47,19 +59,15 @@ export function LoginForm({
               <span className="sr-only">Templata</span>
             </a>
             <h1 className="text-xl font-bold">
-              {isLoggingIn ? "Welcome back!" : "Welcome to Templata"}
+              {emailSent ? "Check your email" : "Welcome to Templata"}
             </h1>
-            {!isLoggingIn && (
-              <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <a href="#" className="underline underline-offset-4">
-                  Sign up
-                </a>
-              </div>
-            )}
-            {isLoggingIn && (
+            {emailSent ? (
               <div className="text-center text-sm text-green-600">
-                Logging you in...
+                We sent a magic link to <strong>{email}</strong>
+              </div>
+            ) : (
+              <div className="text-center text-sm">
+                Enter your email to sign in or create an account
               </div>
             )}
           </div>
@@ -73,22 +81,30 @@ export function LoginForm({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={emailSent}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoggingIn}>
-              {isLoggingIn ? "Logging in..." : "Send Magic Link"}
-            </Button>
+            {error && (
+              <div className="text-sm text-red-600 text-center">
+                {error}
+              </div>
+            )}
+            {!emailSent && (
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Sending..." : "Send Magic Link"}
+              </Button>
+            )}
           </div>
         </div>
       </form>
-      {isLoggingIn ? (
-        <div className="text-center text-sm text-green-600 font-medium">
-          ✨ Success! Redirecting you to your dashboard...
+      {emailSent ? (
+        <div className="text-center text-sm text-muted-foreground">
+          Click the link in your email to sign in. You can close this window.
         </div>
       ) : (
         <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-          By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-          and <a href="#">Privacy Policy</a>.
+          By clicking continue, you agree to our <a href="/terms">Terms of Service</a>{" "}
+          and <a href="/privacy">Privacy Policy</a>.
         </div>
       )}
     </div>

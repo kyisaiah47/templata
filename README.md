@@ -1,197 +1,84 @@
 # Templata
 
-> Skip the blank page. Start with abundant guidance for life's biggest moments.
+> Skip the blank page. Start with structured guidance.
 
-Templata is the first encyclopedia for living - a complete evolution from guided templates to autonomous life management. We provide 15,000+ action prompts, 3,000+ articles, and three progressive workspace modes to take you from structured guidance to complete life mastery.
+## What is Templata?
 
-## 🌟 Philosophy: The Abundance Mindset
+Templata is **The Encyclopedia for Life** - the complete collection of structured guidance for every human experience.
 
-The blank page era is dead. Instead of starting with emptiness, you get abundance: action-oriented prompts that drive decisions, contextual articles that provide insights, and a complete workspace evolution that grows with your expertise.
+We solve the blank page problem at two levels:
 
-Our three-mode progression system:
-- **Template Workspace** - Split-screen guided experience with 15,000+ action prompts
-- **Reflection Mode** - Daily immersive environment for processing your journey
-- **Life OS** - Unified life management system like Notion, built from your structured foundation
-- **Complete Evolution** - From guided learning to autonomous life mastery
+### 🎯 **Skip the Blank Page** (Individual Experience)
+Every template gives you structure instead of emptiness:
+- Open `wedding-planning` → Get 8 categories of prompts, not a blank page
+- Open `career-change` → Get expert guidance, not overwhelming choices
+- Open `3d-printing` → Get organized workflows, not "where do I start?"
 
-## ✨ Core Features
+### 🌍 **The Encyclopedia for Life** (Complete Coverage)
+Whatever life throws at you, we have structured guidance for it:
+- Getting divorced? We have a template.
+- Learning accordion? We have a template.
+- Turning 73? We have a template.
+- Starting a zookeeping career? We have a template.
+- Recovering from a cult? We have a template.
+- Planning a polyamorous relationship? We have a template.
 
-- **150+ Templates** - Comprehensive workspaces for life's biggest moments
-- **Three Workspace Modes** - Template (guided), Reflection (immersive), Aggregate (autonomous)
-- **15,000+ Action Prompts** - Tactical, practical prompts that drive decision-making
-- **3,000+ Articles** - In-depth guidance and insights for every situation
-- **Progressive Evolution** - Learn structure, then graduate to complete autonomy
-- **Drag & Drop Integration** - Pull insights from articles directly into prompt answers
+**Whatever life throws at you, we have a template for it.**
 
-## 📂 Template Categories
+## The Vision
 
-### 💝 Personal Life (40+ Templates)
-- **Wedding Planning** - Complete wedding organization workspace
-- **Baby Planning** - Pregnancy and newborn preparation
-- **Moving & Relocation** - Comprehensive moving coordination
-- **Personal Health & Wellness** - Health goal tracking and planning
-- **Relationship & Dating** - Relationship guidance and planning
-- **And many more...**
+**Universal Life Coverage** through **Structured Guidance**
 
-### 💼 Career & Work (45+ Templates)
-- **Job Search** - Application tracking and career strategy
-- **Career Change Transition** - Skills assessment and transition planning
-- **Remote Work Setup** - Home office and productivity optimization
-- **Personal Development** - Goal setting and skill building
-- **And many more...**
+Instead of facing life's challenges with blank pages and overwhelming choices, you get:
+- Expert guidance through organized prompts
+- Relevant articles and insights
+- Clear paths forward for any situation
 
-### 🏠 Property & Finance (35+ Templates)
-- **Home Buying** - House hunting and purchase coordination
-- **Home Renovation** - Project planning and contractor management
-- **Budget Planning** - Financial planning and expense tracking
-- **Investment Strategy** - Portfolio planning and wealth building
-- **And many more...**
+Like Netflix gives you every type of content, **Templata gives you every type of life guidance** - but with structure, not chaos.
 
-### 🚀 Business & Entrepreneurship (30+ Templates)
-- **Business Launch** - Startup planning and strategy development
-- **Marketing Strategy** - Campaign planning and execution
-- **Freelance Business** - Client management and growth planning
-- **Digital Products** - Product development and launch planning
-- **And many more...**
+## What You Get
 
-## 🚀 Getting Started
+### 🌍 **Complete Coverage**
+1,300+ templates covering every conceivable life situation:
+- **Every career** (from software engineer to circus performer)
+- **Every age milestone** (turning 16 to turning 90+)
+- **Every relationship type** (traditional marriage to polyamory)
+- **Every crisis** (job loss to natural disasters)
+- **Every skill** (cooking to quantum physics)
+- **Every transition** (going to college to end-of-life planning)
 
-### Using Templates
-1. **Choose Your Template** - Browse 150+ templates across 4 major categories
-2. **Open Workspace** - Simple, clean interface with split-screen design
-3. **Explore Prompts** - Browse categorized reflection prompts powered by Axiom Engine
-4. **Read Articles** - Access relevant articles for deeper insights and guidance
-5. **Organize & Plan** - Use the workspace to structure your thoughts and decisions
+### 📝 **Structured Guidance** (No Blank Pages)
+Each template contains:
+- **8 categories** of note-taking and reflection prompts
+- **20 expert articles** with deep insights
+- **Marketing pages** explaining when and why to use it
+- **Organized workspace** for planning and execution
 
-### Template Structure
-Each template provides:
-- **Split Screen Interface** - Prompts on the left, articles on the right
-- **Categorized Prompts** - Organized by planning phases and decision types
-- **Axiom Engine Articles** - AI-generated insights and guidance
-- **Clean Workspace** - Distraction-free environment for focused planning
+### 🔄 **Subscription Model**
+Pay monthly for access to the **entire encyclopedia**. Like Netflix, you get everything - use what you need, when you need it.
 
-### Development Setup
+## Why This Matters
 
-```bash
-# Install dependencies
-npm install
+Life is unpredictable and overwhelming. You might need structured guidance for:
+- `wedding-planning` at 25
+- `career-change` at 35
+- `teenage-parenting` at 45
+- `alzheimers-care-planning` at 55
+- `retirement-transition` at 65
 
-# Run development server
-npm run dev
+**We make sure you're never caught staring at a blank page, wondering where to start.**
 
-# Open http://localhost:3000
-```
+## Built for Everyone
 
-### Example Templates to Try
-- **Wedding Planning:** `/wedding-planning/app`
-- **Baby Planning:** `/baby-planning/app`
-- **Job Search:** `/job-search/app`
-- **Home Buying:** `/home-buying/app`
-- **Business Launch:** `/business-launch/app`
+Different people discover us through different entry points:
+- Musicians find us through `piano-mastery-journey`
+- Parents through `first-time-parent`
+- Entrepreneurs through `business-launch`
+- Health advocates through `diabetes-management-system`
+- Retirees through `retirement-planning`
 
-## 🛠 Tech Stack
-
-- **Framework**: Next.js 15 with TypeScript
-- **Styling**: Tailwind CSS v4 + shadcn/ui components
-- **UI Components**: Split-screen interface with categorized prompts and articles
-- **Icons**: Lucide React
-- **Theme System**: CSS custom properties with OKLCH color space + custom scrollbars
-- **State Management**: React Context API for template data
-- **Content**: 15,000+ prompts and 3,000+ articles powered by Axiom Engine
-
-## 🧠 The Axiom Engine
-
-Templata's content is powered by the **Axiom Engine** - a specialized AI system designed exclusively for life guidance. Unlike generic AI, the Axiom Engine uses:
-
-- **Purpose-built intelligence** specifically trained for life decision-making scenarios
-- **Specialized prompt engineering** refined through multiple iterations for quality and depth
-- **Human oversight and curation** to ensure relevance and helpfulness
-- **Comprehensive coverage** generating 15,000+ unique prompts across 150+ life situations
-- **Thoughtful frameworks** designed for reflection rather than task completion
-- **Article generation** creating 3,000+ in-depth guidance articles
-
-Every template, prompt, and article you see has been generated through carefully crafted AI intelligence, refined specifically for helping you navigate life's biggest decisions. [Learn more about the Axiom Engine](/axiom-engine).
-
-## 🏗 Architecture
-
-```
-src/
-├── app/                     # Next.js 15 app router
-│   ├── page.tsx            # Main landing page
-│   ├── faq/                # FAQ page
-│   ├── [template-name]/    # Template routes
-│   │   ├── page.tsx        # Marketing landing page
-│   │   └── app/            # Template workspace
-│   │       └── page.tsx    # Split-screen interface
-├── components/
-│   ├── ui/                 # shadcn/ui components
-│   ├── layout/             # Page layout components
-│   ├── landing/            # Landing page components
-│   └── template/           # Template system
-│       └── TemplateView.tsx # Split-screen workspace
-├── registry/               # Template and content data
-│   ├── templates.ts        # 150+ template definitions
-│   ├── prompts.ts          # 15,000+ Axiom Engine prompts
-│   └── articles.ts         # 3,000+ guidance articles
-├── contexts/               # React Context providers
-├── hooks/                  # Custom React hooks
-├── lib/                    # Utility functions and configs
-└── types/                  # TypeScript type definitions
-```
-
-## ✨ Key Features
-
-### Split-Screen Interface
-- **Categorized Prompts** - Left panel with organized reflection prompts
-- **Article Browser** - Right panel with relevant Axiom Engine articles
-- **Clean Workspace** - Distraction-free environment for planning
-- **Responsive Design** - Works seamlessly across all devices
-
-### Axiom Engine Content
-- **15,000+ Prompts** - Categorized by planning phases and decision types
-- **3,000+ Articles** - In-depth guidance for every situation
-- **150+ Templates** - Comprehensive workspaces for life's biggest moments
-- **AI-Powered Insights** - Specialized intelligence for life guidance
-
-### User Experience
-- **Simple Navigation** - Easy browsing between prompts and articles
-- **Progressive Planning** - Structured approach to complex decisions
-- **Export Options** - Save and share your completed plans
-- **Consistent Theming** - Beautiful design across all templates
-
-## 📊 Platform Stats
-
-- **150+ Templates** - Comprehensive workspaces for life's major moments
-- **15,000+ Prompts** - Categorized reflection prompts powered by Axiom Engine
-- **3,000+ Articles** - In-depth guidance and insights for every situation
-- **4 Categories** - Personal Life, Career & Work, Property & Finance, Business & Entrepreneurship
-
-## 🤝 Contributing
-
-We welcome contributions to make Templata even better:
-
-1. **Template Suggestions** - Propose new life situations that need workspaces
-2. **Bug Reports** - Help us identify and fix issues
-3. **Feature Requests** - Suggest improvements to existing functionality
-4. **Code Contributions** - Submit PRs for features or fixes
-
-## 📞 Support
-
-- **FAQ**: `/faq` - Common questions and answers
-- **Email**: support@templata.com
-- **Response Time**: Within 24 hours
-- **Community**: Join discussions with other users
-
-## 📝 License
-
-This project is available under the [MIT License](LICENSE).
-
-## 🚀 Deploy on Vercel
-
-Deploy your own instance using the [Vercel Platform](https://vercel.com/new):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/yourusername/templata)
+**Every template is an entry point. Every situation has structure.**
 
 ---
 
-Built with ❤️ for people organizing life's biggest moments.
+*Skip the blank page. Master your life.*
