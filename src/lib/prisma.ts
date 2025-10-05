@@ -1,17 +1,16 @@
-import { PrismaClient } from '../generated/prisma';
+import { createClient } from '@supabase/supabase-js';
 
-// Global Prisma instance for Next.js development
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+// Supabase client for database operations
+// Using Supabase instead of Prisma for direct SQL access
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
-}
+// Legacy export for compatibility - maps to Supabase
+export const prisma = supabase;
 
-// Helper function to disconnect Prisma
+// Helper function (no-op for Supabase)
 export const disconnectPrisma = async () => {
-  await prisma.$disconnect();
+  // Supabase doesn't require manual disconnection
 };
