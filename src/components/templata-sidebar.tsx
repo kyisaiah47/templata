@@ -80,7 +80,7 @@ export function TemplataContentSidebar({
   const [searchQuery, setSearchQuery] = React.useState('')
   const { setOpen } = useSidebar()
 
-  const currentSection = template.sections[activeSection]
+  const currentSection = template.sections?.[activeSection]
   const sectionPrompts = currentSection?.reflectionPrompts || []
 
   // Get prompts from registry
