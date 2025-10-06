@@ -26,9 +26,6 @@ export function ArticleContent({ content }: ArticleContentProps) {
       return true;
     });
 
-  console.log('[ArticleContent] Total content length:', content.length, 'chars');
-  console.log('[ArticleContent] Number of paragraphs after cleaning:', cleanedContent.length);
-
   return (
     <div className="prose prose-lg max-w-none">
       {cleanedContent.map((paragraph, index) => {

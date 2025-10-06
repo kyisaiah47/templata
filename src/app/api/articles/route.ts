@@ -47,11 +47,6 @@ export async function GET(request: Request) {
       throw error;
     }
 
-    // Log all fields from first article to see what's available
-    if (data && data.length > 0) {
-      console.log('[API /articles] Raw DB fields:', Object.keys(data[0]));
-    }
-
     const articles = data.map((article: any) => ({
       id: article.id,
       title: article.title,
@@ -67,11 +62,6 @@ export async function GET(request: Request) {
       featured: article.featured,
       relatedTemplates: article.related_templates,
     }));
-
-    console.log('[API /articles] Query:', query, 'Type:', type, 'Difficulty:', difficulty, 'Page:', page, '- Returned', articles.length, 'of', count, 'total matches');
-    if (articles.length > 0) {
-      console.log('[API /articles] Sample article relatedTemplates:', articles[0].relatedTemplates, 'category:', articles[0].category);
-    }
 
     return NextResponse.json({ articles, total: count || 0 });
   } catch (error) {

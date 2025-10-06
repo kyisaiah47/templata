@@ -181,7 +181,7 @@ export function TemplataContentSidebar({
                   </div>
                 </SidebarMenuItem>
 
-                {template.sections.map((section, index) => (
+                {template.sections?.map((section, index) => (
                   <SidebarMenuItem key={section.id}>
                     <SidebarMenuButton
                       onClick={() => {
