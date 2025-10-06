@@ -121,7 +121,6 @@ export function ArticlesList({ articles, total, currentPage }: ArticlesListProps
           <div className="flex gap-2">
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
               <SelectTrigger className="w-[180px]">
-                <Filter className="w-4 h-4 mr-2" />
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
