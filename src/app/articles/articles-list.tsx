@@ -2,16 +2,15 @@
 
 import React, { useState, useMemo, useTransition } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TemplateImage } from '@/components/ui/template-image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Filter, Clock, User, Star, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Search, ChevronLeft, ChevronRight, Loader2, BookOpen, Brain, Layers } from 'lucide-react';
 import Link from 'next/link';
 
-const FEATURED_COUNT = 3;
-const ARTICLES_PER_PAGE = 50;
+const ARTICLES_PER_PAGE = 100;
 
 interface Article {
   id: string;
@@ -49,23 +48,6 @@ export function ArticlesList({ articles, total, currentPage }: ArticlesListProps
   const categories = useMemo(() => {
     const uniqueCategories = [...new Set(articles.map(post => post.category))];
     return uniqueCategories.sort();
-  }, [articles]);
-
-  // Get featured articles (curated selection)
-  const featuredArticles = useMemo(() => {
-    // Curated selection of high-quality, iconic articles
-    const featuredSlugs = [
-      'wedding-timeline-planning-master-schedule-guide',
-      'complete-first-time-home-buyer-guide-2025',
-      'building-your-baby-budget-financial-planning-guide'
-    ];
-
-    const featured = featuredSlugs.map(slug =>
-      articles.find(post => post.slug === slug)
-    ).filter(Boolean);
-
-    // Fallback to first 3 if curated articles not found
-    return featured.length === FEATURED_COUNT ? featured : articles.slice(0, FEATURED_COUNT);
   }, [articles]);
 
   // Filter articles based on search and filters
@@ -108,7 +90,7 @@ export function ArticlesList({ articles, total, currentPage }: ArticlesListProps
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 relative">
+    <div className="container mx-auto px-4 max-w-6xl relative">
       {/* Loading overlay */}
       {isPending && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
@@ -118,53 +100,10 @@ export function ArticlesList({ articles, total, currentPage }: ArticlesListProps
           </div>
         </div>
       )}
-      {/* Featured Articles Section */}
-      {currentPage === 1 && !searchQuery && selectedCategory === 'all' && selectedType === 'all' && selectedDifficulty === 'all' && (
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Featured Articles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredArticles.map((article: any) => (
-              <Link
-                key={article.id}
-                href={`/articles/${article.slug}`}
-                className="group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-colors"
-              >
-                <div className="aspect-video relative overflow-hidden">
-                  <TemplateImage
-                    templateName={article.category}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    alt={article.title}
-                  />
-                  <Badge className="absolute top-4 right-4 bg-primary">
-                    <Star className="w-3 h-3 mr-1" />
-                    Featured
-                  </Badge>
-                </div>
-                <div className="p-6">
-                  <Badge variant="outline" className="mb-3">{article.category}</Badge>
-                  <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4 line-clamp-2">{article.excerpt}</p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {article.readTime}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <User className="w-4 h-4" />
-                      {article.author}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
 
-      {/* Search and Filter Section */}
-      <section className="mb-8">
+      {/* Browse Section */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-6">Browse All Articles</h2>
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1 relative">
@@ -221,32 +160,36 @@ export function ArticlesList({ articles, total, currentPage }: ArticlesListProps
         </div>
 
         {/* Results count */}
-        <div className="mt-4 text-sm text-muted-foreground">
-          Showing {startIndex + 1}-{endIndex} of {hasActiveFilters ? filteredArticles.length : total} articles
+        <div className="mt-6 text-sm text-muted-foreground">
+          {hasActiveFilters ? (
+            `${filteredArticles.length} articles found`
+          ) : (
+            `${total.toLocaleString()} articles across all templates`
+          )}
         </div>
       </section>
 
-      {/* Articles Grid */}
+      {/* Articles List */}
       <section className="mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-0 divide-y divide-border">
           {displayArticles.map((article: any) => (
             <Link
               key={article.id}
               href={`/articles/${article.slug}`}
-              className="group border border-border rounded-lg p-6 hover:border-primary/50 transition-colors"
+              className="group block py-4 hover:text-primary transition-colors"
             >
-              <Badge variant="outline" className="mb-3">{article.category}</Badge>
-              <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                {article.title}
-              </h3>
-              <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{article.excerpt}</p>
-              <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {article.readTime}
-                </span>
-                <Badge variant="secondary" className="text-xs">{article.type}</Badge>
-                <Badge variant="outline" className="text-xs">{article.difficulty}</Badge>
+              <div className="flex items-start gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Badge variant="outline" className="text-xs">{article.category}</Badge>
+                    <Badge variant="secondary" className="text-xs">{article.type}</Badge>
+                    <span className="text-xs text-muted-foreground">{article.readTime}</span>
+                  </div>
+                  <h3 className="text-base font-medium mb-1 group-hover:text-primary transition-colors">
+                    {article.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground line-clamp-1">{article.excerpt}</p>
+                </div>
               </div>
             </Link>
           ))}
