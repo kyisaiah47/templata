@@ -49,7 +49,12 @@ export async function getArticleBySlug(slug: string) {
     .eq('slug', slug)
     .single();
 
-  if (error || !data) return null;
+  if (error || !data) {
+    console.error('[getArticleBySlug] Error:', error);
+    return null;
+  }
+
+  console.log('[getArticleBySlug] Content length:', data.content?.length || 0, 'chars');
 
   return {
     id: data.id,

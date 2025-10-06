@@ -10,8 +10,11 @@ interface ArticleContentProps {
 }
 
 export function ArticleContent({ content }: ArticleContentProps) {
-  // Filter out generation metadata and debug text
-  const cleanedContent = content
+  // Normalize line breaks and split content
+  // Handle both \n\n and \n as paragraph separators
+  const normalizedContent = content.replace(/\n\n+/g, '\n\n'); // Normalize multiple newlines to double
+
+  const cleanedContent = normalizedContent
     .split('\n\n')
     .filter(paragraph => {
       const trimmed = paragraph.trim();
@@ -19,8 +22,12 @@ export function ArticleContent({ content }: ArticleContentProps) {
       if (trimmed.includes('ARTICLE GENERATION COMPLETE')) return false;
       if (trimmed.includes('Article #')) return false;
       if (trimmed.match(/^---+$/)) return false; // Remove separator lines
+      if (trimmed.length === 0) return false; // Remove empty paragraphs
       return true;
     });
+
+  console.log('[ArticleContent] Total content length:', content.length, 'chars');
+  console.log('[ArticleContent] Number of paragraphs after cleaning:', cleanedContent.length);
 
   return (
     <div className="prose prose-lg max-w-none">
