@@ -43,19 +43,41 @@ function parseArticleFile(filePath) {
 }
 
 async function fixArticles() {
-  console.log('🔄 Finding ALL articles to update with full content...\n');
+  console.log('🔄 Counting total articles...\n');
 
-  // Get ALL articles (we need to fix the ones we just corrupted)
-  const { data: articles, error } = await supabase
+  // Get total count
+  const { count, error: countError } = await supabase
     .from('templata_articles')
-    .select('id, title, template, read_time');
+    .select('*', { count: 'exact', head: true });
 
-  if (error) {
-    console.error('Error fetching articles:', error);
+  if (countError) {
+    console.error('Error counting articles:', countError);
     return;
   }
 
-  console.log(`Found ${articles.length} articles to update\n`);
+  console.log(`Found ${count} total articles in database\n`);
+  console.log('🔄 Processing articles in batches...\n');
+
+  const BATCH_SIZE = 1000;
+  let allArticles = [];
+
+  for (let offset = 0; offset < count; offset += BATCH_SIZE) {
+    const { data: batch, error } = await supabase
+      .from('templata_articles')
+      .select('id, title, template, read_time')
+      .range(offset, offset + BATCH_SIZE - 1);
+
+    if (error) {
+      console.error('Error fetching batch:', error);
+      continue;
+    }
+
+    allArticles = allArticles.concat(batch);
+    console.log(`Fetched ${allArticles.length}/${count} articles...`);
+  }
+
+  const articles = allArticles;
+  console.log(`\nReady to process ${articles.length} articles\n`);
 
   let updated = 0;
   let failed = 0;
