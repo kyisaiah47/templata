@@ -428,7 +428,7 @@ export default function WorkspacePage() {
               </button>
 
               {templatesExpanded && (
-                <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto scrollbar-none">
+                <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
                   {categories.map((category) => (
                     <div key={category} className="mb-2">
                       <div className="text-xs text-sidebar-foreground/50 px-2 py-1">{category}</div>
@@ -471,7 +471,7 @@ export default function WorkspacePage() {
                 </button>
 
                 {promptsExpanded && (
-                  <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto scrollbar-none">
+                  <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
                     {loadingContent ? (
                       <div className="text-xs text-sidebar-foreground/50 px-2 py-2">Loading...</div>
                     ) : templatePrompts.length === 0 ? (
@@ -484,7 +484,7 @@ export default function WorkspacePage() {
                             <button
                               key={prompt.id}
                               onClick={() => handleInsertPrompt(prompt)}
-                              className="text-xs px-2 py-1 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors line-clamp-2"
+                              className="text-xs px-2 py-1 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors"
                             >
                               {prompt.prompt}
                             </button>
@@ -515,7 +515,7 @@ export default function WorkspacePage() {
                 </button>
 
                 {articlesExpanded && (
-                  <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto scrollbar-none">
+                  <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
                     {loadingContent ? (
                       <div className="text-xs text-sidebar-foreground/50 px-2 py-2">Loading...</div>
                     ) : templateArticles.length === 0 ? (
@@ -525,10 +525,9 @@ export default function WorkspacePage() {
                         <button
                           key={article.id}
                           onClick={() => handleOpenArticle(article)}
-                          className="text-xs px-2 py-1.5 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors"
+                          className="text-xs px-2 py-1.5 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors font-medium"
                         >
-                          <div className="line-clamp-1 font-medium">{article.title}</div>
-                          <div className="text-sidebar-foreground/50 text-xs mt-0.5">{article.readTime}</div>
+                          {article.title}
                         </button>
                       ))
                     )}
