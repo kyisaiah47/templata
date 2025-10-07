@@ -153,6 +153,21 @@ export default function WorkspacePage() {
     return template?.name || 'Select Template';
   }, [selectedTemplate]);
 
+  // Group prompts by category
+  const groupedPrompts = useMemo(() => {
+    const grouped: Record<string, Prompt[]> = {};
+    templatePrompts.forEach(prompt => {
+      const category = prompt.categoryName || 'General';
+      if (!grouped[category]) {
+        grouped[category] = [];
+      }
+      grouped[category].push(prompt);
+    });
+    return grouped;
+  }, [templatePrompts]);
+
+  const promptCategories = Object.keys(groupedPrompts).sort();
+
   const handleCloseArticle = () => {
     setOpenArticle(null);
   };
@@ -270,19 +285,26 @@ export default function WorkspacePage() {
                   {selectedTemplate ? 'No prompts available' : 'Select a template first'}
                 </div>
               ) : (
-                templatePrompts.map((prompt) => (
-                  <DropdownMenuItem
-                    key={prompt.id}
-                    onClick={() => handleInsertPrompt(prompt)}
-                    className="cursor-pointer"
-                  >
-                    <div className="flex flex-col gap-1">
-                      <span className="text-sm line-clamp-2">{prompt.prompt}</span>
-                      {prompt.categoryName && (
-                        <span className="text-xs text-muted-foreground">{prompt.categoryName}</span>
-                      )}
-                    </div>
-                  </DropdownMenuItem>
+                promptCategories.map((category) => (
+                  <DropdownMenuSub key={category}>
+                    <DropdownMenuSubTrigger>
+                      {category}
+                      <Badge variant="secondary" className="ml-2 h-5 px-1.5 text-xs">
+                        {groupedPrompts[category].length}
+                      </Badge>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent className="w-80 max-h-[300px] overflow-y-auto">
+                      {groupedPrompts[category].map((prompt) => (
+                        <DropdownMenuItem
+                          key={prompt.id}
+                          onClick={() => handleInsertPrompt(prompt)}
+                          className="cursor-pointer"
+                        >
+                          <span className="text-sm line-clamp-2">{prompt.prompt}</span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
                 ))
               )}
             </DropdownMenuContent>
