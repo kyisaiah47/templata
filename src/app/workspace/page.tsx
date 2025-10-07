@@ -31,22 +31,40 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { IconSearch } from "@tabler/icons-react"
 import { templateRegistry } from '@/registry/templates';
 import { useRouter } from 'next/navigation';
 import { ChartAreaInteractive } from '@/components/chart-area-interactive';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 export default function WorkspacePage() {
   const router = useRouter();
   const totalTemplates = templateRegistry.length;
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Listen for hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove #
+      setCurrentView(hash || 'dashboard');
+    };
+
+    handleHashChange(); // Set initial view
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   // Pagination state
   const [allPage, setAllPage] = useState(0);
   const [recentPage, setRecentPage] = useState(0);
   const [favoritesPage, setFavoritesPage] = useState(0);
   const [workspacesPage, setWorkspacesPage] = useState(0);
+  const [templatesPage, setTemplatesPage] = useState(0);
   const pageSize = 10;
+  const templatesPageSize = 20;
 
   // Mock data - replace with real data later
   const stats = {
@@ -74,6 +92,22 @@ export default function WorkspacePage() {
   const paginatedFavoriteTemplates = favoriteTemplates.slice(favoritesPage * pageSize, (favoritesPage + 1) * pageSize);
   const paginatedWorkspaces = workspaces.slice(workspacesPage * pageSize, (workspacesPage + 1) * pageSize);
 
+  // Filter templates for templates view
+  const filteredTemplates = useMemo(() => {
+    if (!searchQuery.trim()) return templateRegistry;
+    return templateRegistry.filter(t =>
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
+
+  const paginatedTemplatesView = useMemo(() => {
+    return filteredTemplates.slice(templatesPage * templatesPageSize, (templatesPage + 1) * templatesPageSize);
+  }, [filteredTemplates, templatesPage]);
+
+  const totalTemplatesPages = Math.ceil(filteredTemplates.length / templatesPageSize);
+
   return (
     <SidebarProvider
       style={
@@ -88,7 +122,8 @@ export default function WorkspacePage() {
         <SiteHeader />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            {currentView === 'dashboard' ? (
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
 
               {/* Stats Cards */}
               <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
@@ -426,7 +461,121 @@ export default function WorkspacePage() {
                 </Tabs>
               </div>
 
-            </div>
+              </div>
+            ) : currentView === 'templates' ? (
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 px-4 lg:px-6">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-3xl font-bold">Templates</h1>
+                    <p className="text-muted-foreground mt-1">
+                      {filteredTemplates.length} templates available
+                    </p>
+                  </div>
+                </div>
+
+                {/* Search */}
+                <div className="flex items-center gap-2 max-w-md">
+                  <div className="relative flex-1">
+                    <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search templates..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setTemplatesPage(0);
+                      }}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+
+                {/* Templates Table */}
+                <div className="rounded-lg border overflow-x-auto">
+                  <Table>
+                    <TableHeader className="bg-muted">
+                      <TableRow>
+                        <TableHead className="min-w-[200px]">Template</TableHead>
+                        <TableHead className="min-w-[120px]">Category</TableHead>
+                        <TableHead className="min-w-[300px] max-w-[400px]">Description</TableHead>
+                        <TableHead className="text-right min-w-[100px]">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {paginatedTemplatesView.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
+                            No templates found
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        paginatedTemplatesView.map((template) => (
+                          <TableRow key={template.id}>
+                            <TableCell className="font-medium">{template.name}</TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className="text-muted-foreground px-1.5">
+                                {template.category}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-sm text-muted-foreground max-w-[400px] truncate">
+                              {template.description}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => router.push(`/${template.id}/template`)}
+                              >
+                                View
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                {/* Pagination */}
+                {totalTemplatesPages > 1 && (
+                  <div className="flex items-center justify-between px-2">
+                    <div className="text-sm text-muted-foreground">
+                      Showing {templatesPage * templatesPageSize + 1} to {Math.min((templatesPage + 1) * templatesPageSize, filteredTemplates.length)} of {filteredTemplates.length} templates
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setTemplatesPage(Math.max(0, templatesPage - 1))}
+                        disabled={templatesPage === 0}
+                      >
+                        <IconChevronLeft className="h-4 w-4" />
+                        Previous
+                      </Button>
+                      <div className="text-sm text-muted-foreground">
+                        Page {templatesPage + 1} of {totalTemplatesPages}
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setTemplatesPage(templatesPage + 1)}
+                        disabled={templatesPage >= totalTemplatesPages - 1}
+                      >
+                        Next
+                        <IconChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-full px-4">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold mb-2">Coming Soon</h2>
+                  <p className="text-muted-foreground">This section is under construction.</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </SidebarInset>

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import {
   IconCamera,
   IconChartBar,
@@ -42,27 +43,27 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "#dashboard",
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
+      title: "Templates",
+      url: "#templates",
+      icon: IconFileDescription,
     },
     {
       title: "Analytics",
-      url: "#",
+      url: "#analytics",
       icon: IconChartBar,
     },
     {
       title: "Projects",
-      url: "#",
+      url: "#projects",
       icon: IconFolder,
     },
     {
       title: "Team",
-      url: "#",
+      url: "#team",
       icon: IconUsers,
     },
   ],
@@ -161,8 +162,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <Image
+                  src="/brand/templata-logo.svg"
+                  alt="Templata"
+                  width={20}
+                  height={20}
+                  className="dark:invert"
+                />
+                <span className="text-base font-semibold">Templata</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
