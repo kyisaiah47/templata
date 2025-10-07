@@ -440,7 +440,7 @@ export default function WorkspacePage() {
               </div>
             </div>
 
-            <div className="px-6 pb-6">
+            <div className="px-6 pb-6 pt-6">
               <div
                 style={{
                   transform: `scale(${articleFontSize / 100})`,
