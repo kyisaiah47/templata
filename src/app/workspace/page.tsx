@@ -440,7 +440,13 @@ export default function WorkspacePage() {
 
             <h2 className="text-lg font-semibold mb-4 leading-tight">{openArticle.title}</h2>
 
-            <div style={{ fontSize: `${articleFontSize}%` }}>
+            <div
+              style={{
+                transform: `scale(${articleFontSize / 100})`,
+                transformOrigin: 'top left',
+                width: `${100 / (articleFontSize / 100)}%`
+              }}
+            >
               {openArticle.content ? (
                 <ArticleContent content={openArticle.content} />
               ) : (
