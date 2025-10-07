@@ -292,6 +292,7 @@ export function SimpleEditor({ content = "", onUpdate, onSwitchMode, templateId 
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
           ref={toolbarRef}
+          variant="floating"
           style={{
             ...(isMobile
               ? {

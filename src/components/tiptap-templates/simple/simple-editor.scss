@@ -77,6 +77,18 @@ body,
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.simple-editor-wrapper .tiptap-toolbar[data-variant="floating"] {
+  position: sticky;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+  margin: 1rem auto 0;
 }
 
 .simple-editor-content {
@@ -90,4 +102,5 @@ body,
 .simple-editor-content .tiptap.ProseMirror.simple-editor {
   flex: 1;
   padding: 1rem;
+  padding-top: 0;
 }
