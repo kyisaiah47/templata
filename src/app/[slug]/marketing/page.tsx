@@ -1,54 +1,72 @@
 import type { Metadata } from 'next';
+import { getTemplateById } from '@/registry/templates';
 import MarketingClient from './marketing-client';
 
-interface LandingPageData {
-  templateLanding: {
-    seo: {
-      title: string;
-      description: string;
-      keywords: string[];
-      ogTitle: string;
-      ogDescription: string;
-    };
-  };
-}
-
-// Generate metadata function
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const template = getTemplateById(slug);
 
-  // Try to load landing page data for SEO
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3002'}/${slug}-landing-page.json`);
-    if (response.ok) {
-      const data: LandingPageData = await response.json();
-      return {
-        title: data.templateLanding.seo.title,
-        description: data.templateLanding.seo.description,
-        keywords: data.templateLanding.seo.keywords.join(', '),
-        openGraph: {
-          title: data.templateLanding.seo.ogTitle,
-          description: data.templateLanding.seo.ogDescription,
-          url: `/${slug}/marketing`,
-          siteName: 'Templata',
-          type: 'website',
-        },
-        twitter: {
-          card: 'summary_large_image',
-          title: data.templateLanding.seo.ogTitle,
-          description: data.templateLanding.seo.ogDescription,
-        },
-      };
-    }
-  } catch (error) {
-    console.error(`Error loading metadata for ${slug}:`, error);
+  if (!template?.template) {
+    return {
+      title: 'Template Not Found | Templata',
+      description: 'The requested template could not be found.',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
   }
 
-  // Fallback metadata
-  const templateName = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  const templateData = template.template;
+  const title = `${templateData.title} - AI-Powered Template | Templata`;
+  const description = `${templateData.description} Get expert guidance with 15,000+ prompts and 26,000+ articles. Transform how you plan your ${templateData.title.toLowerCase()} with Templata's AI-powered workspace.`;
+
   return {
-    title: `${templateName} Template - Organize Your ${templateName} | Templata`,
-    description: `Transform your ${templateName.toLowerCase()} planning with our comprehensive template. Get expert guidance, actionable prompts, and step-by-step organization.`,
+    title,
+    description,
+    keywords: `${templateData.title.toLowerCase()}, ${templateData.title.toLowerCase()} template, ${templateData.category.toLowerCase()}, life planning, templata, ai planning tool, life organization`,
+    authors: [{ name: 'Templata' }],
+    creator: 'Templata',
+    publisher: 'Templata',
+    metadataBase: new URL('https://templata.com'),
+    alternates: {
+      canonical: `/${slug}/marketing`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `https://templata.com/${slug}/marketing`,
+      siteName: 'Templata',
+      images: [
+        {
+          url: `/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `${templateData.title} Template - Templata`,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`/og-image.jpg`],
+      creator: '@templata',
+      site: '@templata',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 
