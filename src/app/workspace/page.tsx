@@ -381,10 +381,16 @@ export default function WorkspacePage() {
       </header>
 
       {/* Main Content Area */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div
+        className="flex flex-1 overflow-hidden relative"
+        style={{
+          backgroundImage: 'radial-gradient(circle, hsl(var(--muted-foreground) / 0.08) 1px, transparent 1px)',
+          backgroundSize: '24px 24px'
+        }}
+      >
         {/* Editor - Full width with centered content */}
         <div className="w-full flex flex-col">
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto bg-background/80">
             <Suspense fallback={
               <div className="flex items-center justify-center h-full">
                 <div className="text-muted-foreground">Loading editor...</div>
