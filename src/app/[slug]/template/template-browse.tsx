@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowRight, Sparkles, FileText } from 'lucide-react';
 import { useUserUnlocks } from '@/contexts/UserUnlockContext';
+import { PaywallModal } from '@/components/paywall-modal';
 
 interface TemplateBrowseProps {
   params: Promise<{ slug: string }>;
@@ -39,6 +40,8 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [unlocking, setUnlocking] = useState(false);
+  const [paywallOpen, setPaywallOpen] = useState(false);
+  const [paywallTrigger, setPaywallTrigger] = useState<'unlock-limit' | 'locked-content'>('unlock-limit');
 
   useEffect(() => {
     async function fetchData() {
@@ -89,8 +92,8 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
       if (!isTemplateUnlocked(slug)) {
         // Check if user can unlock more
         if (!canUnlockMore()) {
-          // TODO: Show paywall modal
-          alert('You have used all 3 free template unlocks. Upgrade to Pro for unlimited access.');
+          setPaywallTrigger('unlock-limit');
+          setPaywallOpen(true);
           return;
         }
 
@@ -99,8 +102,8 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
           await unlockTemplate(slug);
         } catch (error: any) {
           if (error.message === 'UPGRADE_REQUIRED') {
-            // TODO: Show paywall modal
-            alert('You have used all 3 free template unlocks. Upgrade to Pro for unlimited access.');
+            setPaywallTrigger('unlock-limit');
+            setPaywallOpen(true);
             return;
           }
           throw error;
@@ -126,8 +129,8 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
 
       // Check if template is already unlocked
       if (!isTemplateUnlocked(slug)) {
-        // TODO: Show paywall modal
-        alert('This article is locked. Unlock this template to access all articles.');
+        setPaywallTrigger('locked-content');
+        setPaywallOpen(true);
         return;
       }
 
@@ -145,7 +148,15 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
   };
 
   return (
-    <PageLayout>
+    <>
+      <PaywallModal
+        isOpen={paywallOpen}
+        onClose={() => setPaywallOpen(false)}
+        trigger={paywallTrigger}
+        templateName={templateData.title}
+      />
+
+      <PageLayout>
       {/* Marketing Hero */}
       <section className="py-24 md:py-32 border-b">
         <div className="container mx-auto max-w-7xl px-4">
@@ -278,5 +289,6 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
         </div>
       </div>
     </PageLayout>
+    </>
   );
 }

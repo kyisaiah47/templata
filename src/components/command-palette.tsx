@@ -21,17 +21,27 @@ import {
   ChevronRight,
   FileText,
   Sparkles,
+  Lock,
+  Layout,
 } from "lucide-react"
 import { SubtleGlow } from "@/components/ui/glow-variants"
 import { useRecentTemplates } from "@/hooks/use-recent-templates"
+import { useUserUnlocks } from "@/contexts/UserUnlockContext"
 
 // Import data
-import { templateRegistry } from "@/registry/templates"
+import { templateRegistry, getAllCategories } from "@/registry/templates"
 
 interface CommandPaletteProps {
   isOpen: boolean
   onClose: () => void
   autoFocus?: boolean
+  mode?: 'default' | 'life-os-mode' | 'template-mode'
+  templateMode?: {
+    template: any
+    onSectionChange?: (section: number) => void
+    onInsertPrompt?: (prompt: any) => void
+    onOpenResource?: (resource: any) => void
+  }
 }
 
 const getTemplateIcon = (templateId: string) => {
@@ -76,16 +86,22 @@ export function CommandPalette({
   isOpen,
   onClose,
   autoFocus = true,
+  mode: paletteMode = 'default',
+  templateMode,
 }: CommandPaletteProps) {
   const [query, setQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState("")
-  const [mode, setMode] = useState<"all" | "templates" | "articles">("all")
+  const [tab, setTab] = useState<"search" | "templates">("search")
+  const [searchMode, setSearchMode] = useState<"all" | "prompts" | "articles">("all")
+  const [searchFilter, setSearchFilter] = useState<"selected" | "all">("selected")
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
   const [articleResults, setArticleResults] = useState<any[]>([])
   const [articlesTotal, setArticlesTotal] = useState(0)
   const [articlesLoading, setArticlesLoading] = useState(false)
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set())
 
   const { addRecentItem } = useRecentTemplates()
+  const { unlockData, isTemplateUnlocked } = useUserUnlocks()
 
   // Debounce search query
   useEffect(() => {
@@ -152,28 +168,40 @@ export function CommandPalette({
     }))
   }, [])
 
+  // Filter templates by unlock status for Life OS mode
+  const filterableTemplates = useMemo(() => {
+    if (paletteMode !== 'life-os-mode') return searchableTemplates
+
+    // For free tier users with unlock filter on, only show unlocked templates
+    if (unlockData && !unlockData.hasUnlimitedAccess && searchFilter === 'selected') {
+      return searchableTemplates.filter(t => isTemplateUnlocked(t.id))
+    }
+
+    return searchableTemplates
+  }, [searchableTemplates, paletteMode, unlockData, searchFilter, isTemplateUnlocked])
+
   // Search templates with relevance scoring (articles come from API)
   const searchResults = useMemo(() => {
-    if (!debouncedQuery) return { templates: [], articles: [] }
+    if (!debouncedQuery && tab === 'search') return { templates: [], articles: [] }
 
     const queryLower = debouncedQuery.toLowerCase()
 
-    const templateResults = (mode === "articles" ? [] : searchableTemplates)
+    const templateResults = (searchMode === "articles" ? [] : filterableTemplates)
       .map(template => {
         let score = 0
         if (template.name.toLowerCase().includes(queryLower)) score += 10
         if (template.name.toLowerCase().startsWith(queryLower)) score += 5
         if (template.description.toLowerCase().includes(queryLower)) score += 3
         if (template.category.toLowerCase().includes(queryLower)) score += 2
-        return { ...template, relevanceScore: score }
+        return { ...template, relevanceScore: score, isLocked: paletteMode === 'life-os-mode' && !isTemplateUnlocked(template.id) }
       })
       .filter(t => t.relevanceScore > 0)
       .sort((a, b) => b.relevanceScore - a.relevanceScore)
       .slice(0, 20)
 
     // Articles come from API (already searched server-side)
-    return { templates: templateResults, articles: mode === "templates" ? [] : articleResults }
-  }, [debouncedQuery, searchableTemplates, mode, articleResults])
+    return { templates: templateResults, articles: searchMode === "articles" || searchMode === "all" ? articleResults : [] }
+  }, [debouncedQuery, filterableTemplates, searchMode, articleResults, tab, paletteMode, isTemplateUnlocked])
 
   const handleClose = () => {
     setQuery("")
@@ -202,6 +230,37 @@ export function CommandPalette({
     handleClose()
   }
 
+  // Group templates by category for Templates tab
+  const groupedTemplates = useMemo(() => {
+    const grouped: Record<string, typeof filterableTemplates> = {}
+
+    filterableTemplates.forEach(template => {
+      if (!grouped[template.category]) {
+        grouped[template.category] = []
+      }
+      grouped[template.category].push(template)
+    })
+
+    // Sort templates within each category
+    Object.keys(grouped).forEach(category => {
+      grouped[category].sort((a, b) => a.name.localeCompare(b.name))
+    })
+
+    return grouped
+  }, [filterableTemplates])
+
+  const categories = Object.keys(groupedTemplates).sort()
+
+  const toggleCategory = (category: string) => {
+    const newExpanded = new Set(expandedCategories)
+    if (newExpanded.has(category)) {
+      newExpanded.delete(category)
+    } else {
+      newExpanded.add(category)
+    }
+    setExpandedCategories(newExpanded)
+  }
+
   const hasResults = searchResults.templates.length > 0 || searchResults.articles.length > 0
 
   return (
@@ -218,58 +277,109 @@ export function CommandPalette({
 
             {/* Header */}
             <div className="border-b bg-background/50 p-6 flex-shrink-0">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
-                <Input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder={query ? "Search..." : `Try "${searchSuggestions[currentSuggestionIndex]}"`}
-                  className="pl-12 pr-24 h-14 text-lg bg-background border-0 focus:outline-none rounded-xl"
-                  autoFocus={autoFocus}
-                />
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 border border-muted rounded-lg px-2 py-1">
-                    <kbd className="px-1.5 py-0.5 bg-background border border-border rounded text-xs font-mono">Esc</kbd>
-                    <span>to close</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Simple Mode Tabs - only show when searching */}
-              {query && (
-                <div className="flex items-center gap-1 mt-4 p-1 bg-muted/30 rounded-lg w-fit">
+              {/* Main Tabs - Search vs Templates (Life OS mode only) */}
+              {paletteMode === 'life-os-mode' && (
+                <div className="flex items-center gap-2 mb-4 p-1 bg-muted/30 rounded-lg w-fit">
                   <Button
-                    variant={mode === "all" ? "default" : "ghost"}
+                    variant={tab === "search" ? "default" : "ghost"}
                     size="sm"
-                    className="h-7 text-xs"
-                    onClick={() => setMode("all")}
+                    className="h-8"
+                    onClick={() => setTab("search")}
                   >
-                    All
+                    <Search className="w-4 h-4 mr-2" />
+                    Search
                   </Button>
                   <Button
-                    variant={mode === "templates" ? "default" : "ghost"}
+                    variant={tab === "templates" ? "default" : "ghost"}
                     size="sm"
-                    className="h-7 text-xs flex items-center gap-1"
-                    onClick={() => setMode("templates")}
+                    className="h-8"
+                    onClick={() => setTab("templates")}
                   >
-                    <Target className="w-3 h-3" />
+                    <Layout className="w-4 h-4 mr-2" />
                     Templates
                   </Button>
-                  <Button
-                    variant={mode === "articles" ? "default" : "ghost"}
-                    size="sm"
-                    className="h-7 text-xs flex items-center gap-1"
-                    onClick={() => setMode("articles")}
-                  >
-                    <FileText className="w-3 h-3" />
-                    Articles
-                  </Button>
+                </div>
+              )}
+
+              {/* Search Input - only for Search tab */}
+              {tab === 'search' && (
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
+                  <Input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder={query ? "Search..." : `Try "${searchSuggestions[currentSuggestionIndex]}"`}
+                    className="pl-12 pr-24 h-14 text-lg bg-background border-0 focus:outline-none rounded-xl"
+                    autoFocus={autoFocus}
+                  />
+                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 border border-muted rounded-lg px-2 py-1">
+                      <kbd className="px-1.5 py-0.5 bg-background border border-border rounded text-xs font-mono">Esc</kbd>
+                      <span>to close</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Search Mode Tabs & Filter - only show when searching in Search tab */}
+              {tab === 'search' && query && (
+                <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center gap-1 p-1 bg-muted/30 rounded-lg w-fit">
+                    <Button
+                      variant={searchMode === "all" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 text-xs"
+                      onClick={() => setSearchMode("all")}
+                    >
+                      All
+                    </Button>
+                    <Button
+                      variant={searchMode === "prompts" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 text-xs flex items-center gap-1"
+                      onClick={() => setSearchMode("prompts")}
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      Prompts
+                    </Button>
+                    <Button
+                      variant={searchMode === "articles" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-7 text-xs flex items-center gap-1"
+                      onClick={() => setSearchMode("articles")}
+                    >
+                      <FileText className="w-3 h-3" />
+                      Articles
+                    </Button>
+                  </div>
+
+                  {/* Pro User Filter Toggle */}
+                  {paletteMode === 'life-os-mode' && unlockData?.hasUnlimitedAccess && (
+                    <div className="flex items-center gap-1 p-1 bg-muted/30 rounded-lg">
+                      <Button
+                        variant={searchFilter === "selected" ? "default" : "ghost"}
+                        size="sm"
+                        className="h-7 text-xs"
+                        onClick={() => setSearchFilter("selected")}
+                      >
+                        Selected only
+                      </Button>
+                      <Button
+                        variant={searchFilter === "all" ? "default" : "ghost"}
+                        size="sm"
+                        className="h-7 text-xs"
+                        onClick={() => setSearchFilter("all")}
+                      >
+                        All templates
+                      </Button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
-            {/* Results - only show when typing */}
-            {query && (
+            {/* Results - Search tab */}
+            {tab === 'search' && query && (
               <div className="flex-1 overflow-y-auto min-h-0 p-6 space-y-6">
                 {/* Templates Results */}
                 {searchResults.templates.length > 0 && (
@@ -278,17 +388,22 @@ export function CommandPalette({
                         Templates ({searchResults.templates.length})
                       </h3>
                       <div className="space-y-2">
-                        {searchResults.templates.map((template) => {
+                        {searchResults.templates.map((template: any) => {
                           const Icon = getTemplateIcon(template.id)
+                          const isLocked = template.isLocked
                           return (
                             <Link key={template.id} href={template.url} onClick={() => handleTemplateClick(template)}>
                               <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50">
                                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                                  <Icon className="w-4 h-4 text-primary" />
+                                  {isLocked ? (
+                                    <Lock className="w-4 h-4 text-muted-foreground" />
+                                  ) : (
+                                    <Icon className="w-4 h-4 text-primary" />
+                                  )}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <h4 className="font-semibold text-sm group-hover:text-primary transition-colors">
-                                    {template.name}
+                                  <h4 className={`font-semibold text-sm ${isLocked ? 'text-muted-foreground' : 'group-hover:text-primary'} transition-colors`}>
+                                    {template.name} {isLocked && '🔒'}
                                   </h4>
                                   <p className="text-xs text-muted-foreground line-clamp-1">
                                     {template.description}
@@ -297,7 +412,13 @@ export function CommandPalette({
                                 <Badge variant="outline" className="text-xs">
                                   {template.category}
                                 </Badge>
-                                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                {isLocked ? (
+                                  <Badge variant="secondary" className="text-xs">
+                                    Upgrade to Pro
+                                  </Badge>
+                                ) : (
+                                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                )}
                               </div>
                             </Link>
                           )
@@ -355,8 +476,78 @@ export function CommandPalette({
               </div>
             )}
 
+            {/* Templates Tab - Browse all templates */}
+            {tab === 'templates' && (
+              <div className="flex-1 overflow-y-auto min-h-0 p-6">
+                <div className="space-y-4">
+                  {categories.map((category) => {
+                    const templates = groupedTemplates[category]
+                    const isExpanded = expandedCategories.has(category)
+
+                    return (
+                      <div key={category} className="border-b pb-4">
+                        <button
+                          onClick={() => toggleCategory(category)}
+                          className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                        >
+                          <div className="flex items-center gap-2">
+                            <ChevronRight
+                              className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                            />
+                            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                              {category}
+                            </h3>
+                          </div>
+                          <Badge variant="outline" className="text-xs">
+                            {templates.length}
+                          </Badge>
+                        </button>
+
+                        {isExpanded && (
+                          <div className="mt-2 space-y-1 pl-6">
+                            {templates.map((template: any) => {
+                              const Icon = getTemplateIcon(template.id)
+                              const isLocked = paletteMode === 'life-os-mode' && !isTemplateUnlocked(template.id)
+
+                              return (
+                                <Link
+                                  key={template.id}
+                                  href={template.url}
+                                  onClick={() => handleTemplateClick(template)}
+                                >
+                                  <div className="group flex items-center gap-3 p-2 rounded-lg transition-all duration-200 hover:bg-muted/50">
+                                    <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                                      {isLocked ? (
+                                        <Lock className="w-3 h-3 text-muted-foreground" />
+                                      ) : (
+                                        <Icon className="w-3 h-3 text-primary" />
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <h4 className={`text-sm ${isLocked ? 'text-muted-foreground' : 'group-hover:text-primary'} transition-colors`}>
+                                        {template.name} {isLocked && '🔒'}
+                                      </h4>
+                                    </div>
+                                    {isLocked && (
+                                      <Badge variant="secondary" className="text-xs">
+                                        Locked
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Footer - only show when searching */}
-            {query && (
+            {tab === 'search' && query && (
               <div className="border-t bg-muted/20 px-6 py-3 flex-shrink-0">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center gap-4">
