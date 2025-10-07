@@ -190,8 +190,19 @@ export default function WorkspacePage() {
     }
   };
 
-  const handleOpenArticle = (article: Article) => {
-    setOpenArticle(article);
+  const handleOpenArticle = async (article: Article) => {
+    // Set article with loading state
+    setOpenArticle({ ...article, content: '' });
+
+    // Fetch full article content
+    try {
+      const response = await fetch(`/api/articles?id=${article.id}`);
+      const data = await response.json();
+      setOpenArticle({ ...article, content: data.article?.content || '' });
+    } catch (error) {
+      console.error('Error fetching article content:', error);
+      setOpenArticle({ ...article, content: '<p>Failed to load article content.</p>' });
+    }
   };
 
   return (

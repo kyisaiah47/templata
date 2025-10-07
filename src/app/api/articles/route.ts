@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
     const query = searchParams.get('q') || '';
     const type = searchParams.get('type') || '';
     const difficulty = searchParams.get('difficulty') || '';
@@ -11,6 +12,40 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get('page') || '1');
     const pageSize = parseInt(searchParams.get('pageSize') || '100');
     const limit = parseInt(searchParams.get('limit') || pageSize.toString());
+
+    // If ID is provided, fetch single article with content
+    if (id) {
+      const { data, error } = await supabase
+        .from('templata_articles')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        console.error('[API /articles] Error fetching by ID:', error);
+        return NextResponse.json(
+          { error: 'Article not found' },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({
+        article: {
+          id: data.id,
+          title: data.title,
+          excerpt: data.excerpt,
+          content: data.content,
+          author: data.author,
+          publishedAt: data.published_at,
+          readTime: data.read_time,
+          slug: data.slug,
+          type: data.type,
+          difficulty: data.difficulty,
+          tags: data.tags,
+          template: data.template,
+        }
+      });
+    }
 
     // Calculate pagination
     const from = (page - 1) * pageSize;
