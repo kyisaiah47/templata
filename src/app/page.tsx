@@ -55,41 +55,6 @@ export default function LandingPage() {
 		url: 'https://templata.com',
 		applicationCategory: 'ProductivityApplication',
 		operatingSystem: 'Web',
-		offers: [
-			{
-				'@type': 'Offer',
-				price: '0',
-				priceCurrency: 'USD',
-				name: 'Free Plan',
-				description: '1-2 starter templates with basic features'
-			},
-			{
-				'@type': 'Offer',
-				price: '9',
-				priceCurrency: 'USD',
-				name: 'Plus Plan',
-				description: 'Full access to 1,298 templates with advanced features',
-				priceSpecification: {
-					'@type': 'UnitPriceSpecification',
-					price: '9',
-					priceCurrency: 'USD',
-					unitCode: 'MON'
-				}
-			},
-			{
-				'@type': 'Offer',
-				price: '15',
-				priceCurrency: 'USD',
-				name: 'Pro Plan',
-				description: 'Everything in Plus with AI features and team collaboration',
-				priceSpecification: {
-					'@type': 'UnitPriceSpecification',
-					price: '15',
-					priceCurrency: 'USD',
-					unitCode: 'MON'
-				}
-			}
-		],
 		creator: {
 			'@type': 'Organization',
 			name: 'Templata',
@@ -554,197 +519,6 @@ export default function LandingPage() {
 				</div>
 			</section>
 
-			{/* Pricing Section */}
-			<section className="py-24">
-				<div className="container mx-auto max-w-7xl px-4">
-					<div className="text-center space-y-4 mb-16">
-						<Badge
-							variant="outline"
-							className="px-4 py-2"
-						>
-							<Star className="mr-2 h-4 w-4" />
-							Choose Your Plan
-						</Badge>
-						<h2 className="text-4xl md:text-5xl font-bold leading-tight">
-							Simple pricing for
-							<br />
-							<span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-								every need
-							</span>
-						</h2>
-						<p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-							Start free and upgrade as you grow. All plans include our intelligent
-							guidance and step-by-step setup.
-						</p>
-					</div>
-
-					<div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-						{/* Free Tier */}
-						<Card className="relative bg-background border-2">
-							<CardHeader className="text-center pb-8">
-								<CardTitle className="text-2xl font-bold">Free</CardTitle>
-								<div className="text-4xl font-bold">$0</div>
-								<CardDescription className="text-base">
-									Perfect for trying out Templata
-								</CardDescription>
-							</CardHeader>
-							<CardContent className="space-y-4">
-								<div className="space-y-3">
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>1-2 starter templates</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Structured templates</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Export to PDF/CSV</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Basic support</span>
-									</div>
-								</div>
-								<Button
-									className="w-full mt-8"
-									variant="outline"
-									onClick={() => {
-										const event = new KeyboardEvent('keydown', {
-											key: 'k',
-											metaKey: true,
-											bubbles: true
-										});
-										document.dispatchEvent(event);
-									}}
-								>
-									{isLoggedIn ? "Open Templates" : "Get Started Free"}
-								</Button>
-							</CardContent>
-						</Card>
-
-						{/* Plus Tier */}
-						<Card className="relative bg-gradient-to-br from-primary/5 to-primary/10 border-2 border-primary shadow-xl ring-2 ring-primary/20 transform scale-105">
-							<div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-								<Badge className="px-4 py-1.5 bg-gradient-to-r from-primary to-primary/80 shadow-lg">
-									<Star className="mr-1 h-3 w-3" />
-									Most Popular
-								</Badge>
-							</div>
-							<CardHeader className="text-center pb-8 pt-8">
-								<CardTitle className="text-2xl font-bold">Plus</CardTitle>
-								<div className="text-4xl font-bold">
-									$9
-									<span className="text-lg font-normal text-muted-foreground">
-										/mo
-									</span>
-								</div>
-								<CardDescription className="text-base">
-									Full access to all templates
-								</CardDescription>
-							</CardHeader>
-							<CardContent className="space-y-4">
-								<div className="space-y-3">
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span className="font-medium">
-											Everything in Free, plus:
-										</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Full access to 1,298 templates</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Deeper workflows & automation</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Unlimited active templates</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Advanced customization</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Priority support</span>
-									</div>
-								</div>
-								<Button
-									className="w-full mt-8"
-									asChild
-								>
-									<Link href="/login">Start Plus Trial</Link>
-								</Button>
-							</CardContent>
-						</Card>
-
-						{/* Pro Tier */}
-						<Card className="relative bg-background border-2">
-							<CardHeader className="text-center pb-8">
-								<CardTitle className="text-2xl font-bold">Pro</CardTitle>
-								<div className="text-4xl font-bold">
-									$15
-									<span className="text-lg font-normal text-muted-foreground">
-										/mo
-									</span>
-								</div>
-								<CardDescription className="text-base">
-									For power users and teams
-								</CardDescription>
-							</CardHeader>
-							<CardContent className="space-y-4">
-								<div className="space-y-3">
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span className="font-medium">
-											Everything in Plus, plus:
-										</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>AI Autofill from documents</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Calendar & tool integrations</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Team collaboration</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>White-label exports</span>
-									</div>
-									<div className="flex items-center gap-3">
-										<CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-										<span>Dedicated support</span>
-									</div>
-								</div>
-								<Button
-									className="w-full mt-8"
-									variant="outline"
-									asChild
-								>
-									<Link href="/login">Start Pro Trial</Link>
-								</Button>
-							</CardContent>
-						</Card>
-					</div>
-
-					<div className="text-center mt-12">
-						<p className="text-sm text-muted-foreground">
-							All plans include 14-day free trial • No commitment • Cancel
-							anytime
-						</p>
-					</div>
-				</div>
-			</section>
-
 			{/* CTA Section */}
 			<section className="py-24">
 				<div className="container mx-auto max-w-7xl px-4">
@@ -753,10 +527,7 @@ export default function LandingPage() {
 							Ready to organize your next big moment?
 						</h2>
 						<p className="text-xl text-muted-foreground">
-							{isLoggedIn
-								? "Choose from our curated collection of templates and start organizing in minutes."
-								: "Choose from our curated collection of templates and get started in minutes. Start free or unlock full access with our premium plans."
-							}
+							Choose from our curated collection of templates and start organizing in minutes.
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
 							<Button
@@ -774,14 +545,16 @@ export default function LandingPage() {
 								Browse Templates
 								<ArrowRight className="ml-2 h-5 w-5" />
 							</Button>
-							<Button
-								variant="outline"
-								size="lg"
-								className="h-12 px-8 text-base"
-								asChild
-							>
-								<Link href="/login">Start Plus Trial</Link>
-							</Button>
+							{!isLoggedIn && (
+								<Button
+									variant="outline"
+									size="lg"
+									className="h-12 px-8 text-base"
+									asChild
+								>
+									<Link href="/login">Get Started</Link>
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>
