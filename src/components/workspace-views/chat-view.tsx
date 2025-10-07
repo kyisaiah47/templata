@@ -14,7 +14,11 @@ interface Message {
   category?: string;
 }
 
-export function ChatView() {
+interface ChatViewProps {
+  templateId: string | null;
+}
+
+export function ChatView({ templateId }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',

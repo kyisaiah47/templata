@@ -19,7 +19,11 @@ interface Category {
   prompts: Prompt[];
 }
 
-export function SplitView() {
+interface SplitViewProps {
+  templateId: string | null;
+}
+
+export function SplitView({ templateId }: SplitViewProps) {
   const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [searchQuery, setSearchQuery] = useState('');

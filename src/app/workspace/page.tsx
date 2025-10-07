@@ -50,6 +50,9 @@ export default function WorkspacePage() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentView, setCurrentView] = useState('dashboard');
   const [viewMode, setViewMode] = useState<ViewMode>('chat');
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+    templateRegistry[0]?.id || null
+  );
   const [searchQuery, setSearchQuery] = useState('');
   const [promptsSearchQuery, setPromptsSearchQuery] = useState('');
   const [articlesSearchQuery, setArticlesSearchQuery] = useState('');
@@ -257,7 +260,13 @@ export default function WorkspacePage() {
         } as React.CSSProperties
       }
     >
-      <WorkspaceSidebar variant="inset" viewMode={viewMode} onViewModeChange={setViewMode} />
+      <WorkspaceSidebar
+        variant="inset"
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        selectedTemplateId={selectedTemplateId}
+        onTemplateChange={setSelectedTemplateId}
+      />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
@@ -939,14 +948,16 @@ export default function WorkspacePage() {
                 {/* Workspace Header */}
                 <div className="border-b px-4 py-3">
                   <h1 className="text-2xl font-bold">My Workspace</h1>
-                  <p className="text-sm text-muted-foreground">Template: Life Planning</p>
+                  <p className="text-sm text-muted-foreground">
+                    Template: {templateRegistry.find(t => t.id === selectedTemplateId)?.name || 'Select a template'}
+                  </p>
                 </div>
 
                 {/* View Mode Content */}
                 <div className="flex-1 overflow-hidden">
-                  {viewMode === 'chat' && <ChatView />}
-                  {viewMode === 'split' && <SplitView />}
-                  {viewMode === 'board' && <BoardView />}
+                  {viewMode === 'chat' && <ChatView templateId={selectedTemplateId} />}
+                  {viewMode === 'split' && <SplitView templateId={selectedTemplateId} />}
+                  {viewMode === 'board' && <BoardView templateId={selectedTemplateId} />}
                 </div>
               </div>
             ) : (

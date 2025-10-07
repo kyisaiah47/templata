@@ -17,6 +17,7 @@ import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import { NavViewMode, ViewMode } from "@/components/nav-view-mode"
+import { NavTemplateSelector } from "@/components/nav-template-selector"
 import {
   Sidebar,
   SidebarContent,
@@ -82,9 +83,11 @@ const data = {
 interface WorkspaceSidebarProps extends React.ComponentProps<typeof Sidebar> {
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  selectedTemplateId: string | null;
+  onTemplateChange: (templateId: string) => void;
 }
 
-export function WorkspaceSidebar({ viewMode, onViewModeChange, ...props }: WorkspaceSidebarProps) {
+export function WorkspaceSidebar({ viewMode, onViewModeChange, selectedTemplateId, onTemplateChange, ...props }: WorkspaceSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -111,6 +114,10 @@ export function WorkspaceSidebar({ viewMode, onViewModeChange, ...props }: Works
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavViewMode currentMode={viewMode} onModeChange={onViewModeChange} />
+        <NavTemplateSelector
+          selectedTemplateId={selectedTemplateId}
+          onTemplateChange={onTemplateChange}
+        />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

@@ -28,7 +28,11 @@ interface PromptCard {
   column: 'todo' | 'thinking' | 'done'; // Required by Kanban
 }
 
-export function BoardView() {
+interface BoardViewProps {
+  templateId: string | null;
+}
+
+export function BoardView({ templateId }: BoardViewProps) {
   const [prompts, setPrompts] = useState<PromptCard[]>([
     {
       id: '1',
