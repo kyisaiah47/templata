@@ -61,6 +61,7 @@ export default function WorkspacePage() {
   const [templatesExpanded, setTemplatesExpanded] = useState(false);
   const [promptsExpanded, setPromptsExpanded] = useState(false);
   const [articlesExpanded, setArticlesExpanded] = useState(false);
+  const [workspaceFontSize, setWorkspaceFontSize] = useState<'sm' | 'md' | 'lg'>('md');
   const { unlockData, loading: unlockLoading } = useUserUnlocks();
   const { currentTheme, setTheme: setCustomTheme } = useCustomTheme();
 
@@ -265,8 +266,14 @@ export default function WorkspacePage() {
     }
   };
 
+  const fontSizeClasses = {
+    sm: 'text-xs',
+    md: 'text-sm',
+    lg: 'text-base'
+  };
+
   return (
-    <div className="flex flex-col h-screen w-full bg-background text-foreground">
+    <div className={`flex flex-col h-screen w-full bg-background text-foreground ${fontSizeClasses[workspaceFontSize]}`}>
       {/* Command Palette */}
       <CommandPalette
         isOpen={commandPaletteOpen}
@@ -368,10 +375,35 @@ export default function WorkspacePage() {
                   })}
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
-              <DropdownMenuItem>
-                <Type className="h-4 w-4 mr-2" />
-                Font style
-              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Type className="h-4 w-4 mr-2" />
+                  Font size
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent className="bg-popover">
+                  <DropdownMenuItem
+                    onClick={() => setWorkspaceFontSize('sm')}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="flex-1">Small</span>
+                    {workspaceFontSize === 'sm' && <Check className="h-3 w-3" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setWorkspaceFontSize('md')}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="flex-1">Medium</span>
+                    {workspaceFontSize === 'md' && <Check className="h-3 w-3" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setWorkspaceFontSize('lg')}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="flex-1">Large</span>
+                    {workspaceFontSize === 'lg' && <Check className="h-3 w-3" />}
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
               <DropdownMenuItem>
                 <Copy className="h-4 w-4 mr-2" />
                 Duplicate workspace
@@ -624,7 +656,7 @@ export default function WorkspacePage() {
               </div>
 
               {/* Article Content */}
-              <div className="flex-1 overflow-y-auto p-6 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] text-sm">
+              <div className="flex-1 overflow-y-auto p-6 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
                 {openArticle.content ? (
                   <ArticleContent content={openArticle.content} />
                 ) : (
