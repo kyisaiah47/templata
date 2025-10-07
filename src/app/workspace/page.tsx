@@ -4,7 +4,8 @@ import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Search, X, User, Zap, FileText, Lightbulb, BookOpen, ChevronDown, ZoomIn, ZoomOut } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Search, X, User, Zap, FileText, Lightbulb, BookOpen, ChevronDown, ZoomIn, ZoomOut, MoreHorizontal, Type, Maximize2, Download, Copy, Trash2 } from 'lucide-react';
 import { useUserUnlocks } from '@/contexts/UserUnlockContext';
 import { CommandPalette } from '@/components/command-palette';
 import {
@@ -50,6 +51,10 @@ export default function WorkspacePage() {
   const [articleFontSize, setArticleFontSize] = useState(100); // percentage
   const [headerVisible, setHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [pageTitle, setPageTitle] = useState('Untitled');
+  const [pageIcon, setPageIcon] = useState('📝');
+  const [showCover, setShowCover] = useState(false);
+  const [isFullWidth, setIsFullWidth] = useState(false);
   const { unlockData, loading: unlockLoading } = useUserUnlocks();
 
   // Check for prompt/article to insert from sessionStorage
@@ -264,13 +269,13 @@ export default function WorkspacePage() {
 
       {/* Top Bar */}
       <header
-        className="flex h-16 items-center justify-between px-6 bg-emerald-950/80 backdrop-blur z-10 transition-transform duration-300 fixed top-0 left-0 right-0 border-b border-emerald-900/30"
+        className="flex h-10 items-center justify-between px-4 bg-emerald-950/80 backdrop-blur z-10 transition-transform duration-300 fixed top-0 left-0 right-0 border-b border-emerald-900/30 text-sm"
         style={{ transform: headerVisible ? 'translateY(0)' : 'translateY(-100%)' }}
       >
         {/* Left side */}
-        <div className="flex items-center gap-4">
-          <Badge variant="outline" className="px-3 py-1.5 text-sm font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30">
-            <Zap className="h-4 w-4 mr-2" />
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30">
+            <Zap className="h-3 w-3 mr-1" />
             Life OS
           </Badge>
 
@@ -295,7 +300,7 @@ export default function WorkspacePage() {
         </div>
 
         {/* Middle - Quick access dropdowns */}
-        <div className="hidden lg:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-1">
           {/* Templates Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -410,44 +415,120 @@ export default function WorkspacePage() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-2 hover:bg-emerald-900/50"
+            className="flex items-center gap-1 hover:bg-emerald-900/50 h-7 px-2"
           >
-            <Search className="h-4 w-4" />
-            <span className="hidden sm:inline text-muted-foreground text-sm">
+            <Search className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline text-muted-foreground text-xs">
               ⌘K
             </span>
           </Button>
 
-          <Button variant="ghost" size="icon" className="hover:bg-emerald-900/50">
-            <User className="h-5 w-5" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon-sm" className="hover:bg-emerald-900/50">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-64 bg-emerald-950/95 border-emerald-900/50">
+              <div className="flex items-center justify-between px-2 py-1.5">
+                <span className="text-sm">Full width</span>
+                <Switch checked={isFullWidth} onCheckedChange={setIsFullWidth} />
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Type className="h-4 w-4 mr-2" />
+                Font style
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Copy className="h-4 w-4 mr-2" />
+                Duplicate workspace
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-red-400">
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete workspace
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <div className="flex flex-1 overflow-hidden relative bg-emerald-950/30 pt-16">
+      <div className="flex flex-1 overflow-hidden relative bg-emerald-950/30 pt-10">
         {/* Editor - Card style with centered content */}
-        <div className="w-full flex flex-col items-center py-8">
-          <div className="flex-1 overflow-y-auto editor-scroll-container w-full max-w-[900px] bg-emerald-950/50 border border-emerald-900/40 rounded-lg shadow-sm mx-4">
-            <Suspense fallback={
-              <div className="flex items-center justify-center h-full">
-                <div className="text-muted-foreground">Loading editor...</div>
+        <div className="w-full flex flex-col items-center">
+          <div className={`overflow-y-auto editor-scroll-container w-full bg-emerald-950/50 border border-emerald-900/40 rounded-lg shadow-sm mx-4 my-8 ${isFullWidth ? 'max-w-full' : 'max-w-[900px]'}`}>
+
+            {/* Cover Photo */}
+            {showCover && (
+              <div className="relative h-52 bg-gradient-to-br from-emerald-600/20 via-emerald-500/10 to-emerald-400/20 group">
+                <button
+                  onClick={() => setShowCover(false)}
+                  className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-white/70 hover:text-white bg-black/20 hover:bg-black/40 px-2 py-1 rounded"
+                >
+                  Remove cover
+                </button>
               </div>
-            }>
-              <SimpleEditor
-                content=""
-                templateId="life-os"
-                onUpdate={(content) => {
-                  // Auto-save to localStorage
-                  localStorage.setItem('life-os-content', content);
-                }}
+            )}
+
+            {/* Page Header */}
+            <div className="px-20 pt-12 pb-2">
+              {/* Icon + Add Cover */}
+              <div className="flex items-center gap-2 mb-4">
+                <button className="text-6xl hover:bg-emerald-900/30 rounded p-1 transition-colors">
+                  {pageIcon}
+                </button>
+                {!showCover && (
+                  <button
+                    onClick={() => setShowCover(true)}
+                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Add cover
+                  </button>
+                )}
+              </div>
+
+              {/* Page Title */}
+              <input
+                type="text"
+                value={pageTitle}
+                onChange={(e) => setPageTitle(e.target.value)}
+                placeholder="Untitled"
+                className="text-5xl font-bold bg-transparent border-none outline-none w-full text-foreground placeholder:text-muted-foreground/30 mb-2"
               />
-            </Suspense>
+
+              {/* Metadata */}
+              <div className="flex items-center gap-3 text-xs text-muted-foreground mb-8">
+                <span>Last edited just now</span>
+              </div>
+            </div>
+
+            {/* Editor Content */}
+            <div className="px-20 pb-20">
+              <Suspense fallback={
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-muted-foreground">Loading editor...</div>
+                </div>
+              }>
+                <SimpleEditor
+                  content=""
+                  templateId="life-os"
+                  onUpdate={(content) => {
+                    // Auto-save to localStorage
+                    localStorage.setItem('life-os-content', content);
+                  }}
+                />
+              </Suspense>
+            </div>
           </div>
         </div>
 
