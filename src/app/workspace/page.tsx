@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
-import { Search, X, User, Zap, FileText, Lightbulb, BookOpen, ChevronDown, ZoomIn, ZoomOut, MoreHorizontal, Type, Maximize2, Download, Copy, Trash2, Palette, Check, PanelLeft, Home, Clock, Settings } from 'lucide-react';
+import { Search, X, User, Zap, FileText, Lightbulb, BookOpen, ChevronDown, ZoomIn, ZoomOut, MoreHorizontal, Type, Maximize2, Download, Copy, Trash2, Palette, Check, PanelLeft, Home, Clock, Settings, ChevronRight } from 'lucide-react';
 import { useUserUnlocks } from '@/contexts/UserUnlockContext';
 import { CommandPalette } from '@/components/command-palette';
 import {
@@ -58,6 +58,9 @@ export default function WorkspacePage() {
   const [showCover, setShowCover] = useState(false);
   const [isFullWidth, setIsFullWidth] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [templatesExpanded, setTemplatesExpanded] = useState(false);
+  const [promptsExpanded, setPromptsExpanded] = useState(false);
+  const [articlesExpanded, setArticlesExpanded] = useState(false);
   const { unlockData, loading: unlockLoading } = useUserUnlocks();
   const { currentTheme, setTheme: setCustomTheme } = useCustomTheme();
 
@@ -312,120 +315,6 @@ export default function WorkspacePage() {
           </DropdownMenu>
         </div>
 
-        {/* Middle - Quick access dropdowns */}
-        <div className="hidden lg:flex items-center gap-1">
-          {/* Templates Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="flex items-center gap-2 hover:bg-accent">
-                <FileText className="h-4 w-4" />
-                {selectedTemplate ? selectedTemplateName : 'Templates'}
-                <ChevronDown className="h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-64 max-h-[400px] overflow-y-auto bg-popover">
-              {categories.map((category) => (
-                <DropdownMenuSub key={category}>
-                  <DropdownMenuSubTrigger>{category}</DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent className="max-h-[300px] overflow-y-auto bg-popover">
-                    {groupedTemplates[category].map((template) => (
-                      <DropdownMenuItem
-                        key={template.id}
-                        onClick={() => handleSelectTemplate(template.id)}
-                      >
-                        {template.name}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuSubContent>
-                </DropdownMenuSub>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Prompts Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex items-center gap-2 hover:bg-accent"
-                disabled={!selectedTemplate}
-              >
-                <Lightbulb className="h-4 w-4" />
-                Prompts
-                {selectedTemplate && <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs bg-accent/50 text-accent-foreground border-accent">{templatePrompts.length}</Badge>}
-                <ChevronDown className="h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-80 max-h-[400px] overflow-y-auto bg-popover">
-              {loadingContent ? (
-                <div className="p-4 text-center text-sm text-muted-foreground">Loading prompts...</div>
-              ) : templatePrompts.length === 0 ? (
-                <div className="p-4 text-center text-sm text-muted-foreground">
-                  {selectedTemplate ? 'No prompts available' : 'Select a template first'}
-                </div>
-              ) : (
-                promptCategories.map((category) => (
-                  <DropdownMenuSub key={category}>
-                    <DropdownMenuSubTrigger>
-                      {category}
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuSubContent className="w-80 max-h-[300px] overflow-y-auto bg-popover">
-                      {groupedPrompts[category].map((prompt) => (
-                        <DropdownMenuItem
-                          key={prompt.id}
-                          onClick={() => handleInsertPrompt(prompt)}
-                          className="cursor-pointer"
-                        >
-                          <span className="text-sm line-clamp-2">{prompt.prompt}</span>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuSubContent>
-                  </DropdownMenuSub>
-                ))
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Articles Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex items-center gap-2 hover:bg-accent"
-                disabled={!selectedTemplate}
-              >
-                <BookOpen className="h-4 w-4" />
-                Articles
-                {selectedTemplate && <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs bg-accent/50 text-accent-foreground border-accent">{templateArticles.length}</Badge>}
-                <ChevronDown className="h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-80 max-h-[400px] overflow-y-auto bg-popover">
-              {loadingContent ? (
-                <div className="p-4 text-center text-sm text-muted-foreground">Loading articles...</div>
-              ) : templateArticles.length === 0 ? (
-                <div className="p-4 text-center text-sm text-muted-foreground">
-                  {selectedTemplate ? 'No articles available' : 'Select a template first'}
-                </div>
-              ) : (
-                templateArticles.map((article) => (
-                  <DropdownMenuItem
-                    key={article.id}
-                    onClick={() => handleOpenArticle(article)}
-                    className="cursor-pointer"
-                  >
-                    <div className="flex flex-col gap-1">
-                      <span className="text-sm font-medium line-clamp-1">{article.title}</span>
-                      <span className="text-xs text-muted-foreground">{article.readTime}</span>
-                    </div>
-                  </DropdownMenuItem>
-                ))
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
 
         {/* Right side */}
         <div className="flex items-center gap-1">
@@ -520,20 +409,133 @@ export default function WorkspacePage() {
                 <Clock className="h-4 w-4" />
                 <span className="text-sm">Recent</span>
               </Button>
-              <Button variant="ghost" className="justify-start gap-2 hover:bg-sidebar-accent">
-                <Settings className="h-4 w-4" />
-                <span className="text-sm">Settings</span>
-              </Button>
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-sidebar-border my-4" />
+            <div className="h-px bg-sidebar-border my-2" />
 
-            {/* Workspaces section (placeholder for now) */}
-            <div className="flex-1 overflow-y-auto">
-              <div className="text-xs text-sidebar-foreground/50 px-2 mb-2">WORKSPACES</div>
-              {/* Workspace items will go here */}
+            {/* Templates Section */}
+            <div className="flex flex-col">
+              <button
+                onClick={() => setTemplatesExpanded(!templatesExpanded)}
+                className="flex items-center justify-between px-2 py-1.5 text-sm hover:bg-sidebar-accent rounded-sm transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  <span>Templates</span>
+                </div>
+                <ChevronRight className={`h-3 w-3 transition-transform ${templatesExpanded ? 'rotate-90' : ''}`} />
+              </button>
+
+              {templatesExpanded && (
+                <div className="flex flex-col pl-6 mt-1">
+                  {categories.map((category) => (
+                    <div key={category} className="mb-2">
+                      <div className="text-xs text-sidebar-foreground/50 px-2 py-1">{category}</div>
+                      {groupedTemplates[category].map((template) => (
+                        <button
+                          key={template.id}
+                          onClick={() => {
+                            handleSelectTemplate(template.id);
+                            setPromptsExpanded(true);
+                            setArticlesExpanded(true);
+                          }}
+                          className={`text-xs px-2 py-1 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors ${
+                            selectedTemplate === template.id ? 'bg-sidebar-accent' : ''
+                          }`}
+                        >
+                          {template.name}
+                        </button>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
+            {/* Prompts Section */}
+            {selectedTemplate && (
+              <div className="flex flex-col">
+                <button
+                  onClick={() => setPromptsExpanded(!promptsExpanded)}
+                  className="flex items-center justify-between px-2 py-1.5 text-sm hover:bg-sidebar-accent rounded-sm transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Lightbulb className="h-4 w-4" />
+                    <span>Prompts</span>
+                    <Badge variant="secondary" className="h-4 px-1 text-xs bg-accent/50 text-accent-foreground border-accent">
+                      {templatePrompts.length}
+                    </Badge>
+                  </div>
+                  <ChevronRight className={`h-3 w-3 transition-transform ${promptsExpanded ? 'rotate-90' : ''}`} />
+                </button>
+
+                {promptsExpanded && (
+                  <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto">
+                    {loadingContent ? (
+                      <div className="text-xs text-sidebar-foreground/50 px-2 py-2">Loading...</div>
+                    ) : templatePrompts.length === 0 ? (
+                      <div className="text-xs text-sidebar-foreground/50 px-2 py-2">No prompts</div>
+                    ) : (
+                      promptCategories.map((category) => (
+                        <div key={category} className="mb-2">
+                          <div className="text-xs text-sidebar-foreground/50 px-2 py-1">{category}</div>
+                          {groupedPrompts[category].map((prompt) => (
+                            <button
+                              key={prompt.id}
+                              onClick={() => handleInsertPrompt(prompt)}
+                              className="text-xs px-2 py-1 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors line-clamp-2"
+                            >
+                              {prompt.prompt}
+                            </button>
+                          ))}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Articles Section */}
+            {selectedTemplate && (
+              <div className="flex flex-col">
+                <button
+                  onClick={() => setArticlesExpanded(!articlesExpanded)}
+                  className="flex items-center justify-between px-2 py-1.5 text-sm hover:bg-sidebar-accent rounded-sm transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="h-4 w-4" />
+                    <span>Articles</span>
+                    <Badge variant="secondary" className="h-4 px-1 text-xs bg-accent/50 text-accent-foreground border-accent">
+                      {templateArticles.length}
+                    </Badge>
+                  </div>
+                  <ChevronRight className={`h-3 w-3 transition-transform ${articlesExpanded ? 'rotate-90' : ''}`} />
+                </button>
+
+                {articlesExpanded && (
+                  <div className="flex flex-col pl-6 mt-1 max-h-60 overflow-y-auto">
+                    {loadingContent ? (
+                      <div className="text-xs text-sidebar-foreground/50 px-2 py-2">Loading...</div>
+                    ) : templateArticles.length === 0 ? (
+                      <div className="text-xs text-sidebar-foreground/50 px-2 py-2">No articles</div>
+                    ) : (
+                      templateArticles.map((article) => (
+                        <button
+                          key={article.id}
+                          onClick={() => handleOpenArticle(article)}
+                          className="text-xs px-2 py-1.5 rounded-sm w-full text-left hover:bg-sidebar-accent transition-colors"
+                        >
+                          <div className="line-clamp-1 font-medium">{article.title}</div>
+                          <div className="text-sidebar-foreground/50 text-xs mt-0.5">{article.readTime}</div>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </aside>
 
