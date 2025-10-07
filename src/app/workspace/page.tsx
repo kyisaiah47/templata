@@ -126,9 +126,10 @@ export default function WorkspacePage() {
             </span>
           </Button>
 
-          <Badge variant="outline" className="px-3 py-1">
+          {/* MVP: Hide unlock status - everything is free */}
+          {/* <Badge variant="outline" className="px-3 py-1">
             {getUnlockStatusText()}
-          </Badge>
+          </Badge> */}
 
           <Button variant="ghost" size="icon">
             <User className="h-5 w-5" />

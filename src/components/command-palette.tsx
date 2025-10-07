@@ -168,6 +168,10 @@ export function CommandPalette({
     }))
   }, [])
 
+  // MVP: No filtering needed - everything is free
+  const filterableTemplates = searchableTemplates
+
+  /* TODO: Enable for production with paywall
   // Filter templates by unlock status for Life OS mode
   const filterableTemplates = useMemo(() => {
     if (paletteMode !== 'life-os-mode') return searchableTemplates
@@ -179,6 +183,7 @@ export function CommandPalette({
 
     return searchableTemplates
   }, [searchableTemplates, paletteMode, unlockData, searchFilter, isTemplateUnlocked])
+  */
 
   // Search templates with relevance scoring (articles come from API)
   const searchResults = useMemo(() => {
@@ -193,7 +198,7 @@ export function CommandPalette({
         if (template.name.toLowerCase().startsWith(queryLower)) score += 5
         if (template.description.toLowerCase().includes(queryLower)) score += 3
         if (template.category.toLowerCase().includes(queryLower)) score += 2
-        return { ...template, relevanceScore: score, isLocked: paletteMode === 'life-os-mode' && !isTemplateUnlocked(template.id) }
+        return { ...template, relevanceScore: score, isLocked: false } // MVP: Nothing is locked
       })
       .filter(t => t.relevanceScore > 0)
       .sort((a, b) => b.relevanceScore - a.relevanceScore)
@@ -353,8 +358,8 @@ export function CommandPalette({
                     </Button>
                   </div>
 
-                  {/* Pro User Filter Toggle */}
-                  {paletteMode === 'life-os-mode' && unlockData?.hasUnlimitedAccess && (
+                  {/* MVP: Hide Pro user filter toggle - no paywall */}
+                  {/* {paletteMode === 'life-os-mode' && unlockData?.hasUnlimitedAccess && (
                     <div className="flex items-center gap-1 p-1 bg-muted/30 rounded-lg">
                       <Button
                         variant={searchFilter === "selected" ? "default" : "ghost"}
@@ -373,7 +378,7 @@ export function CommandPalette({
                         All templates
                       </Button>
                     </div>
-                  )}
+                  )} */}
                 </div>
               )}
             </div>
@@ -390,20 +395,15 @@ export function CommandPalette({
                       <div className="space-y-2">
                         {searchResults.templates.map((template: any) => {
                           const Icon = getTemplateIcon(template.id)
-                          const isLocked = template.isLocked
                           return (
                             <Link key={template.id} href={template.url} onClick={() => handleTemplateClick(template)}>
                               <div className="group flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-muted/50">
                                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                                  {isLocked ? (
-                                    <Lock className="w-4 h-4 text-muted-foreground" />
-                                  ) : (
-                                    <Icon className="w-4 h-4 text-primary" />
-                                  )}
+                                  <Icon className="w-4 h-4 text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <h4 className={`font-semibold text-sm ${isLocked ? 'text-muted-foreground' : 'group-hover:text-primary'} transition-colors`}>
-                                    {template.name} {isLocked && '🔒'}
+                                  <h4 className="font-semibold text-sm group-hover:text-primary transition-colors">
+                                    {template.name}
                                   </h4>
                                   <p className="text-xs text-muted-foreground line-clamp-1">
                                     {template.description}
@@ -412,13 +412,7 @@ export function CommandPalette({
                                 <Badge variant="outline" className="text-xs">
                                   {template.category}
                                 </Badge>
-                                {isLocked ? (
-                                  <Badge variant="secondary" className="text-xs">
-                                    Upgrade to Pro
-                                  </Badge>
-                                ) : (
-                                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                                )}
+                                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                               </div>
                             </Link>
                           )
@@ -507,7 +501,6 @@ export function CommandPalette({
                           <div className="mt-2 space-y-1 pl-6">
                             {templates.map((template: any) => {
                               const Icon = getTemplateIcon(template.id)
-                              const isLocked = paletteMode === 'life-os-mode' && !isTemplateUnlocked(template.id)
 
                               return (
                                 <Link
@@ -517,22 +510,13 @@ export function CommandPalette({
                                 >
                                   <div className="group flex items-center gap-3 p-2 rounded-lg transition-all duration-200 hover:bg-muted/50">
                                     <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center">
-                                      {isLocked ? (
-                                        <Lock className="w-3 h-3 text-muted-foreground" />
-                                      ) : (
-                                        <Icon className="w-3 h-3 text-primary" />
-                                      )}
+                                      <Icon className="w-3 h-3 text-primary" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                      <h4 className={`text-sm ${isLocked ? 'text-muted-foreground' : 'group-hover:text-primary'} transition-colors`}>
-                                        {template.name} {isLocked && '🔒'}
+                                      <h4 className="text-sm group-hover:text-primary transition-colors">
+                                        {template.name}
                                       </h4>
                                     </div>
-                                    {isLocked && (
-                                      <Badge variant="secondary" className="text-xs">
-                                        Locked
-                                      </Badge>
-                                    )}
                                   </div>
                                 </Link>
                               )

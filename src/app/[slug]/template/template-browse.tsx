@@ -85,6 +85,19 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
   const templateData = template.template;
 
   const handleInsertPrompt = async (prompt: Prompt) => {
+    // MVP: No paywall checks - everything is free
+    try {
+      // Store prompt data for workspace to use
+      sessionStorage.setItem('workspace-insert-prompt', JSON.stringify(prompt));
+
+      // Redirect to workspace
+      router.push('/workspace');
+    } catch (error) {
+      console.error('Error inserting prompt:', error);
+      alert('Failed to insert prompt. Please try again.');
+    }
+
+    /* TODO: Enable for production with paywall
     try {
       setUnlocking(true);
 
@@ -121,9 +134,23 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
     } finally {
       setUnlocking(false);
     }
+    */
   };
 
   const handleReadArticle = async (article: Article) => {
+    // MVP: No paywall checks - everything is free
+    try {
+      // Store article data for workspace to use
+      sessionStorage.setItem('workspace-open-article', JSON.stringify(article));
+
+      // Redirect to workspace
+      router.push('/workspace');
+    } catch (error) {
+      console.error('Error opening article:', error);
+      alert('Failed to open article. Please try again.');
+    }
+
+    /* TODO: Enable for production with paywall
     try {
       setUnlocking(true);
 
@@ -145,16 +172,18 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
     } finally {
       setUnlocking(false);
     }
+    */
   };
 
   return (
     <>
-      <PaywallModal
+      {/* MVP: Paywall modal disabled */}
+      {/* <PaywallModal
         isOpen={paywallOpen}
         onClose={() => setPaywallOpen(false)}
         trigger={paywallTrigger}
         templateName={templateData.title}
-      />
+      /> */}
 
       <PageLayout>
       {/* Marketing Hero */}
@@ -274,20 +303,16 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
         </div>
       </section>
 
-      {/* Sticky Select Button */}
-      <div className="sticky bottom-0 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* MVP: Remove sticky select button with pricing language */}
+      {/* <div className="sticky bottom-0 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto max-w-6xl px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="text-sm text-muted-foreground">
-              Select this template to unlock all prompts and articles
+              Use the buttons above to insert prompts into your workspace or read articles
             </div>
-            <Button size="lg" className="flex items-center gap-2">
-              Select this template
-              <ArrowRight className="h-4 w-4" />
-            </Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </PageLayout>
     </>
   );

@@ -4,6 +4,15 @@ import { supabase } from '@/lib/supabase';
 // GET /api/user/unlocks - Get user's unlocked templates
 export async function GET(request: Request) {
   try {
+    // MVP: Everyone has unlimited access (no paywall)
+    return NextResponse.json({
+      tier: 'free',
+      hasUnlimitedAccess: true,
+      unlockedTemplates: [],
+      remainingUnlocks: null
+    });
+
+    /* TODO: Enable for production with paywall
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
 
@@ -59,6 +68,7 @@ export async function GET(request: Request) {
       remainingUnlocks,
       unlocks: unlocks || []
     });
+    */
   } catch (error) {
     console.error('[API /user/unlocks] Fatal error:', error);
     return NextResponse.json(
@@ -68,9 +78,16 @@ export async function GET(request: Request) {
   }
 }
 
-// POST /api/user/unlocks - Unlock a template (free tier only)
+// POST /api/user/unlocks - Unlock a template (MVP: disabled)
 export async function POST(request: Request) {
   try {
+    // MVP: Everyone has unlimited access (no unlock needed)
+    return NextResponse.json({
+      success: true,
+      message: 'MVP - all templates unlocked'
+    });
+
+    /* TODO: Enable for production with paywall
     const { userId, templateId } = await request.json();
 
     if (!userId || !templateId) {
@@ -151,6 +168,7 @@ export async function POST(request: Request) {
       message: 'Template unlocked successfully',
       remainingUnlocks: 2 - (currentUnlocks?.length || 0)
     });
+    */
   } catch (error) {
     console.error('[API /user/unlocks] Fatal error:', error);
     return NextResponse.json(
