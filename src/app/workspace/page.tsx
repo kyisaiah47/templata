@@ -440,20 +440,12 @@ export default function WorkspacePage() {
               </div>
             </div>
 
-            <div className="px-6 pb-6 pt-6">
-              <div
-                style={{
-                  transform: `scale(${articleFontSize / 100})`,
-                  transformOrigin: 'top left',
-                  width: `${100 / (articleFontSize / 100)}%`
-                }}
-              >
-                {openArticle.content ? (
-                  <ArticleContent content={openArticle.content} />
-                ) : (
-                  <p className="text-muted-foreground text-sm">Article content loading...</p>
-                )}
-              </div>
+            <div className="px-6 pb-6 pt-6" style={{ fontSize: `${articleFontSize}%` }}>
+              {openArticle.content ? (
+                <ArticleContent content={openArticle.content} />
+              ) : (
+                <p className="text-muted-foreground text-sm">Article content loading...</p>
+              )}
             </div>
           </div>
         )}
