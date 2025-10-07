@@ -389,27 +389,25 @@ export default function WorkspacePage() {
           </div>
         </div>
 
-        {/* Article Panel - Fixed in side margin */}
+        {/* Article Card - Floating in right margin */}
         {openArticle && (
-          <div className="fixed right-0 top-16 bottom-0 w-96 flex flex-col border-l bg-background shadow-2xl z-20">
-            <div className="flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur flex-shrink-0">
-              <h2 className="text-sm font-semibold truncate">{openArticle.title}</h2>
+          <div className="fixed right-8 top-24 w-96 max-h-[calc(100vh-12rem)] overflow-y-auto bg-muted/30 backdrop-blur-xl rounded-lg p-6 shadow-lg z-20">
+            <div className="flex items-center justify-between mb-4">
+              <Badge variant="outline" className="text-xs">
+                {openArticle.readTime}
+              </Badge>
               <Button
                 variant="ghost"
                 size="icon"
+                className="h-6 w-6"
                 onClick={handleCloseArticle}
               >
-                <X className="h-4 w-4" />
+                <X className="h-3 w-3" />
               </Button>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
-              <div className="p-6 prose prose-sm prose-neutral dark:prose-invert max-w-none">
-                <p className="text-xs text-muted-foreground mb-4">
-                  {openArticle.readTime} • {openArticle.excerpt}
-                </p>
-                <div dangerouslySetInnerHTML={{ __html: openArticle.content || 'Article content loading...' }} />
-              </div>
+            <div className="prose prose-sm prose-neutral dark:prose-invert max-w-none">
+              <div dangerouslySetInnerHTML={{ __html: openArticle.content || 'Article content loading...' }} />
             </div>
           </div>
         )}
