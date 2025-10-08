@@ -68,6 +68,9 @@ export default function WorkspacePage() {
   const [promptsSearchQuery, setPromptsSearchQuery] = useState('');
   const [articlesSearchQuery, setArticlesSearchQuery] = useState('');
   const [workspacesSearchQuery, setWorkspacesSearchQuery] = useState('');
+  const [templatesDrawerOpen, setTemplatesDrawerOpen] = useState(false);
+  const [promptsDrawerOpen, setPromptsDrawerOpen] = useState(false);
+  const [articlesDrawerOpen, setArticlesDrawerOpen] = useState(false);
   const [allPrompts, setAllPrompts] = useState<any[]>([]);
   const [allArticles, setAllArticles] = useState<any[]>([]);
   const [promptsLoading, setPromptsLoading] = useState(false);
@@ -974,15 +977,15 @@ export default function WorkspacePage() {
                   <div className="pointer-events-auto">
                     <Dock>
                       {/* Templates Drawer */}
-                      <Drawer direction="bottom">
-                        <DrawerTrigger asChild>
+                      <Drawer direction="bottom" open={templatesDrawerOpen} onOpenChange={setTemplatesDrawerOpen}>
+                        <div onClick={() => setTemplatesDrawerOpen(true)} className="flex items-center justify-center h-full">
                           <DockItem>
                             <DockLabel>Templates</DockLabel>
                             <DockIcon>
                               <IconTemplate className="h-6 w-6" />
                             </DockIcon>
                           </DockItem>
-                        </DrawerTrigger>
+                        </div>
                         <DrawerContent>
                           <DrawerHeader>
                             <DrawerTitle>Select Template</DrawerTitle>
@@ -1014,15 +1017,15 @@ export default function WorkspacePage() {
                       </Drawer>
 
                       {/* Prompts Drawer */}
-                      <Drawer direction="bottom">
-                        <DrawerTrigger asChild>
+                      <Drawer direction="bottom" open={promptsDrawerOpen} onOpenChange={setPromptsDrawerOpen}>
+                        <div onClick={() => setPromptsDrawerOpen(true)} className="flex items-center justify-center h-full">
                           <DockItem>
                             <DockLabel>Prompts</DockLabel>
                             <DockIcon>
                               <IconNotes className="h-6 w-6" />
                             </DockIcon>
                           </DockItem>
-                        </DrawerTrigger>
+                        </div>
                         <DrawerContent>
                           <DrawerHeader>
                             <DrawerTitle>Browse Prompts</DrawerTitle>
@@ -1051,15 +1054,15 @@ export default function WorkspacePage() {
                       </Drawer>
 
                       {/* Articles Drawer */}
-                      <Drawer direction="bottom">
-                        <DrawerTrigger asChild>
+                      <Drawer direction="bottom" open={articlesDrawerOpen} onOpenChange={setArticlesDrawerOpen}>
+                        <div onClick={() => setArticlesDrawerOpen(true)} className="flex items-center justify-center h-full">
                           <DockItem>
                             <DockLabel>Articles</DockLabel>
                             <DockIcon>
                               <IconFileText className="h-6 w-6" />
                             </DockIcon>
                           </DockItem>
-                        </DrawerTrigger>
+                        </div>
                         <DrawerContent>
                           <DrawerHeader>
                             <DrawerTitle>Browse Articles</DrawerTitle>
