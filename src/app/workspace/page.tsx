@@ -41,6 +41,17 @@ import { supabase } from '@/lib/supabase';
 import { ChatView } from '@/components/workspace-views/chat-view';
 import { SplitView } from '@/components/workspace-views/split-view';
 import { BoardView } from '@/components/workspace-views/board-view';
+import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/shadcn-io/dock';
+import { IconNotes } from '@tabler/icons-react';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 export type ViewMode = 'chat' | 'split' | 'board';
 
@@ -264,8 +275,6 @@ export default function WorkspacePage() {
         variant="inset"
         viewMode={viewMode}
         onViewModeChange={setViewMode}
-        selectedTemplateId={selectedTemplateId}
-        onTemplateChange={setSelectedTemplateId}
       />
       <SidebarInset>
         <SiteHeader />
@@ -944,7 +953,7 @@ export default function WorkspacePage() {
                 )}
               </div>
             ) : currentView === 'workspaces' ? (
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col h-full relative">
                 {/* Workspace Header */}
                 <div className="border-b px-4 py-3">
                   <h1 className="text-2xl font-bold">My Workspace</h1>
@@ -954,10 +963,131 @@ export default function WorkspacePage() {
                 </div>
 
                 {/* View Mode Content */}
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 overflow-hidden pb-32">
                   {viewMode === 'chat' && <ChatView templateId={selectedTemplateId} />}
                   {viewMode === 'split' && <SplitView templateId={selectedTemplateId} />}
                   {viewMode === 'board' && <BoardView templateId={selectedTemplateId} />}
+                </div>
+
+                {/* Floating Dock */}
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none">
+                  <div className="pointer-events-auto">
+                    <Dock>
+                      {/* Templates Drawer */}
+                      <Drawer direction="bottom">
+                        <DrawerTrigger asChild>
+                          <DockItem>
+                            <DockLabel>Templates</DockLabel>
+                            <DockIcon>
+                              <IconTemplate className="h-6 w-6" />
+                            </DockIcon>
+                          </DockItem>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>Select Template</DrawerTitle>
+                            <DrawerDescription>Choose a template to work with</DrawerDescription>
+                          </DrawerHeader>
+                          <div className="p-4 overflow-y-auto max-h-[60vh]">
+                            <Input
+                              placeholder="Search templates..."
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              className="mb-4"
+                            />
+                            <div className="space-y-2">
+                              {filteredTemplates.slice(0, 20).map((template) => (
+                                <div
+                                  key={template.id}
+                                  className="p-3 border rounded-lg hover:bg-muted cursor-pointer"
+                                  onClick={() => {
+                                    setSelectedTemplateId(template.id);
+                                  }}
+                                >
+                                  <div className="font-medium">{template.name}</div>
+                                  <div className="text-sm text-muted-foreground">{template.category}</div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </DrawerContent>
+                      </Drawer>
+
+                      {/* Prompts Drawer */}
+                      <Drawer direction="bottom">
+                        <DrawerTrigger asChild>
+                          <DockItem>
+                            <DockLabel>Prompts</DockLabel>
+                            <DockIcon>
+                              <IconNotes className="h-6 w-6" />
+                            </DockIcon>
+                          </DockItem>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>Browse Prompts</DrawerTitle>
+                            <DrawerDescription>
+                              {selectedTemplateId
+                                ? `Prompts for ${templateRegistry.find(t => t.id === selectedTemplateId)?.name}`
+                                : 'Select a template first'}
+                            </DrawerDescription>
+                          </DrawerHeader>
+                          <div className="p-4 overflow-y-auto max-h-[60vh]">
+                            <Input
+                              placeholder="Search prompts..."
+                              className="mb-4"
+                            />
+                            {selectedTemplateId ? (
+                              <div className="space-y-2">
+                                <p className="text-sm text-muted-foreground">Prompts will load here...</p>
+                              </div>
+                            ) : (
+                              <p className="text-sm text-muted-foreground text-center py-8">
+                                Select a template from the dock to view prompts
+                              </p>
+                            )}
+                          </div>
+                        </DrawerContent>
+                      </Drawer>
+
+                      {/* Articles Drawer */}
+                      <Drawer direction="bottom">
+                        <DrawerTrigger asChild>
+                          <DockItem>
+                            <DockLabel>Articles</DockLabel>
+                            <DockIcon>
+                              <IconFileText className="h-6 w-6" />
+                            </DockIcon>
+                          </DockItem>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>Browse Articles</DrawerTitle>
+                            <DrawerDescription>
+                              {selectedTemplateId
+                                ? `Articles for ${templateRegistry.find(t => t.id === selectedTemplateId)?.name}`
+                                : 'Select a template first'}
+                            </DrawerDescription>
+                          </DrawerHeader>
+                          <div className="p-4 overflow-y-auto max-h-[60vh]">
+                            <Input
+                              placeholder="Search articles..."
+                              className="mb-4"
+                            />
+                            {selectedTemplateId ? (
+                              <div className="space-y-2">
+                                <p className="text-sm text-muted-foreground">Articles will load here...</p>
+                              </div>
+                            ) : (
+                              <p className="text-sm text-muted-foreground text-center py-8">
+                                Select a template from the dock to view articles
+                              </p>
+                            )}
+                          </div>
+                        </DrawerContent>
+                      </Drawer>
+                    </Dock>
+                  </div>
                 </div>
               </div>
             ) : (

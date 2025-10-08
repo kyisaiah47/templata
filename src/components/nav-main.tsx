@@ -13,18 +13,22 @@ import {
 
 export function NavMain({
   items,
+  useHashRouting = false,
 }: {
   items: {
     title: string
     url: string
     icon?: Icon
   }[]
+  useHashRouting?: boolean
 }) {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
-    e.preventDefault();
-    // Simply allow default anchor behavior
-    const cleanHash = url.startsWith('#') ? url.slice(1) : url;
-    window.location.hash = cleanHash;
+    if (useHashRouting) {
+      e.preventDefault();
+      const cleanHash = url.startsWith('#') ? url.slice(1) : url;
+      window.location.hash = cleanHash;
+    }
+    // Otherwise let the default anchor behavior work (normal page navigation)
   };
 
   return (

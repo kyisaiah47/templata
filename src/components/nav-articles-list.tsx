@@ -58,7 +58,7 @@ export function NavArticlesList({ templateId, onArticleSelect }: NavArticlesList
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <SidebarMenuSub>
+          <SidebarMenuSub className="max-h-[200px] overflow-y-auto">
             {loading ? (
               <div className="text-xs text-muted-foreground p-2">Loading...</div>
             ) : articles.length === 0 ? (

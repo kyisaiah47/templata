@@ -17,9 +17,6 @@ import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import { NavViewMode, ViewMode } from "@/components/nav-view-mode"
-import { NavTemplateSelector } from "@/components/nav-template-selector"
-import { NavPromptsList } from "@/components/nav-prompts-list"
-import { NavArticlesList } from "@/components/nav-articles-list"
 import {
   Sidebar,
   SidebarContent,
@@ -87,11 +84,9 @@ const data = {
 interface WorkspaceSidebarProps extends React.ComponentProps<typeof Sidebar> {
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
-  selectedTemplateId: string | null;
-  onTemplateChange: (templateId: string) => void;
 }
 
-export function WorkspaceSidebar({ viewMode, onViewModeChange, selectedTemplateId, onTemplateChange, ...props }: WorkspaceSidebarProps) {
+export function WorkspaceSidebar({ viewMode, onViewModeChange, ...props }: WorkspaceSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -116,19 +111,8 @@ export function WorkspaceSidebar({ viewMode, onViewModeChange, selectedTemplateI
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={data.navMain} useHashRouting={true} />
         <NavViewMode currentMode={viewMode} onModeChange={onViewModeChange} />
-        <SidebarGroup>
-          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
-          <SidebarMenu>
-            <NavTemplateSelector
-              selectedTemplateId={selectedTemplateId}
-              onTemplateChange={onTemplateChange}
-            />
-            <NavPromptsList templateId={selectedTemplateId} />
-            <NavArticlesList templateId={selectedTemplateId} />
-          </SidebarMenu>
-        </SidebarGroup>
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

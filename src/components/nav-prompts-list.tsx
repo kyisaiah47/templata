@@ -58,7 +58,7 @@ export function NavPromptsList({ templateId, onPromptSelect }: NavPromptsListPro
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <SidebarMenuSub>
+          <SidebarMenuSub className="max-h-[200px] overflow-y-auto">
             {loading ? (
               <div className="text-xs text-muted-foreground p-2">Loading...</div>
             ) : prompts.length === 0 ? (

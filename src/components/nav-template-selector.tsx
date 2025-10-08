@@ -32,7 +32,7 @@ export function NavTemplateSelector({ selectedTemplateId, onTemplateChange }: Na
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <SidebarMenuSub>
+          <SidebarMenuSub className="max-h-[200px] overflow-y-auto">
             {templateRegistry.map((template) => (
               <SidebarMenuSubItem key={template.id}>
                 <SidebarMenuSubButton
