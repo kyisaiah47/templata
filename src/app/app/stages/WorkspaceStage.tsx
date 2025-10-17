@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { FileText, BookOpen, ChevronRight, ChevronDown, Save, ArrowLeft, X } from 'lucide-react';
+import { ArticleContent } from '@/app/articles/[slug]/article-content';
 
 interface Prompt {
   id: string;
@@ -181,30 +182,7 @@ export function WorkspaceStage() {
       const res = await fetch(`/api/articles?id=${articleId}`);
       const data = await res.json();
 
-      // Process content to ensure proper formatting
-      let content = data.article.content || '';
-
-      // If content doesn't have HTML tags, convert newlines to paragraphs
-      if (!content.includes('<p>') && !content.includes('<h')) {
-        // Split by double newlines for paragraphs
-        const paragraphs = content.split(/\n\n+/).filter(p => p.trim());
-        content = paragraphs.map(p => {
-          // Check if it looks like a heading (starts with # or is short and uppercase)
-          if (p.startsWith('#')) {
-            const level = p.match(/^#+/)?.[0].length || 1;
-            const text = p.replace(/^#+\s*/, '');
-            return `<h${Math.min(level, 6)}>${text}</h${Math.min(level, 6)}>`;
-          }
-          // Convert single newlines to <br> within paragraphs
-          const formatted = p.replace(/\n/g, '<br>');
-          return `<p>${formatted}</p>`;
-        }).join('');
-      }
-
-      setSelectedArticle({
-        ...data.article,
-        content
-      });
+      setSelectedArticle(data.article);
     } catch (error) {
       console.error('Error fetching article:', error);
     } finally {
@@ -463,10 +441,7 @@ export function WorkspaceStage() {
                       </div>
                     </header>
 
-                    <div
-                      className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-base prose-p:leading-relaxed prose-li:text-base prose-ul:space-y-2 prose-ol:space-y-2"
-                      dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
-                    />
+                    <ArticleContent content={selectedArticle.content} />
                   </div>
                 )}
               </>
