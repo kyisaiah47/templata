@@ -280,34 +280,38 @@ export function LifeOSStage() {
                     const isFirstOfMonth = date.getDate() === 1;
                     const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
                     const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    const isStartOrEnd = index === 0 || index === activityData.length - 1;
 
-                    // Generate color based on intensity (green scale like GitHub)
+                    // Generate color based on intensity using theme colors
                     const getColor = () => {
                       if (total === 0) return 'bg-muted';
-                      if (intensity <= 0.2) return 'bg-green-100 dark:bg-green-900/30';
-                      if (intensity <= 0.4) return 'bg-green-200 dark:bg-green-800/40';
-                      if (intensity <= 0.6) return 'bg-green-300 dark:bg-green-700/50';
-                      if (intensity <= 0.8) return 'bg-green-400 dark:bg-green-600/60';
-                      return 'bg-green-500 dark:bg-green-500/70';
+                      if (intensity <= 0.2) return 'bg-primary/20';
+                      if (intensity <= 0.4) return 'bg-primary/40';
+                      if (intensity <= 0.6) return 'bg-primary/60';
+                      if (intensity <= 0.8) return 'bg-primary/80';
+                      return 'bg-primary';
                     };
 
                     return (
-                      <div key={day.date} className="flex flex-col items-center gap-1">
-                        {/* Month label - all columns same height */}
-                        <div className="h-4 text-xs text-muted-foreground font-medium">
-                          {isFirstOfMonth && date.toLocaleDateString('en-US', { month: 'short' })}
+                      <div
+                        key={day.date}
+                        className={`aspect-square rounded border border-border relative group cursor-pointer ${getColor()}`}
+                        title={`${formattedDate} (${dayOfWeek}): ${day.reflections} reflections, ${day.promptsWorked} prompts`}
+                      >
+                        {/* Default: Show date for start/end, or month for first of month */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center group-hover:opacity-0 transition-opacity">
+                          {isStartOrEnd ? (
+                            <>
+                              <span className="text-[10px] font-medium text-foreground leading-none">{date.toLocaleDateString('en-US', { month: 'short' })}</span>
+                              <span className="text-xs font-bold text-foreground leading-none mt-0.5">{date.getDate()}</span>
+                            </>
+                          ) : isFirstOfMonth ? (
+                            <span className="text-[10px] font-medium text-foreground">{date.toLocaleDateString('en-US', { month: 'short' })}</span>
+                          ) : null}
                         </div>
-                        <div
-                          className={`aspect-square w-full rounded border border-border relative group cursor-pointer ${getColor()}`}
-                          title={`${formattedDate} (${dayOfWeek}): ${day.reflections} reflections, ${day.promptsWorked} prompts`}
-                        >
-                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-background/90 rounded">
-                            <span className="text-xs font-medium text-foreground">{total}</span>
-                          </div>
-                        </div>
-                        {/* Day number - all columns same height */}
-                        <div className="h-4 text-xs text-muted-foreground">
-                          {(index === 0 || index === activityData.length - 1) && date.getDate()}
+                        {/* On hover: Show count */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-background/90 rounded">
+                          <span className="text-xs font-medium text-foreground">{total}</span>
                         </div>
                       </div>
                     );
@@ -317,11 +321,11 @@ export function LifeOSStage() {
                   <span>Less</span>
                   <div className="flex gap-1">
                     <div className="w-4 h-4 rounded border border-border bg-muted" />
-                    <div className="w-4 h-4 rounded border border-border bg-green-100 dark:bg-green-900/30" />
-                    <div className="w-4 h-4 rounded border border-border bg-green-200 dark:bg-green-800/40" />
-                    <div className="w-4 h-4 rounded border border-border bg-green-300 dark:bg-green-700/50" />
-                    <div className="w-4 h-4 rounded border border-border bg-green-400 dark:bg-green-600/60" />
-                    <div className="w-4 h-4 rounded border border-border bg-green-500 dark:bg-green-500/70" />
+                    <div className="w-4 h-4 rounded border border-border bg-primary/20" />
+                    <div className="w-4 h-4 rounded border border-border bg-primary/40" />
+                    <div className="w-4 h-4 rounded border border-border bg-primary/60" />
+                    <div className="w-4 h-4 rounded border border-border bg-primary/80" />
+                    <div className="w-4 h-4 rounded border border-border bg-primary" />
                   </div>
                   <span>More</span>
                 </div>

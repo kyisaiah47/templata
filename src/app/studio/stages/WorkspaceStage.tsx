@@ -139,7 +139,20 @@ export function WorkspaceStage() {
 
         const promptsRes = await fetch(`/api/prompts?templateId=${selectedTemplate}`);
         const promptsData = await promptsRes.json();
-        setPrompts(promptsData.prompts || []);
+        const fetchedPrompts = promptsData.prompts || [];
+        setPrompts(fetchedPrompts);
+
+        // Collapse all categories by default
+        const groupedPrompts = fetchedPrompts.reduce((acc: Record<string, Prompt[]>, prompt: Prompt) => {
+          const category = prompt.categoryName || 'General';
+          if (!acc[category]) {
+            acc[category] = [];
+          }
+          acc[category].push(prompt);
+          return acc;
+        }, {});
+        const allCategories = Object.keys(groupedPrompts);
+        setCollapsedCategories(new Set(allCategories));
 
         const articlesRes = await fetch(`/api/articles?template=${selectedTemplate}&pageSize=50`);
         const articlesData = await articlesRes.json();
