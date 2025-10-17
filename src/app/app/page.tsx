@@ -7,6 +7,7 @@ import { ReflectionStage } from './stages/ReflectionStage';
 import { LifeOSStage } from './stages/LifeOSStage';
 import { Button } from '@/components/ui/button';
 import { LogOut, Settings, User } from 'lucide-react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +19,20 @@ type Stage = 'workspace' | 'reflection' | 'lifeos';
 
 export default function StudioPage() {
   const [currentStage, setCurrentStage] = useState<Stage>('workspace');
+  const [stageKeys, setStageKeys] = useState({
+    workspace: 0,
+    reflection: 0,
+    lifeos: 0,
+  });
+
+  const handleStageChange = (newStage: Stage) => {
+    setCurrentStage(newStage);
+    // Increment the key for the new stage to retrigger animations
+    setStageKeys(prev => ({
+      ...prev,
+      [newStage]: prev[newStage] + 1,
+    }));
+  };
 
   return (
     <div className="h-screen flex flex-col bg-background">
@@ -34,21 +49,21 @@ export default function StudioPage() {
               <Button
                 variant={currentStage === 'workspace' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setCurrentStage('workspace')}
+                onClick={() => handleStageChange('workspace')}
               >
                 Workspace
               </Button>
               <Button
                 variant={currentStage === 'reflection' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setCurrentStage('reflection')}
+                onClick={() => handleStageChange('reflection')}
               >
                 Reflection
               </Button>
               <Button
                 variant={currentStage === 'lifeos' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setCurrentStage('lifeos')}
+                onClick={() => handleStageChange('lifeos')}
               >
                 Life OS
               </Button>
@@ -63,10 +78,12 @@ export default function StudioPage() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem>
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
-                  </DropdownMenuItem>
+                  <Link href="/app/settings">
+                    <DropdownMenuItem>
+                      <Settings className="h-4 w-4 mr-2" />
+                      Settings
+                    </DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem>
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
@@ -81,40 +98,49 @@ export default function StudioPage() {
       {/* Stage Viewport with transitions */}
       <div className="flex-1 overflow-hidden relative bg-background">
         <motion.div
-          initial={false}
+          initial={{ opacity: 1, y: 0 }}
           animate={{
             opacity: currentStage === 'workspace' ? 1 : 0,
             y: currentStage === 'workspace' ? 0 : 20,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0"
-          style={{ pointerEvents: currentStage === 'workspace' ? 'auto' : 'none' }}
+          style={{
+            pointerEvents: currentStage === 'workspace' ? 'auto' : 'none',
+            zIndex: currentStage === 'workspace' ? 10 : 0
+          }}
         >
-          <WorkspaceStage />
+          <WorkspaceStage key={`workspace-${stageKeys.workspace}`} />
         </motion.div>
         <motion.div
-          initial={false}
+          initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: currentStage === 'reflection' ? 1 : 0,
             y: currentStage === 'reflection' ? 0 : 20,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0"
-          style={{ pointerEvents: currentStage === 'reflection' ? 'auto' : 'none' }}
+          style={{
+            pointerEvents: currentStage === 'reflection' ? 'auto' : 'none',
+            zIndex: currentStage === 'reflection' ? 10 : 0
+          }}
         >
-          <ReflectionStage />
+          <ReflectionStage key={`reflection-${stageKeys.reflection}`} />
         </motion.div>
         <motion.div
-          initial={false}
+          initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: currentStage === 'lifeos' ? 1 : 0,
             y: currentStage === 'lifeos' ? 0 : 20,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0"
-          style={{ pointerEvents: currentStage === 'lifeos' ? 'auto' : 'none' }}
+          style={{
+            pointerEvents: currentStage === 'lifeos' ? 'auto' : 'none',
+            zIndex: currentStage === 'lifeos' ? 10 : 0
+          }}
         >
-          <LifeOSStage />
+          <LifeOSStage key={`lifeos-${stageKeys.lifeos}`} />
         </motion.div>
       </div>
     </div>
