@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import type { Metadata } from 'next';
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
+import { motion } from "framer-motion";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -68,23 +71,43 @@ export default function LandingPage() {
 	];
 
 	useEffect(() => {
+		// Initialize Lenis for smooth scrolling
+		const lenis = new Lenis({
+			duration: 1.2,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			orientation: 'vertical',
+			smoothWheel: true,
+			wheelMultiplier: 1,
+			touchMultiplier: 2,
+		});
+
+		// Animation loop
+		function raf(time: number) {
+			lenis.raf(time);
+			requestAnimationFrame(raf);
+		}
+		requestAnimationFrame(raf);
+
+		// Background switching on scroll
 		const handleScroll = () => {
 			const scrollPosition = window.scrollY;
 			const windowHeight = window.innerHeight;
 			const documentHeight = document.documentElement.scrollHeight;
-
-			// Calculate which background to show based on scroll position
 			const scrollPercentage = scrollPosition / (documentHeight - windowHeight);
 			const bgIndex = Math.min(
 				Math.floor(scrollPercentage * backgrounds.length),
 				backgrounds.length - 1
 			);
-
 			setCurrentBg(bgIndex);
 		};
 
+		handleScroll();
 		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+			lenis.destroy();
+		};
 	}, [backgrounds.length]);
 
 	const jsonLd = {
@@ -147,13 +170,13 @@ export default function LandingPage() {
 	];
 
 	return (
-		<PageLayout includeHeaderPadding={false}>
-			{/* Fixed Background Layer */}
-			<div className="fixed inset-0 w-full h-full -z-10">
+		<>
+			{/* Fixed Background Layer - OUTSIDE PageLayout */}
+			<div className="fixed inset-0 w-full h-full z-0">
 				{backgrounds.map((bg, index) => (
 					<div
 						key={bg}
-						className="absolute inset-0 transition-opacity duration-1000"
+						className="absolute inset-0 transition-opacity duration-700"
 						style={{
 							backgroundImage: `url(${bg})`,
 							backgroundSize: 'cover',
@@ -169,14 +192,22 @@ export default function LandingPage() {
 				<div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
 			</div>
 
+			{/* Content Layer */}
+			<div className="relative z-10 scrollbar-none">
+			<PageLayout includeHeaderPadding={false}>
+
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
 
 			{/* Hero Section */}
-			<section className="h-screen flex items-center justify-center relative overflow-hidden">
-
+			<motion.section
+				className="min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-8">
 						<Announcement className="border-white/30 text-white bg-white/10 backdrop-blur-sm">
@@ -227,11 +258,16 @@ export default function LandingPage() {
 						</p>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
 			{/* The Problem */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 max-w-4xl mx-auto mb-16">
 						<Badge variant="outline" className="px-4 py-2">
@@ -283,11 +319,16 @@ export default function LandingPage() {
 						</Card>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
 			{/* The Solution - Split-Screen Workspace */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 max-w-4xl mx-auto mb-16">
 						<Badge variant="outline" className="px-4 py-2">
@@ -382,11 +423,16 @@ export default function LandingPage() {
 						</div>
 					</Card>
 				</div>
-			</section>
+			</motion.section>
 
-			{/* 1,298 Guided Workspaces */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*1,298 Guided Workspaces */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="grid md:grid-cols-2 gap-16 items-start">
 						<div className="space-y-8">
@@ -486,11 +532,16 @@ export default function LandingPage() {
 						</div>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
-			{/* Three-Stage Evolution */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*Three-Stage Evolution */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 max-w-4xl mx-auto mb-16">
 						<Badge variant="outline" className="px-4 py-2">
@@ -550,11 +601,16 @@ export default function LandingPage() {
 					</div>
 
 				</div>
-			</section>
+			</motion.section>
 
-			{/* The Manifesto - Short Version */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*The Manifesto - Short Version */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="max-w-4xl mx-auto text-center space-y-6">
 						<Badge variant="outline" className="px-4 py-2">
@@ -575,11 +631,16 @@ export default function LandingPage() {
 						</div>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
-			{/* What is the Axiom Engine */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*What is the Axiom Engine */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 max-w-4xl mx-auto mb-16">
 						<Badge variant="outline" className="px-4 py-2">
@@ -668,11 +729,16 @@ export default function LandingPage() {
 						</div>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
-			{/* Inspiration - Notion & Wikipedia */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*Inspiration - Notion & Wikipedia */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 mb-16">
 						<h2 className="text-3xl md:text-4xl font-bold">
@@ -727,11 +793,16 @@ export default function LandingPage() {
 						</Card>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
 			{/* FAQ Section */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-4xl px-4 relative z-10">
 					<div className="text-center space-y-6 mb-12">
 						<Badge variant="outline" className="px-4 py-2">
@@ -761,11 +832,16 @@ export default function LandingPage() {
 						))}
 					</Accordion>
 				</div>
-			</section>
+			</motion.section>
 
-			{/* By the Numbers */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*By the Numbers */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 mb-16">
 						<h2 className="text-3xl font-bold">Templata by the numbers</h2>
@@ -808,11 +884,16 @@ export default function LandingPage() {
 						</Card>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
-			{/* Final CTA */}
-			<section className="py-32 border-t relative">
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+			{/*Final CTA */}
+			<motion.section
+				className="min-h-screen py-32 border-t relative flex items-center bg-transparent"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.8 }}
+				transition={{ duration: 1 }}
+			>
 				<div className="container mx-auto max-w-7xl px-4 relative z-10">
 					<div className="text-center space-y-6 max-w-3xl mx-auto">
 						<h2 className="text-3xl font-bold">
@@ -840,8 +921,10 @@ export default function LandingPage() {
 						</div>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 
 		</PageLayout>
+		</div>
+		</>
 	);
 }

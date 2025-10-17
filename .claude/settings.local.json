@@ -25,7 +25,8 @@
       "Bash(npx shadcn@latest add sonner)",
       "Bash(xxd:*)",
       "Bash(PGPASSWORD=040796yh psql:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
