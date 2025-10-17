@@ -112,7 +112,7 @@ export default function Loading() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="text-xs text-muted-foreground/60 mt-4"
+          className="text-xs text-muted-foreground/60"
         >
           The encyclopedia for living
         </motion.p>

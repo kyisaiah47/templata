@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,42 +10,51 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
-export function LoginForm({
+export function ResetPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ password }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Login failed");
+        setError(data.error || "Failed to reset password");
         return;
       }
 
-      // Redirect to app after successful login
-      router.push("/app");
-      router.refresh();
+      // Redirect to login after successful password reset
+      router.push("/login?reset=success");
     } catch (err) {
       setError("An error occurred. Please try again.");
     } finally {
@@ -56,52 +66,45 @@ export function LoginForm({
     <form className={cn("flex flex-col gap-6", className)} onSubmit={handleSubmit} {...props}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
+          <h1 className="text-2xl font-bold">Set new password</h1>
           <p className="text-muted-foreground text-sm text-balance">
-            Enter your email below to login to your account
+            Enter your new password below
           </p>
         </div>
         {error && (
           <div className="text-sm text-destructive text-center">{error}</div>
         )}
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input
-            id="email"
-            type="email"
-            placeholder="m@example.com"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Field>
-        <Field>
-          <div className="flex items-center">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <a
-              href="/forgot-password"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
-            >
-              Forgot your password?
-            </a>
-          </div>
+          <FieldLabel htmlFor="password">New Password</FieldLabel>
           <Input
             id="password"
             type="password"
+            placeholder="Enter new password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Field>
         <Field>
+          <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
+          <Input
+            id="confirm-password"
+            type="password"
+            placeholder="Confirm new password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </Field>
+        <Field>
           <Button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Resetting..." : "Reset password"}
           </Button>
           <FieldDescription className="text-center">
-            Don&apos;t have an account?{" "}
-            <a href="/signup" className="underline underline-offset-4">
-              Sign up
-            </a>
+            Remember your password?{" "}
+            <Link href="/login" className="underline underline-offset-4">
+              Back to login
+            </Link>
           </FieldDescription>
         </Field>
       </FieldGroup>
