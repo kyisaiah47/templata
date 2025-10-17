@@ -44,6 +44,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="space-y-4">
             {/* Metadata */}
             <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              {blogPost.template && (
+                <>
+                  <span>{blogPost.template}</span>
+                  <span>·</span>
+                </>
+              )}
               <Badge variant="outline">{blogPost.type}</Badge>
               <span className="flex items-center gap-1">
                 <Clock className="w-3 h-3" />
