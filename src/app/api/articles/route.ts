@@ -78,7 +78,7 @@ export async function GET(request: Request) {
 
     // Apply ordering and pagination
     supabaseQuery = supabaseQuery
-      .order('published_at', { ascending: false })
+      .order('title', { ascending: true })
       .range(from, to);
 
     const { data, error, count } = await supabaseQuery;

@@ -204,7 +204,6 @@ export function ArticlesList({ initialArticles, initialTotal }: ArticlesListProp
                     {templateName && (
                       <span>{templateName}</span>
                     )}
-                    <span>·</span>
                     <span>{article.readTime}</span>
                   </div>
                 </div>
