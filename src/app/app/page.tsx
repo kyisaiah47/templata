@@ -6,7 +6,7 @@ import { WorkspaceStage } from './stages/WorkspaceStage';
 import { ReflectionStage } from './stages/ReflectionStage';
 import { LifeOSStage } from './stages/LifeOSStage';
 import { Button } from '@/components/ui/button';
-import { LogOut, Settings, User, FileText, Heart, BarChart3, X } from 'lucide-react';
+import { LogOut, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
 import {
   DropdownMenu,
@@ -16,15 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
 import { ThemeSelector } from '@/components/theme-selector';
-import { Card } from '@/components/ui/card';
 
 type Stage = 'workspace' | 'reflection' | 'lifeos';
 
@@ -89,124 +81,7 @@ export default function StudioPage() {
   };
 
   return (
-    <>
-      {/* Onboarding Modal */}
-      <Dialog open={showOnboarding} onOpenChange={setShowOnboarding}>
-        <DialogContent className="max-w-3xl border-none p-0 overflow-hidden">
-          {/* Animated background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background overflow-hidden">
-            <motion.div
-              className="absolute top-1/4 left-1/4 w-48 h-48 bg-primary/5 rounded-full blur-3xl"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-primary/5 rounded-full blur-3xl"
-              animate={{
-                scale: [1.2, 1, 1.2],
-                opacity: [0.5, 0.3, 0.5],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-            />
-          </div>
-
-          {/* Content */}
-          <div className="relative z-10 p-8">
-            <DialogHeader className="mb-8">
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="text-center"
-              >
-                <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent mb-2">
-                  Welcome to Templata
-                </DialogTitle>
-                <DialogDescription className="text-muted-foreground">
-                  The encyclopedia for living
-                </DialogDescription>
-              </motion.div>
-            </DialogHeader>
-
-            <div className="grid gap-6 mb-8">
-              {[
-                {
-                  Icon: FileText,
-                  title: 'Templates',
-                  description: 'Choose from hundreds of life templates with curated prompts to guide you through important decisions.',
-                  delay: 0
-                },
-                {
-                  Icon: Heart,
-                  title: 'Reflection',
-                  description: 'Daily reflection space with rotating prompts. Track your mood, add tags, and build a journaling habit.',
-                  delay: 0.1
-                },
-                {
-                  Icon: BarChart3,
-                  title: 'Overview',
-                  description: 'See your complete progress across all templates, reflections, and activity streaks.',
-                  delay: 0.2
-                }
-              ].map(({ Icon, title, description, delay }, index) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 + delay }}
-                >
-                  <Card className="p-5 border-primary/20 bg-background/50 backdrop-blur-sm">
-                    <div className="flex gap-4">
-                      <motion.div
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.4, delay: 0.3 + delay }}
-                        className="p-3 rounded-lg bg-primary/10 border border-primary/20 h-fit"
-                      >
-                        <Icon className="h-6 w-6 text-primary" />
-                      </motion.div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-foreground mb-1">{title}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {description}
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.6 }}
-              className="flex items-center justify-between pt-6 border-t border-border/50"
-            >
-              <p className="text-sm text-muted-foreground">
-                All your work auto-saves as you type
-              </p>
-              <Button onClick={handleCloseOnboarding} size="lg">
-                Get Started
-              </Button>
-            </motion.div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <div className="h-screen flex flex-col bg-background">
+    <div className="h-screen flex flex-col bg-background">
       {/* Top Nav */}
       <div className="border-b bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-3">
@@ -276,6 +151,32 @@ export default function StudioPage() {
         </div>
       </div>
 
+      {/* Dismissible Welcome Banner */}
+      {showOnboarding && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="border-b bg-primary/5 border-primary/20"
+        >
+          <div className="container mx-auto max-w-7xl px-4 py-3">
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-sm text-foreground">
+                <span className="font-semibold">Welcome to Templata!</span> Choose <span className="font-medium">Templates</span> to start a guided workspace, <span className="font-medium">Reflection</span> for daily journaling, or <span className="font-medium">Overview</span> to see your progress.
+              </p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleCloseOnboarding}
+                className="flex-shrink-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Stage Viewport with transitions */}
       <div className="flex-1 overflow-hidden relative bg-background">
         <motion.div
@@ -325,6 +226,5 @@ export default function StudioPage() {
         </motion.div>
       </div>
     </div>
-    </>
   );
 }
