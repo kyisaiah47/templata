@@ -39,9 +39,14 @@ export default function StudioPage() {
 
         if (data.user) {
           setUserEmail(data.user.email || '');
+        } else {
+          // No user found, redirect to login
+          window.location.href = '/login';
         }
       } catch (error) {
         console.error('Error loading user:', error);
+        // On error, also redirect to login
+        window.location.href = '/login';
       }
     }
   }, []);
@@ -53,6 +58,15 @@ export default function StudioPage() {
       ...prev,
       [newStage]: prev[newStage] + 1,
     }));
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (
@@ -117,7 +131,7 @@ export default function StudioPage() {
                       Settings
                     </DropdownMenuItem>
                   </Link>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="h-4 w-4 mr-2" />
                     Logout
                   </DropdownMenuItem>

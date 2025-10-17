@@ -6,8 +6,8 @@ export default function LoginPage() {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <Link href="/" className="flex items-center gap-2 font-medium">
-            <img src="/brand/templata-logo.svg" alt="Templata" className="h-8 w-8" />
+          <Link href="/" className="flex items-center gap-2 font-medium text-white">
+            <img src="/brand/templata-logo.svg" alt="Templata" className="h-8 w-8 brightness-0 invert" />
             <span className="text-lg">Templata</span>
           </Link>
         </div>
@@ -19,7 +19,7 @@ export default function LoginPage() {
       </div>
       <div className="relative hidden lg:block">
         <img
-          src="/geometric-monuments.png"
+          src="/floating-papers.png"
           alt="Templata"
           className="absolute inset-0 h-full w-full object-cover"
         />

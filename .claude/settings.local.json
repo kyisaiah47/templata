@@ -24,7 +24,8 @@
       "Bash(npx shadcn@latest add alert-dialog:*)",
       "Bash(npx shadcn@latest add sonner)",
       "Bash(xxd:*)",
-      "Bash(PGPASSWORD=040796yh psql:*)"
+      "Bash(PGPASSWORD=040796yh psql:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []
