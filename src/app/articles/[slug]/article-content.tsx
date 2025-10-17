@@ -211,14 +211,14 @@ export function ArticleContent({ content }: ArticleContentProps) {
           // Pro Tip callouts with lightbulb
           if (paragraph.includes('Pro Tip:') || paragraph.includes('**Pro Tip:**')) {
             return (
-              <div key={index} className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+              <div key={index} className="bg-primary/5 dark:bg-primary/10 border border-primary/20 dark:border-primary/30 rounded-lg p-4 my-4">
                 <div className="flex items-start gap-2">
-                  <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Lightbulb className="w-3 h-3 text-blue-600" />
+                  <div className="w-6 h-6 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Lightbulb className="w-3 h-3 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1 text-sm">Pro Tip!</h4>
-                    <p className="text-blue-800 dark:text-blue-200 text-sm">
+                    <h4 className="font-semibold text-foreground mb-1 text-sm">Pro Tip!</h4>
+                    <p className="text-muted-foreground text-sm">
                       {renderText(paragraph.replace('**Pro Tip:** ', '').replace('Pro Tip: ', ''))}
                     </p>
                   </div>

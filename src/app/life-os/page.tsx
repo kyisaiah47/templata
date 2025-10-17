@@ -51,7 +51,7 @@ function ActiveTemplatesWidget({ activeTemplates }: { activeTemplates: string[] 
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
-          <Target className="w-5 h-5 text-blue-500" />
+          <Target className="w-5 h-5 text-primary" />
           Active Templates ({activeTemplates.length})
         </CardTitle>
       </CardHeader>
@@ -163,12 +163,12 @@ function RecommendationsWidget() {
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          <div className="p-3 rounded-lg border border-blue-200 bg-blue-50">
+          <div className="p-3 rounded-lg border border-primary/20 bg-primary/5">
             <div className="flex items-start gap-2">
-              <Lightbulb className="w-4 h-4 text-blue-600 mt-0.5" />
+              <Lightbulb className="w-4 h-4 text-primary mt-0.5" />
               <div className="flex-1">
-                <div className="font-medium text-blue-800">Consider adding Personal Finance</div>
-                <div className="text-sm text-blue-600">
+                <div className="font-medium text-foreground">Consider adding Personal Finance</div>
+                <div className="text-sm text-muted-foreground">
                   Critical for your home buying and wedding planning financial coordination
                 </div>
               </div>
@@ -271,7 +271,7 @@ export default function LifeOSPage() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted cursor-pointer">
-                    <div className="w-2 h-2 rounded-full bg-blue-500" />
+                    <div className="w-2 h-2 rounded-full bg-primary" />
                     <span className="text-sm">Update wedding budget</span>
                   </div>
                   <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted cursor-pointer">

@@ -212,7 +212,7 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
         >
           {isDragReady && (
             <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-right-5 duration-300">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-2 py-1 rounded-full shadow-lg border border-white/20 backdrop-blur flex items-center gap-1">
+              <div className="bg-gradient-to-r from-primary to-purple-500 text-white px-2 py-1 rounded-full shadow-lg border border-white/20 backdrop-blur flex items-center gap-1">
                 <ArrowLeft className="w-3 h-3" />
                 <span className="text-xs font-medium">Drag selected text to any note field</span>
               </div>
@@ -473,7 +473,7 @@ export function ResourceViewer({ resource, onClose }: ResourceViewerProps) {
 
                   const calloutStyles = calloutType === 'warning'
                     ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200'
-                    : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200';
+                    : 'bg-primary/5 dark:bg-primary/10 border-primary/20 dark:border-primary/30 text-foreground';
 
                   const calloutIcon = calloutType === 'warning' ? '⚠️' : '💡';
 

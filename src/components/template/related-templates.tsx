@@ -34,10 +34,10 @@ function TemplateCard({ template, strength, reason, level, showReasoning, onNavi
   }
 
   const strengthColor = level === 'critical' ? 'text-red-600' :
-                       level === 'strong' ? 'text-orange-600' : 'text-blue-600'
+                       level === 'strong' ? 'text-orange-600' : 'text-primary'
 
   const strengthBg = level === 'critical' ? 'bg-red-50 border-red-200' :
-                    level === 'strong' ? 'bg-orange-50 border-orange-200' : 'bg-blue-50 border-blue-200'
+                    level === 'strong' ? 'bg-orange-50 border-orange-200' : 'bg-primary/5 border-primary/20'
 
   return (
     <SubtleGlow>
@@ -109,7 +109,7 @@ export function RelatedTemplates({
   return (
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center gap-2">
-        <Brain className="w-4 h-4 text-blue-500" />
+        <Brain className="w-4 h-4 text-primary" />
         <h3 className="font-medium text-sm text-muted-foreground">
           Psychologically Connected Templates
         </h3>

@@ -190,7 +190,7 @@ export function SmartRecommendationsWidget({
     <Card className="w-full">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
-          <Brain className="w-5 h-5 text-blue-500" />
+          <Brain className="w-5 h-5 text-primary" />
           {title}
         </CardTitle>
       </CardHeader>
@@ -207,16 +207,16 @@ export function SmartRecommendationsWidget({
                   onClick={() => handleClick(rec)}
                   className="block"
                 >
-                  <div className="group flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-muted/50 bg-gradient-to-r from-blue-50/50 to-transparent">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                    <Icon className="w-4 h-4 text-blue-600" />
+                  <div className="group flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-muted/50 bg-gradient-to-r from-primary/5 to-transparent">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-sm group-hover:text-blue-600 transition-colors line-clamp-1">
+                    <h4 className="font-medium text-sm group-hover:text-primary transition-colors line-clamp-1">
                       {rec.name}
                     </h4>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                      <Badge variant="outline" className="text-xs border-blue-200 text-blue-700">
+                      <Badge variant="outline" className="text-xs">
                         {rec.category}
                       </Badge>
                       <span>•</span>
@@ -235,7 +235,7 @@ export function SmartRecommendationsWidget({
                     >
                       <Star className={`w-3 h-3 ${isStarred ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground hover:text-foreground'}`} />
                     </Button>
-                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
                   </div>
                 </Link>
