@@ -30,6 +30,7 @@ const MOODS = ['😊', '😌', '😐', '😔', '😤', '😴', '🤔'];
 
 export function ReflectionStage() {
   const today = new Date().toISOString().split('T')[0];
+  const [currentDate, setCurrentDate] = useState(today); // Track which date is being viewed
   const [content, setContent] = useState('');
   const [selectedMood, setSelectedMood] = useState('');
   const [tags, setTags] = useState<string[]>([]);
@@ -39,13 +40,13 @@ export function ReflectionStage() {
   const [pastEntries, setPastEntries] = useState<ReflectionEntry[]>([]);
   const [dailyPrompt, setDailyPrompt] = useState('');
 
-  // Load today's entry from Supabase
+  // Load reflection for current date
   useEffect(() => {
-    loadTodayReflection();
+    loadReflection();
 
-    async function loadTodayReflection() {
+    async function loadReflection() {
       try {
-        const res = await fetch(`/api/reflections?date=${today}`);
+        const res = await fetch(`/api/reflections?date=${currentDate}`);
         const data = await res.json();
 
         if (data.reflections && data.reflections.length > 0) {
@@ -55,19 +56,25 @@ export function ReflectionStage() {
           setTags(reflection.tags || []);
           setDailyPrompt(reflection.prompt || '');
           setLastSaved(reflection.updated_at ? new Date(reflection.updated_at) : null);
+        } else {
+          // No reflection for this date, clear fields
+          setContent('');
+          setSelectedMood('');
+          setTags([]);
+          setLastSaved(null);
+
+          // Set daily prompt if viewing today
+          if (currentDate === today) {
+            const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+            const promptIndex = dayOfYear % DAILY_PROMPTS.length;
+            setDailyPrompt(DAILY_PROMPTS[promptIndex]);
+          }
         }
       } catch (e) {
         console.error('Error loading reflection:', e);
       }
     }
-
-    // Set daily prompt (consistent per day)
-    if (!dailyPrompt) {
-      const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-      const promptIndex = dayOfYear % DAILY_PROMPTS.length;
-      setDailyPrompt(DAILY_PROMPTS[promptIndex]);
-    }
-  }, [today, dailyPrompt]);
+  }, [currentDate, today]);
 
   // Load past entries from Supabase
   useEffect(() => {
@@ -99,9 +106,9 @@ export function ReflectionStage() {
     }
   }, [today, lastSaved]);
 
-  // Autosave to Supabase
+  // Autosave to Supabase (only save if viewing current date)
   useEffect(() => {
-    if (!dailyPrompt) return; // Wait for prompt to be set
+    if (!dailyPrompt || currentDate !== today) return; // Only autosave for today
 
     const timeoutId = setTimeout(async () => {
       try {
@@ -109,7 +116,7 @@ export function ReflectionStage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            date: today,
+            date: currentDate,
             prompt: dailyPrompt,
             content,
             mood: selectedMood,
@@ -123,7 +130,7 @@ export function ReflectionStage() {
     }, 2000);
 
     return () => clearTimeout(timeoutId);
-  }, [content, selectedMood, tags, today, dailyPrompt]);
+  }, [content, selectedMood, tags, currentDate, today, dailyPrompt]);
 
   const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && tagInput.trim()) {
@@ -139,11 +146,12 @@ export function ReflectionStage() {
   };
 
   const loadPastEntry = (entry: ReflectionEntry) => {
-    setContent(entry.content);
-    setSelectedMood(entry.mood);
-    setTags(entry.tags);
-    setDailyPrompt(entry.prompt);
+    setCurrentDate(entry.date); // Change the current date being viewed
     setShowPastEntries(false);
+  };
+
+  const returnToToday = () => {
+    setCurrentDate(today);
   };
 
   return (
@@ -222,14 +230,19 @@ export function ReflectionStage() {
                   )}
                 </Button>
                 <div className="h-6 w-px bg-border" />
-                <div>
+                <div className="flex items-center gap-2">
                   <p className="text-sm font-medium text-foreground">
-                    {new Date(today).toLocaleDateString('en-US', {
+                    {new Date(currentDate).toLocaleDateString('en-US', {
                       weekday: 'long',
                       month: 'long',
                       day: 'numeric',
                     })}
                   </p>
+                  {currentDate !== today && (
+                    <Button variant="ghost" size="sm" onClick={returnToToday}>
+                      Back to Today
+                    </Button>
+                  )}
                 </div>
               </div>
 

@@ -42,8 +42,8 @@ export function SignupForm({
         return;
       }
 
-      // Redirect to studio after successful signup
-      router.push("/studio");
+      // Redirect to app after successful signup
+      router.push("/app");
       router.refresh();
     } catch (err) {
       setError("An error occurred. Please try again.");

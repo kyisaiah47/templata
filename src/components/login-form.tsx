@@ -42,8 +42,8 @@ export function LoginForm({
         return;
       }
 
-      // Redirect to studio after successful login
-      router.push("/studio");
+      // Redirect to app after successful login
+      router.push("/app");
       router.refresh();
     } catch (err) {
       setError("An error occurred. Please try again.");

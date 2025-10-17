@@ -5,8 +5,13 @@ import { WorkspaceStage } from './stages/WorkspaceStage';
 import { ReflectionStage } from './stages/ReflectionStage';
 import { LifeOSStage } from './stages/LifeOSStage';
 import { Button } from '@/components/ui/button';
-import { Home } from 'lucide-react';
-import Link from 'next/link';
+import { LogOut, Settings, User } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 type Stage = 'workspace' | 'reflection' | 'lifeos';
 
@@ -87,14 +92,7 @@ export default function StudioPage() {
         <div className="container mx-auto max-w-7xl px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link href="/">
-                <Button variant="ghost" size="sm">
-                  <Home className="h-4 w-4 mr-2" />
-                  Home
-                </Button>
-              </Link>
-              <div className="h-6 w-px bg-border" />
-              <h1 className="text-lg font-bold text-foreground">Studio</h1>
+              <h1 className="text-2xl font-bold text-foreground">Templata</h1>
             </div>
 
             {/* Stage Switcher */}
@@ -123,6 +121,27 @@ export default function StudioPage() {
               >
                 Life OS
               </Button>
+            </div>
+
+            {/* User Dropdown */}
+            <div className="flex items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <User className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>
+                    <Settings className="h-4 w-4 mr-2" />
+                    Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
