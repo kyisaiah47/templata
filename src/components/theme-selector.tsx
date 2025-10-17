@@ -26,8 +26,8 @@ export function ThemeSelector({ iconOnly = false }: ThemeSelectorProps) {
     setMounted(true)
     // Only set default theme on initial mount
     if (!localStorage.getItem('templata-theme')) {
-      // Set default theme to black (Default theme) - already in dark mode
-      const defaultTheme = themes[0] // Default/Black theme
+      // Set default theme to Noir (pure black/white)
+      const defaultTheme = themes[0] // Noir theme
       setCustomTheme(defaultTheme.colors.dark)
     }
   }, [])
@@ -67,16 +67,18 @@ export function ThemeSelector({ iconOnly = false }: ThemeSelectorProps) {
         <DropdownMenuSeparator />
         
         {themes.map((themeOption) => {
-          // Create visual swatch based on theme name
-          const getThemeSwatch = (name: string) => {
-            switch (name.toLowerCase()) {
-              case 'default': return 'bg-gradient-to-r from-white to-gray-200';
-              case 'rose': return 'bg-gradient-to-r from-purple-300 to-purple-400';
-              case 'neutral': return 'bg-gradient-to-r from-orange-300 to-orange-400';
-              case 'emerald': return 'bg-gradient-to-r from-emerald-400 to-emerald-500';
-              case 'violet': return 'bg-gradient-to-r from-violet-400 to-purple-500';
-              case 'midnight': return 'bg-gradient-to-r from-indigo-600 to-teal-500';
-              default: return 'bg-gradient-to-r from-gray-400 to-gray-600';
+          // Create visual swatch based on actual theme colors
+          const getThemeSwatch = (id: string) => {
+            switch (id) {
+              case 'noir': return 'bg-gradient-to-r from-black to-gray-600';
+              case 'slate': return 'bg-gradient-to-r from-slate-500 to-blue-400';
+              case 'midnight': return 'bg-gradient-to-r from-blue-700 to-blue-500';
+              case 'ocean': return 'bg-gradient-to-r from-cyan-600 to-teal-400';
+              case 'forest': return 'bg-gradient-to-r from-emerald-700 to-green-500';
+              case 'lavender': return 'bg-gradient-to-r from-purple-600 to-violet-400';
+              case 'sunset': return 'bg-gradient-to-r from-orange-500 to-pink-400';
+              case 'cherry-blossom': return 'bg-gradient-to-r from-pink-400 to-rose-300';
+              default: return 'bg-gradient-to-r from-gray-500 to-gray-400';
             }
           };
 
@@ -86,7 +88,7 @@ export function ThemeSelector({ iconOnly = false }: ThemeSelectorProps) {
               onClick={() => handleThemeChange(themeOption.id)}
               className="flex items-center gap-3"
             >
-              <div className={`w-4 h-4 rounded-full ${getThemeSwatch(themeOption.name)} ring-1 ring-border flex-shrink-0`} />
+              <div className={`w-4 h-4 rounded-full ${getThemeSwatch(themeOption.id)} ring-1 ring-border flex-shrink-0`} />
               <span className="flex-1">{themeOption.name}</span>
               {currentThemeInfo.id === themeOption.id && (
                 <Check className="h-3 w-3 text-primary" />
