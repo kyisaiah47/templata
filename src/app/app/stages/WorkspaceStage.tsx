@@ -329,16 +329,10 @@ export function WorkspaceStage() {
       <div className="border-b bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-3">
           <div className="flex items-center justify-between">
-            <div>
-              {templateInfo && (
-                <p className="text-sm text-muted-foreground">{templateInfo.name}</p>
-              )}
-            </div>
-
             <div className="flex items-center gap-3">
               {/* Template Selector */}
               <Select value={selectedTemplate} onValueChange={handleTemplateChange}>
-                <SelectTrigger className="w-[250px]">
+                <SelectTrigger className="w-[350px]">
                   <SelectValue placeholder="Select template" />
                 </SelectTrigger>
                 <SelectContent>
@@ -349,7 +343,9 @@ export function WorkspaceStage() {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
 
+            <div className="flex items-center gap-3">
               {/* Autosave Toggle */}
               <div className="flex items-center gap-2 px-3 py-2 rounded-md border border-border">
                 <Checkbox
