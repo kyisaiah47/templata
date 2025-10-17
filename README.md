@@ -46,11 +46,12 @@ Each template includes carefully curated prompts to guide your thinking:
 - Best practices
 
 ### 🎨 **Core Features**
-- **Full Workspace System** - Create workspaces from any template
-- **Multiple View Modes** - Chat, Board, Checklist, Split, Table, Text Editor, Timeline
-- **Auto-save** - Your work is automatically saved to localStorage
+- **Full Workspace System** - Create workspaces from any template with text editor
+- **Auto-save to Supabase** - Your work is automatically saved to cloud database
+- **3-Column Layout** - Prompts sidebar, editor, and article viewer
 - **Browse 1,298+ Templates** - Searchable directory organized by category
 - **Curated Articles** - Comprehensive article library with 20+ articles per template
+- **Life OS Dashboard** - Manage multiple templates and workflows
 - **User Authentication** - Secure Supabase auth with password reset
 - **Dark/Light Mode** - Beautiful theme system
 - **Responsive Design** - Works on all devices
@@ -299,9 +300,9 @@ We welcome contributions! Please see our contributing guidelines.
 ### Phase 2: Enhancement (In Progress)
 - [ ] Export to PDF
 - [ ] Template favorites and organization
-- [ ] Supabase sync (currently localStorage only)
 - [ ] Collaboration features
 - [ ] Mobile-optimized views
+- [ ] Additional view modes beyond text editor
 
 ### Phase 3: Advanced Features
 - [ ] AI-powered guidance (Axiom Engine)
