@@ -25,7 +25,7 @@ export default function PromptsAdPage() {
 			<div className="flex-1 flex items-center justify-center">
 				<div className="max-w-4xl text-center space-y-12">
 					<h1 className="text-7xl lg:text-8xl font-black leading-none tracking-tight">
-						15,000+
+						104,000+
 						<br />
 						prompts for
 						<br />

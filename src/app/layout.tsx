@@ -102,7 +102,7 @@ export default function RootLayout({
                 "name": "Templata - Free Forever",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Full access to 1,298 templates, 15,000+ prompts, and 25,936 articles. Completely free, no paywalls."
+                "description": "Full access to 1,298 templates, 104,000+ prompts, and 25,936 articles. Completely free, no paywalls."
               }
             })
           }}

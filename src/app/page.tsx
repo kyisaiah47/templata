@@ -49,13 +49,13 @@ export default function LandingPage() {
 		'@context': 'https://schema.org',
 		'@type': 'SoftwareApplication',
 		name: 'Templata',
-		description: 'The first encyclopedia for living. 1,298 guided workspaces with 26,000+ articles and 15,000+ prompts for life\'s biggest decisions.',
+		description: 'The first encyclopedia for living. 1,298 guided workspaces with 26,000+ articles and 104,000+ prompts for life\'s biggest decisions.',
 		url: 'https://templata.com',
 		applicationCategory: 'ProductivityApplication',
 		operatingSystem: 'Web',
 		featureList: [
 			'1,298 Guided Workspaces',
-			'15,000+ Action Prompts',
+			'104,000+ Action Prompts',
 			'26,000+ Expert Articles',
 			'Split-Screen Interface',
 		],
@@ -108,7 +108,7 @@ export default function LandingPage() {
 						</h1>
 
 						<p className="mx-auto max-w-2xl text-lg md:text-xl text-white/90">
-							1,298 guided workspaces with 26,000+ articles and 15,000+ prompts.
+							1,298 guided workspaces with 26,000+ articles and 104,000+ prompts.
 							<br />
 							Never start with a blank page.
 						</p>
@@ -187,7 +187,7 @@ export default function LandingPage() {
 						<div className="border-t mt-8 pt-6 space-y-3">
 							<div className="flex items-center gap-2 text-sm text-muted-foreground">
 								<CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
-								<span>15,000+ categorized prompts ensure you consider everything</span>
+								<span>104,000+ categorized prompts ensure you consider everything</span>
 							</div>
 							<div className="flex items-center gap-2 text-sm text-muted-foreground">
 								<CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
@@ -218,7 +218,7 @@ export default function LandingPage() {
 							<p className="text-muted-foreground">Guided Workspaces</p>
 						</div>
 						<div className="text-center">
-							<div className="text-5xl font-bold mb-2">15k+</div>
+							<div className="text-5xl font-bold mb-2">104K+</div>
 							<p className="text-muted-foreground">Action Prompts</p>
 						</div>
 						<div className="text-center">

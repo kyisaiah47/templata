@@ -82,7 +82,7 @@ export function PaywallModal({ isOpen, onClose, trigger = 'unlock-limit', templa
             </li>
             <li className="flex items-start gap-2">
               <Check className="h-4 w-4 text-primary mt-0.5" />
-              <span>15,000+ expertly crafted prompts</span>
+              <span>104,000+ expertly crafted prompts</span>
             </li>
             <li className="flex items-start gap-2">
               <Check className="h-4 w-4 text-primary mt-0.5" />

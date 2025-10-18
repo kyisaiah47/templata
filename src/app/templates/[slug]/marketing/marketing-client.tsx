@@ -421,7 +421,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
               <div className="border-t mt-8 pt-6 space-y-3">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span>15,000+ categorized prompts ensure you consider everything</span>
+                  <span>104,000+ categorized prompts ensure you consider everything</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
@@ -446,7 +446,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
                 <p className="text-muted-foreground">Guided Workspaces</p>
               </div>
               <div className="text-center">
-                <div className="text-5xl font-bold mb-2">15k+</div>
+                <div className="text-5xl font-bold mb-2">104K+</div>
                 <p className="text-muted-foreground">Action Prompts</p>
               </div>
               <div className="text-center">

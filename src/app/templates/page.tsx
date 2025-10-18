@@ -122,7 +122,7 @@ export default function TemplatesPage() {
               },
               {
                 icon: FileText,
-                title: "15,000+ Prompts Included",
+                title: "104,000+ Prompts Included",
                 description: "Each template comes with tactical prompts and 20+ curated articles, giving you both structure and deep insights."
               },
               {

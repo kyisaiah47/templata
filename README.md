@@ -11,7 +11,7 @@
 ### What Makes Us Different
 
 - **📚 Systematic Coverage** - 1,298 templates covering every conceivable life situation
-- **🎯 Actionable Guidance** - 15,000+ tactical prompts to guide your thinking
+- **🎯 Actionable Guidance** - 104,000+ tactical prompts to guide your thinking
 - **📰 Deep Insights** - 25,936 curated articles for research and learning
 - **🔍 Built for Abundance** - Wikipedia philosophy: if it exists, we've covered it
 
