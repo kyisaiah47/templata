@@ -95,14 +95,14 @@ export default function RootLayout({
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-                "email": "support@templata.com"
+                "email": "templata.app@gmail.com"
               },
               "offers": {
                 "@type": "Offer",
                 "name": "Templata - Free Forever",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Full access to 1,298 templates, 15,000+ prompts, and 26,000+ articles. Completely free, no paywalls."
+                "description": "Full access to 1,298 templates, 15,000+ prompts, and 25,936 articles. Completely free, no paywalls."
               }
             })
           }}

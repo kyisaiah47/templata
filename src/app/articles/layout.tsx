@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Articles & Guides - Expert Insights for Life Planning | Templata',
-  description: 'Discover 26,000+ expert articles and guides for life\'s biggest decisions. Career changes, family planning, business launches, home buying & more. Written by industry professionals.',
-  keywords: 'life planning articles, career change guides, home buying articles, wedding planning tips, business launch guides, expert advice, life decision guides, planning resources',
-  authors: [{ name: 'Templata Editorial Team' }],
+  title: 'Browse 25,936 Articles | Expert Knowledge Base for Life | Templata',
+  description: 'Explore 25,936 expert articles covering every life situation. Wedding planning, career changes, business launches, home buying, health decisions & more. Like Wikipedia for life guidance.',
+  keywords: 'life planning articles, expert guides, how-to articles, wedding planning tips, career change advice, business launch guides, home buying guidance, life decisions, knowledge base, templata articles',
+  authors: [{ name: 'Templata Team' }],
   creator: 'Templata',
   publisher: 'Templata',
   metadataBase: new URL('https://templata.com'),
@@ -12,16 +12,16 @@ export const metadata: Metadata = {
     canonical: '/articles',
   },
   openGraph: {
-    title: 'Articles & Guides - Expert Insights for Life Planning | Templata',
-    description: 'Discover 26,000+ expert articles and guides for life\'s biggest decisions. Career changes, family planning, business launches & more from industry professionals.',
+    title: 'Browse 25,936 Articles | Expert Knowledge Base for Life',
+    description: '25,936 expert articles covering every life situation. Wedding planning, career changes, business launches, home buying & more. Like Wikipedia for life guidance.',
     url: 'https://templata.com/articles',
     siteName: 'Templata',
     images: [
       {
-        url: '/og-articles.jpg',
+        url: 'https://templata.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Templata Articles - Expert Insights for Life Planning',
+        alt: 'Templata Articles - 25,936 Expert Articles',
       },
     ],
     locale: 'en_US',
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Articles & Guides - Expert Insights for Life Planning',
-    description: 'Discover 26,000+ expert articles and guides for life\'s biggest decisions. Career changes, family planning, business launches & more.',
-    images: ['/twitter-articles.jpg'],
+    title: 'Browse 25,936 Articles | Expert Knowledge Base for Life',
+    description: '25,936 expert articles for every life situation. Wedding planning, career changes, business launches & more. Completely free.',
+    images: ['https://templata.com/og-image.png'],
     creator: '@templata',
     site: '@templata',
   },

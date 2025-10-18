@@ -1,20 +1,20 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Browse All Templates | 100+ Expert-Crafted Life Planning Templates | Templata',
-  description: 'Discover 100+ expertly designed templates for every major life moment. Wedding planning, career changes, home buying, business launches, health planning & more. Filter by category, difficulty, and time investment.',
-  keywords: 'life templates browse, wedding planning template, career change guide, home buying checklist, business plan template, health planning, personal development, template library, life planning tools, expert guidance',
+  title: 'Browse 1,298 Life Templates | The Encyclopedia for Living | Templata',
+  description: 'Explore 1,298 systematically organized templates for every life situation. From wedding planning to career transitions, business launches to home buying—comprehensive guidance with 15,000+ prompts and 25,936 articles.',
+  keywords: 'life templates, wedding planning template, career change guide, home buying checklist, business plan template, life planning, template directory, planning tools, life organization, structured guidance, templata templates',
   openGraph: {
-    title: 'Browse All Templates | 100+ Expert-Crafted Life Planning Templates',
-    description: 'Discover expertly designed templates for every major life moment. Wedding planning, career changes, home buying, business launches & more.',
+    title: 'Browse 1,298 Life Templates | The Encyclopedia for Living',
+    description: 'Systematically organized templates for every life situation. Wedding planning, career transitions, business launches, home buying & more. 15,000+ prompts and 25,936 articles.',
     url: 'https://templata.com/templates',
     siteName: 'Templata',
     images: [
       {
-        url: 'https://templata.com/og-image-templates.png',
+        url: 'https://templata.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Browse 100+ Expert-Crafted Life Planning Templates',
+        alt: 'Templata - 1,298 Life Planning Templates',
       },
     ],
     locale: 'en_US',
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Browse All Templates | 100+ Expert-Crafted Life Planning Templates',
-    description: 'Discover expertly designed templates for every major life moment. Used by 50,000+ people worldwide.',
-    images: ['https://templata.com/og-image-templates.png'],
+    title: 'Browse 1,298 Life Templates | The Encyclopedia for Living',
+    description: '1,298 systematically organized templates for every life situation. 15,000+ prompts and 25,936 articles. Completely free.',
+    images: ['https://templata.com/og-image.png'],
     creator: '@templata',
   },
   robots: {
@@ -58,13 +58,13 @@ export default function TemplatesLayout({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             "name": "Life Planning Templates",
-            "description": "Browse 100+ expert-crafted templates for major life moments",
+            "description": "Browse 1,298 systematically organized templates for every life situation",
             "url": "https://templata.com/templates",
             "mainEntity": {
               "@type": "ItemList",
               "name": "Template Collection",
-              "description": "Comprehensive collection of life planning templates",
-              "numberOfItems": 100,
+              "description": "Comprehensive collection of 1,298 life planning templates",
+              "numberOfItems": 1298,
               "itemListElement": [
                 {
                   "@type": "SoftwareApplication",

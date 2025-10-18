@@ -3,7 +3,22 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Templata',
-  description: 'Terms of service for Templata - Rules and guidelines for using our service.',
+  description: 'Terms of service for Templata - Rules and guidelines for using our life planning platform. User agreements, content policies, and service terms.',
+  openGraph: {
+    title: 'Terms of Service | Templata',
+    description: 'Terms of service for Templata - Rules and guidelines for using our life planning platform.',
+    url: 'https://templata.com/terms',
+    siteName: 'Templata',
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://templata.com/terms',
+  },
 };
 
 export default function TermsPage() {
