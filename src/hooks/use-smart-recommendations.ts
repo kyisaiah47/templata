@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react"
 import { useFavorites } from "./use-favorites"
 import { useRecentTemplates } from "./use-recent-templates"
-import { templateRegistry } from "@/registry/templates"
+import type { TemplateRegistryEntry } from "@/registry/templates"
 import { articleRegistry } from "@/registry/articles"
 
 export interface SmartRecommendation {
@@ -50,9 +50,24 @@ export function useSmartRecommendations() {
       interests: []
     }
   })
+  const [templateRegistry, setTemplateRegistry] = useState<TemplateRegistryEntry[]>([])
 
   const { favorites } = useFavorites()
   const { recentItems } = useRecentTemplates()
+
+  // Load templates from API
+  useEffect(() => {
+    async function fetchTemplates() {
+      try {
+        const res = await fetch('/api/templates')
+        const data = await res.json()
+        setTemplateRegistry(data.templates || [])
+      } catch (error) {
+        console.error("Failed to load templates:", error)
+      }
+    }
+    fetchTemplates()
+  }, [])
 
   // Load user context from localStorage
   useEffect(() => {
@@ -288,7 +303,7 @@ export function useSmartRecommendations() {
     return recs
       .sort((a, b) => b.score - a.score)
       .slice(0, 12) // Limit to top 12
-  }, [context, favorites, recentItems])
+  }, [context, favorites, recentItems, templateRegistry])
 
   // Get recommendations by type
   const getRecommendationsByType = (type: "template" | "article", limit = 6) => {

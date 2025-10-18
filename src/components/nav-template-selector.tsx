@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { IconPlus, IconMinus } from "@tabler/icons-react"
 import {
   Collapsible,
@@ -13,7 +14,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { templateRegistry } from "@/registry/templates"
+import type { TemplateRegistryEntry } from "@/registry/templates"
 
 interface NavTemplateSelectorProps {
   selectedTemplateId: string | null;
@@ -21,6 +22,21 @@ interface NavTemplateSelectorProps {
 }
 
 export function NavTemplateSelector({ selectedTemplateId, onTemplateChange }: NavTemplateSelectorProps) {
+  const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([])
+
+  useEffect(() => {
+    async function fetchTemplates() {
+      try {
+        const res = await fetch('/api/templates')
+        const data = await res.json()
+        setTemplates(data.templates || [])
+      } catch (error) {
+        console.error("Failed to load templates:", error)
+      }
+    }
+    fetchTemplates()
+  }, [])
+
   return (
     <Collapsible defaultOpen className="group/collapsible">
       <SidebarMenuItem>
@@ -33,7 +49,7 @@ export function NavTemplateSelector({ selectedTemplateId, onTemplateChange }: Na
         </CollapsibleTrigger>
         <CollapsibleContent>
           <SidebarMenuSub className="max-h-[200px] overflow-y-auto">
-            {templateRegistry.map((template) => (
+            {templates.map((template) => (
               <SidebarMenuSubItem key={template.id}>
                 <SidebarMenuSubButton
                   onClick={() => onTemplateChange(template.id)}

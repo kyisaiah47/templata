@@ -28,8 +28,8 @@ import { SubtleGlow } from "@/components/ui/glow-variants"
 import { useRecentTemplates } from "@/hooks/use-recent-templates"
 import { useUserUnlocks } from "@/contexts/UserUnlockContext"
 
-// Import data
-import { templateRegistry, getAllCategories } from "@/registry/templates"
+// Import types
+import type { TemplateRegistryEntry } from "@/registry/templates"
 
 interface CommandPaletteProps {
   isOpen: boolean
@@ -99,9 +99,24 @@ export function CommandPalette({
   const [articlesTotal, setArticlesTotal] = useState(0)
   const [articlesLoading, setArticlesLoading] = useState(false)
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set())
+  const [templateRegistry, setTemplateRegistry] = useState<TemplateRegistryEntry[]>([])
 
   const { addRecentItem } = useRecentTemplates()
   const { unlockData, isTemplateUnlocked } = useUserUnlocks()
+
+  // Load templates from API
+  useEffect(() => {
+    async function fetchTemplates() {
+      try {
+        const res = await fetch('/api/templates')
+        const data = await res.json()
+        setTemplateRegistry(data.templates || [])
+      } catch (error) {
+        console.error("Failed to load templates:", error)
+      }
+    }
+    fetchTemplates()
+  }, [])
 
   // Debounce search query
   useEffect(() => {
@@ -166,7 +181,7 @@ export function CommandPalette({
       searchableText: `${template.name} ${template.description} ${template.category}`.toLowerCase(),
       type: 'template' as const
     }))
-  }, [])
+  }, [templateRegistry])
 
   // MVP: No filtering needed - everything is free
   const filterableTemplates = searchableTemplates
