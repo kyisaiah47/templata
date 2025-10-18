@@ -5,6 +5,7 @@ import { Footer } from "./footer";
 import { RecentlyUsedStrip, RecentlyUsedFooter } from "@/components/recently-used-strip";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
 
 interface PageLayoutProps {
 	children: React.ReactNode;
@@ -19,6 +20,8 @@ export function PageLayout({
 	includeFooter = true,
 	includeHeaderPadding = true
 }: PageLayoutProps) {
+	const { isLoggedIn } = useAuth();
+
 	return (
 		<div className="min-h-screen bg-transparent">
 			{includeHeader && <Header />}
@@ -44,7 +47,7 @@ export function PageLayout({
 				>
 					<a href="/app">
 						<Play className="h-5 w-5" />
-						<span className="hidden sm:inline">Try Demo</span>
+						<span className="hidden sm:inline">{isLoggedIn ? "Open App" : "Try Demo"}</span>
 					</a>
 				</Button>
 			</div>
