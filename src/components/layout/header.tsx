@@ -44,6 +44,7 @@ import {
 export function Header() {
 	const [scrollY, setScrollY] = React.useState(0)
 	const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+	const [isMobile, setIsMobile] = React.useState(false)
 	const pathname = usePathname()
 	const { isLoggedIn, user, logout } = useAuth()
 
@@ -51,14 +52,26 @@ export function Header() {
 		const handleScroll = () => {
 			setScrollY(window.scrollY)
 		}
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768) // md breakpoint
+		}
+
+		// Initial check
+		handleResize()
+
 		window.addEventListener('scroll', handleScroll)
-		return () => window.removeEventListener('scroll', handleScroll)
+		window.addEventListener('resize', handleResize)
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+			window.removeEventListener('resize', handleResize)
+		}
 	}, [])
 
 	const scrollProgress = Math.min(scrollY / 100, 1)
 	const isScrolled = scrollY > 10
-	const headerWidth = 100 - (scrollProgress * 30) // Goes from 100% to 70%
-	const borderRadius = scrollProgress * 16 // Goes from 0 to 16px
+	// Disable shrinking effect on mobile
+	const headerWidth = isMobile ? 100 : (100 - (scrollProgress * 30)) // Goes from 100% to 70%
+	const borderRadius = isMobile ? 0 : (scrollProgress * 16) // Goes from 0 to 16px
 	const backgroundOpacity = scrollProgress * 0.8
 	const isHomePage = pathname === "/"
 
