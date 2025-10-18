@@ -1,28 +1,48 @@
 "use client"
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import type { TemplateRegistryEntry } from '@/registry/templates';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Search, Layout, FileText, Lightbulb, Target } from 'lucide-react';
+import { Search, Layout, FileText, Lightbulb, Target, Loader2 } from 'lucide-react';
 import { PageLayout } from '@/components/layout';
 import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
+
+const TEMPLATES_PER_PAGE = 100;
 
 export default function TemplatesPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [allTemplates, setAllTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [displayedTemplates, setDisplayedTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
 
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
+
+  // Fetch all templates once for search
   useEffect(() => {
     async function fetchTemplates() {
       try {
         setLoading(true);
         const res = await fetch('/api/templates');
         const data = await res.json();
-        setTemplates(data.templates || []);
+        const templates = data.templates || [];
+        setAllTemplates(templates);
+        setTotalCount(templates.length);
+
+        // Initial load - first page
+        setDisplayedTemplates(templates.slice(0, TEMPLATES_PER_PAGE));
+        setHasMore(templates.length > TEMPLATES_PER_PAGE);
       } catch (error) {
         console.error('Error fetching templates:', error);
       } finally {
@@ -33,14 +53,42 @@ export default function TemplatesPage() {
     fetchTemplates();
   }, []);
 
+  // Load more when scrolling into view
+  const loadMore = useCallback(() => {
+    if (loadingMore || !hasMore || searchQuery) return;
+
+    setLoadingMore(true);
+
+    setTimeout(() => {
+      const nextPage = page + 1;
+      const start = 0;
+      const end = nextPage * TEMPLATES_PER_PAGE;
+      const newDisplayed = allTemplates.slice(start, end);
+
+      setDisplayedTemplates(newDisplayed);
+      setPage(nextPage);
+      setHasMore(end < allTemplates.length);
+      setLoadingMore(false);
+    }, 300); // Small delay for better UX
+  }, [allTemplates, page, hasMore, loadingMore, searchQuery]);
+
+  useEffect(() => {
+    if (inView && !searchQuery) {
+      loadMore();
+    }
+  }, [inView, loadMore, searchQuery]);
+
   // Group templates by category and sort alphabetically
   const groupedTemplates = useMemo(() => {
+    // If searching, use all templates; otherwise use paginated displayed templates
+    const templatesToUse = searchQuery.trim() ? allTemplates : displayedTemplates;
+
     const filtered = searchQuery.trim()
-      ? templates.filter(t =>
+      ? templatesToUse.filter(t =>
           t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           t.category.toLowerCase().includes(searchQuery.toLowerCase())
         )
-      : templates;
+      : templatesToUse;
 
     const grouped: Record<string, TemplateRegistryEntry[]> = {};
 
@@ -57,9 +105,12 @@ export default function TemplatesPage() {
     });
 
     return grouped;
-  }, [templates, searchQuery]);
+  }, [allTemplates, displayedTemplates, searchQuery]);
 
   const categories = Object.keys(groupedTemplates).sort();
+  const displayedCount = searchQuery.trim()
+    ? Object.values(groupedTemplates).flat().length
+    : displayedTemplates.length;
 
   return (
     <PageLayout>
@@ -164,7 +215,10 @@ export default function TemplatesPage() {
             />
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
-            {loading ? 'Loading...' : `${templates.length} templates across ${categories.length} categories`}
+            {loading ? 'Loading...' : searchQuery.trim()
+              ? `${displayedCount} results across ${categories.length} categories`
+              : `Showing ${displayedCount} of ${totalCount} templates across ${categories.length} categories`
+            }
           </p>
         </div>
 
@@ -195,6 +249,27 @@ export default function TemplatesPage() {
             </section>
           ))}
         </div>
+
+        {/* Load More Trigger & Indicator */}
+        {!searchQuery && hasMore && (
+          <div ref={loadMoreRef} className="flex justify-center py-12">
+            {loadingMore && (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Loading more templates...</span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* End of list message */}
+        {!searchQuery && !hasMore && displayedTemplates.length > 0 && (
+          <div className="flex justify-center py-12">
+            <p className="text-sm text-muted-foreground">
+              You've reached the end of the list
+            </p>
+          </div>
+        )}
       </div>
     </PageLayout>
   );
