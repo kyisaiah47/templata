@@ -1,13 +1,11 @@
 import { MetadataRoute } from 'next';
-import { articles } from '@/registry/articles';
+import { createClient } from '@supabase/supabase-js';
 
-const ARTICLES_PER_PAGE = 25;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://templata.com';
-
-  // Calculate total pages for articles
-  const totalArticlePages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -18,60 +16,74 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${baseUrl}/templates`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/articles`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/about`,
+      url: `${baseUrl}/privacy`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.3,
     },
     {
-      url: `${baseUrl}/partners`,
+      url: `${baseUrl}/terms`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/preview`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.3,
     },
   ];
 
-  // Article pages (paginated)
-  const articlePages: MetadataRoute.Sitemap = Array.from(
-    { length: totalArticlePages },
-    (_, i) => ({
-      url: i === 0 ? `${baseUrl}/articles` : `${baseUrl}/articles?page=${i + 1}`,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: i === 0 ? 0.9 : 0.7,
-    })
-  );
+  try {
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Individual articles
-  const articleDetailPages: MetadataRoute.Sitemap = articles.map((post) => {
-    const dateString = post.updatedAt || post.publishedAt;
-    const lastModified = new Date(dateString);
+    // Fetch all template IDs
+    const { data: templates } = await supabase
+      .from('templata_templates')
+      .select('id, created_at')
+      .order('created_at', { ascending: false });
 
-    return {
-      url: `${baseUrl}/articles/${post.slug}`,
-      lastModified: isNaN(lastModified.getTime()) ? new Date() : lastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    };
-  });
+    // Fetch all article slugs
+    const { data: articles } = await supabase
+      .from('templata_articles')
+      .select('slug, created_at')
+      .order('created_at', { ascending: false });
 
-  return [...staticPages, ...articlePages, ...articleDetailPages];
+    // Generate template pages
+    const templatePages: MetadataRoute.Sitemap = (templates || []).flatMap((template) => [
+      {
+        url: `${baseUrl}/templates/${template.id}`,
+        lastModified: new Date(template.created_at),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/templates/${template.id}/marketing`,
+        lastModified: new Date(template.created_at),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      },
+    ]);
+
+    // Generate article pages
+    const articlePages: MetadataRoute.Sitemap = (articles || []).map((article) => ({
+      url: `${baseUrl}/articles/${article.slug}`,
+      lastModified: new Date(article.created_at),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    }));
+
+    return [...staticPages, ...templatePages, ...articlePages];
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    // Return just static pages if database fetch fails
+    return staticPages;
+  }
 }

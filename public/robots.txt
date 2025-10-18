@@ -1,0 +1,23 @@
+# robots.txt for Templata
+# https://templata.com
+
+User-agent: *
+Allow: /
+Allow: /templates
+Allow: /templates/*
+Allow: /articles
+Allow: /articles/*
+Allow: /privacy
+Allow: /terms
+
+# Disallow user-specific pages
+Disallow: /app
+Disallow: /app/*
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://templata.com/sitemap.xml
