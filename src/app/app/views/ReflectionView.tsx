@@ -29,7 +29,7 @@ const DAILY_PROMPTS = [
 
 const MOODS = ['😊', '😌', '😐', '😔', '😤', '😴', '🤔'];
 
-export function ReflectionStage() {
+export function ReflectionView() {
   // Get today's date in local timezone (not UTC)
   const today = new Date().toLocaleDateString('en-CA'); // en-CA gives YYYY-MM-DD format
   const [currentDate, setCurrentDate] = useState(today); // Track which date is being viewed

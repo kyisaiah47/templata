@@ -59,7 +59,7 @@ const FEATURED_TEMPLATE_IDS = [
   'business-launch',
 ];
 
-export function WorkspaceStage() {
+export function TemplatesView() {
   const [selectedTemplate, setSelectedTemplate] = useState('wedding-planning');
   const [templates, setTemplates] = useState<Template[]>([]);
   const [displayedTemplates, setDisplayedTemplates] = useState<Template[]>([]);

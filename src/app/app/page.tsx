@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { WorkspaceStage } from './stages/WorkspaceStage';
-import { ReflectionStage } from './stages/ReflectionStage';
-import { LifeOSStage } from './stages/LifeOSStage';
+import { TemplatesView } from './views/TemplatesView';
+import { ReflectionView } from './views/ReflectionView';
+import { OverviewView } from './views/OverviewView';
 import { Button } from '@/components/ui/button';
 import { LogOut, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
@@ -18,14 +18,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ThemeSelector } from '@/components/theme-selector';
 
-type Stage = 'workspace' | 'reflection' | 'lifeos';
+type View = 'templates' | 'reflection' | 'overview';
 
 export default function StudioPage() {
-  const [currentStage, setCurrentStage] = useState<Stage>('workspace');
-  const [stageKeys, setStageKeys] = useState({
-    workspace: 0,
+  const [currentView, setCurrentView] = useState<View>('templates');
+  const [viewKeys, setViewKeys] = useState({
+    templates: 0,
     reflection: 0,
-    lifeos: 0,
+    overview: 0,
   });
   const [userEmail, setUserEmail] = useState('');
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -62,12 +62,12 @@ export default function StudioPage() {
     setShowOnboarding(false);
   };
 
-  const handleStageChange = (newStage: Stage) => {
-    setCurrentStage(newStage);
-    // Increment the key for the new stage to retrigger animations
-    setStageKeys(prev => ({
+  const handleViewChange = (newView: View) => {
+    setCurrentView(newView);
+    // Increment the key for the new view to retrigger animations
+    setViewKeys(prev => ({
       ...prev,
-      [newStage]: prev[newStage] + 1,
+      [newView]: prev[newView] + 1,
     }));
   };
 
@@ -92,26 +92,26 @@ export default function StudioPage() {
               </Link>
             </div>
 
-            {/* Stage Switcher */}
+            {/* View Switcher */}
             <div className="flex items-center gap-2">
               <Button
-                variant={currentStage === 'workspace' ? 'default' : 'ghost'}
+                variant={currentView === 'templates' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => handleStageChange('workspace')}
+                onClick={() => handleViewChange('templates')}
               >
                 Templates
               </Button>
               <Button
-                variant={currentStage === 'reflection' ? 'default' : 'ghost'}
+                variant={currentView === 'reflection' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => handleStageChange('reflection')}
+                onClick={() => handleViewChange('reflection')}
               >
                 Reflection
               </Button>
               <Button
-                variant={currentStage === 'lifeos' ? 'default' : 'ghost'}
+                variant={currentView === 'overview' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => handleStageChange('lifeos')}
+                onClick={() => handleViewChange('overview')}
               >
                 Overview
               </Button>
@@ -179,52 +179,52 @@ export default function StudioPage() {
         </motion.div>
       )}
 
-      {/* Stage Viewport with transitions */}
+      {/* View Viewport with transitions */}
       <div className="flex-1 overflow-hidden relative bg-background">
         <motion.div
           initial={{ opacity: 1, y: 0 }}
           animate={{
-            opacity: currentStage === 'workspace' ? 1 : 0,
-            y: currentStage === 'workspace' ? 0 : 20,
+            opacity: currentView === 'templates' ? 1 : 0,
+            y: currentView === 'templates' ? 0 : 20,
           }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0"
           style={{
-            pointerEvents: currentStage === 'workspace' ? 'auto' : 'none',
-            zIndex: currentStage === 'workspace' ? 10 : 0
+            pointerEvents: currentView === 'templates' ? 'auto' : 'none',
+            zIndex: currentView === 'templates' ? 10 : 0
           }}
         >
-          <WorkspaceStage key={`workspace-${stageKeys.workspace}`} />
+          <TemplatesView key={`templates-${viewKeys.templates}`} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{
-            opacity: currentStage === 'reflection' ? 1 : 0,
-            y: currentStage === 'reflection' ? 0 : 20,
+            opacity: currentView === 'reflection' ? 1 : 0,
+            y: currentView === 'reflection' ? 0 : 20,
           }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0"
           style={{
-            pointerEvents: currentStage === 'reflection' ? 'auto' : 'none',
-            zIndex: currentStage === 'reflection' ? 10 : 0
+            pointerEvents: currentView === 'reflection' ? 'auto' : 'none',
+            zIndex: currentView === 'reflection' ? 10 : 0
           }}
         >
-          <ReflectionStage key={`reflection-${stageKeys.reflection}`} />
+          <ReflectionView key={`reflection-${viewKeys.reflection}`} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{
-            opacity: currentStage === 'lifeos' ? 1 : 0,
-            y: currentStage === 'lifeos' ? 0 : 20,
+            opacity: currentView === 'overview' ? 1 : 0,
+            y: currentView === 'overview' ? 0 : 20,
           }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0"
           style={{
-            pointerEvents: currentStage === 'lifeos' ? 'auto' : 'none',
-            zIndex: currentStage === 'lifeos' ? 10 : 0
+            pointerEvents: currentView === 'overview' ? 'auto' : 'none',
+            zIndex: currentView === 'overview' ? 10 : 0
           }}
         >
-          <LifeOSStage key={`lifeos-${stageKeys.lifeos}`} />
+          <OverviewView key={`overview-${viewKeys.overview}`} />
         </motion.div>
       </div>
     </div>

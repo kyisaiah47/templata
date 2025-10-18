@@ -35,7 +35,7 @@ interface ActivityDay {
   promptsWorked: number;
 }
 
-export function LifeOSStage() {
+export function OverviewView() {
   const [view, setView] = useState<'board' | 'timeline' | 'insights'>('board');
   const [templates, setTemplates] = useState<TemplateProgress[]>([]);
   const [reflections, setReflections] = useState<ReflectionSummary[]>([]);
