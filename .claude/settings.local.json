@@ -33,7 +33,8 @@
       "Bash(supabase db remote:*)",
       "Bash(xargs cat:*)",
       "Bash(npx tsx:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(ffmpeg:*)"
     ],
     "deny": [],
     "ask": []
