@@ -230,7 +230,6 @@
     @apply border-border outline-ring/50;
   }
   html {
-    overflow-y: scroll !important;
     scrollbar-gutter: stable;
     width: 100%;
     overflow-x: hidden;
