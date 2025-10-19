@@ -89,7 +89,7 @@ export default function StudioPage() {
           <div className="flex items-center gap-2 w-full relative">
             {/* Left side - Templata Logo */}
             <div className="flex items-center gap-4">
-              <Link href="/">
+              <Link href="/" className="flex items-center gap-2">
                 <Image
                   src="/brand/favicon-white.svg"
                   alt="Templata"
@@ -97,6 +97,7 @@ export default function StudioPage() {
                   height={20}
                   className="hover:opacity-80 transition-opacity cursor-pointer"
                 />
+                <span className="hidden md:block font-semibold text-lg">Templata</span>
               </Link>
             </div>
 
@@ -129,7 +130,7 @@ export default function StudioPage() {
             </div>
 
             {/* Theme Selector & User Dropdown */}
-            <div className="flex items-center gap-1 md:gap-2 ml-auto md:ml-0">
+            <div className="flex items-center gap-1 md:gap-2 ml-auto">
               <ThemeSelector iconOnly />
 
               {userEmail && (
