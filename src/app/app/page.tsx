@@ -169,13 +169,31 @@ export default function StudioPage() {
       <div className="border-b bg-primary/5 border-primary/20">
         <div className="container mx-auto max-w-7xl px-4 py-3">
           <p className="text-sm text-foreground text-center">
-            Pick a template that fits your goal → Answer thoughtful prompts → Read curated articles for help → See everything you've written in{' '}
-            <button
-              onClick={() => handleViewChange('overview')}
-              className="text-primary hover:underline font-medium"
-            >
-              Overview
-            </button>.
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/20 text-primary text-xs font-semibold">1</span>
+              Pick a template that fits your goal
+            </span>
+            {' → '}
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/20 text-primary text-xs font-semibold">2</span>
+              Answer thoughtful prompts
+            </span>
+            {' → '}
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/20 text-primary text-xs font-semibold">3</span>
+              Read curated articles for help
+            </span>
+            {' → '}
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/20 text-primary text-xs font-semibold">4</span>
+              See everything you've written in{' '}
+              <button
+                onClick={() => handleViewChange('overview')}
+                className="text-primary hover:underline font-medium"
+              >
+                Overview
+              </button>
+            </span>.
           </p>
         </div>
       </div>
