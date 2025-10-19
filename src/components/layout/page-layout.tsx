@@ -143,6 +143,13 @@ export function PageLayout({
 							>
 								Articles
 							</Link>
+							<Link
+								href="/how-it-works"
+								className="px-3 py-3 text-base font-medium hover:bg-accent rounded-md transition-colors"
+								onClick={() => setMobileMenuOpen(false)}
+							>
+								How It Works
+							</Link>
 						</div>
 					</DrawerContent>
 				</Drawer>
