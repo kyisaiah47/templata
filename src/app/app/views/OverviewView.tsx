@@ -47,6 +47,7 @@ interface TemplateResponses {
   templateId: string;
   templateName: string;
   responses: Response[];
+  totalPrompts: number;
 }
 
 export function OverviewView() {
@@ -56,6 +57,7 @@ export function OverviewView() {
   const [reflections, setReflections] = useState<ReflectionSummary[]>([]);
   const [activityData, setActivityData] = useState<ActivityDay[]>([]);
   const [boardFilter, setBoardFilter] = useState<'all' | 'in-progress' | 'completed'>('all');
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<ActivityDay | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -84,6 +86,7 @@ export function OverviewView() {
   const loadResponses = async () => {
     try {
       const responsesMap = new Map<string, TemplateResponses>();
+      const templatePromptsCache = new Map<string, any[]>();
 
       if (isLoggedIn) {
         // Fetch all responses from API
@@ -98,9 +101,14 @@ export function OverviewView() {
             const templateId = response.template_id;
 
             // Fetch prompts for this template if not already fetched
-            const promptsRes = await fetch(`/api/prompts?templateId=${templateId}`);
-            const promptsData = await promptsRes.json();
-            const prompt = promptsData.prompts?.find((p: any) => p.id === response.prompt_id);
+            if (!templatePromptsCache.has(templateId)) {
+              const promptsRes = await fetch(`/api/prompts?templateId=${templateId}`);
+              const promptsData = await promptsRes.json();
+              templatePromptsCache.set(templateId, promptsData.prompts || []);
+            }
+
+            const prompts = templatePromptsCache.get(templateId)!;
+            const prompt = prompts.find((p: any) => p.id === response.prompt_id);
 
             if (!prompt) continue;
 
@@ -109,6 +117,7 @@ export function OverviewView() {
                 templateId,
                 templateName: templateId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
                 responses: [],
+                totalPrompts: prompts.length,
               });
             }
 
@@ -123,8 +132,6 @@ export function OverviewView() {
         }
       } else {
         // Load from localStorage
-        const templatePromptsCache = new Map<string, any[]>();
-
         for (let i = 0; i < localStorage.length; i++) {
           const key = localStorage.key(i);
           if (key && key.startsWith('workspace_')) {
@@ -156,6 +163,7 @@ export function OverviewView() {
                       templateId,
                       templateName: templateId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
                       responses: [],
+                      totalPrompts: prompts.length,
                     });
                   }
 
@@ -185,6 +193,11 @@ export function OverviewView() {
       }));
 
       setTemplateResponses(sorted);
+
+      // Set first template as selected by default
+      if (sorted.length > 0 && !selectedTemplateId) {
+        setSelectedTemplateId(sorted[0].templateId);
+      }
     } catch (error) {
       console.error('Error loading responses:', error);
     }
@@ -846,43 +859,47 @@ export function OverviewView() {
                     </p>
                   </Card>
                 ) : (
-                  templateResponses.map((template, index) => (
-                    <motion.div
-                      key={template.templateId}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                      <Card className="p-6">
-                        <h3 className="text-xl font-bold text-foreground mb-1">{template.templateName}</h3>
-                        <p className="text-sm text-muted-foreground mb-6">
-                          {template.responses.length} {template.responses.length === 1 ? 'response' : 'responses'}
-                        </p>
-                        <div className="space-y-6">
-                          {template.responses.map((response, responseIndex) => (
-                            <motion.div
-                              key={response.prompt_id}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ duration: 0.2, delay: index * 0.1 + responseIndex * 0.05 }}
-                              className="pb-6 border-b border-border last:border-b-0 last:pb-0"
-                            >
-                              <div className="mb-2">
-                                <Badge variant="outline" className="text-xs mb-2">{response.category}</Badge>
-                                <h4 className="font-semibold text-foreground mb-1">{response.prompt}</h4>
-                                <p className="text-xs text-muted-foreground">
-                                  Last updated: {new Date(response.updated_at).toLocaleDateString()}
+                  <>
+                    {/* Template Filter Tabs */}
+                    <div className="flex gap-2 flex-wrap">
+                      {templateResponses.map((template) => (
+                        <Button
+                          key={template.templateId}
+                          variant={selectedTemplateId === template.templateId ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => setSelectedTemplateId(template.templateId)}
+                        >
+                          {template.templateName}
+                        </Button>
+                      ))}
+                    </div>
+
+                    {/* Selected Template Content */}
+                    {selectedTemplateId && templateResponses.find(t => t.templateId === selectedTemplateId) && (
+                      <motion.div
+                        key={selectedTemplateId}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="prose prose-slate dark:prose-invert max-w-none"
+                      >
+                        <div className="space-y-8">
+                          {templateResponses
+                            .find(t => t.templateId === selectedTemplateId)!
+                            .responses.map((response, index) => (
+                              <div key={response.prompt_id} className="space-y-2">
+                                <h3 className="text-lg font-semibold text-foreground m-0">
+                                  {response.prompt}
+                                </h3>
+                                <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed m-0">
+                                  {response.response}
                                 </p>
                               </div>
-                              <div className="mt-3 p-4 bg-muted/30 rounded-lg">
-                                <p className="text-sm text-foreground whitespace-pre-wrap">{response.response}</p>
-                              </div>
-                            </motion.div>
-                          ))}
+                            ))}
                         </div>
-                      </Card>
-                    </motion.div>
-                  ))
+                      </motion.div>
+                    )}
+                  </>
                 )}
               </motion.div>
             </TabsContent>
