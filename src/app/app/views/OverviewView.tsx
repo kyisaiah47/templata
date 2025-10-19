@@ -1160,13 +1160,13 @@ export function OverviewView() {
             </TabsContent>
 
             {/* Responses View */}
-            <TabsContent value="responses" className="mt-0">
+            <TabsContent value="responses" className="mt-0 h-full overflow-y-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="space-y-6"
+                className="space-y-6 pb-8"
               >
                 {templateResponses.length === 0 ? (
                   <Card className="p-8">
@@ -1269,13 +1269,13 @@ export function OverviewView() {
             </TabsContent>
 
             {/* Reflections View */}
-            <TabsContent value="reflections" className="mt-0">
+            <TabsContent value="reflections" className="mt-0 h-full overflow-y-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="space-y-6"
+                className="space-y-6 pb-8"
               >
                 {reflectionDetails.length === 0 ? (
                   <Card className="p-8">
