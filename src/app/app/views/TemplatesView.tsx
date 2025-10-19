@@ -68,7 +68,11 @@ const FEATURED_TEMPLATE_IDS = [
   'business-launch',
 ];
 
-export function TemplatesView() {
+interface TemplatesViewProps {
+  onViewChange?: (view: 'templates' | 'reflection' | 'overview') => void;
+}
+
+export function TemplatesView({ onViewChange }: TemplatesViewProps) {
   const [selectedTemplate, setSelectedTemplate] = useState('wedding-planning');
   const [templates, setTemplates] = useState<Template[]>([]);
   const [displayedTemplates, setDisplayedTemplates] = useState<Template[]>([]);
@@ -558,6 +562,21 @@ export function TemplatesView() {
                   </Command>
                 </PopoverContent>
               </Popover>
+
+              {/* Helper Text */}
+              <div className="hidden lg:block text-xs text-muted-foreground max-w-md">
+                <p>This isn't graded - work at your own pace.</p>
+                <p>
+                  See all your answered prompts in the{' '}
+                  <button
+                    onClick={() => onViewChange?.('overview')}
+                    className="text-primary hover:underline"
+                  >
+                    Overview
+                  </button>{' '}
+                  tab.
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center gap-2 md:gap-3">
@@ -600,12 +619,17 @@ export function TemplatesView() {
         {/* Left Sidebar - Prompts (Desktop only) */}
         <div className="hidden md:block w-80 border-r bg-background overflow-y-auto">
           <div className="p-4 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <FileText className="h-4 w-4 text-primary" />
-              <h2 className="font-semibold text-foreground">Action Prompts</h2>
-              <Badge variant="outline" className="ml-auto text-xs">
-                {prompts.length}
-              </Badge>
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-1">
+                <FileText className="h-4 w-4 text-primary" />
+                <h2 className="font-semibold text-foreground">Action Prompts</h2>
+                <Badge variant="outline" className="ml-auto text-xs">
+                  {prompts.length}
+                </Badge>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Select a prompt, write your answer, and see a checkmark appear
+              </p>
             </div>
 
             {loading ? (
@@ -791,12 +815,17 @@ export function TemplatesView() {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="flex items-center gap-2 mb-4">
-                    <BookOpen className="h-4 w-4 text-primary" />
-                    <h2 className="font-semibold text-foreground">Related Articles</h2>
-                    <Badge variant="outline" className="ml-auto text-xs">
-                      {articles.length}
-                    </Badge>
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <BookOpen className="h-4 w-4 text-primary" />
+                      <h2 className="font-semibold text-foreground">Related Articles</h2>
+                      <Badge variant="outline" className="ml-auto text-xs">
+                        {articles.length}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Read articles to help guide your responses
+                    </p>
                   </div>
 
                   {loading ? (
@@ -902,6 +931,9 @@ export function TemplatesView() {
 
             <TabsContent value="prompts" className="flex-1 overflow-y-auto px-4 mt-0">
               <div className="space-y-4 py-4">
+                <p className="text-xs text-muted-foreground -mt-2">
+                  Select a prompt, write your answer, and see a checkmark appear
+                </p>
                 {loading ? (
                   <p className="text-sm text-muted-foreground">Loading prompts...</p>
                 ) : (

@@ -206,7 +206,7 @@ export default function StudioPage() {
             zIndex: currentView === 'templates' ? 10 : 0
           }}
         >
-          <TemplatesView key={`templates-${viewKeys.templates}`} />
+          <TemplatesView key={`templates-${viewKeys.templates}`} onViewChange={handleViewChange} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -35,8 +35,23 @@ interface ActivityDay {
   promptsWorked: number;
 }
 
+interface Response {
+  prompt_id: string;
+  prompt: string;
+  response: string;
+  category: string;
+  updated_at: string;
+}
+
+interface TemplateResponses {
+  templateId: string;
+  templateName: string;
+  responses: Response[];
+}
+
 export function OverviewView() {
-  const [view, setView] = useState<'board' | 'timeline' | 'insights'>('board');
+  const [view, setView] = useState<'board' | 'timeline' | 'insights' | 'responses'>('board');
+  const [templateResponses, setTemplateResponses] = useState<TemplateResponses[]>([]);
   const [templates, setTemplates] = useState<TemplateProgress[]>([]);
   const [reflections, setReflections] = useState<ReflectionSummary[]>([]);
   const [activityData, setActivityData] = useState<ActivityDay[]>([]);
@@ -62,8 +77,118 @@ export function OverviewView() {
   useEffect(() => {
     if (isLoggedIn !== null) {
       loadData();
+      loadResponses();
     }
   }, [isLoggedIn]);
+
+  const loadResponses = async () => {
+    try {
+      const responsesMap = new Map<string, TemplateResponses>();
+
+      if (isLoggedIn) {
+        // Fetch all responses from API
+        const res = await fetch('/api/workspace/responses');
+        const data = await res.json();
+
+        if (data.responses) {
+          // For each response, fetch the prompt details
+          for (const response of data.responses) {
+            if (!response.response || !response.response.trim()) continue;
+
+            const templateId = response.template_id;
+
+            // Fetch prompts for this template if not already fetched
+            const promptsRes = await fetch(`/api/prompts?templateId=${templateId}`);
+            const promptsData = await promptsRes.json();
+            const prompt = promptsData.prompts?.find((p: any) => p.id === response.prompt_id);
+
+            if (!prompt) continue;
+
+            if (!responsesMap.has(templateId)) {
+              responsesMap.set(templateId, {
+                templateId,
+                templateName: templateId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                responses: [],
+              });
+            }
+
+            responsesMap.get(templateId)!.responses.push({
+              prompt_id: response.prompt_id,
+              prompt: prompt.prompt,
+              response: response.response,
+              category: prompt.categoryName || 'General',
+              updated_at: response.updated_at,
+            });
+          }
+        }
+      } else {
+        // Load from localStorage
+        const templatePromptsCache = new Map<string, any[]>();
+
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith('workspace_')) {
+            const stored = localStorage.getItem(key);
+            if (stored) {
+              try {
+                const data = JSON.parse(stored);
+                if (!data.response || !data.response.trim()) continue;
+
+                const parts = key.split('_');
+                if (parts.length >= 3) {
+                  const templateId = parts[1];
+                  const promptId = parts[2];
+
+                  // Fetch prompts for this template if not cached
+                  if (!templatePromptsCache.has(templateId)) {
+                    const promptsRes = await fetch(`/api/prompts?templateId=${templateId}`);
+                    const promptsData = await promptsRes.json();
+                    templatePromptsCache.set(templateId, promptsData.prompts || []);
+                  }
+
+                  const prompts = templatePromptsCache.get(templateId)!;
+                  const prompt = prompts.find((p: any) => p.id === promptId);
+
+                  if (!prompt) continue;
+
+                  if (!responsesMap.has(templateId)) {
+                    responsesMap.set(templateId, {
+                      templateId,
+                      templateName: templateId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                      responses: [],
+                    });
+                  }
+
+                  responsesMap.get(templateId)!.responses.push({
+                    prompt_id: promptId,
+                    prompt: prompt.prompt,
+                    response: data.response,
+                    category: prompt.categoryName || 'General',
+                    updated_at: data.savedAt,
+                  });
+                }
+              } catch (e) {
+                console.error('Error parsing localStorage data:', e);
+              }
+            }
+          }
+        }
+      }
+
+      // Sort responses within each template by category and updated date
+      const sorted = Array.from(responsesMap.values()).map(template => ({
+        ...template,
+        responses: template.responses.sort((a, b) => {
+          if (a.category !== b.category) return a.category.localeCompare(b.category);
+          return b.updated_at.localeCompare(a.updated_at);
+        }),
+      }));
+
+      setTemplateResponses(sorted);
+    } catch (error) {
+      console.error('Error loading responses:', error);
+    }
+  };
 
   const loadData = async () => {
     try {
@@ -292,6 +417,10 @@ export function OverviewView() {
               <TabsTrigger value="insights" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
                 <BarChart3 className="h-4 w-4 mr-2" />
                 Insights
+              </TabsTrigger>
+              <TabsTrigger value="responses" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+                <FileText className="h-4 w-4 mr-2" />
+                Responses
               </TabsTrigger>
             </TabsList>
           </div>
@@ -697,6 +826,63 @@ export function OverviewView() {
                       </p>
                     </Card>
                   </motion.div>
+                )}
+              </motion.div>
+            </TabsContent>
+
+            {/* Responses View */}
+            <TabsContent value="responses" className="mt-0">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                {templateResponses.length === 0 ? (
+                  <Card className="p-8">
+                    <p className="text-center text-muted-foreground">
+                      No responses yet. Go to Templates to start answering prompts!
+                    </p>
+                  </Card>
+                ) : (
+                  templateResponses.map((template, index) => (
+                    <motion.div
+                      key={template.templateId}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                    >
+                      <Card className="p-6">
+                        <h3 className="text-xl font-bold text-foreground mb-1">{template.templateName}</h3>
+                        <p className="text-sm text-muted-foreground mb-6">
+                          {template.responses.length} {template.responses.length === 1 ? 'response' : 'responses'}
+                        </p>
+                        <div className="space-y-6">
+                          {template.responses.map((response, responseIndex) => (
+                            <motion.div
+                              key={response.prompt_id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.2, delay: index * 0.1 + responseIndex * 0.05 }}
+                              className="pb-6 border-b border-border last:border-b-0 last:pb-0"
+                            >
+                              <div className="mb-2">
+                                <Badge variant="outline" className="text-xs mb-2">{response.category}</Badge>
+                                <h4 className="font-semibold text-foreground mb-1">{response.prompt}</h4>
+                                <p className="text-xs text-muted-foreground">
+                                  Last updated: {new Date(response.updated_at).toLocaleDateString()}
+                                </p>
+                              </div>
+                              <div className="mt-3 p-4 bg-muted/30 rounded-lg">
+                                <p className="text-sm text-foreground whitespace-pre-wrap">{response.response}</p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </Card>
+                    </motion.div>
+                  ))
                 )}
               </motion.div>
             </TabsContent>
