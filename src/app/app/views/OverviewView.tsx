@@ -12,7 +12,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { LayoutGrid, Calendar, BarChart3, FileText, Heart, TrendingUp, Flame } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { LayoutGrid, Calendar, BarChart3, FileText, Heart, TrendingUp, Flame, Download } from 'lucide-react';
+import jsPDF from 'jspdf';
 
 interface TemplateProgress {
   templateId: string;
@@ -438,6 +445,159 @@ export function OverviewView() {
       .slice(0, 3)
       .map(([tag]) => tag);
   })();
+
+  // Export functions
+  const exportResponsesAsText = (template: TemplateResponses) => {
+    let content = `${template.templateName}\n`;
+    content += `${'='.repeat(template.templateName.length)}\n\n`;
+
+    template.responses.forEach((response, index) => {
+      content += `${index + 1}. ${response.prompt}\n\n`;
+      content += `${response.response}\n\n`;
+      content += `---\n\n`;
+    });
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${template.templateId}-responses.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportResponsesAsPDF = (template: TemplateResponses) => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    const maxWidth = pageWidth - 2 * margin;
+    let yPosition = margin;
+
+    // Title
+    doc.setFontSize(18);
+    doc.text(template.templateName, margin, yPosition);
+    yPosition += 10;
+
+    doc.setFontSize(10);
+    doc.text(`${template.responses.length} responses`, margin, yPosition);
+    yPosition += 15;
+
+    // Responses
+    doc.setFontSize(12);
+    template.responses.forEach((response, index) => {
+      // Check if we need a new page
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = margin;
+      }
+
+      // Question
+      doc.setFont('helvetica', 'bold');
+      const questionLines = doc.splitTextToSize(`${index + 1}. ${response.prompt}`, maxWidth);
+      doc.text(questionLines, margin, yPosition);
+      yPosition += questionLines.length * 7;
+
+      // Answer
+      doc.setFont('helvetica', 'normal');
+      const answerLines = doc.splitTextToSize(response.response, maxWidth);
+      doc.text(answerLines, margin, yPosition);
+      yPosition += answerLines.length * 5 + 10;
+    });
+
+    doc.save(`${template.templateId}-responses.pdf`);
+  };
+
+  const exportReflectionsAsText = () => {
+    let content = `My Reflections\n`;
+    content += `${'='.repeat(14)}\n\n`;
+
+    reflectionDetails.forEach((reflection) => {
+      const date = new Date(reflection.date + 'T00:00:00').toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      });
+      content += `${date}${reflection.mood ? ' ' + reflection.mood : ''}\n\n`;
+      if (reflection.prompt) {
+        content += `"${reflection.prompt}"\n\n`;
+      }
+      content += `${reflection.content}\n\n`;
+      if (reflection.tags.length > 0) {
+        content += `Tags: ${reflection.tags.join(', ')}\n\n`;
+      }
+      content += `---\n\n`;
+    });
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reflections.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportReflectionsAsPDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    const maxWidth = pageWidth - 2 * margin;
+    let yPosition = margin;
+
+    // Title
+    doc.setFontSize(18);
+    doc.text('My Reflections', margin, yPosition);
+    yPosition += 15;
+
+    // Reflections
+    reflectionDetails.forEach((reflection) => {
+      // Check if we need a new page
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = margin;
+      }
+
+      // Date
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      const date = new Date(reflection.date + 'T00:00:00').toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      });
+      doc.text(`${date}${reflection.mood ? ' ' + reflection.mood : ''}`, margin, yPosition);
+      yPosition += 10;
+
+      // Prompt
+      if (reflection.prompt) {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        const promptLines = doc.splitTextToSize(`"${reflection.prompt}"`, maxWidth);
+        doc.text(promptLines, margin, yPosition);
+        yPosition += promptLines.length * 5 + 3;
+      }
+
+      // Content
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      const contentLines = doc.splitTextToSize(reflection.content, maxWidth);
+      doc.text(contentLines, margin, yPosition);
+      yPosition += contentLines.length * 5 + 5;
+
+      // Tags
+      if (reflection.tags.length > 0) {
+        doc.setFontSize(9);
+        doc.text(`Tags: ${reflection.tags.join(', ')}`, margin, yPosition);
+        yPosition += 10;
+      }
+
+      yPosition += 5;
+    });
+
+    doc.save('reflections.pdf');
+  };
 
   return (
     <div className="h-full flex flex-col bg-background">
@@ -903,18 +1063,48 @@ export function OverviewView() {
                   </Card>
                 ) : (
                   <>
-                    {/* Template Filter Tabs */}
-                    <div className="flex gap-2 flex-wrap">
-                      {templateResponses.map((template) => (
-                        <Button
-                          key={template.templateId}
-                          variant={selectedTemplateId === template.templateId ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => setSelectedTemplateId(template.templateId)}
-                        >
-                          {template.templateName}
-                        </Button>
-                      ))}
+                    {/* Template Filter Tabs and Export */}
+                    <div className="flex items-center justify-between gap-4 flex-wrap">
+                      <div className="flex gap-2 flex-wrap">
+                        {templateResponses.map((template) => (
+                          <Button
+                            key={template.templateId}
+                            variant={selectedTemplateId === template.templateId ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => setSelectedTemplateId(template.templateId)}
+                          >
+                            {template.templateName}
+                          </Button>
+                        ))}
+                      </div>
+                      {selectedTemplateId && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <Download className="h-4 w-4 mr-2" />
+                              Export
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                const template = templateResponses.find(t => t.templateId === selectedTemplateId);
+                                if (template) exportResponsesAsText(template);
+                              }}
+                            >
+                              Plain Text (.txt)
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                const template = templateResponses.find(t => t.templateId === selectedTemplateId);
+                                if (template) exportResponsesAsPDF(template);
+                              }}
+                            >
+                              PDF (Styled)
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )}
                     </div>
 
                     {/* Selected Template Content */}
@@ -981,7 +1171,28 @@ export function OverviewView() {
                     </p>
                   </Card>
                 ) : (
-                  reflectionDetails.map((reflection, index) => (
+                  <>
+                    {/* Export Button */}
+                    <div className="flex justify-end">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            <Download className="h-4 w-4 mr-2" />
+                            Export All Reflections
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem onClick={exportReflectionsAsText}>
+                            Plain Text (.txt)
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={exportReflectionsAsPDF}>
+                            PDF (Styled)
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+
+                    {reflectionDetails.map((reflection, index) => (
                     <motion.div
                       key={reflection.id}
                       initial={{ opacity: 0, y: 20 }}
@@ -1023,7 +1234,8 @@ export function OverviewView() {
                         )}
                       </Card>
                     </motion.div>
-                  ))
+                  ))}
+                  </>
                 )}
               </motion.div>
             </TabsContent>
