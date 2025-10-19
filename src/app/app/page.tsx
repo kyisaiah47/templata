@@ -85,9 +85,10 @@ export default function StudioPage() {
       {/* Top Nav */}
       <div className="border-b bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-3">
-          <div className="flex items-center justify-between gap-2 w-full md:relative">
-            <div className="md:flex items-center gap-4">
-              <Link href="/" className="hidden md:block">
+          <div className="flex items-center gap-2 w-full md:relative md:justify-between">
+            {/* Left side - Templata (desktop only) */}
+            <div className="hidden md:flex items-center gap-4">
+              <Link href="/">
                 <h1 className="text-2xl font-bold text-foreground hover:text-primary transition-colors cursor-pointer">Templata</h1>
               </Link>
             </div>
@@ -121,7 +122,7 @@ export default function StudioPage() {
             </div>
 
             {/* Theme Selector & User Dropdown */}
-            <div className="flex items-center gap-1 md:gap-2">
+            <div className="flex items-center gap-1 md:gap-2 ml-auto md:ml-0">
               <ThemeSelector iconOnly />
 
               {userEmail && (
