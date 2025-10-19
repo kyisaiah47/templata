@@ -16,14 +16,8 @@ import {
 import { ThemeSelector } from "@/components/theme-selector"
 import { useAuth } from "@/contexts/auth-context"
 import {
-	Heart,
-	Home,
-	Briefcase,
-	Target,
 	LogOut,
 	User,
-	Menu,
-	X
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
@@ -33,17 +27,9 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-	Sheet,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet"
 
 export function Header() {
 	const [scrollY, setScrollY] = React.useState(0)
-	const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 	const [isMobile, setIsMobile] = React.useState(false)
 	const pathname = usePathname()
 	const { isLoggedIn, user, logout } = useAuth()
@@ -144,58 +130,6 @@ export function Header() {
 
 						{/* Right side - Actions */}
 						<div className="flex items-center space-x-2 md:space-x-3">
-							{/* Mobile Menu */}
-							<Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-								<SheetTrigger asChild className="md:hidden">
-									<Button variant="ghost" size="sm">
-										<Menu className="h-5 w-5" />
-									</Button>
-								</SheetTrigger>
-								<SheetContent side="right" className="w-[280px] sm:w-[320px]">
-									<SheetHeader className="text-left">
-										<SheetTitle className="text-xl">Menu</SheetTitle>
-									</SheetHeader>
-
-									<div className="flex flex-col gap-1 mt-8">
-										<Link
-											href="/templates"
-											className="px-3 py-2.5 text-base font-medium hover:bg-accent rounded-md transition-colors"
-											onClick={() => setMobileMenuOpen(false)}
-										>
-											Templates
-										</Link>
-										<Link
-											href="/articles"
-											className="px-3 py-2.5 text-base font-medium hover:bg-accent rounded-md transition-colors"
-											onClick={() => setMobileMenuOpen(false)}
-										>
-											Articles
-										</Link>
-									</div>
-
-									<div className="mt-6 pt-6 border-t space-y-4">
-										<div className="px-3">
-											<ThemeSelector />
-										</div>
-
-										{isLoggedIn && (
-											<div className="px-3">
-												<Button
-													variant="outline"
-													onClick={() => {
-														logout();
-														setMobileMenuOpen(false);
-													}}
-													className="w-full justify-start"
-												>
-													<LogOut className="h-4 w-4 mr-2" />
-													<span>Logout</span>
-												</Button>
-											</div>
-										)}
-									</div>
-								</SheetContent>
-							</Sheet>
 
 							{/* Desktop User Actions */}
 							<div className="hidden md:flex items-center space-x-3">

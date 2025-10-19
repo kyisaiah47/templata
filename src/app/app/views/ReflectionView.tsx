@@ -5,7 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Save } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Save, Menu, Calendar } from 'lucide-react';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 
 interface ReflectionEntry {
   id: string;
@@ -42,6 +50,19 @@ export function ReflectionView() {
   const [pastEntries, setPastEntries] = useState<ReflectionEntry[]>([]);
   const [dailyPrompt, setDailyPrompt] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Mobile drawer state
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Check if user is logged in
   useEffect(() => {
@@ -232,9 +253,9 @@ export function ReflectionView() {
 
   return (
     <div className="h-full flex bg-background">
-      {/* Past Entries Sidebar */}
+      {/* Past Entries Sidebar - Desktop only */}
       <motion.div
-        className="border-r bg-background overflow-y-auto"
+        className="hidden md:block border-r bg-background overflow-y-auto"
         animate={{ width: showPastEntries ? 320 : 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
@@ -306,7 +327,7 @@ export function ReflectionView() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowPastEntries(!showPastEntries)}
-                  className="text-xs md:text-sm"
+                  className="text-xs md:text-sm hidden md:flex"
                 >
                   {showPastEntries ? (
                     <>
@@ -433,6 +454,61 @@ export function ReflectionView() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Drawer - Past Reflections */}
+      {isMobile && (
+        <Drawer open={mobileDrawerOpen} onOpenChange={setMobileDrawerOpen}>
+          <DrawerTrigger asChild>
+            <Button
+              size="lg"
+              className="fixed bottom-6 right-6 z-40 rounded-full w-14 h-14 shadow-lg"
+            >
+              <Calendar className="h-5 w-5" />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent className="max-h-[85vh]">
+            <DrawerHeader>
+              <DrawerTitle>Past Reflections</DrawerTitle>
+            </DrawerHeader>
+            <div className="flex-1 overflow-y-auto px-4 pb-4">
+              <div className="space-y-2">
+                {pastEntries.map((entry, index) => (
+                  <Card
+                    key={entry.id}
+                    className="p-3 cursor-pointer hover:bg-muted/50 transition-colors border-border"
+                    onClick={() => {
+                      loadPastEntry(entry);
+                      setMobileDrawerOpen(false);
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-foreground">
+                        {new Date(entry.date + 'T00:00:00').toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </span>
+                      {entry.mood && <span className="text-lg">{entry.mood}</span>}
+                    </div>
+                    <p className="text-xs text-muted-foreground line-clamp-2">
+                      {entry.content || 'No content'}
+                    </p>
+                    {entry.tags.length > 0 && (
+                      <div className="flex gap-1 mt-2 flex-wrap">
+                        {entry.tags.slice(0, 3).map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </DrawerContent>
+        </Drawer>
+      )}
     </div>
   );
 }

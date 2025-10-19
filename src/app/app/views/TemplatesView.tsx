@@ -666,7 +666,7 @@ export function TemplatesView() {
 
         {/* Middle - Editor */}
         <div className="flex-1 overflow-y-auto bg-background">
-          <div className="container mx-auto max-w-4xl px-4 md:px-8 py-4 md:py-8">
+          <div className="container mx-auto max-w-4xl px-4 md:px-8 py-4 md:py-8 h-full">
             <AnimatePresence mode="wait">
               {selectedPrompt ? (
                 <motion.div
@@ -675,13 +675,13 @@ export function TemplatesView() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="space-y-4 md:space-y-6 h-full flex flex-col"
+                  className="h-full flex flex-col gap-4 md:gap-6"
                 >
                   <div>
-                    <Badge variant="outline" className="mb-2 md:mb-3">
+                    <Badge variant="outline" className="mb-2 md:mb-3 text-xs">
                       {selectedPrompt.categoryName}
                     </Badge>
-                    <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                    <h2 className="text-lg md:text-xl font-bold text-foreground mb-2">
                       {selectedPrompt.prompt}
                     </h2>
                     <p className="text-xs md:text-sm text-muted-foreground hidden md:block">

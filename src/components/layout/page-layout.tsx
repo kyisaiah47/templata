@@ -1,12 +1,22 @@
 "use client"
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { RecentlyUsedStrip, RecentlyUsedFooter } from "@/components/recently-used-strip";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { Play, Menu } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import {
+	Drawer,
+	DrawerContent,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from "@/components/ui/drawer";
+import Link from "next/link";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
@@ -24,6 +34,20 @@ export function PageLayout({
 	includeHeaderPadding = true
 }: PageLayoutProps) {
 	const { isLoggedIn } = useAuth();
+	const pathname = usePathname();
+	const [isMobile, setIsMobile] = useState(false);
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const isHomePage = pathname === "/";
+
+	// Check if mobile
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	// Initialize Lenis smooth scrolling site-wide
 	useEffect(() => {
@@ -62,8 +86,8 @@ export function PageLayout({
 			{/* Recently Used Footer - shows as sticky footer */}
 			<RecentlyUsedFooter />
 
-			{/* Floating Demo Button */}
-			<div className="fixed bottom-8 right-8 z-50">
+			{/* Floating Demo Button - Hidden on mobile */}
+			<div className={cn("fixed bottom-8 right-8 z-50", isMobile && "hidden")}>
 				<Button
 					size="lg"
 					variant="outline"
@@ -76,6 +100,53 @@ export function PageLayout({
 					</a>
 				</Button>
 			</div>
+
+			{/* Mobile Split FAB */}
+			{isMobile && (
+				<Drawer open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+					<div className="fixed bottom-6 right-6 z-50 flex items-center bg-background border rounded-lg shadow-lg overflow-hidden">
+						<DrawerTrigger asChild>
+							<Button
+								size="lg"
+								variant="ghost"
+								className="rounded-l-md rounded-r-none border-r h-14 w-14"
+							>
+								<Menu className="h-5 w-5" />
+							</Button>
+						</DrawerTrigger>
+						<Link href="/app">
+							<Button
+								size="lg"
+								variant="ghost"
+								className="rounded-r-md rounded-l-none h-14 w-14"
+							>
+								<Play className="h-5 w-5" />
+							</Button>
+						</Link>
+					</div>
+					<DrawerContent className="max-h-[85vh]">
+						<DrawerHeader>
+							<DrawerTitle>Menu</DrawerTitle>
+						</DrawerHeader>
+						<div className="flex flex-col gap-1 px-4 pb-4">
+							<Link
+								href="/templates"
+								className="px-3 py-3 text-base font-medium hover:bg-accent rounded-md transition-colors"
+								onClick={() => setMobileMenuOpen(false)}
+							>
+								Templates
+							</Link>
+							<Link
+								href="/articles"
+								className="px-3 py-3 text-base font-medium hover:bg-accent rounded-md transition-colors"
+								onClick={() => setMobileMenuOpen(false)}
+							>
+								Articles
+							</Link>
+						</div>
+					</DrawerContent>
+				</Drawer>
+			)}
 		</div>
 	);
 }

@@ -8,6 +8,7 @@ import { OverviewView } from './views/OverviewView';
 import { Button } from '@/components/ui/button';
 import { LogOut, Settings, User, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -85,16 +86,22 @@ export default function StudioPage() {
       {/* Top Nav */}
       <div className="border-b bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-3">
-          <div className="flex items-center gap-2 w-full md:relative md:justify-between">
-            {/* Left side - Templata (desktop only) */}
-            <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-2 w-full relative">
+            {/* Left side - Templata Logo */}
+            <div className="flex items-center gap-4">
               <Link href="/">
-                <h1 className="text-2xl font-bold text-foreground hover:text-primary transition-colors cursor-pointer">Templata</h1>
+                <Image
+                  src="/brand/favicon-white.svg"
+                  alt="Templata"
+                  width={20}
+                  height={20}
+                  className="hover:opacity-80 transition-opacity cursor-pointer"
+                />
               </Link>
             </div>
 
-            {/* View Switcher */}
-            <div className="flex items-center gap-1 md:gap-2 md:absolute md:left-1/2 md:-translate-x-1/2">
+            {/* View Switcher - Centered */}
+            <div className="flex items-center gap-1 md:gap-2 absolute left-1/2 -translate-x-1/2">
               <Button
                 variant={currentView === 'templates' ? 'default' : 'ghost'}
                 size="sm"
