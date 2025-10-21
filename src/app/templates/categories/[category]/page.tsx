@@ -35,7 +35,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const categoryName = categoryDisplayNames[category] || category.replace(/-/g, ' ');
+  // Convert URL slug to proper title case
+  const categoryName = categoryDisplayNames[category] ||
+    category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   useEffect(() => {
     async function fetchTemplates() {
@@ -45,10 +47,11 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         const data = await res.json();
         const allTemplates = data.templates || [];
 
-        // Filter by category (case-insensitive match)
-        const filtered = allTemplates.filter((t: TemplateRegistryEntry) =>
-          t.category.toLowerCase().replace(/\s+/g, '-') === category.toLowerCase()
-        );
+        // Filter by category - normalize both for comparison
+        const filtered = allTemplates.filter((t: TemplateRegistryEntry) => {
+          const normalizedCategory = t.category.toLowerCase().replace(/\s+&?\s*/g, '-');
+          return normalizedCategory === category.toLowerCase();
+        });
 
         setTemplates(filtered);
       } catch (error) {

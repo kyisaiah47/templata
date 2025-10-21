@@ -34,7 +34,8 @@ const categoryDescriptions: Record<string, string> = {
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const { category } = await params;
-  const categoryName = categoryDisplayNames[category] || category.replace(/-/g, ' ');
+  const categoryName = categoryDisplayNames[category] ||
+    category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   const description = categoryDescriptions[category] || `Browse all ${categoryName.toLowerCase()} templates with prompts, articles, and expert guidance.`;
 
   const title = `${categoryName} Templates | Templata`;
@@ -86,7 +87,8 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
 export default async function CategoryLayout({ children, params }: CategoryLayoutProps) {
   const { category } = await params;
-  const categoryName = categoryDisplayNames[category] || category.replace(/-/g, ' ');
+  const categoryName = categoryDisplayNames[category] ||
+    category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   return (
     <>
