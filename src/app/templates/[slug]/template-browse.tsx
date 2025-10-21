@@ -227,18 +227,16 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
                     </button>
 
                     {isExpanded && (
-                      <div className="mt-2 grid grid-cols-1 gap-y-1 pl-6">
+                      <ol className="mt-2 space-y-2 pl-6 list-decimal">
                         {categoryPrompts.map((prompt) => (
-                          <div
+                          <li
                             key={prompt.id}
-                            className="group block py-2 hover:text-primary transition-colors"
+                            className="group py-2 text-sm hover:text-primary transition-colors"
                           >
-                            <div className="text-sm">
-                              {prompt.prompt}
-                            </div>
-                          </div>
+                            {prompt.prompt}
+                          </li>
                         ))}
-                      </div>
+                      </ol>
                     )}
                   </section>
                 );
@@ -265,11 +263,11 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
           ) : articles.length === 0 ? (
             <p className="text-muted-foreground">No articles available for this template.</p>
           ) : (
-            <div className="border-t">
+            <ol className="space-y-3 pl-6 list-decimal border-t pt-6">
               {articles.map((article) => (
-                <div
+                <li
                   key={article.id}
-                  className="group border-b py-3 hover:bg-muted/50 transition-colors"
+                  className="group py-2"
                 >
                   <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
                     {article.title}
@@ -277,9 +275,9 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
                   <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                     <span>{article.readTime}</span>
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           )}
         </div>
       </section>
