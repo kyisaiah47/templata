@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { TemplateRegistryEntry } from '@/registry/templates';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Layout, Sparkles, FileText, Plus, Minus } from 'lucide-react';
+import { Search, Layout, Sparkles, FileText, ChevronDown, ChevronUp } from 'lucide-react';
 import { PageLayout } from '@/components/layout';
 import { motion } from 'framer-motion';
 import { use } from 'react';
@@ -209,9 +209,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                           aria-label={isExpanded ? "Collapse" : "Expand"}
                         >
                           {isExpanded ? (
-                            <Minus className="w-5 h-5" />
+                            <ChevronUp className="w-5 h-5" />
                           ) : (
-                            <Plus className="w-5 h-5" />
+                            <ChevronDown className="w-5 h-5" />
                           )}
                         </button>
                       </div>
