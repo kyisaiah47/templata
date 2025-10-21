@@ -89,7 +89,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           >
             <Badge variant="outline" className="px-4 py-2">
               <Layout className="mr-2 h-4 w-4" />
-              {filteredTemplates.length} Templates
+              {filteredTemplates.length} {filteredTemplates.length === 1 ? 'Template' : 'Templates'}
             </Badge>
 
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
