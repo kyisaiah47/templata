@@ -224,7 +224,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                             ))}
                           </ol>
                           {data.prompts.length > 5 && (
-                            <div className="mt-3 pl-6">
+                            <div className="mt-3">
                               <Link href={`/templates/${template.id}`} className="text-sm text-muted-foreground hover:text-primary italic">
                                 +{data.prompts.length - 5} more prompts →
                               </Link>
@@ -252,7 +252,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                             ))}
                           </ol>
                           {data.articles.length > 5 && (
-                            <div className="mt-3 pl-6">
+                            <div className="mt-3">
                               <Link href={`/templates/${template.id}`} className="text-sm text-muted-foreground hover:text-primary italic">
                                 +{data.articles.length - 5} more articles →
                               </Link>
