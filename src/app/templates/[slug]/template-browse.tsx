@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowRight, Sparkles, FileText, Zap, ChevronRight } from 'lucide-react';
 import { SubtleGlow } from '@/components/ui/glow-variants';
+import Script from 'next/script';
 
 interface TemplateBrowseProps {
   params: Promise<{ slug: string }>;
@@ -36,6 +37,7 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
   const [template, setTemplate] = useState<TemplateRegistryEntry | null>(null);
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [relatedTemplates, setRelatedTemplates] = useState<TemplateRegistryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
 
@@ -61,6 +63,16 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
 
         console.log('[Template Browse] Articles for', slug, ':', articlesData.articles?.length || 0);
         setArticles(articlesData.articles || []);
+
+        // Fetch related templates (same category, exclude current)
+        if (foundTemplate) {
+          const related = templatesData.templates
+            ?.filter((t: TemplateRegistryEntry) =>
+              t.category === foundTemplate.category && t.id !== slug
+            )
+            .slice(0, 5) || [];
+          setRelatedTemplates(related);
+        }
       } catch (error) {
         console.error('Error fetching template data:', error);
       } finally {
@@ -271,6 +283,74 @@ export default function TemplateBrowse({ params }: TemplateBrowseProps) {
           )}
         </div>
       </section>
+
+      <Separator />
+
+      {/* Related Templates */}
+      {relatedTemplates.length > 0 && (
+        <section className="py-16">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-2">Related Templates</h2>
+              <p className="text-sm text-muted-foreground">
+                Explore similar templates in {templateData.category}
+              </p>
+            </div>
+
+            <div className="border-t">
+              {relatedTemplates.map((relatedTemplate) => (
+                <a
+                  key={relatedTemplate.id}
+                  href={`/templates/${relatedTemplate.id}`}
+                  className="group border-b py-4 hover:bg-muted/50 transition-colors flex items-center justify-between"
+                >
+                  <div className="flex-1">
+                    <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
+                      {relatedTemplate.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {relatedTemplate.description}
+                    </p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors ml-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Schema.org CreativeWork Markup */}
+      <Script
+        id="template-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            name: `${templateData.title} Template`,
+            description: templateData.description,
+            creator: {
+              '@type': 'Organization',
+              name: 'Templata',
+              url: 'https://templata.org'
+            },
+            url: `https://templata.org/templates/${slug}`,
+            inLanguage: 'en-US',
+            genre: 'Planning Template',
+            keywords: templateData.tags?.join(', ') || templateData.category,
+            isPartOf: {
+              '@type': 'WebSite',
+              name: 'Templata',
+              url: 'https://templata.org'
+            },
+            about: {
+              '@type': 'Thing',
+              name: templateData.category
+            }
+          })
+        }}
+      />
 
       {/* Floating Action Button */}
       <div className="fixed bottom-8 right-8 z-50">

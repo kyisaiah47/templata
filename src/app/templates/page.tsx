@@ -183,9 +183,17 @@ export default function TemplatesPage() {
               key={category}
               className="border-t pt-8"
             >
-              <h2 className="text-xs font-semibold text-muted-foreground mb-6 tracking-wider uppercase">
-                {category}
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xs font-semibold text-muted-foreground tracking-wider uppercase">
+                  {category}
+                </h2>
+                <Link
+                  href={`/templates/categories/${category.toLowerCase().replace(/\s+&?\s*/g, '-')}`}
+                  className="text-xs text-primary hover:underline"
+                >
+                  View all →
+                </Link>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-1">
                 {groupedTemplates[category].map((template) => (

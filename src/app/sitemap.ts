@@ -41,6 +41,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Category pages
+  const categories = [
+    'life-planning',
+    'career-finance',
+    'health-wellness',
+    'relationships-family',
+    'creative-hobbies',
+    'business-entrepreneurship',
+    'education-learning',
+    'technology-digital',
+    'personal-development',
+    'home-living',
+  ];
+
+  const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
+    url: `${baseUrl}/templates/categories/${category}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
+
   try {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -80,10 +101,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-    return [...staticPages, ...templatePages, ...articlePages];
+    return [...staticPages, ...categoryPages, ...templatePages, ...articlePages];
   } catch (error) {
     console.error('Error generating sitemap:', error);
-    // Return just static pages if database fetch fails
-    return staticPages;
+    // Return just static pages and category pages if database fetch fails
+    return [...staticPages, ...categoryPages];
   }
 }
