@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { TemplateRegistryEntry } from '@/registry/templates';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Layout } from 'lucide-react';
+import { Search, Layout, Sparkles, FileText } from 'lucide-react';
 import { PageLayout } from '@/components/layout';
 import { motion } from 'framer-motion';
 import { use } from 'react';
@@ -32,6 +32,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const { category } = use(params);
   const [searchQuery, setSearchQuery] = useState('');
   const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [templateData, setTemplateData] = useState<Record<string, { prompts: any[], articles: any[] }>>({});
   const [loading, setLoading] = useState(true);
 
   // Convert URL slug to proper title case
@@ -55,6 +56,31 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         });
 
         setTemplates(filtered);
+
+        // Fetch prompts and articles for each template
+        const dataPromises = filtered.map(async (template) => {
+          const [promptsRes, articlesRes] = await Promise.all([
+            fetch(`/api/prompts?templateId=${template.id}`),
+            fetch(`/api/articles?template=${template.id}&pageSize=1000`)
+          ]);
+
+          const promptsData = await promptsRes.json();
+          const articlesData = await articlesRes.json();
+
+          return {
+            id: template.id,
+            prompts: promptsData.prompts || [],
+            articles: articlesData.articles || []
+          };
+        });
+
+        const allData = await Promise.all(dataPromises);
+        const dataMap: Record<string, { prompts: any[], articles: any[] }> = {};
+        allData.forEach(item => {
+          dataMap[item.id] = { prompts: item.prompts, articles: item.articles };
+        });
+
+        setTemplateData(dataMap);
       } catch (error) {
         console.error('Error fetching templates:', error);
       } finally {
@@ -136,34 +162,87 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               </p>
             </div>
           ) : (
-            <div className="border-t pt-8">
-              <h2 className="text-xs font-semibold text-muted-foreground mb-6 tracking-wider uppercase">
-                {categoryName}
-              </h2>
-              <ol className="space-y-4 pl-6 list-decimal marker:text-sm">
-                {filteredTemplates.map((template) => (
-                  <li key={template.id} className="py-3">
-                    <Link
-                      href={`/templates/${template.id}`}
-                      className="group block"
-                    >
-                      <div className="text-base font-medium group-hover:text-primary transition-colors">
-                        {template.name}
-                      </div>
-                      <p className="text-sm text-muted-foreground mt-1">
+            <div className="space-y-16">
+              {filteredTemplates.map((template) => {
+                const data = templateData[template.id] || { prompts: [], articles: [] };
+
+                return (
+                  <div key={template.id} className="border-t pt-8">
+                    {/* Template Header */}
+                    <div className="mb-6">
+                      <Link href={`/templates/${template.id}`}>
+                        <h2 className="text-2xl font-bold hover:text-primary transition-colors">
+                          {template.name}
+                        </h2>
+                      </Link>
+                      <p className="text-sm text-muted-foreground mt-2">
                         {template.description}
                       </p>
-                      {template.template && (
-                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
-                          <span>{template.template.estimatedTime}</span>
-                          <span>•</span>
-                          <span className="capitalize">{template.template.difficulty}</span>
+                      <div className="flex items-center gap-6 mt-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="h-4 w-4" />
+                          <span>{data.prompts.length} prompts</span>
                         </div>
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ol>
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4" />
+                          <span>{data.articles.length} articles</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Prompts Section */}
+                    {data.prompts.length > 0 && (
+                      <div className="mb-8">
+                        <h3 className="text-xs font-semibold text-muted-foreground mb-4 tracking-wider uppercase">
+                          Prompts
+                        </h3>
+                        <ol className="space-y-2 pl-6 list-decimal marker:text-sm">
+                          {data.prompts.slice(0, 10).map((prompt: any) => (
+                            <li key={prompt.id} className="py-1 text-sm">
+                              {prompt.prompt}
+                            </li>
+                          ))}
+                          {data.prompts.length > 10 && (
+                            <li className="py-1 text-sm text-muted-foreground italic">
+                              <Link href={`/templates/${template.id}`} className="hover:text-primary">
+                                +{data.prompts.length - 10} more prompts →
+                              </Link>
+                            </li>
+                          )}
+                        </ol>
+                      </div>
+                    )}
+
+                    {/* Articles Section */}
+                    {data.articles.length > 0 && (
+                      <div>
+                        <h3 className="text-xs font-semibold text-muted-foreground mb-4 tracking-wider uppercase">
+                          Articles
+                        </h3>
+                        <ol className="space-y-2 pl-6 list-decimal marker:text-sm">
+                          {data.articles.slice(0, 10).map((article: any) => (
+                            <li key={article.id} className="py-1">
+                              <Link
+                                href={`/articles/${article.slug}`}
+                                className="text-sm hover:text-primary transition-colors"
+                              >
+                                {article.title}
+                              </Link>
+                            </li>
+                          ))}
+                          {data.articles.length > 10 && (
+                            <li className="py-1 text-sm text-muted-foreground italic">
+                              <Link href={`/templates/${template.id}`} className="hover:text-primary">
+                                +{data.articles.length - 10} more articles →
+                              </Link>
+                            </li>
+                          )}
+                        </ol>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
