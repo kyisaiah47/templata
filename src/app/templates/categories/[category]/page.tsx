@@ -49,8 +49,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
         // Filter by category - normalize both for comparison
         const filtered = allTemplates.filter((t: TemplateRegistryEntry) => {
-          const normalizedCategory = t.category.toLowerCase().replace(/\s+&?\s*/g, '-');
-          return normalizedCategory === category.toLowerCase();
+          // Normalize by removing spaces and ampersands, then compare
+          const normalizedDbCategory = t.category.toLowerCase().replace(/[\s&]+/g, '');
+          const normalizedUrlCategory = category.toLowerCase().replace(/[-]/g, '');
+          return normalizedDbCategory === normalizedUrlCategory;
         });
 
         setTemplates(filtered);
