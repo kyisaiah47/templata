@@ -27,6 +27,11 @@ A community-driven library of expert frameworks and guides for major life decisi
 
 ### Hero Section (Above the fold)
 
+**The 15-second test:** Someone landing on this page needs to understand:
+- 👉 What it is
+- 👉 How it works
+- 👉 What they get out of it
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Logo] Templata              [Try Demo] [Sign In]
@@ -34,19 +39,28 @@ A community-driven library of expert frameworks and guides for major life decisi
 Wikipedia × Notion for life planning
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Expert frameworks for life's biggest decisions.
+1,200+ templates with expert prompts and articles
+for major life decisions.
 
-Get structured guides for:
-→ "Should I change careers?"
-→ "How do I handle a breakup?"
-→ "What do I need to know about buying a house?"
-→ "How do I set boundaries with my parents?"
+• Templates for career changes, relationships, health, and life events
+• Each template has: structured prompts and curated articles
+• Try instantly — no signup needed
 
-[Browse 1,200+ guides]
+[Browse Templates] [See a Live Example]
+
+Free forever. No signup required.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[VISUAL: Clean screenshot of actual guide page
-showing questions/decisions/articles - CONCRETE]
+[RIGHT SIDE: Screenshot of actual template page]
+
+Career Transition Template
+
+Shows:
+• Structured prompts to work through
+• Curated articles for context
+• Split-screen workspace
+
+[Try this template live →]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -109,15 +123,24 @@ Moving, weddings, career pivots, loss
 
 ### How It Works
 
+**Goal:** Show what literally happens when someone uses Templata.
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 How Templata works
 
-1. Pick your situation       2. Get the framework        3. Take action
-[Screenshot: Browse page]    [Screenshot: Guide page]    [Screenshot: Articles]
+1️⃣ Pick a life situation
+→ Example: "Career transition"
 
-1,200+ guides organized      Expert questions,           Curated articles
-by life area                 key decisions, prompts      for deeper context
+2️⃣ Open the template
+→ See structured prompts and curated articles in split-screen.
+
+3️⃣ Work through the prompts
+→ Answer in the workspace, read articles for context.
+→ Everything saves in your browser (no account needed).
+
+4️⃣ Return anytime
+→ Your progress is saved locally.
 
 100% free. No signup required to browse.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -127,50 +150,71 @@ by life area                 key decisions, prompts      for deeper context
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Career Transition Guide — See the full framework
+Career Transition Template — See the full template
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Instead of Googling random advice or staring at a blank page,
-you get a complete framework:
+you get structured prompts and articles:
 
-Key Questions to Answer:
+Prompts:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ What skills from my current role give me energy vs. drain me?
-✓ What's my financial runway? (savings ÷ monthly expenses)
-✓ Who in my network has made a similar transition?
-✓ What does success look like for me in 5 years?
-✓ What's non-negotiable vs. nice-to-have in my next role?
-✓ What am I running FROM vs. running TO?
+• What skills from my current role give me energy vs. drain me?
+• What's my financial runway? (savings ÷ monthly expenses)
+• Who in my network has made a similar transition?
+• What does success look like for me in 5 years?
+• Same industry or completely pivot?
+• Take a pay cut for better fit, or wait for ideal role?
 
-[+ 41 more questions organized by theme]
+[+ 40+ more prompts]
 
-Key Decisions to Make:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ Same industry or completely pivot?
-✓ Take a pay cut for better fit, or wait for ideal role?
-✓ Go back to school or learn on the job?
-✓ Tell current employer now or wait until certain?
-✓ Move cities for opportunity or stay local?
-
-Curated Reading:
+Articles:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 → "How to Identify Transferable Skills" (Harvard Business Review)
 → "Financial Planning for Career Changes" (The Balance)
 → "Networking During Transitions" (Forbes)
 → "When to Tell Your Boss You're Leaving" (Inc.)
 
-[+ 8 more expert articles]
+[+ more expert articles]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Try it live — answer the questions interactively →]
+[Try it live — see the split-screen interface →]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-^ THIS should be an actual interactive preview or screenshot
-  showing the real guide page with all sections visible
+^ Show screenshot of actual template page with split-screen
+  showing prompts on left, workspace in middle, articles on right
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### How Is This Different?
+### How Is This Different? (Behavioral Comparison)
+
+**Goal:** Instead of product-to-product comparison, show user behavior contrast.
+
+**Approach 1: Behavioral comparison table**
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+When you face a big life decision...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Situation              Without Templata              With Templata
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Searching              Endless tabs,                 One guide with
+"should I quit         contradictory                 curated questions
+my job?"               advice                        + readings
+
+Trying to              Blank page,                   Structured Q&A
+journal your           unstructured                  workspace that
+thoughts                                             auto-saves notes
+
+Reading generic        Random tips,                  Expert frameworks
+articles               no clear plan                 organized by
+                                                     category
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This helps people see themselves in the product instantly.
+```
+
+**Approach 2: Product comparisons (for reference)**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -211,6 +255,9 @@ vs. Therapy / coaching:
 Note: Templata is NOT a replacement for professional help.
 It's structured guidance for thinking through decisions.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+**Recommendation:** Use behavioral comparison first, then product
+comparison for those who want specifics.
 ```
 
 ### Who Uses Templata?
@@ -345,10 +392,10 @@ Screenshots & Media Requirements
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. Homepage Hero Screenshot:
-   → Show actual guide page (Career Transition example)
-   → Must show: questions, decisions, articles sections
+   → Show actual template page (Career Transition example)
+   → Must show: prompts section and articles section
    → Clean, readable, professional
-   → Annotate key parts if needed ("Key Questions", "Curated Reading")
+   → Annotate key parts if needed ("Prompts", "Articles", "Workspace")
 
 2. Browse Page Screenshot:
    → Category cards clearly visible
@@ -422,13 +469,13 @@ ALTER TABLE template_prompts
 ADD COLUMN suggested_article_ids uuid[];
 ```
 
-**UX on guide page:**
+**UX on template page:**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Career Transition Guide
+Career Transition Template
 
-Key Questions to Answer:
+Prompts:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. What transferable skills do I actually have?
@@ -437,7 +484,7 @@ Key Questions to Answer:
    → "How to Identify Transferable Skills" (HBR)
    → "Skills Inventory Worksheet" (The Muse)
 
-   [Expand to answer this question ▼]
+   [Expand to answer ▼]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -447,7 +494,7 @@ Key Questions to Answer:
    → "Financial Planning for Career Changes" (The Balance)
    → "Building an Emergency Fund" (Investopedia)
 
-   [Expand to answer this question ▼]
+   [Expand to answer ▼]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -457,7 +504,7 @@ Key Questions to Answer:
    → "Networking During Career Transitions" (Forbes)
    → "How to Ask for Informational Interviews" (Inc.)
 
-   [Expand to answer this question ▼]
+   [Expand to answer ▼]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -594,36 +641,25 @@ Once implemented, measure:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Rename sections for clarity
-
-**OLD terminology:**
-- "Reflection prompts"
-- "Articles"
-
-**NEW terminology:**
-- "Key Questions to Answer"
-- "Key Decisions to Make"
-- "Curated Reading"
-
-This makes it clear it's a GUIDE not a JOURNAL.
-
 ---
 
 ## Messaging Guidelines
 
 ### ✅ SAY:
-- "Guide" / "Framework" / "Playbook"
+- "Template" (what we call them)
+- "Prompts" (the questions/actions in templates)
+- "Articles" (curated reading)
 - "Expert-curated"
 - "Life planning" / "Life decisions"
-- "Get the framework, not a blank page"
-- "What to think through" / "What to decide"
+- "Wikipedia × Notion for life planning"
+- "Structured prompts, not a blank page"
 
 ### ❌ DON'T SAY:
-- "Reflection" / "Journal" / "Self-reflection"
-- "Organize your thoughts"
-- "Personal development journey"
-- "Discover yourself"
-- Anything vague or poetic
+- "Self-reflection" / "Journal" (sounds like therapy)
+- "Organize your thoughts" (too vague)
+- "Personal development journey" (too aspirational)
+- "Discover yourself" (too poetic)
+- Anything vague or mysterious
 
 ### Voice & Tone:
 - **Direct, not mysterious**
@@ -631,7 +667,7 @@ This makes it clear it's a GUIDE not a JOURNAL.
 - **Clear, not clever**
 - **Helpful, not preachy**
 
-Think: **Practical guide, not life coach**
+Think: **Practical frameworks, not life coaching**
 
 ---
 
@@ -783,7 +819,7 @@ Optional: Your email (we'll notify you when it's ready)
 
 **2. Request goes to queue**
 ```sql
-CREATE TABLE guide_requests (
+CREATE TABLE template_requests (
   id uuid PRIMARY KEY,
   user_id uuid REFERENCES auth.users (optional),
   email text,
@@ -792,13 +828,13 @@ CREATE TABLE guide_requests (
   status text DEFAULT 'queued', -- queued, processing, ready, published, merged
   votes int DEFAULT 1,
   created_at timestamp DEFAULT now(),
-  published_guide_id uuid REFERENCES templates
+  published_template_id uuid REFERENCES templates
 );
 ```
 
 **3. Nightly generation (your local Claude Code script)**
 - Pulls top-voted queued requests from DB
-- Generates guide using your existing Claude Code workflow
+- Generates template using your existing Claude Code workflow
 - Validates quality (structure, completeness, accuracy)
 - Checks for duplicates (hash matching)
 - Inserts into templates table with `source='community-requested'`
@@ -807,9 +843,9 @@ CREATE TABLE guide_requests (
 **4. Attribution**
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[At top of community-requested guides]
+[At top of community-requested templates]
 
-📝 Community Guide
+📝 Community Template
 Requested by 12 users • Created [date] • Curated by Templata
 
 [👍 Helpful] [💬 Discuss] [✏️ Suggest edit]
@@ -819,14 +855,14 @@ Requested by 12 users • Created [date] • Curated by Templata
 **5. User notification**
 ```
 Email:
-Subject: Your guide request is ready!
+Subject: Your template request is ready!
 
 Hi there,
 
-The guide you requested ("Starting a side business while working full-time")
+The template you requested ("Starting a side business while working full-time")
 is now live on Templata.
 
-[View guide →]
+[View template →]
 
 Thanks for helping us grow the library!
 ```
@@ -1246,8 +1282,8 @@ Would love your feedback!
 - [ ] Collect user feedback on helpfulness
 
 ### Phase 4: Content Quality Pass (Week 4-5)
-- [ ] Audit top 100 guides for quality and consistency
-- [ ] Ensure consistent section naming (Key Questions, Key Decisions, Curated Reading)
+- [ ] Audit top 100 templates for quality and consistency
+- [ ] Ensure consistent prompts and articles coverage
 - [ ] Add more curated articles where content is thin
 - [ ] Test with 10 new users and iterate based on feedback
 - [ ] Fix any broken links or outdated content
@@ -1255,26 +1291,26 @@ Would love your feedback!
 ### Phase 5: User-Generated Requests (Month 2-3)
 
 **Database setup:**
-- [ ] Create `guide_requests` table in Supabase
+- [ ] Create `template_requests` table in Supabase
 - [ ] Add RLS policies for user submissions
 - [ ] Set up email notification system
 
 **Frontend:**
-- [ ] Add "Request a guide" button on browse page
+- [ ] Add "Request a template" button on browse page
 - [ ] Create request modal with topic input and category dropdown
-- [ ] Add "Upcoming guides" section showing popular requests
+- [ ] Add "Upcoming templates" section showing popular requests
 - [ ] Add voting functionality on requests
 - [ ] Add tabs: All / Expert-curated / Community-requested
 
 **Backend/Generation:**
-- [ ] Create local Claude Code script to poll guide_requests table
+- [ ] Create local Claude Code script to poll template_requests table
 - [ ] Implement nightly generation workflow
 - [ ] Add duplicate detection (content hash matching)
 - [ ] Add quality validation checks
 - [ ] Add email notifications when requests are fulfilled
 
 **Attribution:**
-- [ ] Add "Community Guide" badge to requested guides
+- [ ] Add "Community Template" badge to requested templates
 - [ ] Track and display request count ("Requested by 12 users")
 - [ ] Add source attribution system to templates table
 
