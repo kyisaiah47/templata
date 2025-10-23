@@ -48,9 +48,9 @@ export default function LandingPage() {
 			/>
 
 			{/* Hero Section - Linear style: centered, lots of space */}
-			<section className="relative px-6 pt-32 pb-24 md:pt-48 md:pb-32">
+			<section className="relative px-6 pt-40 pb-32 md:pt-56 md:pb-40">
 				<div className="mx-auto max-w-4xl text-center">
-					<h1 className="text-5xl font-semibold tracking-tight md:text-7xl mb-6">
+					<h1 className="text-5xl font-semibold tracking-tight md:text-7xl mb-8">
 						Wikipedia × Notion
 						<br />
 						<span className="text-muted-foreground">for life planning</span>
@@ -74,26 +74,32 @@ export default function LandingPage() {
 					</div>
 
 					<p className="text-sm text-muted-foreground">
-						No signup needed · Export to PDF anytime
+						No signup needed · Export to PDF anytime · 100% free
 					</p>
 				</div>
 			</section>
 
 			{/* Hero Screenshot - Code-based UI */}
-			<section className="px-6 pb-32">
+			<section className="px-6 pb-40">
 				<div className="mx-auto max-w-6xl">
 					<HeroWorkspace />
 				</div>
 			</section>
 
 			{/* How It Works - 2x2 grid */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-5xl">
-					<h2 className="text-3xl font-semibold tracking-tight mb-16 text-center">
-						How it works
-					</h2>
+					<div className="mb-20">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							How it works
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							No AI. No blank pages. Just expert-designed frameworks ready to use.
+							Pick a guide, answer thoughtful questions, and export when you're done.
+						</p>
+					</div>
 
-					<div className="grid md:grid-cols-2 gap-12">
+					<div className="grid md:grid-cols-2 gap-16">
 						<div className="space-y-4">
 							<h3 className="text-lg font-semibold">1. Pick a situation</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
@@ -130,23 +136,35 @@ export default function LandingPage() {
 			</section>
 
 			{/* Categories */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<h2 className="text-3xl font-semibold tracking-tight mb-16 text-center">
-						Browse by category
-					</h2>
+					<div className="mb-20">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							Browse by category
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							From life events to relationships, career moves to personal growth — find expert frameworks
+							for the decisions that shape your life.
+						</p>
+					</div>
 					<CategorySelection />
 				</div>
 			</section>
 
 			{/* Why different */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<h2 className="text-3xl font-semibold tracking-tight mb-16 text-center">
-						Not just another tool
-					</h2>
+					<div className="mb-20">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							Not just another tool
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							AI gives you generic advice. Blank journals leave you stuck. Templata gives you
+							expert frameworks with the exact questions you need to answer.
+						</p>
+					</div>
 
-					<div className="grid lg:grid-cols-2 gap-12 items-center">
+					<div className="grid lg:grid-cols-2 gap-16 items-center">
 						{/* Screenshot */}
 						<div>
 							<StructuredGuide />
@@ -213,23 +231,35 @@ export default function LandingPage() {
 			</section>
 
 			{/* Featured Guides */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<h2 className="text-3xl font-semibold tracking-tight mb-16 text-center">
-						Popular guides
-					</h2>
+					<div className="mb-20">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							Popular guides
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							See what others are working through. Wedding planning, career changes, relationship decisions,
+							and more — each with expert questions and curated resources.
+						</p>
+					</div>
 					<PopularGuides />
 				</div>
 			</section>
 
 			{/* Community */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<h2 className="text-3xl font-semibold tracking-tight mb-16 text-center">
-						Built by the community
-					</h2>
+					<div className="mb-20">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							Built by the community
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							Like Wikipedia, our guides are created and refined by experts and users who've been there.
+							Submit your own, request what you need, and help others navigate life's big decisions.
+						</p>
+					</div>
 
-					<div className="grid lg:grid-cols-2 gap-12 items-center">
+					<div className="grid lg:grid-cols-2 gap-16 items-center">
 						{/* Screenshot */}
 						<div>
 							<CommunityHub />
@@ -273,35 +303,48 @@ export default function LandingPage() {
 			</section>
 
 			{/* Stats */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-40 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<div className="grid md:grid-cols-4 gap-8 text-center">
+					<div className="mb-16">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							By the numbers
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							A comprehensive library of frameworks, questions, and resources — all free, forever.
+						</p>
+					</div>
+					<div className="grid md:grid-cols-4 gap-12 text-center">
 						<div>
-							<div className="text-4xl font-semibold mb-2">1,200+</div>
+							<div className="text-5xl font-semibold mb-3">1,200+</div>
 							<div className="text-sm text-muted-foreground">Life guides</div>
 						</div>
 						<div>
-							<div className="text-4xl font-semibold mb-2">104k+</div>
-							<div className="text-sm text-muted-foreground">Questions</div>
+							<div className="text-5xl font-semibold mb-3">104k+</div>
+							<div className="text-sm text-muted-foreground">Expert questions</div>
 						</div>
 						<div>
-							<div className="text-4xl font-semibold mb-2">25k+</div>
-							<div className="text-sm text-muted-foreground">Articles</div>
+							<div className="text-5xl font-semibold mb-3">25k+</div>
+							<div className="text-sm text-muted-foreground">Curated articles</div>
 						</div>
 						<div>
-							<div className="text-4xl font-semibold mb-2">100%</div>
-							<div className="text-sm text-muted-foreground">Free</div>
+							<div className="text-5xl font-semibold mb-3">100%</div>
+							<div className="text-sm text-muted-foreground">Free forever</div>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			{/* FAQ */}
-			<section className="px-6 py-32 border-t border-border/40">
+			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-3xl">
-					<h2 className="text-3xl font-semibold tracking-tight mb-16 text-center">
-						Common questions
-					</h2>
+					<div className="mb-20">
+						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+							Common questions
+						</h2>
+						<p className="text-base text-muted-foreground max-w-2xl">
+							Everything you need to know about how Templata works and what makes it different.
+						</p>
+					</div>
 
 					<div className="space-y-8">
 						<div>
@@ -348,8 +391,14 @@ export default function LandingPage() {
 			</section>
 
 			{/* Simple footer CTA */}
-			<section className="px-6 py-24 border-t border-border/40">
+			<section className="px-6 py-32 border-t border-border/40">
 				<div className="mx-auto max-w-2xl text-center">
+					<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
+						Ready to get started?
+					</h2>
+					<p className="text-base text-muted-foreground mb-8">
+						Browse 1,200+ expert guides. No signup. No credit card. Just frameworks that work.
+					</p>
 					<Button size="lg" asChild>
 						<Link href="/guides">
 							Browse all guides

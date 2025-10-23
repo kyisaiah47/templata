@@ -62,23 +62,11 @@ export function Header() {
 	const isHomePage = pathname === "/"
 
 	return (
-		<header>
-			<nav className="fixed z-50 w-full px-4">
-				<div
-					className={cn(
-						"mx-auto mt-4",
-						isScrolled && isHomePage ? "border backdrop-blur-lg" : "border-transparent"
-					)}
-					style={{
-						width: '100%',
-						borderRadius: '0px',
-						backgroundColor: isScrolled && isHomePage ? `rgba(var(--background-rgb), 0.8)` : 'transparent',
-						paddingTop: '16px',
-						paddingBottom: '16px',
-						paddingLeft: '24px',
-						paddingRight: '24px'
-					}}
-				>
+		<header className={cn(
+			"fixed z-50 w-full border-b transition-colors duration-300",
+			isScrolled && isHomePage ? "bg-background" : "border-transparent"
+		)}>
+			<nav className="container mx-auto px-4 py-4">
 					<div className="flex items-center justify-between relative">
 						{/* Left side - Logo and Theme */}
 						<div className="flex items-center space-x-2 md:space-x-4">
@@ -191,7 +179,6 @@ export function Header() {
 							)}
 						</div>
 					</div>
-				</div>
 			</nav>
 		</header>
 	)
