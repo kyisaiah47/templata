@@ -109,7 +109,9 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  /* Linear-style refined radii */
+  --radius: 0.75rem;
+
   --background: oklch(0.9900 0 0);
   --background-rgb: 252, 252, 252;
   --border-rgb: 229, 229, 229;
@@ -147,23 +149,31 @@
   --font-sans: Geist, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Geist Mono, monospace;
+
+  /* Linear-style refined shadows - subtler, crisper */
   --shadow-color: hsl(0 0% 0%);
-  --shadow-opacity: 0.18;
-  --shadow-blur: 2px;
+  --shadow-opacity: 0.04;
+  --shadow-blur: 16px;
   --shadow-spread: 0px;
   --shadow-offset-x: 0px;
-  --shadow-offset-y: 1px;
-  --letter-spacing: 0em;
+  --shadow-offset-y: 2px;
+
+  /* Linear typography - tighter tracking */
+  --letter-spacing: -0.01em;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-loose: 0em;
+
   --spacing: 0.25rem;
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
-  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
-  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
-  --tracking-normal: 0em;
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.02);
+  --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.04);
+  --shadow-sm: 0px 2px 4px 0px hsl(0 0% 0% / 0.04), 0px 1px 2px 0px hsl(0 0% 0% / 0.02);
+  --shadow: 0px 4px 8px 0px hsl(0 0% 0% / 0.04), 0px 2px 4px 0px hsl(0 0% 0% / 0.02);
+  --shadow-md: 0px 8px 16px 0px hsl(0 0% 0% / 0.06), 0px 2px 4px 0px hsl(0 0% 0% / 0.02);
+  --shadow-lg: 0px 16px 24px 0px hsl(0 0% 0% / 0.08), 0px 4px 8px 0px hsl(0 0% 0% / 0.03);
+  --shadow-xl: 0px 24px 32px 0px hsl(0 0% 0% / 0.10), 0px 8px 16px 0px hsl(0 0% 0% / 0.04);
+  --shadow-2xl: 0px 32px 48px 0px hsl(0 0% 0% / 0.12);
+
+  --tracking-normal: -0.01em;
   --font-geist-sans: "Geist Sans", sans-serif;
   --font-geist-mono: "Geist Mono", monospace;
 }

@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Templata | Organize Life\'s Biggest Moments',
-  description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments. From wedding planning to career changes, get organized in minutes with proven frameworks from domain experts.',
-  keywords: 'life planning templates, wedding planning, career change, home buying, business planning, expert guidance, structured frameworks, life organization',
+  title: 'Templata | Wikipedia × Notion for Life Planning',
+  description: 'Expert-curated guides for life\'s biggest decisions. Get the framework — not a blank page. 1,200+ guides with guided questions and curated reading.',
+  keywords: 'life planning guides, decision framework, guided questions, curated reading, career change, relationships, health, personal growth, expert guidance',
   authors: [{ name: 'Templata Team' }],
   icons: {
     icon: "/brand/favicon-white.svg",
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     maximumScale: 5,
   },
   openGraph: {
-    title: 'Templata | Organize Life\'s Biggest Moments',
-    description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments. Get organized in minutes with proven frameworks from domain experts.',
+    title: 'Templata | Wikipedia × Notion for Life Planning',
+    description: 'Expert-curated guides for life\'s biggest decisions. Get the framework — not a blank page.',
     url: 'https://templata.org',
     siteName: 'Templata',
     images: [
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Templata | Organize Life\'s Biggest Moments',
-    description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments.',
+    title: 'Templata | Wikipedia × Notion for Life Planning',
+    description: 'Expert-curated guides for life\'s biggest decisions. Get the framework — not a blank page.',
     images: ['https://templata.org/og-image.png'],
     creator: '@templata',
   },
@@ -91,7 +91,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Templata",
-              "description": "Expert-crafted templates for life's biggest moments",
+              "description": "Expert-curated guides for life's biggest decisions",
               "url": "https://templata.org",
               "logo": "https://templata.org/logo.png",
               "sameAs": [
@@ -108,7 +108,7 @@ export default function RootLayout({
                 "name": "Templata - Free Forever",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Full access to 1,298 templates, 104,000+ prompts, and 25,936 articles. Completely free, no paywalls."
+                "description": "Full access to 1,200+ guides with guided questions and curated reading. Completely free, no paywalls."
               }
             })
           }}
