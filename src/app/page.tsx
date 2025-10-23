@@ -19,6 +19,9 @@ import { CategorySelection } from "@/components/landing/CategorySelection";
 import { StructuredGuide } from "@/components/landing/StructuredGuide";
 import { PopularGuides } from "@/components/landing/PopularGuides";
 import { CommunityHub } from "@/components/landing/CommunityHub";
+import { ExpertProfile } from "@/components/landing/ExpertProfile";
+import { SubmitGuide } from "@/components/landing/SubmitGuide";
+import { CommunityActivity } from "@/components/landing/CommunityActivity";
 
 export default function LandingPage() {
 	const jsonLd = {

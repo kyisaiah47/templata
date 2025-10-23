@@ -40,11 +40,11 @@ export function CategoryPreview({ category }: CategoryPreviewProps) {
       badge: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
       text: "text-emerald-600 dark:text-emerald-400"
     },
-    orange: {
-      bg: "bg-orange-500/5",
-      border: "border-orange-500/30",
-      badge: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
-      text: "text-orange-600 dark:text-orange-400"
+    indigo: {
+      bg: "bg-[#6366f1]/5",
+      border: "border-[#6366f1]/30",
+      badge: "bg-[#6366f1]/10",
+      text: ""
     },
   };
 

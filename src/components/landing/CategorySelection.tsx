@@ -7,7 +7,7 @@ export function CategorySelection() {
     { name: "Health & Wellness", guides: 142, color: "green", icon: Activity },
     { name: "Personal Growth", guides: 189, color: "purple", icon: Sprout },
     { name: "Finance", guides: 127, color: "emerald", icon: DollarSign },
-    { name: "Life Events", guides: 181, color: "orange", icon: Calendar },
+    { name: "Life Events", guides: 181, color: "indigo", icon: Calendar },
   ];
 
   const colorMap: Record<string, { bg: string; text: string; icon: string }> = {
@@ -16,7 +16,7 @@ export function CategorySelection() {
     green: { bg: "bg-green-500/10", text: "text-green-600 dark:text-green-400", icon: "text-green-600 dark:text-green-400" },
     purple: { bg: "bg-purple-500/10", text: "text-purple-600 dark:text-purple-400", icon: "text-purple-600 dark:text-purple-400" },
     emerald: { bg: "bg-emerald-500/10", text: "text-emerald-600 dark:text-emerald-400", icon: "text-emerald-600 dark:text-emerald-400" },
-    orange: { bg: "bg-orange-500/10", text: "text-orange-600 dark:text-orange-400", icon: "text-orange-600 dark:text-orange-400" },
+    indigo: { bg: "bg-[#6366f1]/10", text: "", icon: "" },
   };
 
   const guides = [
@@ -62,13 +62,14 @@ export function CategorySelection() {
                   key={cat.name}
                   className={`px-2 py-1.5 rounded text-[13px] transition-colors cursor-pointer ${
                     isSelected
-                      ? `${colors.bg} ${colors.text} font-medium`
+                      ? `${colors.bg} font-medium`
                       : 'text-muted-foreground hover:bg-muted/50'
                   }`}
+                  style={isSelected && cat.color === 'indigo' ? { color: '#6366f1' } : {}}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Icon className={`h-3.5 w-3.5 ${isSelected ? colors.icon : ''}`} />
+                      <Icon className={`h-3.5 w-3.5 ${isSelected && cat.color !== 'indigo' ? colors.icon : ''}`} style={isSelected && cat.color === 'indigo' ? { color: '#6366f1' } : {}} />
                       <span>{cat.name}</span>
                     </div>
                     <span className="text-[11px] opacity-60">{cat.guides}</span>
