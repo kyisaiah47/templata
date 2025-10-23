@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PageLayout } from "@/components/layout";
@@ -8,9 +9,18 @@ import {
 	TrendingUp,
 	Clock,
 	User,
+	Plus,
+	MessageCircle,
+	Bug,
+	Lightbulb,
+	Users,
 } from "lucide-react";
 
+type TabType = 'discussions' | 'requests' | 'feedback' | 'bugs' | 'features' | 'experts';
+
 export default function CommunityPage() {
+	const [activeTab, setActiveTab] = useState<TabType>('discussions');
+
 	// Mock discussions data
 	const discussions = [
 		{
@@ -74,62 +84,221 @@ export default function CommunityPage() {
 						{/* Header */}
 						<div className="mb-6">
 							<h1 className="text-2xl font-semibold tracking-tight mb-2">
-								Community Discussions
+								Community
 							</h1>
-							<p className="text-sm text-muted-foreground">
-								Real experiences from people using the guides
+							<p className="text-sm text-muted-foreground mb-4">
+								Share experiences, request guides, and help improve Templata
 							</p>
+
+							{/* Entry points */}
+							<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+								<button onClick={() => setActiveTab('discussions')} className="text-left group">
+									<div className={`border rounded-lg p-3 transition-colors ${
+										activeTab === 'discussions'
+											? 'border-primary bg-primary/5'
+											: 'border-border hover:border-primary/50'
+									}`}>
+										<MessageSquare className={`h-4 w-4 mb-1 ${
+											activeTab === 'discussions' ? 'text-primary' : 'text-muted-foreground'
+										}`} />
+										<div className="text-sm font-medium">Discussions</div>
+										<div className="text-xs text-muted-foreground">Share experiences</div>
+									</div>
+								</button>
+
+								<button onClick={() => setActiveTab('requests')} className="text-left group">
+									<div className={`border rounded-lg p-3 transition-colors ${
+										activeTab === 'requests'
+											? 'border-primary bg-primary/5'
+											: 'border-border hover:border-primary/50'
+									}`}>
+										<Plus className={`h-4 w-4 mb-1 ${
+											activeTab === 'requests' ? 'text-primary' : 'text-muted-foreground'
+										}`} />
+										<div className="text-sm font-medium">Request Guide</div>
+										<div className="text-xs text-muted-foreground">New guide ideas</div>
+									</div>
+								</button>
+
+								<button onClick={() => setActiveTab('feedback')} className="text-left group">
+									<div className={`border rounded-lg p-3 transition-colors ${
+										activeTab === 'feedback'
+											? 'border-primary bg-primary/5'
+											: 'border-border hover:border-primary/50'
+									}`}>
+										<MessageCircle className={`h-4 w-4 mb-1 ${
+											activeTab === 'feedback' ? 'text-primary' : 'text-muted-foreground'
+										}`} />
+										<div className="text-sm font-medium">Feedback</div>
+										<div className="text-xs text-muted-foreground">Improve guides</div>
+									</div>
+								</button>
+
+								<button onClick={() => setActiveTab('bugs')} className="text-left group">
+									<div className={`border rounded-lg p-3 transition-colors ${
+										activeTab === 'bugs'
+											? 'border-primary bg-primary/5'
+											: 'border-border hover:border-primary/50'
+									}`}>
+										<Bug className={`h-4 w-4 mb-1 ${
+											activeTab === 'bugs' ? 'text-primary' : 'text-muted-foreground'
+										}`} />
+										<div className="text-sm font-medium">Report Bug</div>
+										<div className="text-xs text-muted-foreground">Technical issues</div>
+									</div>
+								</button>
+
+								<button onClick={() => setActiveTab('features')} className="text-left group">
+									<div className={`border rounded-lg p-3 transition-colors ${
+										activeTab === 'features'
+											? 'border-primary bg-primary/5'
+											: 'border-border hover:border-primary/50'
+									}`}>
+										<Lightbulb className={`h-4 w-4 mb-1 ${
+											activeTab === 'features' ? 'text-primary' : 'text-muted-foreground'
+										}`} />
+										<div className="text-sm font-medium">Features</div>
+										<div className="text-xs text-muted-foreground">Product ideas</div>
+									</div>
+								</button>
+
+								<button onClick={() => setActiveTab('experts')} className="text-left group">
+									<div className={`border rounded-lg p-3 transition-colors ${
+										activeTab === 'experts'
+											? 'border-primary bg-primary/5'
+											: 'border-border hover:border-primary/50'
+									}`}>
+										<Users className={`h-4 w-4 mb-1 ${
+											activeTab === 'experts' ? 'text-primary' : 'text-muted-foreground'
+										}`} />
+										<div className="text-sm font-medium">Experts</div>
+										<div className="text-xs text-muted-foreground">Contributors</div>
+									</div>
+								</button>
+							</div>
 						</div>
 
-						{/* Discussions list */}
-						<div className="space-y-2">
-							{discussions.map((discussion) => (
-								<Link
-									key={discussion.id}
-									href={`/community/discussions/${discussion.id}`}
-									className="block group"
-								>
-									<div className="border-b border-border py-3 hover:bg-muted/30 -mx-4 px-4 transition-colors">
-										<div className="flex items-start gap-3">
-											{/* Upvote column */}
-											<div className="flex flex-col items-center gap-0.5 min-w-[40px] pt-1">
-												<button className="p-0.5 hover:bg-muted rounded" onClick={(e) => e.preventDefault()}>
-													<TrendingUp className="h-4 w-4 text-muted-foreground" />
-												</button>
-												<span className="text-xs font-medium text-muted-foreground">{discussion.upvotes}</span>
-											</div>
+						{/* Content based on active tab */}
+						{activeTab === 'discussions' && (
+							<>
+								<div className="mb-4">
+									<h2 className="text-lg font-semibold mb-2">Recent Discussions</h2>
+								</div>
+								<div className="space-y-2">
+									{discussions.map((discussion) => (
+										<Link
+											key={discussion.id}
+											href={`/community/discussions/${discussion.id}`}
+											className="block group"
+										>
+											<div className="border-b border-border py-3 hover:bg-muted/30 -mx-4 px-4 transition-colors">
+												<div className="flex items-start gap-3">
+													{/* Upvote column */}
+													<div className="flex flex-col items-center gap-0.5 min-w-[40px] pt-1">
+														<button className="p-0.5 hover:bg-muted rounded" onClick={(e) => e.preventDefault()}>
+															<TrendingUp className="h-4 w-4 text-muted-foreground" />
+														</button>
+														<span className="text-xs font-medium text-muted-foreground">{discussion.upvotes}</span>
+													</div>
 
-											{/* Content */}
-											<div className="flex-1 min-w-0">
-												<h3 className="text-sm font-semibold mb-1 group-hover:text-primary transition-colors">
-													{discussion.title}
-												</h3>
-												<p className="text-xs text-muted-foreground mb-2 line-clamp-1">
-													{discussion.preview}
-												</p>
-												<div className="flex items-center gap-3 text-xs text-muted-foreground">
-													<span className="flex items-center gap-1">
-														<User className="h-3 w-3" />
-														{discussion.author}
-													</span>
-													<span className="flex items-center gap-1">
-														<MessageSquare className="h-3 w-3" />
-														{discussion.comments}
-													</span>
-													<span className="flex items-center gap-1">
-														<Clock className="h-3 w-3" />
-														{discussion.lastActivity}
-													</span>
-													<span className="text-primary font-medium">
-														{discussion.guide}
-													</span>
+													{/* Content */}
+													<div className="flex-1 min-w-0">
+														<h3 className="text-sm font-semibold mb-1 group-hover:text-primary transition-colors">
+															{discussion.title}
+														</h3>
+														<p className="text-xs text-muted-foreground mb-2 line-clamp-1">
+															{discussion.preview}
+														</p>
+														<div className="flex items-center gap-3 text-xs text-muted-foreground">
+															<span className="flex items-center gap-1">
+																<User className="h-3 w-3" />
+																{discussion.author}
+															</span>
+															<span className="flex items-center gap-1">
+																<MessageSquare className="h-3 w-3" />
+																{discussion.comments}
+															</span>
+															<span className="flex items-center gap-1">
+																<Clock className="h-3 w-3" />
+																{discussion.lastActivity}
+															</span>
+															<span className="text-primary font-medium">
+																{discussion.guide}
+															</span>
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-								</Link>
-							))}
-						</div>
+										</Link>
+									))}
+								</div>
+							</>
+						)}
+
+						{activeTab === 'requests' && (
+							<>
+								<div className="mb-4">
+									<h2 className="text-lg font-semibold mb-2">Guide Requests</h2>
+									<p className="text-sm text-muted-foreground">Request a new guide or vote on existing requests</p>
+								</div>
+								<div className="border border-border rounded-lg p-8 text-center">
+									<Plus className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+									<p className="text-sm text-muted-foreground mb-4">Coming soon: Request guides and vote on community requests</p>
+								</div>
+							</>
+						)}
+
+						{activeTab === 'feedback' && (
+							<>
+								<div className="mb-4">
+									<h2 className="text-lg font-semibold mb-2">Guide Feedback</h2>
+									<p className="text-sm text-muted-foreground">Help improve existing guides</p>
+								</div>
+								<div className="border border-border rounded-lg p-8 text-center">
+									<MessageCircle className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+									<p className="text-sm text-muted-foreground mb-4">Coming soon: Suggest improvements to guides</p>
+								</div>
+							</>
+						)}
+
+						{activeTab === 'bugs' && (
+							<>
+								<div className="mb-4">
+									<h2 className="text-lg font-semibold mb-2">Bug Reports</h2>
+									<p className="text-sm text-muted-foreground">Report technical issues</p>
+								</div>
+								<div className="border border-border rounded-lg p-8 text-center">
+									<Bug className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+									<p className="text-sm text-muted-foreground mb-4">Coming soon: Report and track bugs</p>
+								</div>
+							</>
+						)}
+
+						{activeTab === 'features' && (
+							<>
+								<div className="mb-4">
+									<h2 className="text-lg font-semibold mb-2">Feature Requests</h2>
+									<p className="text-sm text-muted-foreground">Suggest new product features</p>
+								</div>
+								<div className="border border-border rounded-lg p-8 text-center">
+									<Lightbulb className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+									<p className="text-sm text-muted-foreground mb-4">Coming soon: Request features and vote on ideas</p>
+								</div>
+							</>
+						)}
+
+						{activeTab === 'experts' && (
+							<>
+								<div className="mb-4">
+									<h2 className="text-lg font-semibold mb-2">Expert Contributors</h2>
+									<p className="text-sm text-muted-foreground">Verified experts who review and create guides</p>
+								</div>
+								<div className="border border-border rounded-lg p-8 text-center">
+									<Users className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+									<p className="text-sm text-muted-foreground mb-4">Coming soon: Browse expert contributors</p>
+								</div>
+							</>
+						)}
 					</div>
 
 					{/* Sidebar */}
