@@ -333,32 +333,34 @@ export function HeroWorkspace() {
           <div className="flex-1 overflow-hidden bg-background flex">
           {activeTab === 'Tasks' ? (
             /* Tasks View - Kanban */
-            <div className="flex-1 p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold mb-1">Tasks</h2>
-                <p className="text-[11px] text-muted-foreground">Manage tasks from your active guides</p>
+            <div className="flex-1 p-6 overflow-y-auto">
+              <div className="mb-6">
+                <h2 className="text-sm font-semibold mb-0.5">Tasks</h2>
+                <p className="text-[10px] text-muted-foreground">10 total • 5 pending</p>
               </div>
 
               {/* Kanban Board */}
-              <div className="grid grid-cols-3 gap-4 h-full">
+              <div className="grid grid-cols-3 gap-4">
                 {/* To Do Column */}
                 <div className="flex flex-col">
-                  <div className="px-3 py-2 bg-muted/20 rounded-t-lg border border-b-0 border-border/40">
-                    <h3 className="text-[11px] font-semibold">To Do</h3>
+                  <div className="px-2 py-1.5 mb-2">
+                    <h3 className="text-[10px] font-semibold">To Do</h3>
                     <span className="text-[9px] text-muted-foreground">5 tasks</span>
                   </div>
-                  <div className="flex-1 border border-border/40 rounded-b-lg p-2 space-y-2 bg-muted/5">
+                  <div className="space-y-2">
                     {[
-                      { title: 'Book photographer', guide: 'Wedding', color: 'blue' },
-                      { title: 'Update resume', guide: 'Career', color: 'green' },
-                      { title: 'Schedule venue tour', guide: 'Wedding', color: 'blue' },
-                      { title: 'Research neighborhoods', guide: 'Home Buying', color: 'purple' },
-                      { title: 'Send invitations', guide: 'Wedding', color: 'blue' },
+                      { title: 'Book photographer', guide: 'Wedding Planning', date: 'Nov 28' },
+                      { title: 'Update resume', guide: 'Career Transition', date: 'Nov 30' },
+                      { title: 'Schedule venue tour', guide: 'Wedding Planning', date: 'Dec 5' },
+                      { title: 'Research neighborhoods', guide: 'Home Buying', date: 'Dec 8' },
+                      { title: 'Send invitations', guide: 'Wedding Planning', date: 'Jan 15' },
                     ].map((task, i) => (
-                      <div key={i} className="p-2.5 rounded-lg border border-border/40 bg-background hover:shadow-sm transition-shadow cursor-pointer">
+                      <div key={i} className="p-2.5 rounded border border-border/40 bg-background hover:shadow-sm transition-shadow cursor-pointer">
                         <div className="text-[10px] font-medium mb-1">{task.title}</div>
-                        <div className={`inline-block text-[8px] px-1.5 py-0.5 rounded bg-${task.color}-500/10 text-${task.color}-600 dark:text-${task.color}-400`}>
-                          {task.guide}
+                        <div className="flex items-center gap-1.5 text-[9px] text-muted-foreground">
+                          <span>{task.guide}</span>
+                          <span>•</span>
+                          <span>{task.date}</span>
                         </div>
                       </div>
                     ))}
@@ -367,20 +369,18 @@ export function HeroWorkspace() {
 
                 {/* In Progress Column */}
                 <div className="flex flex-col">
-                  <div className="px-3 py-2 bg-muted/20 rounded-t-lg border border-b-0 border-border/40">
-                    <h3 className="text-[11px] font-semibold">In Progress</h3>
+                  <div className="px-2 py-1.5 mb-2">
+                    <h3 className="text-[10px] font-semibold">In Progress</h3>
                     <span className="text-[9px] text-muted-foreground">2 tasks</span>
                   </div>
-                  <div className="flex-1 border border-border/40 rounded-b-lg p-2 space-y-2 bg-muted/5">
+                  <div className="space-y-2">
                     {[
-                      { title: 'Plan ceremony details', guide: 'Wedding', color: 'blue' },
-                      { title: 'Network with recruiters', guide: 'Career', color: 'green' },
+                      { title: 'Plan ceremony details', guide: 'Wedding Planning' },
+                      { title: 'Network with recruiters', guide: 'Career Transition' },
                     ].map((task, i) => (
-                      <div key={i} className="p-2.5 rounded-lg border border-border/40 bg-background hover:shadow-sm transition-shadow cursor-pointer">
+                      <div key={i} className="p-2.5 rounded border border-border/40 bg-background hover:shadow-sm transition-shadow cursor-pointer">
                         <div className="text-[10px] font-medium mb-1">{task.title}</div>
-                        <div className={`inline-block text-[8px] px-1.5 py-0.5 rounded bg-${task.color}-500/10 text-${task.color}-600 dark:text-${task.color}-400`}>
-                          {task.guide}
-                        </div>
+                        <div className="text-[9px] text-muted-foreground">{task.guide}</div>
                       </div>
                     ))}
                   </div>
@@ -388,21 +388,19 @@ export function HeroWorkspace() {
 
                 {/* Done Column */}
                 <div className="flex flex-col">
-                  <div className="px-3 py-2 bg-muted/20 rounded-t-lg border border-b-0 border-border/40">
-                    <h3 className="text-[11px] font-semibold">Done</h3>
+                  <div className="px-2 py-1.5 mb-2">
+                    <h3 className="text-[10px] font-semibold">Done</h3>
                     <span className="text-[9px] text-muted-foreground">3 tasks</span>
                   </div>
-                  <div className="flex-1 border border-border/40 rounded-b-lg p-2 space-y-2 bg-muted/5">
+                  <div className="space-y-2">
                     {[
-                      { title: 'Set wedding budget', guide: 'Wedding', color: 'blue' },
-                      { title: 'Create LinkedIn profile', guide: 'Career', color: 'green' },
-                      { title: 'Book venue', guide: 'Wedding', color: 'blue' },
+                      { title: 'Set wedding budget', guide: 'Wedding Planning' },
+                      { title: 'Create LinkedIn profile', guide: 'Career Transition' },
+                      { title: 'Book venue', guide: 'Wedding Planning' },
                     ].map((task, i) => (
-                      <div key={i} className="p-2.5 rounded-lg border border-border/40 bg-background opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                      <div key={i} className="p-2.5 rounded border border-border/40 bg-background opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
                         <div className="text-[10px] font-medium mb-1 line-through">{task.title}</div>
-                        <div className={`inline-block text-[8px] px-1.5 py-0.5 rounded bg-${task.color}-500/10 text-${task.color}-600 dark:text-${task.color}-400`}>
-                          {task.guide}
-                        </div>
+                        <div className="text-[9px] text-muted-foreground">{task.guide}</div>
                       </div>
                     ))}
                   </div>
@@ -410,174 +408,240 @@ export function HeroWorkspace() {
               </div>
             </div>
           ) : activeTab === 'Timeline' ? (
-            /* Timeline View - Gantt */
-            <div className="flex-1 p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold mb-1">Timeline</h2>
-                <p className="text-[11px] text-muted-foreground">Visualize all your projects</p>
-              </div>
-
-              {/* Timeline */}
-              <div className="space-y-6">
-                {/* Wedding Planning Timeline */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-3 h-3 rounded bg-blue-500/20" />
-                    <h3 className="text-[11px] font-semibold">Wedding Planning</h3>
-                    <span className="text-[9px] text-muted-foreground">Nov 2024 - Jun 2025</span>
-                  </div>
-                  <div className="relative h-12 bg-muted/20 rounded-lg border border-border/40">
-                    <div className="absolute top-2 left-[10%] right-[40%] h-8 bg-blue-500/20 border border-blue-500/40 rounded flex items-center px-2">
-                      <span className="text-[9px] font-medium">Planning Phase</span>
-                    </div>
-                  </div>
+            /* Timeline View - Gantt Style */
+            <div className="flex-1 p-6 overflow-y-auto">
+              <div className="max-w-4xl">
+                <div className="mb-6">
+                  <h2 className="text-sm font-semibold mb-0.5">Timeline</h2>
+                  <p className="text-[10px] text-muted-foreground">3 active projects • Nov 2024 - Jul 2025</p>
                 </div>
 
-                {/* Career Transition Timeline */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-3 h-3 rounded bg-green-500/20" />
-                    <h3 className="text-[11px] font-semibold">Career Transition</h3>
-                    <span className="text-[9px] text-muted-foreground">Dec 2024 - May 2025</span>
-                  </div>
-                  <div className="relative h-12 bg-muted/20 rounded-lg border border-border/40">
-                    <div className="absolute top-2 left-[20%] right-[30%] h-8 bg-green-500/20 border border-green-500/40 rounded flex items-center px-2">
-                      <span className="text-[9px] font-medium">Job Search</span>
+                {/* Timeline */}
+                <div className="space-y-6">
+                  {/* Wedding Planning Timeline */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                      <h3 className="text-[11px] font-semibold">Wedding Planning</h3>
+                      <span className="text-[9px] text-muted-foreground">Nov 2024 - Jun 2025</span>
+                    </div>
+                    <div className="relative h-8 bg-muted/10 rounded overflow-hidden">
+                      <div className="absolute top-0 left-[10%] right-[40%] h-full bg-blue-500/20 border-l-2 border-blue-500 flex items-center px-2">
+                        <span className="text-[9px] font-medium">Planning Phase</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Home Buying Timeline */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-3 h-3 rounded bg-purple-500/20" />
-                    <h3 className="text-[11px] font-semibold">Home Buying</h3>
-                    <span className="text-[9px] text-muted-foreground">Jan 2025 - Jul 2025</span>
-                  </div>
-                  <div className="relative h-12 bg-muted/20 rounded-lg border border-border/40">
-                    <div className="absolute top-2 left-[30%] right-[20%] h-8 bg-purple-500/20 border border-purple-500/40 rounded flex items-center px-2">
-                      <span className="text-[9px] font-medium">House Hunting</span>
+                  {/* Career Transition Timeline */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                      <h3 className="text-[11px] font-semibold">Career Transition</h3>
+                      <span className="text-[9px] text-muted-foreground">Dec 2024 - May 2025</span>
+                    </div>
+                    <div className="relative h-8 bg-muted/10 rounded overflow-hidden">
+                      <div className="absolute top-0 left-[20%] right-[30%] h-full bg-green-500/20 border-l-2 border-green-500 flex items-center px-2">
+                        <span className="text-[9px] font-medium">Job Search</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Timeline Months Legend */}
-                <div className="flex justify-between text-[9px] text-muted-foreground pt-4 border-t border-border/40">
-                  {['Nov 24', 'Dec 24', 'Jan 25', 'Feb 25', 'Mar 25', 'Apr 25', 'May 25', 'Jun 25', 'Jul 25'].map(month => (
-                    <span key={month}>{month}</span>
-                  ))}
+                  {/* Home Buying Timeline */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                      <h3 className="text-[11px] font-semibold">Home Buying</h3>
+                      <span className="text-[9px] text-muted-foreground">Jan 2025 - Jul 2025</span>
+                    </div>
+                    <div className="relative h-8 bg-muted/10 rounded overflow-hidden">
+                      <div className="absolute top-0 left-[30%] right-[20%] h-full bg-purple-500/20 border-l-2 border-purple-500 flex items-center px-2">
+                        <span className="text-[9px] font-medium">House Hunting</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Timeline Months Legend */}
+                  <div className="flex justify-between text-[9px] text-muted-foreground pt-4">
+                    {['Nov 24', 'Dec 24', 'Jan 25', 'Feb 25', 'Mar 25', 'Apr 25', 'May 25', 'Jun 25', 'Jul 25'].map(month => (
+                      <span key={month}>{month}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           ) : activeTab === 'Overview' ? (
             /* Overview Dashboard */
-            <div className="flex-1 p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold mb-1">Overview</h2>
-                <p className="text-[11px] text-muted-foreground">All your guides at a glance</p>
-              </div>
+            <div className="flex-1 p-6 overflow-y-auto">
+              <div className="max-w-4xl">
+                <div className="mb-6">
+                  <h2 className="text-sm font-semibold mb-0.5">Overview</h2>
+                  <p className="text-[10px] text-muted-foreground">5 active guides • 7 pending tasks</p>
+                </div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="p-4 rounded-lg border border-border/40 bg-muted/5">
-                  <div className="text-[10px] text-muted-foreground mb-1">Active Guides</div>
-                  <div className="text-2xl font-bold">5</div>
-                </div>
-                <div className="p-4 rounded-lg border border-border/40 bg-muted/5">
-                  <div className="text-[10px] text-muted-foreground mb-1">Pending Tasks</div>
-                  <div className="text-2xl font-bold">7</div>
-                </div>
-                <div className="p-4 rounded-lg border border-border/40 bg-muted/5">
-                  <div className="text-[10px] text-muted-foreground mb-1">Upcoming Dates</div>
-                  <div className="text-2xl font-bold">4</div>
-                </div>
-              </div>
-
-              {/* Active Guides List */}
-              <div className="space-y-3">
-                {[
-                  { name: 'Wedding Planning', progress: 20, questions: '3 of 15', color: 'blue' },
-                  { name: 'Career Transition', progress: 42, questions: '5 of 12', color: 'green' },
-                  { name: 'Home Buying', progress: 14, questions: '2 of 14', color: 'purple' },
-                  { name: 'Setting Boundaries', progress: 67, questions: '6 of 9', color: 'pink' },
-                  { name: 'Personal Growth', progress: 33, questions: '4 of 12', color: 'orange' },
-                ].map((guide, i) => (
-                  <div key={i} className="p-4 rounded-lg border border-border/40 bg-background hover:shadow-sm transition-shadow">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full bg-${guide.color}-500`} />
-                        <h3 className="text-[11px] font-semibold">{guide.name}</h3>
+                {/* Active Guides List */}
+                <div className="space-y-1">
+                  {[
+                    { name: 'Wedding Planning', progress: 20, questions: '3 of 15', color: 'blue', nextTask: 'Book photographer', nextDate: 'Nov 28' },
+                    { name: 'Career Transition', progress: 42, questions: '5 of 12', color: 'green', nextTask: 'Update resume', nextDate: 'Nov 30' },
+                    { name: 'Home Buying', progress: 14, questions: '2 of 14', color: 'purple', nextTask: 'Get pre-approved', nextDate: 'Jan 15' },
+                    { name: 'Setting Boundaries', progress: 67, questions: '6 of 9', color: 'pink', nextTask: 'Practice saying no', nextDate: 'Dec 1' },
+                    { name: 'Personal Growth', progress: 33, questions: '4 of 12', color: 'orange', nextTask: 'Morning meditation', nextDate: 'Daily' },
+                  ].map((guide, i) => (
+                    <div key={i} className="group px-3 py-3 hover:bg-muted/30 rounded transition-colors cursor-pointer">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                          <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                            guide.color === 'blue' ? 'bg-blue-500' :
+                            guide.color === 'green' ? 'bg-green-500' :
+                            guide.color === 'purple' ? 'bg-purple-500' :
+                            guide.color === 'pink' ? 'bg-pink-500' :
+                            'bg-orange-500'
+                          }`} />
+                          <h3 className="text-[11px] font-semibold truncate">{guide.name}</h3>
+                        </div>
+                        <span className="text-[9px] text-muted-foreground flex-shrink-0">{guide.questions}</span>
                       </div>
-                      <span className="text-[9px] text-muted-foreground">{guide.questions} complete</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className={`h-full bg-${guide.color}-500`} style={{ width: `${guide.progress}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : activeTab === 'Calendar' ? (
-            /* Calendar View */
-            <div className="flex-1 p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold mb-1">Calendar</h2>
-                <p className="text-[11px] text-muted-foreground">All dates from your active guides</p>
-              </div>
-
-              {/* Calendar Grid */}
-              <div className="border border-border/40 rounded-lg overflow-hidden">
-                {/* Calendar Header */}
-                <div className="bg-muted/20 px-4 py-2 border-b border-border/40 flex items-center justify-between">
-                  <h3 className="text-[12px] font-semibold">November 2024</h3>
-                  <div className="flex gap-1">
-                    <button className="px-2 py-1 text-[10px] hover:bg-muted/50 rounded">Prev</button>
-                    <button className="px-2 py-1 text-[10px] hover:bg-muted/50 rounded">Today</button>
-                    <button className="px-2 py-1 text-[10px] hover:bg-muted/50 rounded">Next</button>
-                  </div>
-                </div>
-
-                {/* Days of Week */}
-                <div className="grid grid-cols-7 border-b border-border/40">
-                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                    <div key={day} className="px-2 py-1.5 text-[9px] font-semibold text-muted-foreground text-center border-r border-border/40 last:border-r-0">
-                      {day}
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
+                          <div className={`h-full ${
+                            guide.color === 'blue' ? 'bg-blue-500' :
+                            guide.color === 'green' ? 'bg-green-500' :
+                            guide.color === 'purple' ? 'bg-purple-500' :
+                            guide.color === 'pink' ? 'bg-pink-500' :
+                            'bg-orange-500'
+                          }`} style={{ width: `${guide.progress}%` }} />
+                        </div>
+                        <span className="text-[9px] text-muted-foreground flex-shrink-0">{guide.progress}%</span>
+                      </div>
+                      <div className="mt-2 text-[9px] text-muted-foreground flex items-center gap-2">
+                        <span>Next: {guide.nextTask}</span>
+                        <span>·</span>
+                        <span>{guide.nextDate}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Calendar Days */}
-                <div className="grid grid-cols-7">
-                  {Array.from({ length: 35 }, (_, i) => {
-                    const day = i - 2; // Start from day -2 to show previous month
-                    const hasEvent = [5, 12, 18, 25].includes(day);
-                    const isToday = day === 15;
-
-                    return (
-                      <div
-                        key={i}
-                        className={`min-h-[80px] p-2 border-r border-b border-border/40 last:border-r-0 ${
-                          day < 1 || day > 30 ? 'bg-muted/10' : ''
-                        }`}
-                      >
-                        <div className={`text-[10px] mb-1 ${isToday ? 'w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center' : day < 1 || day > 30 ? 'text-muted-foreground' : ''}`}>
-                          {day > 0 && day <= 30 ? day : ''}
-                        </div>
-                        {hasEvent && day > 0 && (
-                          <div className="space-y-1">
-                            <div className="text-[8px] px-1.5 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded truncate">
-                              Venue deposit
-                            </div>
-                            {day === 18 && (
-                              <div className="text-[8px] px-1.5 py-0.5 bg-green-500/10 text-green-600 dark:text-green-400 rounded truncate">
-                                Interview prep
-                              </div>
-                            )}
-                          </div>
-                        )}
+                {/* Recent Activity */}
+                <div className="mt-8 pt-6 border-t border-border/40">
+                  <div className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+                    Recent Activity
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { action: 'Completed question', guide: 'Wedding Planning', time: '2 hours ago' },
+                      { action: 'Added task', guide: 'Career Transition', time: '5 hours ago' },
+                      { action: 'Updated timeline', guide: 'Home Buying', time: 'Yesterday' },
+                      { action: 'Completed question', guide: 'Personal Growth', time: '2 days ago' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3 px-1 text-[10px]">
+                        <div className="w-1 h-1 rounded-full bg-muted-foreground/40 flex-shrink-0" />
+                        <span className="text-muted-foreground">{item.action} in</span>
+                        <span className="font-medium">{item.guide}</span>
+                        <span className="text-muted-foreground">·</span>
+                        <span className="text-muted-foreground text-[9px]">{item.time}</span>
                       </div>
-                    );
-                  })}
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : activeTab === 'Calendar' ? (
+            /* Calendar View */
+            <div className="flex-1 p-6 overflow-y-auto">
+              <div className="max-w-4xl">
+                <div className="mb-6 flex items-center justify-between">
+                  <div>
+                    <h2 className="text-sm font-semibold mb-0.5">November 2024</h2>
+                    <p className="text-[10px] text-muted-foreground">4 events this month</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <button className="px-2 py-1 text-[10px] hover:bg-muted/30 rounded transition-colors">Prev</button>
+                    <button className="px-2 py-1 text-[10px] hover:bg-muted/30 rounded transition-colors">Today</button>
+                    <button className="px-2 py-1 text-[10px] hover:bg-muted/30 rounded transition-colors">Next</button>
+                  </div>
+                </div>
+
+                {/* Calendar Grid */}
+                <div className="border-t border-l border-border/40">
+                  {/* Days of Week */}
+                  <div className="grid grid-cols-7">
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                      <div key={day} className="px-2 py-1.5 text-[9px] font-semibold text-muted-foreground border-r border-b border-border/40">
+                        {day}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Calendar Days */}
+                  <div className="grid grid-cols-7">
+                    {Array.from({ length: 35 }, (_, i) => {
+                      const day = i - 2;
+                      const hasEvent = [5, 12, 18, 25].includes(day);
+                      const isToday = day === 15;
+
+                      return (
+                        <div
+                          key={i}
+                          className={`min-h-[70px] p-2 border-r border-b border-border/40 ${
+                            day < 1 || day > 30 ? 'bg-muted/5' : 'hover:bg-muted/10 cursor-pointer'
+                          } transition-colors`}
+                        >
+                          <div className={`text-[10px] mb-1 ${
+                            isToday
+                              ? 'w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center font-medium'
+                              : day < 1 || day > 30
+                              ? 'text-muted-foreground/40'
+                              : 'text-foreground'
+                          }`}>
+                            {day > 0 && day <= 30 ? day : ''}
+                          </div>
+                          {hasEvent && day > 0 && (
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-1">
+                                <div className="w-1 h-1 rounded-full bg-blue-500 flex-shrink-0" />
+                                <div className="text-[9px] text-foreground truncate">Venue deposit</div>
+                              </div>
+                              {day === 18 && (
+                                <div className="flex items-center gap-1">
+                                  <div className="w-1 h-1 rounded-full bg-green-500 flex-shrink-0" />
+                                  <div className="text-[9px] text-foreground truncate">Interview prep</div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Upcoming Events List */}
+                <div className="mt-8 pt-6 border-t border-border/40">
+                  <div className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+                    Upcoming Events
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { date: 'Nov 28', title: 'Venue deposit due', guide: 'Wedding Planning', color: 'blue' },
+                      { date: 'Dec 1', title: 'Update LinkedIn profile', guide: 'Career Transition', color: 'green' },
+                      { date: 'Dec 5', title: 'Schedule venue tour', guide: 'Wedding Planning', color: 'blue' },
+                      { date: 'Dec 8', title: 'Research neighborhoods', guide: 'Home Buying', color: 'purple' },
+                    ].map((event, i) => (
+                      <div key={i} className="flex items-center gap-3 px-2 py-2 hover:bg-muted/30 rounded transition-colors cursor-pointer">
+                        <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                          event.color === 'blue' ? 'bg-blue-500' :
+                          event.color === 'green' ? 'bg-green-500' :
+                          'bg-purple-500'
+                        }`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[11px] font-medium mb-0.5">{event.title}</div>
+                          <div className="text-[9px] text-muted-foreground">{event.guide}</div>
+                        </div>
+                        <span className="text-[9px] text-muted-foreground flex-shrink-0">{event.date}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
