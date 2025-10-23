@@ -1,13 +1,13 @@
-import { FileText, BookOpen, User, Moon, X, Plus, Circle, CheckCircle2, ChevronRight, Search, Star, Clock, Calendar, ListTodo, BarChart3, LayoutDashboard, PanelLeftClose, PanelLeft } from "lucide-react";
+import { FileText, BookOpen, User, Moon, X, Plus, Circle, CheckCircle2, ChevronRight, Search, Star, Clock, Calendar, ListTodo, BarChart3, LayoutDashboard, PanelLeftClose, PanelLeft, Compass, PenLine } from "lucide-react";
 import { useState } from "react";
 
 export function HeroWorkspace() {
-  const [activeView, setActiveView] = useState<'guides' | 'calendar' | 'tasks' | 'timeline' | 'overview'>('guides');
+  const [activeView, setActiveView] = useState<'guides' | 'calendar' | 'tasks' | 'timeline' | 'overview' | 'discover' | 'journal'>('guides');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [openTabs, setOpenTabs] = useState<string[]>(['Wedding Planning']);
   const [activeTab, setActiveTab] = useState('Wedding Planning');
 
-  const handleViewClick = (view: 'guides' | 'calendar' | 'tasks' | 'timeline' | 'overview') => {
+  const handleViewClick = (view: 'guides' | 'calendar' | 'tasks' | 'timeline' | 'overview' | 'discover' | 'journal') => {
     setActiveView(view);
     if (view !== 'guides') {
       // Open a new tab for the view
@@ -18,7 +18,7 @@ export function HeroWorkspace() {
       setActiveTab(viewName);
     } else {
       // Switch to most recently used guide tab
-      const guideTabs = openTabs.filter(tab => !['Calendar', 'Tasks', 'Timeline', 'Overview'].includes(tab));
+      const guideTabs = openTabs.filter(tab => !['Calendar', 'Tasks', 'Timeline', 'Overview', 'Discover', 'Journal'].includes(tab));
       if (guideTabs.length > 0) {
         setActiveTab(guideTabs[guideTabs.length - 1]);
       }
@@ -55,6 +55,9 @@ export function HeroWorkspace() {
           >
             <FileText className="w-3 h-3" />
           </button>
+
+          {/* Divider */}
+          <div className="w-4 h-px bg-border my-1" />
 
           {/* Calendar Icon */}
           <button
@@ -102,6 +105,33 @@ export function HeroWorkspace() {
             }`}
           >
             <LayoutDashboard className="w-3 h-3" />
+          </button>
+
+          {/* Divider */}
+          <div className="w-4 h-px bg-border my-1" />
+
+          {/* Discover Icon */}
+          <button
+            onClick={() => handleViewClick('discover')}
+            className={`w-6 h-6 rounded flex items-center justify-center transition-colors ${
+              activeView === 'discover'
+                ? 'bg-[#6366f1]/10 text-[#6366f1]'
+                : 'text-muted-foreground hover:bg-muted/50'
+            }`}
+          >
+            <Compass className="w-3 h-3" />
+          </button>
+
+          {/* Journal Icon */}
+          <button
+            onClick={() => handleViewClick('journal')}
+            className={`w-6 h-6 rounded flex items-center justify-center transition-colors ${
+              activeView === 'journal'
+                ? 'bg-[#6366f1]/10 text-[#6366f1]'
+                : 'text-muted-foreground hover:bg-muted/50'
+            }`}
+          >
+            <PenLine className="w-3 h-3" />
           </button>
         </div>
 
@@ -273,8 +303,8 @@ export function HeroWorkspace() {
               <div className="flex-1 flex items-center gap-0.5 overflow-x-auto -mb-px">
                 {openTabs.map((tab, i) => {
                   const isActive = tab === activeTab;
-                  const isGuide = !['Calendar', 'Tasks', 'Timeline', 'Overview'].includes(tab);
-                  const Icon = isGuide ? FileText : tab === 'Calendar' ? Calendar : tab === 'Tasks' ? ListTodo : tab === 'Timeline' ? BarChart3 : LayoutDashboard;
+                  const isGuide = !['Calendar', 'Tasks', 'Timeline', 'Overview', 'Discover', 'Journal'].includes(tab);
+                  const Icon = isGuide ? FileText : tab === 'Calendar' ? Calendar : tab === 'Tasks' ? ListTodo : tab === 'Timeline' ? BarChart3 : tab === 'Overview' ? LayoutDashboard : tab === 'Discover' ? Compass : PenLine;
                   const colors = ['blue', 'green', 'purple', 'orange', 'pink'];
                   const color = colors[i % colors.length];
 
@@ -288,6 +318,8 @@ export function HeroWorkspace() {
                         else if (tab === 'Tasks') setActiveView('tasks');
                         else if (tab === 'Timeline') setActiveView('timeline');
                         else if (tab === 'Overview') setActiveView('overview');
+                        else if (tab === 'Discover') setActiveView('discover');
+                        else if (tab === 'Journal') setActiveView('journal');
                         else setActiveView('guides');
                       }}
                       className={`flex items-center gap-2 px-3 py-1.5 min-w-fit cursor-pointer ${
@@ -639,6 +671,126 @@ export function HeroWorkspace() {
                           <div className="text-[9px] text-muted-foreground">{event.guide}</div>
                         </div>
                         <span className="text-[9px] text-muted-foreground flex-shrink-0">{event.date}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : activeTab === 'Discover' ? (
+            /* Discover View */
+            <div className="flex-1 p-6 overflow-y-auto">
+              <div className="max-w-4xl">
+                <div className="mb-6">
+                  <h2 className="text-sm font-semibold mb-0.5">Discover Guides</h2>
+                  <p className="text-[10px] text-muted-foreground">1,200+ guides across 6 categories</p>
+                </div>
+
+                {/* Search */}
+                <div className="mb-6">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                    <input
+                      type="text"
+                      placeholder="Search guides..."
+                      className="w-full h-9 pl-9 pr-4 rounded-lg border border-border/60 bg-background text-[11px] focus:outline-none focus:ring-2 focus:ring-[#6366f1]/20"
+                    />
+                  </div>
+                </div>
+
+                {/* Popular Guides */}
+                <div className="mb-8">
+                  <div className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+                    Popular This Week
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { title: 'Career Transition', category: 'Career & Work', users: 1203, questions: 12 },
+                      { title: 'Wedding Planning', category: 'Life Events', users: 856, questions: 15 },
+                      { title: 'Home Buying', category: 'Finance', users: 642, questions: 14 },
+                      { title: 'Starting a Business', category: 'Career & Work', users: 534, questions: 18 },
+                    ].map((guide, i) => (
+                      <div key={i} className="p-3 rounded-lg border border-border/40 bg-background hover:shadow-sm transition-shadow cursor-pointer">
+                        <h3 className="text-[11px] font-semibold mb-1">{guide.title}</h3>
+                        <div className="text-[9px] text-muted-foreground mb-2">{guide.category}</div>
+                        <div className="flex items-center gap-3 text-[9px] text-muted-foreground">
+                          <span>{guide.users.toLocaleString()} working on this</span>
+                          <span>•</span>
+                          <span>{guide.questions} questions</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Categories */}
+                <div>
+                  <div className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+                    Browse by Category
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { name: 'Career & Work', guides: 156 },
+                      { name: 'Relationships', guides: 203 },
+                      { name: 'Health & Wellness', guides: 142 },
+                      { name: 'Personal Growth', guides: 189 },
+                      { name: 'Finance', guides: 127 },
+                      { name: 'Life Events', guides: 181 },
+                    ].map((category, i) => (
+                      <div key={i} className="flex items-center justify-between px-3 py-2 hover:bg-muted/30 rounded transition-colors cursor-pointer">
+                        <span className="text-[11px] font-medium">{category.name}</span>
+                        <span className="text-[9px] text-muted-foreground">{category.guides} guides</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : activeTab === 'Journal' ? (
+            /* Journal View */
+            <div className="flex-1 p-6 overflow-y-auto">
+              <div className="max-w-3xl">
+                <div className="mb-6">
+                  <h2 className="text-sm font-semibold mb-0.5">Journal</h2>
+                  <p className="text-[10px] text-muted-foreground">Free-form notes and thoughts</p>
+                </div>
+
+                {/* New Entry */}
+                <div className="mb-6">
+                  <div className="rounded-lg border border-border/40 bg-background p-4">
+                    <input
+                      type="text"
+                      placeholder="Entry title..."
+                      className="w-full text-[13px] font-semibold mb-3 bg-transparent border-none focus:outline-none"
+                    />
+                    <textarea
+                      placeholder="Write your thoughts..."
+                      className="w-full h-32 text-[11px] bg-transparent border-none focus:outline-none resize-none"
+                    />
+                    <div className="flex items-center justify-between pt-3 border-t border-border/40">
+                      <span className="text-[9px] text-muted-foreground">Today, 3:42 PM</span>
+                      <button className="px-3 py-1.5 rounded text-[10px] font-medium bg-[#6366f1] text-white hover:bg-[#6366f1]/90">
+                        Save Entry
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent Entries */}
+                <div>
+                  <div className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+                    Recent Entries
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { title: 'Thoughts on career changes', date: 'Yesterday, 8:15 PM', preview: 'Been thinking a lot about what I really want from my next role...' },
+                      { title: 'Wedding venue visit', date: 'Nov 18, 2:30 PM', preview: 'Visited three venues today. The barn venue was stunning but...' },
+                      { title: 'Morning reflections', date: 'Nov 17, 7:00 AM', preview: 'Woke up early and took some time to think about priorities...' },
+                    ].map((entry, i) => (
+                      <div key={i} className="p-3 rounded-lg border border-border/40 bg-background hover:shadow-sm transition-shadow cursor-pointer">
+                        <h3 className="text-[11px] font-semibold mb-1">{entry.title}</h3>
+                        <p className="text-[10px] text-muted-foreground mb-2 line-clamp-2">{entry.preview}</p>
+                        <span className="text-[9px] text-muted-foreground">{entry.date}</span>
                       </div>
                     ))}
                   </div>
