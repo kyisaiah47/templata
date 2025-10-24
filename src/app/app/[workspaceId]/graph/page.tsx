@@ -57,20 +57,24 @@ export default function GraphPage() {
   };
 
   return (
-    <div className="h-full w-full">
-      <div className="max-w-7xl mx-auto p-8">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
-            <Network className="w-5 h-5 text-[#6366f1]" />
+    <div className="h-full w-full flex flex-col overflow-hidden">
+      {/* Header */}
+      <div className="border-b border-border/40 px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
+            <Network className="w-4 h-4 text-[#6366f1]" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold">Knowledge Graph</h1>
-            <p className="text-sm text-muted-foreground">
+            <h1 className="text-xl font-semibold">Knowledge Graph</h1>
+            <p className="text-xs text-muted-foreground">
               Explore connections between your active guides
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-auto p-6">
 
         {/* Content */}
         {loading ? (
@@ -86,7 +90,7 @@ export default function GraphPage() {
         )}
 
         {/* Legend and Help */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Category Legend */}
           <div className="p-4 rounded-lg bg-muted/20 border border-border/20">
             <h3 className="text-sm font-semibold mb-3">Categories</h3>
