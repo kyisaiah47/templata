@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
 
 interface JournalEntry {
   id: string;
@@ -163,7 +164,12 @@ export default function JournalPage() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden">
+    <motion.div
+      className="h-full w-full flex flex-col overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -182,29 +188,37 @@ export default function JournalPage() {
           </div>
           <div className="flex items-center gap-2">
             {entryId && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleDelete}
-                className="text-destructive hover:text-destructive"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2 }}
               >
-                <Trash2 className="w-4 h-4" />
-                Delete
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDelete}
+                  className="text-destructive hover:text-destructive"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Delete
+                </Button>
+              </motion.div>
             )}
-            <Button onClick={handleSave} disabled={saving} size="sm">
-              {saving ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="w-4 h-4" />
-                  Save
-                </>
-              )}
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button onClick={handleSave} disabled={saving} size="sm">
+                {saving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4" />
+                    Save
+                  </>
+                )}
+              </Button>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -212,37 +226,66 @@ export default function JournalPage() {
       {/* Content */}
       <div className="flex-1 overflow-auto p-6">
         {loading ? (
-          <div className="flex items-center justify-center h-full">
+          <motion.div
+            className="flex items-center justify-center h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-          </div>
+          </motion.div>
         ) : (
-          <div className="h-full flex flex-col gap-4">
+          <motion.div
+            className="h-full flex flex-col gap-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             {/* Title */}
-            <Input
-              placeholder="Title (optional)"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="text-lg font-medium"
-            />
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+            >
+              <Input
+                placeholder="Title (optional)"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="text-lg font-medium"
+              />
+            </motion.div>
 
             {/* Tags */}
-            <Input
-              placeholder="Tags (comma separated, e.g., personal, work, goals)"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              className="text-sm"
-            />
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+            >
+              <Input
+                placeholder="Tags (comma separated, e.g., personal, work, goals)"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                className="text-sm"
+              />
+            </motion.div>
 
             {/* Content */}
-            <Textarea
-              placeholder="Write your thoughts..."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="flex-1 resize-none text-base"
-            />
-          </div>
+            <motion.div
+              className="flex-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
+            >
+              <Textarea
+                placeholder="Write your thoughts..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="flex-1 resize-none text-base h-full"
+              />
+            </motion.div>
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

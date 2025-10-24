@@ -45,7 +45,12 @@ export default function SettingsPage() {
   }, [searchParams]);
 
   return (
-    <div className="h-full flex flex-col bg-background">
+    <motion.div
+      className="h-full flex flex-col bg-background"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <AnimatePresence mode="wait">
@@ -323,6 +328,6 @@ export default function SettingsPage() {
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

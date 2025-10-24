@@ -2,6 +2,7 @@
 
 import { useParams, useSearchParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { ListTodo, Loader2 } from 'lucide-react';
 import { KanbanBoard } from '@/components/app/tasks/KanbanBoard';
 import { Task } from '@/types/workspace';
@@ -260,15 +261,23 @@ export default function TasksPage() {
 
   if (isLoading) {
     return (
-      <div className="h-full w-full flex items-center justify-center">
+      <motion.div
+        className="h-full w-full flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
+      </motion.div>
     );
   }
 
   if (error) {
     return (
-      <div className="h-full w-full p-8">
+      <motion.div
+        className="h-full w-full p-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center">
@@ -280,12 +289,17 @@ export default function TasksPage() {
             Failed to load tasks. Please try again later.
           </p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden">
+    <motion.div
+      className="h-full w-full flex flex-col overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <div className="flex items-center gap-3">
@@ -310,6 +324,6 @@ export default function TasksPage() {
           workspaceId={workspaceId}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }

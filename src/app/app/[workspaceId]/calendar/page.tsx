@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { Calendar as CalendarIcon, Plus, Loader2, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MonthView } from '@/components/app/calendar/MonthView';
@@ -115,7 +116,12 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden">
+    <motion.div
+      className="h-full w-full flex flex-col overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -239,6 +245,6 @@ export default function CalendarPage() {
         selectedDate={selectedDate}
         onEventCreated={handleEventCreated}
       />
-    </div>
+    </motion.div>
   );
 }

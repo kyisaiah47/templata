@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { TrendingUp, Loader2, Activity, Calendar, CheckCircle2, Clock } from 'lucide-react';
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, isWithinInterval, parseISO, startOfMonth, endOfMonth, subMonths } from 'date-fns';
+import { motion } from 'framer-motion';
 
 interface UserGuide {
   id: string;
@@ -164,7 +165,12 @@ export default function AnalyticsPage() {
   const maxWeeklyActivity = Math.max(...weeklyPattern.map(d => d.count), 1);
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden">
+    <motion.div
+      className="h-full w-full flex flex-col overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <div className="flex items-center gap-3">
@@ -185,20 +191,53 @@ export default function AnalyticsPage() {
       {/* Content */}
       <div className="flex-1 overflow-auto p-6">
         {loading ? (
-          <div className="flex items-center justify-center h-96">
+          <motion.div
+            className="flex items-center justify-center h-96"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Loader2 className="w-8 h-8 animate-spin text-[#6366f1]" />
-          </div>
+          </motion.div>
         ) : selectedGuideIds.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
+          <motion.div
+            className="flex flex-col items-center justify-center h-96 text-muted-foreground"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
             <p className="text-lg font-medium">No notes selected</p>
             <p className="text-sm">Select notes from the sidebar to view analytics</p>
-          </div>
+          </motion.div>
         ) : (
-          <div className="space-y-4">
+          <motion.div
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="rounded-lg border border-border/40 bg-background p-4">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.08 }
+                }
+              }}
+              initial="hidden"
+              animate="show"
+            >
+              <motion.div
+                className="rounded-lg border border-border/40 bg-background p-4"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   <Activity className="w-5 h-5 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">Active Notes</span>
@@ -207,9 +246,16 @@ export default function AnalyticsPage() {
                 <div className="text-xs text-muted-foreground mt-1">
                   {avgProgress}% avg progress
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-lg border border-border/40 bg-background p-4">
+              <motion.div
+                className="rounded-lg border border-border/40 bg-background p-4"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle2 className="w-5 h-5 text-green-500" />
                   <span className="text-sm text-muted-foreground">Completion Rate</span>
@@ -218,9 +264,16 @@ export default function AnalyticsPage() {
                 <div className="text-xs text-muted-foreground mt-1">
                   {completedTasks}/{totalTasks} tasks done
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-lg border border-border/40 bg-background p-4">
+              <motion.div
+                className="rounded-lg border border-border/40 bg-background p-4"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   <Clock className="w-5 h-5 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">Total Tasks</span>
@@ -229,9 +282,16 @@ export default function AnalyticsPage() {
                 <div className="text-xs text-muted-foreground mt-1">
                   {tasks.filter(t => t.status !== 'completed').length} pending
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-lg border border-border/40 bg-background p-4">
+              <motion.div
+                className="rounded-lg border border-border/40 bg-background p-4"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">Events</span>
@@ -240,11 +300,16 @@ export default function AnalyticsPage() {
                 <div className="text-xs text-muted-foreground mt-1">
                   Total scheduled
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Monthly Trends - Last 6 Months */}
-            <div className="rounded-lg border border-border/40 bg-background p-4">
+            <motion.div
+              className="rounded-lg border border-border/40 bg-background p-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+            >
               <h3 className="text-sm font-semibold mb-4">Monthly Trends (Last 6 Months)</h3>
               <div className="space-y-3">
                 {monthlyTrends.map((month) => (
@@ -301,10 +366,15 @@ export default function AnalyticsPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Weekly Activity Pattern */}
-            <div className="rounded-lg border border-border/40 bg-background p-4">
+            <motion.div
+              className="rounded-lg border border-border/40 bg-background p-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.5 }}
+            >
               <h3 className="text-sm font-semibold mb-4">Activity by Day of Week</h3>
               <div className="space-y-2">
                 {weeklyPattern.map((day) => (
@@ -323,10 +393,15 @@ export default function AnalyticsPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Note Statistics */}
-            <div className="rounded-lg border border-border/40 bg-background p-4">
+            <motion.div
+              className="rounded-lg border border-border/40 bg-background p-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+            >
               <h3 className="text-sm font-semibold mb-4">Note Statistics</h3>
               <div className="space-y-3">
                 {userGuides.map((guide) => {
@@ -370,10 +445,10 @@ export default function AnalyticsPage() {
                   </div>
                 )}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

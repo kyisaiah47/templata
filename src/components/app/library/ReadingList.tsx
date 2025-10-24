@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ReadingCard } from './ReadingCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface Reading {
   id: string;
@@ -101,11 +102,16 @@ export function ReadingList({ workspaceId }: ReadingListProps) {
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
+      <motion.div
+        className="space-y-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         {[...Array(5)].map((_, i) => (
           <Skeleton key={i} className="h-32 w-full" />
         ))}
-      </div>
+      </motion.div>
     );
   }
 
@@ -113,27 +119,43 @@ export function ReadingList({ workspaceId }: ReadingListProps) {
 
   if (readings.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+      <motion.div
+        className="flex flex-col items-center justify-center h-full py-12 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         <BookOpen className="w-12 h-12 text-muted-foreground mb-4" />
         <h3 className="text-lg font-semibold mb-2">No readings available</h3>
         <p className="text-sm text-muted-foreground">
           Start by adding guides to your workspace to access curated readings.
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <div className="h-full overflow-y-auto">
       {selectedReading ? (
-        <div className="max-w-4xl mx-auto p-8">
-          <div className="mb-6">
+        <motion.div
+          key={selectedReading.id}
+          className="max-w-4xl mx-auto p-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             <div className="text-xs text-muted-foreground mb-2">{selectedReading.guide_name}</div>
             <h1 className="text-3xl font-bold mb-2">{selectedReading.title}</h1>
             <p className="text-sm text-muted-foreground">{selectedReading.description}</p>
             <div className="flex items-center gap-3 mt-4">
               <span className="text-xs text-muted-foreground">{selectedReading.reading_time} min read</span>
-              <button
+              <motion.button
                 onClick={() => toggleReadMutation.mutate({
                   id: selectedReading.id,
                   isRead: !progressMap.has(selectedReading.id)
@@ -143,23 +165,35 @@ export function ReadingList({ workspaceId }: ReadingListProps) {
                     ? 'bg-green-500/10 text-green-600 hover:bg-green-500/20'
                     : 'bg-muted hover:bg-muted/80'
                 }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {progressMap.has(selectedReading.id) ? 'Mark as Unread' : 'Mark as Read'}
-              </button>
+              </motion.button>
             </div>
-          </div>
-          <div className="prose prose-sm max-w-none">
+          </motion.div>
+          <motion.div
+            className="prose prose-sm max-w-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
             <div dangerouslySetInnerHTML={{ __html: selectedReading.content }} />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-full text-center">
+        <motion.div
+          className="flex flex-col items-center justify-center h-full text-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
           <BookOpen className="w-12 h-12 text-muted-foreground mb-4" />
           <h3 className="text-lg font-semibold mb-2">Select a reading</h3>
           <p className="text-sm text-muted-foreground">
             Choose a reading from the sidebar to view its content
           </p>
-        </div>
+        </motion.div>
       )}
     </div>
   );

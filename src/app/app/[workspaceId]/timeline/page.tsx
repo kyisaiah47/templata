@@ -6,6 +6,7 @@ import { BarChart3, Loader2 } from 'lucide-react';
 import { GanttView } from '@/components/app/timeline/GanttView';
 import { CalendarEvent, Task } from '@/types/workspace';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
+import { motion } from 'framer-motion';
 
 export default function TimelinePage() {
   const params = useParams();
@@ -59,7 +60,12 @@ export default function TimelinePage() {
   }, [fetchData]);
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden">
+    <motion.div
+      className="h-full w-full flex flex-col overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <div className="flex items-center gap-3">
@@ -76,17 +82,33 @@ export default function TimelinePage() {
       {/* Content */}
       <div className="flex-1 overflow-auto p-6">
         {loading ? (
-          <div className="flex items-center justify-center h-96">
+          <motion.div
+            className="flex items-center justify-center h-96"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Loader2 className="w-8 h-8 animate-spin text-[#6366f1]" />
-          </div>
+          </motion.div>
         ) : error ? (
-          <div className="flex items-center justify-center h-96 text-destructive">
+          <motion.div
+            className="flex items-center justify-center h-96 text-destructive"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <p>{error}</p>
-          </div>
+          </motion.div>
         ) : (
-          <GanttView events={events} tasks={tasks} />
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <GanttView events={events} tasks={tasks} />
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Network, Loader2 } from 'lucide-react';
 import { GuideGraph } from '@/components/app/graph/GuideGraph';
+import { motion } from 'framer-motion';
 
 interface UserGuide {
   id: string;
@@ -66,7 +67,12 @@ export default function GraphPage() {
   };
 
   return (
-    <div className="h-full w-full flex flex-col overflow-hidden">
+    <motion.div
+      className="h-full w-full flex flex-col overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="border-b border-border/40 px-6 py-4">
         <div className="flex items-center gap-3">
@@ -87,19 +93,40 @@ export default function GraphPage() {
 
         {/* Content */}
         {loading ? (
-          <div className="flex items-center justify-center h-96 rounded-lg border border-border/40 bg-background">
+          <motion.div
+            className="flex items-center justify-center h-96 rounded-lg border border-border/40 bg-background"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Loader2 className="w-8 h-8 animate-spin text-[#6366f1]" />
-          </div>
+          </motion.div>
         ) : error ? (
-          <div className="flex items-center justify-center h-96 text-destructive rounded-lg border border-border/40 bg-background">
+          <motion.div
+            className="flex items-center justify-center h-96 text-destructive rounded-lg border border-border/40 bg-background"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <p>{error}</p>
-          </div>
+          </motion.div>
         ) : (
-          <GuideGraph userGuides={userGuides} onGuideClick={handleGuideClick} />
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <GuideGraph userGuides={userGuides} onGuideClick={handleGuideClick} />
+          </motion.div>
         )}
 
         {/* Legend and Help */}
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <motion.div
+          className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
           {/* Category Legend */}
           <div className="p-4 rounded-lg bg-muted/20 border border-border/20">
             <h3 className="text-sm font-semibold mb-3">Categories</h3>
@@ -143,10 +170,15 @@ export default function GraphPage() {
               <li>• Lines show relationships between guides</li>
             </ul>
           </div>
-        </div>
+        </motion.div>
 
         {/* Additional Info */}
-        <div className="mt-4 p-4 rounded-lg bg-[#6366f1]/5 border border-[#6366f1]/20">
+        <motion.div
+          className="mt-4 p-4 rounded-lg bg-[#6366f1]/5 border border-[#6366f1]/20"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
           <h3 className="text-sm font-semibold mb-2 text-[#6366f1]">Understanding Connections</h3>
           <div className="text-xs text-muted-foreground space-y-1">
             <p>
@@ -159,8 +191,8 @@ export default function GraphPage() {
               The graph helps you discover synergies between your guides and identify areas where your learning connects.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
