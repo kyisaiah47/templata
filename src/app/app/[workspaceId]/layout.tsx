@@ -392,27 +392,25 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
   // Handle calendar note toggle
   const handleCalendarNoteToggle = useCallback((noteId: string) => {
-    setSelectedCalendarNoteIds(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(noteId)) {
-        newSet.delete(noteId);
-      } else {
-        newSet.add(noteId);
-      }
+    const newSet = new Set(selectedCalendarNoteIds);
+    if (newSet.has(noteId)) {
+      newSet.delete(noteId);
+    } else {
+      newSet.add(noteId);
+    }
 
-      // Update URL with selected note IDs
-      const params = new URLSearchParams(searchParams.toString());
-      if (newSet.size > 0) {
-        params.set('calendarNotes', Array.from(newSet).join(','));
-      } else {
-        params.delete('calendarNotes');
-      }
-      const queryString = params.toString();
-      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+    setSelectedCalendarNoteIds(newSet);
 
-      return newSet;
-    });
-  }, [searchParams, router]);
+    // Update URL with selected note IDs
+    const params = new URLSearchParams(searchParams.toString());
+    if (newSet.size > 0) {
+      params.set('calendarNotes', Array.from(newSet).join(','));
+    } else {
+      params.delete('calendarNotes');
+    }
+    const queryString = params.toString();
+    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+  }, [selectedCalendarNoteIds, searchParams, router]);
 
   if (loading || !workspace) {
     return (
