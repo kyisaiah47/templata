@@ -29,15 +29,14 @@ export function EventList({ events, tasks, onEventClick }: EventListProps) {
   const upcomingItems: EventItem[] = [
     ...events
       .filter(event => {
-        const eventDate = new Date(event.start_time);
+        const eventDate = new Date(event.date);
         return eventDate >= now && eventDate <= nextWeek;
       })
       .map(event => ({
         type: 'event' as const,
         id: event.id,
         title: event.title,
-        date: new Date(event.start_time),
-        time: format(new Date(event.start_time), 'h:mm a'),
+        date: new Date(event.date),
         description: event.description,
         data: event,
       })),
