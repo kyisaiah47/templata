@@ -1,19 +1,22 @@
 'use client';
 
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { TemplatesView } from '@/app/app/views/TemplatesView';
+import { GettingStartedWizard } from '@/components/app/notes/GettingStartedWizard';
 import { Loader2, FileText } from 'lucide-react';
 
 export default function NotesPage() {
   const params = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const workspaceId = params.workspaceId as string;
   const guideId = searchParams.get('id');
   const pageId = searchParams.get('pageId');
 
   const [userGuideId, setUserGuideId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [pageName, setPageName] = useState<string>('');
 
   // Fetch or create user_guide instance for this guide
   useEffect(() => {
@@ -65,15 +68,55 @@ export default function NotesPage() {
     );
   }
 
+  // Fetch page data if pageId is present
+  useEffect(() => {
+    async function fetchPage() {
+      if (!pageId) return;
+
+      try {
+        const response = await fetch(`/api/workspaces/${workspaceId}/pages`);
+        if (!response.ok) return;
+        const data = await response.json();
+        const page = data.pages.find((p: any) => p.id === pageId);
+        if (page) {
+          setPageName(page.name);
+        }
+      } catch (error) {
+        console.error('Error fetching page:', error);
+      }
+    }
+
+    fetchPage();
+  }, [pageId, workspaceId]);
+
+  const handleCreateBlank = () => {
+    // TODO: Create a new blank page
+    console.log('Create blank note');
+  };
+
+  const handleChooseTemplate = () => {
+    // Navigate to discover view
+    router.push(`/app/${workspaceId}/discover`);
+  };
+
   // If viewing a page (not a guide template)
   if (pageId && !guideId) {
+    // Show wizard for "Getting Started" page
+    if (pageName === 'Getting Started') {
+      return (
+        <GettingStartedWizard
+          workspaceId={workspaceId}
+          onCreateBlank={handleCreateBlank}
+          onChooseTemplate={handleChooseTemplate}
+        />
+      );
+    }
+
+    // Show regular page editor for other pages
     return (
       <div className="h-full w-full p-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-4">Page Content</h1>
-          <p className="text-muted-foreground">
-            Page ID: {pageId}
-          </p>
+          <h1 className="text-3xl font-bold mb-4">{pageName || 'Untitled'}</h1>
           <p className="text-sm text-muted-foreground mt-4">
             This is where the page editor will go - showing content for the selected page from the sidebar.
           </p>
