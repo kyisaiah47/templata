@@ -44,8 +44,17 @@ export function TimelineBar({
     (guide.estimatedEndDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
   );
 
+  // Convert kebab-case to PascalCase (e.g., "graduation-cap" -> "GraduationCap")
+  const toPascalCase = (str: string) => {
+    return str
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('');
+  };
+
   // Get the Lucide icon component
-  const IconComponent = guide.icon && (LucideIcons as any)[guide.icon];
+  const iconName = guide.icon ? toPascalCase(guide.icon) : null;
+  const IconComponent = iconName && (LucideIcons as any)[iconName];
 
   return (
     <motion.div
@@ -57,9 +66,7 @@ export function TimelineBar({
       <div className="absolute left-0 top-0 flex items-center gap-2 w-48 pr-4">
         {IconComponent ? (
           <IconComponent className="w-5 h-5 flex-shrink-0" />
-        ) : (
-          <span className="text-xl">{guide.icon || '📚'}</span>
-        )}
+        ) : null}
         <div className="flex-1 min-w-0">
           <div className="text-sm font-medium truncate">{guide.name}</div>
           <div className="text-xs text-muted-foreground truncate">
@@ -98,10 +105,8 @@ export function TimelineBar({
           {/* Content */}
           <div className="relative h-full flex items-center justify-between px-3">
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              {IconComponent ? (
+              {IconComponent && (
                 <IconComponent className="w-4 h-4 flex-shrink-0" />
-              ) : (
-                <span className="text-lg">{guide.icon || '📚'}</span>
               )}
               <span className="text-xs font-medium truncate">
                 {guide.name}
