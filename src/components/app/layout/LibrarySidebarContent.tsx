@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { BookOpen, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface Reading {
   id: string;
@@ -95,25 +96,52 @@ export function LibrarySidebarContent({ selectedReadingId, onReadingClick }: Lib
       {/* Readings List */}
       <div className="flex-1 overflow-y-auto px-2 py-2">
         {loading ? (
-          <div className="flex items-center justify-center py-8">
+          <motion.div
+            className="flex items-center justify-center py-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-          </div>
+          </motion.div>
         ) : filteredReadings.length === 0 ? (
-          <div className="text-center py-8 px-2">
+          <motion.div
+            className="text-center py-8 px-2"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <p className="text-[11px] text-muted-foreground">
               {searchQuery ? 'No readings found' : 'No readings available'}
             </p>
-          </div>
+          </motion.div>
         ) : (
-          <div className="space-y-4">
+          <motion.div
+            className="space-y-4"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.05 }
+              }
+            }}
+            initial="hidden"
+            animate="show"
+          >
             {Object.entries(readingsByGuide).map(([guideId, { name, readings: guideReadings }]) => (
-              <div key={guideId}>
+              <motion.div
+                key={guideId}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  show: { opacity: 1, y: 0 }
+                }}
+              >
                 <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 px-2">
                   {name}
                 </h3>
                 <div className="space-y-0.5">
                   {guideReadings.map((reading) => (
-                    <button
+                    <motion.button
                       key={reading.id}
                       onClick={() => onReadingClick(reading.id)}
                       className={cn(
@@ -122,18 +150,20 @@ export function LibrarySidebarContent({ selectedReadingId, onReadingClick }: Lib
                           ? 'bg-[#6366f1]/10 text-[#6366f1]'
                           : 'hover:bg-muted/50 text-foreground'
                       )}
+                      whileHover={{ x: 4, backgroundColor: 'rgba(0,0,0,0.02)' }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       <BookOpen className="h-3.5 w-3.5 flex-shrink-0" />
                       <span className="flex-1 truncate">{reading.title}</span>
                       {progressMap.has(reading.id) && (
                         <div className="h-1.5 w-1.5 rounded-full bg-green-500 flex-shrink-0" />
                       )}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { FileText, Plus, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface UserGuide {
   id: string;
@@ -75,19 +76,40 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
       {/* Notes List */}
       <div className="flex-1 overflow-y-auto px-2 py-2">
         {loading ? (
-          <div className="flex items-center justify-center py-8">
+          <motion.div
+            className="flex items-center justify-center py-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-          </div>
+          </motion.div>
         ) : filteredNotes.length === 0 ? (
-          <div className="text-center py-8 px-2">
+          <motion.div
+            className="text-center py-8 px-2"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <p className="text-[11px] text-muted-foreground">
               {searchQuery ? 'No notes found' : 'No notes yet'}
             </p>
-          </div>
+          </motion.div>
         ) : (
-          <div className="space-y-0.5">
+          <motion.div
+            className="space-y-0.5"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.03 }
+              }
+            }}
+            initial="hidden"
+            animate="show"
+          >
             {filteredNotes.map((note) => (
-              <button
+              <motion.button
                 key={note.id}
                 onClick={() => onNoteClick(note.guide_id)}
                 className={cn(
@@ -96,6 +118,12 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
                     ? "bg-[#6366f1]/10 text-[#6366f1]"
                     : "hover:bg-muted/50 text-foreground"
                 )}
+                variants={{
+                  hidden: { opacity: 0, x: -10 },
+                  show: { opacity: 1, x: 0 }
+                }}
+                whileHover={{ x: 4, backgroundColor: 'rgba(0,0,0,0.02)' }}
+                whileTap={{ scale: 0.98 }}
               >
                 <FileText className="h-3.5 w-3.5 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
@@ -114,21 +142,23 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
                     </div>
                   )}
                 </div>
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
 
       {/* New Note Button */}
       <div className="p-2 border-t border-border/40">
-        <button
+        <motion.button
           onClick={onNewNote}
           className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded transition-colors"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
           <Plus className="h-3.5 w-3.5" />
           <span className="text-[11px] font-medium">New Note</span>
-        </button>
+        </motion.button>
       </div>
     </div>
   );
