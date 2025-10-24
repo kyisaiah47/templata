@@ -34,6 +34,8 @@ export function TabBar({ tabs, activeTabId, onTabClick, onTabClose, sidebarOpen,
       {/* Tabs */}
       {tabs.map((tab) => {
         const isActive = tab.id === activeTabId;
+        const IconComponent = tab.icon;
+        const isIconComponent = typeof IconComponent === 'function';
 
         return (
           <div
@@ -46,7 +48,13 @@ export function TabBar({ tabs, activeTabId, onTabClick, onTabClose, sidebarOpen,
             )}
             onClick={() => onTabClick(tab.id)}
           >
-            {tab.icon && <span className="text-sm">{tab.icon}</span>}
+            {tab.icon && (
+              isIconComponent ? (
+                <IconComponent className="w-3.5 h-3.5 text-muted-foreground" />
+              ) : (
+                <span className="text-sm">{tab.icon}</span>
+              )
+            )}
             <span className="text-xs font-medium truncate flex-1">
               {tab.label}
             </span>

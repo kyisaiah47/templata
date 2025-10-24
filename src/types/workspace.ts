@@ -109,7 +109,7 @@ export interface Tab {
   id: string;
   type: TabType;
   label: string;
-  icon?: string;
+  icon?: any; // Can be string (emoji) or Lucide icon component
   pageId?: string;
   guideId?: string;
 }

@@ -6,7 +6,22 @@ import { IconBar } from '@/components/app/layout/IconBar';
 import { Sidebar } from '@/components/app/layout/Sidebar';
 import { TabBar } from '@/components/app/layout/TabBar';
 import { Tab, TabType, Workspace, PageWithSubPages } from '@/types/workspace';
-import { Loader2 } from 'lucide-react';
+import {
+  Loader2,
+  LayoutDashboard,
+  FileText,
+  Compass,
+  Library,
+  Calendar,
+  ListTodo,
+  BarChart3,
+  CalendarDays,
+  PenLine,
+  Network,
+  TrendingUp,
+  Archive,
+  Settings
+} from 'lucide-react';
 
 interface WorkspaceLayoutProps {
   children: React.ReactNode;
@@ -220,20 +235,20 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       settings: 'Settings',
     };
 
-    const viewIcons: Record<TabType, string> = {
-      overview: '📊',
-      guide: '📄',
-      discover: '🧭',
-      library: '📚',
-      calendar: '📅',
-      tasks: '✅',
-      timeline: '📈',
-      daily: '📆',
-      journal: '✍️',
-      graph: '🕸️',
-      analytics: '📊',
-      archive: '📦',
-      settings: '⚙️',
+    const viewIcons: Record<TabType, any> = {
+      overview: LayoutDashboard,
+      guide: FileText,
+      discover: Compass,
+      library: Library,
+      calendar: Calendar,
+      tasks: ListTodo,
+      timeline: BarChart3,
+      daily: CalendarDays,
+      journal: PenLine,
+      graph: Network,
+      analytics: TrendingUp,
+      archive: Archive,
+      settings: Settings,
     };
 
     const newTab: Tab = {
