@@ -23,7 +23,7 @@ interface Guide {
   tags: string[];
 }
 
-const categoryIcons: Record<string, any> = {
+const categoryIconComponents: Record<string, any> = {
   'career-work': Briefcase,
   'relationships': Heart,
   'health-wellness': Activity,
@@ -119,7 +119,7 @@ export default function DiscoverPage() {
           <nav className="space-y-0.5">
             {categories.map((category) => {
               const colors = categoryColors[category.id] || categoryColors['career-work'];
-              const Icon = categoryIcons[category.id] || Briefcase;
+              const Icon = categoryIconComponents[category.id] || Briefcase;
               const isSelected = selectedCategory === category.id;
 
               return (
@@ -156,7 +156,7 @@ export default function DiscoverPage() {
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-2">
                   {(() => {
-                    const Icon = categoryIcons[selectedCategoryData.id] || Briefcase;
+                    const Icon = categoryIconComponents[selectedCategoryData.id] || Briefcase;
                     const colors = categoryColors[selectedCategoryData.id] || categoryColors['career-work'];
                     return <Icon className={cn("h-4 w-4", colors.icon)} />;
                   })()}
@@ -194,7 +194,7 @@ export default function DiscoverPage() {
                 ) : (
                   <div className="space-y-0">
                     {guides.map((guide) => {
-                      const Icon = categoryIcons[selectedCategoryData.id] || Briefcase;
+                      const Icon = categoryIconComponents[selectedCategoryData.id] || Briefcase;
                       return (
                         <button
                           key={guide.id}
