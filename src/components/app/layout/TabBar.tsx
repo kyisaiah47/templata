@@ -81,8 +81,14 @@ export function TabBar({ tabs, activeTabId, onTabClick, onTabClose, sidebarOpen,
             )}
             onClick={() => onTabClick(tab.id)}
           >
-            <IconComponent className="w-3.5 h-3.5 text-muted-foreground" />
-            <span className="text-xs font-medium truncate flex-1">
+            <IconComponent className={cn(
+              "w-3.5 h-3.5 transition-colors",
+              isActive ? "text-[#6366f1]" : "text-muted-foreground"
+            )} />
+            <span className={cn(
+              "text-xs font-medium truncate flex-1 transition-colors",
+              isActive ? "text-foreground" : "text-muted-foreground"
+            )}>
               {tab.label}
             </span>
             <button
