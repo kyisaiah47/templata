@@ -80,7 +80,7 @@ export function KanbanBoard({
       columns={columns}
       data={kanbanItems}
       onDataChange={handleDataChange}
-      className="gap-4 p-4"
+      className="gap-3 p-6"
     >
       {(column) => {
         const columnTasks = tasks.filter((task) => task.status === column.id);

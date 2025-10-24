@@ -74,12 +74,12 @@ export function KanbanColumn({
   };
 
   return (
-    <div className="flex flex-col h-full min-w-[300px] max-w-[350px]">
+    <div className="flex flex-col h-full flex-1">
       {/* Column Header */}
-      <div className={cn('flex items-center justify-between p-3 rounded-t-lg border-b', colors.bg, colors.border)}>
+      <div className="flex items-center justify-between px-3 py-2 border-b border-border/40">
         <div className="flex items-center gap-2">
-          <h2 className={cn('font-semibold text-sm', colors.text)}>{title}</h2>
-          <span className="text-xs text-muted-foreground bg-background/50 px-2 py-0.5 rounded-full">
+          <h2 className="font-semibold text-sm">{title}</h2>
+          <span className="text-xs text-muted-foreground">
             {tasks.length}
           </span>
         </div>
@@ -94,7 +94,7 @@ export function KanbanColumn({
       </div>
 
       {/* Column Content */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-muted/20 rounded-b-lg border-x border-b">
+      <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {/* Create Form */}
         {showForm && (
           <TaskCreateForm
