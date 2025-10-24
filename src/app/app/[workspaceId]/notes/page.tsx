@@ -2,6 +2,7 @@
 
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { TemplatesView } from '@/app/app/views/TemplatesView';
 import { GettingStartedWizard } from '@/components/app/notes/GettingStartedWizard';
 import { NotesListView } from '@/components/app/notes/NotesListView';
@@ -93,9 +94,14 @@ export default function NotesPage() {
 
   if (loading) {
     return (
-      <div className="h-full w-full flex items-center justify-center">
+      <motion.div
+        className="h-full w-full flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
         <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-      </div>
+      </motion.div>
     );
   }
 
@@ -118,14 +124,32 @@ export default function NotesPage() {
 
     // Show regular page editor for other pages
     return (
-      <div className="h-full w-full p-8">
+      <motion.div
+        className="h-full w-full p-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-4">{pageName || 'Untitled'}</h1>
-          <p className="text-sm text-muted-foreground mt-4">
+          <motion.h1
+            className="text-3xl font-bold mb-4"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            {pageName || 'Untitled'}
+          </motion.h1>
+          <motion.p
+            className="text-sm text-muted-foreground mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             This is where the page editor will go - showing content for the selected page from the sidebar.
-          </p>
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 

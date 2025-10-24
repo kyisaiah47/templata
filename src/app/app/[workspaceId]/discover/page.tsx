@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, Heart, Activity, Sprout, DollarSign, Calendar, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -103,12 +104,23 @@ export default function DiscoverPage() {
   const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
 
   return (
-    <div className="h-full overflow-y-auto">
+    <motion.div
+      className="h-full overflow-y-auto"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="p-6">
         {selectedCategoryData ? (
           <>
             {/* Header */}
-            <div className="mb-6">
+            <motion.div
+              className="mb-6"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {(() => {
                   const Icon = categoryIconComponents[selectedCategoryData.id] || Briefcase;
@@ -122,17 +134,23 @@ export default function DiscoverPage() {
               </p>
 
               {/* Search */}
-              <div className="relative max-w-xs">
+              <motion.div
+                className="relative max-w-xs"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+              >
                 <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/40" />
-                <input
+                <motion.input
                   type="text"
                   placeholder="Search guides..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full h-8 pl-8 pr-3 bg-transparent border-b border-border/60 focus:border-foreground/40 outline-none text-[13px] transition-colors"
+                  whileFocus={{ scale: 1.02 }}
                 />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Guides List */}
             <div>
@@ -143,36 +161,63 @@ export default function DiscoverPage() {
               </div>
 
               {loadingGuides ? (
-                <div className="text-center py-12 text-muted-foreground text-sm">
+                <motion.div
+                  className="text-center py-12 text-muted-foreground text-sm"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
                   Loading guides...
-                </div>
+                </motion.div>
               ) : (
-                <div className="space-y-0">
+                <motion.div
+                  className="space-y-0"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.03
+                      }
+                    }
+                  }}
+                  initial="hidden"
+                  animate="show"
+                >
                   {guides.map((guide) => {
                     const Icon = categoryIconComponents[selectedCategoryData.id] || Briefcase;
                     return (
-                      <button
+                      <motion.button
                         key={guide.id}
                         onClick={() => handleGuideClick(guide.id)}
                         className="flex items-center gap-3 py-2.5 border-b border-border/40 hover:bg-muted/20 -mx-3 px-3 transition-colors group w-full text-left"
+                        variants={{
+                          hidden: { opacity: 0, x: -10 },
+                          show: { opacity: 1, x: 0 }
+                        }}
+                        whileHover={{ x: 4, backgroundColor: 'rgba(0,0,0,0.02)' }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         <Icon className="h-3.5 w-3.5 text-muted-foreground/60" />
                         <span className="text-[13px] font-medium group-hover:text-primary transition-colors">
                           {guide.name}
                         </span>
-                      </button>
+                      </motion.button>
                     );
                   })}
-                </div>
+                </motion.div>
               )}
             </div>
           </>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">
+          <motion.div
+            className="text-center py-12 text-muted-foreground"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             Select a category to view guides
-          </div>
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
