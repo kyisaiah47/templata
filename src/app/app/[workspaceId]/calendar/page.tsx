@@ -27,10 +27,17 @@ export default function CalendarPage() {
   // Get selected note IDs from URL
   const selectedNoteIds = searchParams.get('calendarNotes')?.split(',').filter(Boolean) || [];
 
-  // Filter events by selected notes
+  // Filter events by selected notes - only show events if notes are selected
   const events = selectedNoteIds.length > 0
     ? allEvents.filter(event => event.user_guide_id && selectedNoteIds.includes(event.user_guide_id))
-    : allEvents;
+    : [];
+
+  console.log('🔍 Calendar Debug:', {
+    selectedNoteIds,
+    allEventsCount: allEvents.length,
+    filteredEventsCount: events.length,
+    sampleEventUserGuideId: allEvents[0]?.user_guide_id
+  });
 
   // Fetch calendar events
   const fetchEvents = useCallback(async () => {
@@ -179,40 +186,48 @@ export default function CalendarPage() {
 
               {/* Selected Event Details */}
               {selectedEvent && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                <div className="rounded-lg border border-border/40 bg-background overflow-hidden">
+                  <div className="px-4 py-3 border-b border-border/40 flex items-center justify-between">
                     <h3 className="text-sm font-semibold">Event Details</h3>
                     <button
                       onClick={() => setSelectedEvent(null)}
-                      className="text-muted-foreground hover:text-foreground text-sm"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      ✕
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
                     </button>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="p-4 space-y-4">
                     <div>
-                      <h4 className="font-medium mb-1">{selectedEvent.title}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {format(new Date(selectedEvent.date), 'EEEE, MMMM d, yyyy')}
-                      </p>
+                      <h4 className="text-base font-semibold mb-2">{selectedEvent.title}</h4>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <CalendarIcon className="w-4 h-4" />
+                        <span>{format(new Date(selectedEvent.date), 'EEEE, MMMM d, yyyy')}</span>
+                      </div>
                     </div>
 
                     {selectedEvent.description && (
-                      <p className="text-sm text-muted-foreground">
-                        {selectedEvent.description}
-                      </p>
+                      <div>
+                        <p className="text-sm text-foreground/80 leading-relaxed">
+                          {selectedEvent.description}
+                        </p>
+                      </div>
                     )}
 
-                    <button
-                      onClick={() => {
-                        handleDeleteEvent(selectedEvent.id);
-                        setSelectedEvent(null);
-                      }}
-                      className="text-xs text-red-600 hover:text-red-700"
-                    >
-                      Delete Event
-                    </button>
+                    <div className="pt-2">
+                      <button
+                        onClick={() => {
+                          handleDeleteEvent(selectedEvent.id);
+                          setSelectedEvent(null);
+                        }}
+                        className="text-sm text-destructive hover:text-destructive/80 transition-colors flex items-center gap-2"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Delete Event
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

@@ -92,7 +92,10 @@ export function CalendarSidebarContent({ selectedNoteIds, onNoteToggle }: Calend
               return (
                 <button
                   key={note.id}
-                  onClick={() => onNoteToggle(note.id)}
+                  onClick={() => {
+                    console.log('📝 Toggling note:', note.id);
+                    onNoteToggle(note.id);
+                  }}
                   className={cn(
                     "w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm transition-colors group hover:bg-muted/50"
                   )}

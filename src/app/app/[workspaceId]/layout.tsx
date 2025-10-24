@@ -199,6 +199,8 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       if (calendarNotesParam) {
         const noteIds = new Set(calendarNotesParam.split(','));
         setSelectedCalendarNoteIds(noteIds);
+      } else {
+        setSelectedCalendarNoteIds(new Set());
       }
     }
   }, [searchParams, activeView]);
@@ -392,12 +394,17 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
   // Handle calendar note toggle
   const handleCalendarNoteToggle = useCallback((noteId: string) => {
+    console.log('🎯 Handler called with noteId:', noteId);
+    console.log('🎯 Current selected IDs:', selectedCalendarNoteIds);
+
     const newSet = new Set(selectedCalendarNoteIds);
     if (newSet.has(noteId)) {
       newSet.delete(noteId);
     } else {
       newSet.add(noteId);
     }
+
+    console.log('🎯 New set:', Array.from(newSet));
 
     setSelectedCalendarNoteIds(newSet);
 
@@ -409,6 +416,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       params.delete('calendarNotes');
     }
     const queryString = params.toString();
+    console.log('🎯 New URL query:', queryString);
     router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
   }, [selectedCalendarNoteIds, searchParams, router]);
 
