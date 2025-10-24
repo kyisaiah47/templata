@@ -22,11 +22,13 @@ interface TaskCardProps {
 
 export function TaskCard({ task, onDelete, onEdit }: TaskCardProps) {
   const handleDelete = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onDelete(task.id);
   };
 
   const handleEdit = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onEdit();
   };
@@ -41,6 +43,8 @@ export function TaskCard({ task, onDelete, onEdit }: TaskCardProps) {
             variant="ghost"
             size="icon-sm"
             onClick={handleEdit}
+            onPointerDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
             className="shrink-0 h-6 w-6"
           >
             <Pencil className="h-3.5 w-3.5" />
@@ -49,6 +53,8 @@ export function TaskCard({ task, onDelete, onEdit }: TaskCardProps) {
             variant="ghost"
             size="icon-sm"
             onClick={handleDelete}
+            onPointerDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
             className="shrink-0 h-6 w-6"
           >
             <Trash2 className="h-3.5 w-3.5 text-destructive" />
