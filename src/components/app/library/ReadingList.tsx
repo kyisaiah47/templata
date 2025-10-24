@@ -43,9 +43,9 @@ export function ReadingList({ workspaceId }: ReadingListProps) {
 
   // Fetch all readings (from guide_sections joined with guides)
   const { data: readingsData, isLoading: readingsLoading } = useQuery({
-    queryKey: ['readings'],
+    queryKey: ['readings', workspaceId],
     queryFn: async () => {
-      const response = await fetch('/api/readings');
+      const response = await fetch(`/api/readings?workspace_id=${workspaceId}`);
       if (!response.ok) throw new Error('Failed to fetch readings');
       return response.json();
     },
@@ -89,11 +89,9 @@ export function ReadingList({ workspaceId }: ReadingListProps) {
   });
 
   const userGuides = userGuidesData?.userGuides || [];
-  const userGuideIds = new Set(userGuides.map((ug: any) => ug.guide_id));
 
-  const allReadings: Reading[] = readingsData?.readings || [];
-  // Filter readings to only show those from guides the user is using
-  const readings = allReadings.filter(reading => userGuideIds.has(reading.guide_id));
+  // Readings are already filtered by the API
+  const readings: Reading[] = readingsData?.readings || [];
 
   const progress: ReadingProgress[] = progressData?.progress || [];
   const progressMap = new Map(progress.map((p) => [p.guide_section_id, p]));

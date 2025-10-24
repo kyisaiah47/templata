@@ -14,9 +14,24 @@ export async function GET(request: NextRequest) {
       return unauthorizedResponse();
     }
 
-    // Fetch all readings from the readings table where type is 'guide'
-    // and template field links to guide id
-    const { data: readings, error } = await supabase
+    const { searchParams } = new URL(request.url);
+    const workspace_id = searchParams.get('workspace_id');
+
+    // First, get user's active guides
+    let userGuideIds: string[] = [];
+    if (workspace_id) {
+      const { data: userGuides } = await supabase
+        .from('notes')
+        .select('guide_id')
+        .eq('user_id', user.userId)
+        .eq('workspace_id', workspace_id)
+        .eq('archived', false);
+
+      userGuideIds = userGuides?.map((ug: any) => ug.guide_id) || [];
+    }
+
+    // Fetch readings filtered by user's guides
+    let query = supabase
       .from('readings')
       .select(`
         id,
@@ -27,8 +42,16 @@ export async function GET(request: NextRequest) {
         template,
         tags
       `)
-      .eq('type', 'guide')
-      .order('template', { ascending: true });
+      .eq('type', 'guide');
+
+    // Filter by user's guides if we have them
+    if (userGuideIds.length > 0) {
+      query = query.in('template', userGuideIds);
+    }
+
+    query = query.order('template', { ascending: true });
+
+    const { data: readings, error } = await query;
 
     if (error) {
       console.error('Error fetching readings:', error);
