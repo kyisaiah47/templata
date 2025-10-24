@@ -123,23 +123,25 @@ export default function AnalyticsPage() {
   const isLoading = guidesLoading || responsesLoading;
 
   return (
-    <div className="h-full w-full">
-      <div className="max-w-7xl mx-auto p-8">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
-            <TrendingUp className="w-5 h-5 text-[#6366f1]" />
+    <div className="h-full w-full flex flex-col overflow-hidden">
+      {/* Header */}
+      <div className="border-b border-border/40 px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
+            <TrendingUp className="w-4 h-4 text-[#6366f1]" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold">Analytics</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Track your progress and activity
-            </p>
+            <h1 className="text-xl font-semibold">Analytics</h1>
+            <p className="text-xs text-muted-foreground">Track your progress and activity</p>
           </div>
         </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-auto p-6">
 
         {/* Stats Cards */}
-        <div className="mb-8">
+        <div className="mb-4">
           <StatsCards
             questionsAnswered={questionsAnswered}
             activeGuides={activeGuides}
@@ -150,7 +152,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Activity Chart */}
-        <div className="mb-8">
+        <div className="mb-4">
           <ActivityChart data={activityData} isLoading={isLoading} />
         </div>
 

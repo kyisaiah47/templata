@@ -16,6 +16,7 @@ import { DailySidebarContent } from '@/components/app/layout/DailySidebarContent
 import { JournalSidebarContent } from '@/components/app/layout/JournalSidebarContent';
 import { GraphSidebarContent } from '@/components/app/layout/GraphSidebarContent';
 import { OverviewSidebarContent } from '@/components/app/layout/OverviewSidebarContent';
+import { AnalyticsSidebarContent } from '@/components/app/layout/AnalyticsSidebarContent';
 import { Tab, TabType, Workspace, PageWithSubPages } from '@/types/workspace';
 import {
   Loader2,
@@ -60,6 +61,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const [selectedJournalEntryId, setSelectedJournalEntryId] = useState<string | null>(null);
   const [selectedGraphGuideIds, setSelectedGraphGuideIds] = useState<Set<string>>(new Set());
   const [selectedOverviewGuideIds, setSelectedOverviewGuideIds] = useState<Set<string>>(new Set());
+  const [selectedAnalyticsGuideIds, setSelectedAnalyticsGuideIds] = useState<Set<string>>(new Set());
 
   // Icon component mapping for converting emoji strings to components
   const iconComponentMap: Record<TabType, any> = {
@@ -282,6 +284,14 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       if (overviewGuidesParam) {
         const guideIds = new Set(overviewGuidesParam.split(','));
         setSelectedOverviewGuideIds(guideIds);
+      }
+    }
+
+    if (activeView === 'analytics') {
+      const analyticsGuidesParam = searchParams.get('analyticsGuides');
+      if (analyticsGuidesParam) {
+        const guideIds = new Set(analyticsGuidesParam.split(','));
+        setSelectedAnalyticsGuideIds(guideIds);
       }
     }
   }, [searchParams, activeView]);
@@ -620,6 +630,28 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
   }, [selectedOverviewGuideIds, searchParams, router]);
 
+  // Handle analytics guide toggle
+  const handleAnalyticsGuideToggle = useCallback((guideId: string) => {
+    const newSet = new Set(selectedAnalyticsGuideIds);
+    if (newSet.has(guideId)) {
+      newSet.delete(guideId);
+    } else {
+      newSet.add(guideId);
+    }
+
+    setSelectedAnalyticsGuideIds(newSet);
+
+    // Update URL with selected guide IDs
+    const params = new URLSearchParams(searchParams.toString());
+    if (newSet.size > 0) {
+      params.set('analyticsGuides', Array.from(newSet).join(','));
+    } else {
+      params.delete('analyticsGuides');
+    }
+    const queryString = params.toString();
+    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+  }, [selectedAnalyticsGuideIds, searchParams, router]);
+
   if (loading || !workspace) {
     return (
       <div className="h-screen w-screen flex items-center justify-center">
@@ -690,6 +722,11 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
           <GraphSidebarContent
             selectedGuideIds={selectedGraphGuideIds}
             onGuideToggle={handleGraphGuideToggle}
+          />
+        ) : activeView === 'analytics' ? (
+          <AnalyticsSidebarContent
+            selectedGuideIds={selectedAnalyticsGuideIds}
+            onGuideToggle={handleAnalyticsGuideToggle}
           />
         ) : (
           <PagesSidebarContent
