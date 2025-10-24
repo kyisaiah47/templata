@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { CalendarDays, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -25,16 +26,26 @@ interface Task {
   status: string;
   priority: string;
   due_date: string | null;
+  user_guide_id: string | null;
   created_at: string;
   updated_at: string;
 }
 
 export default function DailyPage() {
+  const searchParams = useSearchParams();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [note, setNote] = useState<DailyNoteData | null>(null);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [allTasks, setAllTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [tasksLoading, setTasksLoading] = useState(true);
+
+  // Get selected note IDs from URL
+  const selectedNoteIds = searchParams.get('dailyNotes')?.split(',').filter(Boolean) || [];
+
+  // Filter tasks by selected notes
+  const tasks = selectedNoteIds.length > 0
+    ? allTasks.filter(task => task.user_guide_id && selectedNoteIds.includes(task.user_guide_id))
+    : allTasks;
 
   // Format date for API calls
   const formatDateForAPI = (date: Date) => format(date, 'yyyy-MM-dd');
@@ -73,11 +84,11 @@ export default function DailyPage() {
       }
 
       const data = await response.json();
-      setTasks(data.tasks || []);
+      setAllTasks(data.tasks || []);
     } catch (error) {
       console.error('Error fetching tasks:', error);
       toast.error('Failed to load tasks');
-      setTasks([]);
+      setAllTasks([]);
     } finally {
       setTasksLoading(false);
     }
@@ -137,25 +148,26 @@ export default function DailyPage() {
   const isFuture = selectedDate > new Date();
 
   return (
-    <div className="h-full w-full p-8">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
-              <CalendarDays className="w-5 h-5 text-[#6366f1]" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold">Daily</h1>
-              <p className="text-sm text-muted-foreground">
-                {format(selectedDate, 'EEEE, MMMM d, yyyy')}
-              </p>
-            </div>
+    <div className="h-full w-full flex flex-col overflow-hidden">
+      {/* Header */}
+      <div className="border-b border-border/40 px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
+            <CalendarDays className="w-4 h-4 text-[#6366f1]" />
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold">Daily</h1>
+            <p className="text-xs text-muted-foreground">
+              {format(selectedDate, 'EEEE, MMMM d, yyyy')}
+            </p>
           </div>
         </div>
+      </div>
 
+      {/* Content */}
+      <div className="flex-1 overflow-auto p-6">
         {/* Date Navigation */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
@@ -204,7 +216,7 @@ export default function DailyPage() {
             <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Daily Note - Takes 2 columns */}
             <div className="lg:col-span-2">
               <DailyNote
@@ -232,8 +244,8 @@ export default function DailyPage() {
 
         {/* Future Date Notice */}
         {isFuture && (
-          <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-border/60 text-center">
-            <p className="text-sm text-muted-foreground">
+          <div className="mt-4 p-3 bg-muted/50 rounded-lg border border-border/60 text-center">
+            <p className="text-xs text-muted-foreground">
               You&apos;re viewing a future date. Start planning ahead!
             </p>
           </div>

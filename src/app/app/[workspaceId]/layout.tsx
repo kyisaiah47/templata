@@ -12,6 +12,8 @@ import { LibrarySidebarContent } from '@/components/app/layout/LibrarySidebarCon
 import { CalendarSidebarContent } from '@/components/app/layout/CalendarSidebarContent';
 import { TasksSidebarContent } from '@/components/app/layout/TasksSidebarContent';
 import { TimelineSidebarContent } from '@/components/app/layout/TimelineSidebarContent';
+import { DailySidebarContent } from '@/components/app/layout/DailySidebarContent';
+import { JournalSidebarContent } from '@/components/app/layout/JournalSidebarContent';
 import { Tab, TabType, Workspace, PageWithSubPages } from '@/types/workspace';
 import {
   Loader2,
@@ -52,6 +54,8 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const [selectedCalendarNoteIds, setSelectedCalendarNoteIds] = useState<Set<string>>(new Set());
   const [selectedTasksNoteIds, setSelectedTasksNoteIds] = useState<Set<string>>(new Set());
   const [selectedTimelineNoteIds, setSelectedTimelineNoteIds] = useState<Set<string>>(new Set());
+  const [selectedDailyNoteIds, setSelectedDailyNoteIds] = useState<Set<string>>(new Set());
+  const [selectedJournalEntryId, setSelectedJournalEntryId] = useState<string | null>(null);
 
   // Icon component mapping for converting emoji strings to components
   const iconComponentMap: Record<TabType, any> = {
@@ -232,6 +236,27 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       } else {
         setSelectedTimelineNoteIds(new Set());
       }
+    }
+  }, [searchParams, activeView]);
+
+  // Sync daily note selection from URL
+  useEffect(() => {
+    if (activeView === 'daily') {
+      const dailyNotesParam = searchParams.get('dailyNotes');
+      if (dailyNotesParam) {
+        const noteIds = new Set(dailyNotesParam.split(','));
+        setSelectedDailyNoteIds(noteIds);
+      } else {
+        setSelectedDailyNoteIds(new Set());
+      }
+    }
+  }, [searchParams, activeView]);
+
+  // Sync journal entry selection from URL
+  useEffect(() => {
+    if (activeView === 'journal') {
+      const entryParam = searchParams.get('entryId');
+      setSelectedJournalEntryId(entryParam);
     }
   }, [searchParams, activeView]);
 
@@ -488,6 +513,43 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
   }, [selectedTimelineNoteIds, searchParams, router]);
 
+  // Handle daily note toggle
+  const handleDailyNoteToggle = useCallback((noteId: string) => {
+    const newSet = new Set(selectedDailyNoteIds);
+    if (newSet.has(noteId)) {
+      newSet.delete(noteId);
+    } else {
+      newSet.add(noteId);
+    }
+
+    setSelectedDailyNoteIds(newSet);
+
+    // Update URL with selected note IDs
+    const params = new URLSearchParams(searchParams.toString());
+    if (newSet.size > 0) {
+      params.set('dailyNotes', Array.from(newSet).join(','));
+    } else {
+      params.delete('dailyNotes');
+    }
+    const queryString = params.toString();
+    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+  }, [selectedDailyNoteIds, searchParams, router]);
+
+  // Handle journal entry selection
+  const handleJournalEntrySelect = useCallback((entryId: string | null) => {
+    setSelectedJournalEntryId(entryId);
+
+    // Update URL with selected entry ID
+    const params = new URLSearchParams(searchParams.toString());
+    if (entryId) {
+      params.set('entryId', entryId);
+    } else {
+      params.delete('entryId');
+    }
+    const queryString = params.toString();
+    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+  }, [searchParams, router]);
+
   if (loading || !workspace) {
     return (
       <div className="h-screen w-screen flex items-center justify-center">
@@ -538,6 +600,16 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
           <TimelineSidebarContent
             selectedNoteIds={selectedTimelineNoteIds}
             onNoteToggle={handleTimelineNoteToggle}
+          />
+        ) : activeView === 'daily' ? (
+          <DailySidebarContent
+            selectedNoteIds={selectedDailyNoteIds}
+            onNoteToggle={handleDailyNoteToggle}
+          />
+        ) : activeView === 'journal' ? (
+          <JournalSidebarContent
+            selectedEntryId={selectedJournalEntryId}
+            onEntrySelect={handleJournalEntrySelect}
           />
         ) : (
           <PagesSidebarContent
