@@ -48,21 +48,18 @@ export default function AnalyticsPage() {
   const [allEvents, setAllEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Get selected guide IDs from URL
+  // Get selected guide IDs from URL for COMPARISON only (not filtering)
   const selectedGuideIds = searchParams.get('analyticsGuides')?.split(',').filter(Boolean) || [];
 
-  // Filter by selection
-  const userGuides = selectedGuideIds.length > 0
+  // NO FILTERING - analytics shows ALL workspace data
+  const userGuides = allUserGuides;
+  const tasks = allTasks;
+  const events = allEvents;
+
+  // But we can highlight selected guides for comparison
+  const selectedGuides = selectedGuideIds.length > 0
     ? allUserGuides.filter(guide => selectedGuideIds.includes(guide.id))
-    : allUserGuides;
-
-  const tasks = selectedGuideIds.length > 0
-    ? allTasks.filter(task => task.user_guide_id && selectedGuideIds.includes(task.user_guide_id))
-    : allTasks;
-
-  const events = selectedGuideIds.length > 0
-    ? allEvents.filter(event => event.user_guide_id && selectedGuideIds.includes(event.user_guide_id))
-    : allEvents;
+    : [];
 
   useEffect(() => {
     async function fetchData() {
@@ -106,34 +103,62 @@ export default function AnalyticsPage() {
     ? Math.round(userGuides.reduce((acc, g) => acc + g.progress, 0) / userGuides.length)
     : 0;
 
-  // Activity over last 30 days
-  const getLast30DaysActivity = () => {
-    const last30Days = [];
+  // Monthly trends - last 6 months
+  const getLast6MonthsTrends = () => {
+    const months = [];
     const today = new Date();
 
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const dateStr = format(date, 'yyyy-MM-dd');
+    for (let i = 5; i >= 0; i--) {
+      const monthStart = startOfMonth(subMonths(today, i));
+      const monthEnd = endOfMonth(subMonths(today, i));
+      const monthStr = format(monthStart, 'MMM yyyy');
 
-      const tasksCreated = tasks.filter(t => format(parseISO(t.created_at), 'yyyy-MM-dd') === dateStr).length;
-      const tasksCompleted = tasks.filter(t => t.completed_at && format(parseISO(t.completed_at), 'yyyy-MM-dd') === dateStr).length;
-      const eventsCreated = events.filter(e => format(parseISO(e.created_at), 'yyyy-MM-dd') === dateStr).length;
+      const tasksCreatedInMonth = tasks.filter(t => {
+        const date = parseISO(t.created_at);
+        return date >= monthStart && date <= monthEnd;
+      }).length;
 
-      last30Days.push({
-        date: dateStr,
-        tasks: tasksCreated,
-        completed: tasksCompleted,
-        events: eventsCreated,
-        total: tasksCreated + tasksCompleted + eventsCreated
+      const tasksCompletedInMonth = tasks.filter(t => {
+        if (!t.completed_at) return false;
+        const date = parseISO(t.completed_at);
+        return date >= monthStart && date <= monthEnd;
+      }).length;
+
+      const notesCreatedInMonth = userGuides.filter(g => {
+        const date = parseISO(g.created_at);
+        return date >= monthStart && date <= monthEnd;
+      }).length;
+
+      months.push({
+        month: monthStr,
+        tasksCreated: tasksCreatedInMonth,
+        tasksCompleted: tasksCompletedInMonth,
+        notesCreated: notesCreatedInMonth,
+        total: tasksCreatedInMonth + tasksCompletedInMonth + notesCreatedInMonth
       });
     }
 
-    return last30Days;
+    return months;
   };
 
-  const activityData = getLast30DaysActivity();
-  const maxActivity = Math.max(...activityData.map(d => d.total), 1);
+  const monthlyTrends = getLast6MonthsTrends();
+  const maxMonthlyActivity = Math.max(...monthlyTrends.map(m => m.total), 1);
+
+  // Weekly activity pattern
+  const getWeeklyPattern = () => {
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const pattern = daysOfWeek.map(day => ({ day, count: 0 }));
+
+    tasks.forEach(t => {
+      const dayIndex = new Date(t.created_at).getDay();
+      pattern[dayIndex].count++;
+    });
+
+    return pattern;
+  };
+
+  const weeklyPattern = getWeeklyPattern();
+  const maxWeeklyActivity = Math.max(...weeklyPattern.map(d => d.count), 1);
 
   return (
     <div className="h-full w-full flex flex-col overflow-hidden">
@@ -205,21 +230,81 @@ export default function AnalyticsPage() {
               </div>
             </div>
 
-            {/* Activity Chart - Last 30 Days */}
+            {/* Monthly Trends - Last 6 Months */}
             <div className="rounded-lg border border-border/40 bg-background p-4">
-              <h3 className="text-sm font-semibold mb-4">Activity Last 30 Days</h3>
+              <h3 className="text-sm font-semibold mb-4">Monthly Trends (Last 6 Months)</h3>
+              <div className="space-y-3">
+                {monthlyTrends.map((month) => (
+                  <div key={month.month}>
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="text-xs font-medium">{month.month}</div>
+                      <div className="text-xs text-muted-foreground">{month.total} activities</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-8 bg-muted rounded overflow-hidden flex">
+                        {month.tasksCreated > 0 && (
+                          <div
+                            className="bg-blue-500/60 flex items-center justify-center text-[10px] font-medium text-white"
+                            style={{ width: `${(month.tasksCreated / month.total) * 100}%` }}
+                            title={`${month.tasksCreated} tasks created`}
+                          >
+                            {month.tasksCreated > 2 && month.tasksCreated}
+                          </div>
+                        )}
+                        {month.tasksCompleted > 0 && (
+                          <div
+                            className="bg-green-500/60 flex items-center justify-center text-[10px] font-medium text-white"
+                            style={{ width: `${(month.tasksCompleted / month.total) * 100}%` }}
+                            title={`${month.tasksCompleted} tasks completed`}
+                          >
+                            {month.tasksCompleted > 2 && month.tasksCompleted}
+                          </div>
+                        )}
+                        {month.notesCreated > 0 && (
+                          <div
+                            className="bg-purple-500/60 flex items-center justify-center text-[10px] font-medium text-white"
+                            style={{ width: `${(month.notesCreated / month.total) * 100}%` }}
+                            title={`${month.notesCreated} notes created`}
+                          >
+                            {month.notesCreated > 2 && month.notesCreated}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 mt-1 text-[10px] text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-blue-500/60" />
+                        {month.tasksCreated} created
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-green-500/60" />
+                        {month.tasksCompleted} completed
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-purple-500/60" />
+                        {month.notesCreated} notes
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Weekly Activity Pattern */}
+            <div className="rounded-lg border border-border/40 bg-background p-4">
+              <h3 className="text-sm font-semibold mb-4">Activity by Day of Week</h3>
               <div className="space-y-2">
-                {activityData.map((day) => (
-                  <div key={day.date} className="flex items-center gap-2">
-                    <div className="text-[10px] text-muted-foreground w-16 flex-shrink-0">
-                      {format(parseISO(day.date), 'MMM d')}
+                {weeklyPattern.map((day) => (
+                  <div key={day.day} className="flex items-center gap-2">
+                    <div className="text-xs text-muted-foreground w-10 flex-shrink-0">
+                      {day.day}
                     </div>
                     <div className="flex-1 flex items-center gap-1">
                       <div
                         className="h-6 bg-[#6366f1]/20 rounded flex items-center justify-center text-[10px] font-medium"
-                        style={{ width: `${(day.total / maxActivity) * 100}%`, minWidth: day.total > 0 ? '20px' : '0' }}
+                        style={{ width: `${(day.count / maxWeeklyActivity) * 100}%`, minWidth: day.count > 0 ? '20px' : '0' }}
                       >
-                        {day.total > 0 && day.total}
+                        {day.count > 0 && day.count}
                       </div>
                     </div>
                   </div>
