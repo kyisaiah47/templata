@@ -1,360 +1,201 @@
 # Templata
 
 > **The encyclopedia for living**
->
-> Systematically organized templates, prompts, and articles for life's biggest decisions—built with abundance over curation.
 
-## Overview
+A comprehensive life guidance platform providing structured templates, prompts, and articles for every major life situation.
 
-**Templata** is a comprehensive life guidance platform that provides structured templates, tactical prompts, and curated articles for every major life situation. From wedding planning to career transitions, home buying to business launches—we've systematically created guidance for life's biggest moments.
+---
 
-### What Makes Us Different
+## What is Templata?
 
-- **📚 Systematic Coverage** - 1,298 templates covering every conceivable life situation
-- **🎯 Actionable Guidance** - 104,000+ tactical prompts to guide your thinking
-- **📰 Deep Insights** - 25,936 curated articles for research and learning
-- **🔍 Built for Abundance** - Wikipedia philosophy: if it exists, we've covered it
+Templata helps you navigate life's biggest moments with systematic guidance. Whether you're planning a wedding, changing careers, buying a home, or facing any major life decision—we provide structured frameworks to guide your thinking and planning.
 
-## Core Features
+## What You Can Do
 
-### 📚 **1,298 Life Templates**
-Systematically organized templates covering every life situation:
-- **Personal Milestones** - Weddings, parenthood, retirement
-- **Career & Business** - Job search, career pivots, entrepreneurship
-- **Home & Finance** - Home buying, financial planning, major purchases
-- **Health & Wellness** - Fitness, medical decisions, mental health
-- **Relationships** - Dating, marriage, family dynamics
-- **Education** - College planning, skill development, certifications
-- **Creative Projects** - Learning instruments, artistic pursuits, hobbies
-- And many more...
+### Browse & Discover Life Templates
 
-### 🎯 **Tactical Prompts**
-Each template includes carefully curated prompts to guide your thinking:
-- Tactical action items
-- Contextual considerations
-- Reflection questions
-- Decision frameworks
-- Research areas
-- Planning guides
+Explore over 1,200 templates covering every conceivable life situation:
+- Plan your wedding from engagement to honeymoon
+- Navigate career changes and job searches
+- Manage home buying, moving, and renovation
+- Start businesses and side projects
+- Handle major life transitions (parenthood, retirement, divorce)
+- Develop skills and creative hobbies
+- Manage finances and investments
+- Care for aging parents
+- Plan education and career advancement
+- Navigate relationships and dating
+- Track fitness and health journeys
+- And hundreds more scenarios
 
-### 📰 **25,936 Curated Articles**
-Comprehensive article library providing:
-- Expert insights and guidance
-- Step-by-step how-tos
-- Research-backed strategies
-- Real-world examples
-- Best practices
+### Work in Your Personal Workspace
 
-### ⚡ **3-Stage Workflow**
-The `/app` experience progresses through three focused stages:
+Each template provides a dedicated workspace where you can:
+- View curated prompts and questions to guide your thinking
+- Take notes and organize your plans
+- Save your progress automatically
+- Return anytime to continue working
+- Use multiple templates simultaneously for different life areas
 
-1. **Workspace Stage** - Create and work on your template
-   - Select from 1,298 templates
-   - Work through tactical prompts
-   - Take notes and plan
-   - Auto-save to Supabase
+### Read Expert Articles
 
-2. **Reflection Stage** - Daily journaling and introspection
-   - Daily rotating prompts (7 unique prompts)
-   - Mood tracking
-   - Tag-based organization
-   - Past reflections sidebar
-   - Auto-save with local/cloud sync
+Access thousands of curated articles providing:
+- Step-by-step guides and how-tos
+- Expert insights and research
+- Real-world examples and case studies
+- Best practices for every situation
+- Quick reads (1-5 minutes) and deep dives (10-15 minutes)
 
-3. **Life OS Stage** - Dashboard to manage everything
-   - Overview of active templates
-   - Track progress across projects
-   - Unified view of your work
+### Use Advanced Workspace Features
 
-### 🔒 **Authentication & Data**
-- **Supabase Auth** - Secure email/password authentication
-- **Auto-save** - Authenticated users save to cloud, anonymous users use localStorage
-- **Privacy** - Your data is private and never sold
-- **Password Reset** - Email-based password recovery
+**Flexible View Modes**
+- Note-taking view for freeform writing
+- Kanban boards for task management
+- Calendar view for scheduling
+- Journal entries for daily reflection
+- Timeline views for project planning
+- Archive for completed work
 
-### 🎨 **Modern UI/UX**
-- **Responsive Design** - Works beautifully on all devices
-- **Dark/Light Mode** - System preference + manual toggle
-- **Clean Interface** - Built with shadcn/ui components
-- **Smooth Animations** - Framer Motion transitions
-- **Accessibility** - WCAG compliant with Radix UI
+**Organization Tools**
+- Create multiple workspaces for different life areas
+- Archive completed projects
+- Track progress across all your plans
+- Search through your notes and entries
+- Tag and categorize your work
 
-## Pages & Routes
+**Daily Journaling**
+- Write daily reflections with guided prompts
+- Track your mood and mental state
+- Review past entries
+- Build a continuous record of your thoughts
 
-### Main Pages
-- `/` - Landing page introducing Templata
-- `/templates` - Browse all 1,298 templates by category
-- `/templates/[slug]` - Individual template workspace
-- `/templates/[slug]/marketing` - SEO-optimized marketing page for each template
-- `/articles` - Browse all 25,936 articles
-- `/articles/[slug]` - Individual article reader
-- `/app` - Main 3-stage app experience
-- `/app/settings` - User settings and preferences
-- `/privacy` - Privacy policy
-- `/terms` - Terms of service
+**Task Management**
+- Create tasks and to-dos
+- Organize with kanban boards
+- Set due dates and priorities
+- Track completion progress
 
-### Auth Pages
-- `/login` - Sign in
-- `/signup` - Create account
-- `/forgot-password` - Request password reset
-- `/reset-password` - Reset password with token
-- `/login/verify` - Email verification
+**Calendar & Events**
+- Schedule important dates
+- Plan events and milestones
+- View agenda and upcoming items
+- Organize by day, week, or month
 
-## Tech Stack
+**Library & Reading**
+- Save articles to read later
+- Track your reading progress
+- Organize resources by topic
+- Access from anywhere
 
-### Core
-- **Next.js 15.5** - React framework with App Router and Turbopack
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first styling
+**Analytics Dashboard**
+- View your activity over time
+- Track template completion
+- See progress statistics
+- Review your productivity patterns
 
-### UI & Design
-- **shadcn/ui** - Component design system
-- **Radix UI** - Accessible primitives
-- **Framer Motion** - Smooth animations
-- **Lucide Icons** - Beautiful icon library
+### Community Features
 
-### Backend & Data
-- **Supabase** - PostgreSQL database and authentication
-- **API Routes** - RESTful endpoints for templates, articles, reflections
-- **Server Components** - Next.js 15 server-side rendering
+**Browse User Templates**
+- Discover templates created by the community
+- See how others approach similar situations
+- Get inspired by creative solutions
 
-### Deployment
-- **Vercel** - Hosting and continuous deployment
-- **GitHub** - Version control
+**Participate in Discussions**
+- Share your experiences
+- Ask questions and get advice
+- Connect with others in similar situations
 
-## Project Structure
+**Request New Content**
+- Suggest templates you'd like to see
+- Request articles on specific topics
+- Shape the future of the platform
 
-```
-templata/
-├── src/
-│   ├── app/                    # Next.js app router pages
-│   │   ├── app/               # Main 3-stage app
-│   │   │   ├── page.tsx      # App entry (redirects based on auth)
-│   │   │   ├── settings/     # User settings
-│   │   │   └── stages/       # Workspace, Reflection, Life OS stages
-│   │   ├── articles/          # Article browsing and reading
-│   │   │   ├── page.tsx      # Articles list
-│   │   │   └── [slug]/       # Individual article
-│   │   ├── templates/         # Template directory
-│   │   │   ├── page.tsx      # Templates list
-│   │   │   └── [slug]/       # Template workspace & marketing
-│   │   ├── login/            # Authentication pages
-│   │   ├── signup/
-│   │   ├── forgot-password/
-│   │   ├── reset-password/
-│   │   ├── privacy/          # Privacy policy
-│   │   ├── terms/            # Terms of service
-│   │   ├── api/              # API routes
-│   │   │   ├── auth/         # Auth endpoints
-│   │   │   ├── templates/    # Template data
-│   │   │   ├── articles/     # Article data
-│   │   │   └── reflections/  # Reflection CRUD
-│   │   └── page.tsx          # Landing page
-│   ├── components/            # React components
-│   │   ├── ui/               # shadcn/ui components
-│   │   ├── landing/          # Landing page sections
-│   │   ├── layout/           # Header, footer, sidebar
-│   │   └── template/         # Template-specific components
-│   ├── contexts/             # React contexts (auth, UI)
-│   ├── hooks/                # Custom React hooks
-│   ├── lib/                  # Utilities and configs
-│   │   ├── supabase.ts      # Supabase client setup
-│   │   └── utils.ts         # Helper functions
-│   ├── registry/             # Content registries
-│   │   ├── templates.ts     # Template metadata
-│   │   └── articles.ts      # Article metadata
-│   └── types/               # TypeScript definitions
-├── generation-scripts/       # Data generation and migration
-└── public/                  # Static assets
-    └── brand/              # Logos and branding
-```
+## How It Works
 
-## Getting Started
+### 1. Find Your Template
+Browse by category or search for your specific situation. Every major life moment has a corresponding template with structured guidance.
 
-### Prerequisites
-- Node.js 20+
-- npm or yarn
-- Supabase account (for database and auth)
+### 2. Work Through Prompts
+Each template includes carefully crafted prompts and questions to help you think through all aspects of your situation systematically.
 
-### Installation
+### 3. Take Notes & Plan
+Use the workspace to capture your thoughts, make plans, and organize information. Everything saves automatically.
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/templata.git
-cd templata
-```
+### 4. Return Anytime
+Your work is saved and waiting. Continue where you left off, review past entries, or start new templates as life evolves.
 
-2. Install dependencies:
-```bash
-npm install
-```
+### 5. Stay Organized
+Use multiple workspaces for different life areas. Keep active projects accessible and archive completed ones for future reference.
 
-3. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
+## Who It's For
 
-Edit `.env.local` with your configuration:
-```env
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL="your-supabase-project-url"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
-SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
+**Life Planners** - People who want structure and systematic guidance for major decisions and transitions.
 
-# App
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
+**Career Professionals** - Anyone navigating job searches, career changes, professional development, or entrepreneurship.
 
-4. Set up Supabase database:
+**New Parents** - Expectant and new parents managing the overwhelming journey of parenthood.
 
-Create the following tables in your Supabase project:
+**Home Buyers** - First-time and experienced buyers navigating the complex home purchasing process.
 
-**templata_templates:**
-```sql
-CREATE TABLE templata_templates (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  category TEXT NOT NULL,
-  description TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
+**Students** - College students, grad students, and lifelong learners managing education and career transitions.
 
-**templata_articles:**
-```sql
-CREATE TABLE templata_articles (
-  id TEXT PRIMARY KEY,
-  title TEXT NOT NULL,
-  slug TEXT NOT NULL,
-  content TEXT,
-  excerpt TEXT,
-  author TEXT,
-  published_at TIMESTAMP,
-  read_time INTEGER,
-  type TEXT,
-  difficulty TEXT,
-  tags TEXT[],
-  template TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
+**Entrepreneurs** - Business founders working through launches, planning, and growth strategies.
 
-**templata_reflections:**
-```sql
-CREATE TABLE templata_reflections (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES auth.users(id),
-  date DATE NOT NULL,
-  prompt TEXT,
-  content TEXT,
-  mood TEXT,
-  tags TEXT[],
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(user_id, date)
-);
-```
+**Caregivers** - Those caring for aging parents, managing health crises, or supporting family members.
 
-5. Run the development server:
-```bash
-npm run dev
-```
+**Creative Builders** - Artists, musicians, writers, and hobbyists developing skills and projects.
 
-6. Open [http://localhost:3000](http://localhost:3000)
+**Anyone Facing Change** - People experiencing divorce, relocation, job loss, health challenges, or any major life transition.
 
-### Available Scripts
+## Key Features
 
-```bash
-npm run dev          # Start development server (with Turbopack)
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
+### Comprehensive Coverage
+Over 1,200 templates systematically covering every life situation you might encounter—from common scenarios to rare edge cases.
 
-## Data Architecture
+### Guided Thinking
+Thousands of tactical prompts designed to help you think through decisions methodically, considering angles you might have missed.
 
-### Database Schema
+### Curated Knowledge
+Access to expert articles, research, and insights specific to your situation. Learn from those who've been there before.
 
-**Templates (templata_templates)**
-- 1,298 templates stored in Supabase
-- Organized by category
-- Each has ID, name, category, description
+### Personal Workspace
+Private space to plan, reflect, and organize your life projects. Your data belongs to you.
 
-**Articles (templata_articles)**
-- 25,936 articles in database
-- Linked to templates
-- Includes metadata: author, read time, difficulty, tags
-- Full-text content for reading
+### Flexible Organization
+Multiple view modes, workspaces, and organizational tools adapt to how you think and work.
 
-**Reflections (templata_reflections)**
-- User-specific daily reflections
-- Stores prompt, content, mood, tags
-- One reflection per user per day
-- Auto-saves every 2 seconds
+### Mobile & Desktop
+Access your work from any device. Plan on your laptop, check progress on your phone.
 
-### Authentication Flow
-1. User signs up with email/password
-2. Supabase creates auth user
-3. JWT session stored client-side
-4. Protected routes check session
-5. User data synced to cloud or localStorage
+### Auto-Save
+Never lose your work. Everything saves automatically as you type.
 
-## Key Features in Detail
-
-### Template System
-- **1,298 templates** systematically covering all life situations
-- **Dynamic routing** - Each template at `/templates/[slug]`
-- **Marketing pages** - SEO-optimized landing pages at `/templates/[slug]/marketing`
-- **Auto-save** - Work persists to Supabase or localStorage
-- **Category browsing** - Organized by life area
-
-### Reflection System
-- **Daily prompts** - 7 unique prompts rotating based on day of year
-- **Mood tracking** - Emoji-based mood selection
-- **Tag system** - Organize reflections with custom tags
-- **Past entries** - Sidebar to browse previous reflections
-- **Auto-save** - Saves every 2 seconds while typing
-- **Date navigation** - View and edit any past date
-
-### Article Library
-- **25,936 articles** providing deep insights
-- **Search & filter** - Find articles by topic, template, difficulty
-- **Rich content** - Full markdown rendering
-- **Read time** - Estimated reading duration
-- **Author attribution** - Expert-written content
-
-## Contributing
-
-We welcome contributions! Please see our contributing guidelines.
-
-### Development Workflow
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Style
-- ESLint configuration included
-- TypeScript strict mode
-- Component-first architecture
-- Functional components with hooks
+### Community Connection
+Learn from others' experiences, share your journey, and contribute to a growing knowledge base.
 
 ## Philosophy
 
-**Abundance over curation.** Instead of handpicking 20 "best" templates, we give you access to everything—systematically organized, searchable, and ready when you need it. If a life situation exists, we've covered it.
+**Abundance over curation.**
 
-Like Wikipedia for knowledge, Templata is the comprehensive resource for life guidance.
+Instead of handpicking 20 "best" templates, we provide systematic coverage of everything—organized, searchable, and ready when you need it. If a life situation exists, we've covered it.
 
-## License
+Like Wikipedia became the comprehensive resource for knowledge, Templata is the comprehensive resource for life guidance.
 
-Proprietary - All rights reserved
+## Getting Started
+
+1. **Explore** - Browse templates and articles to see what resonates
+2. **Create Account** - Sign up to save your work and access all features
+3. **Choose a Template** - Select one that matches your current situation
+4. **Start Working** - Use the guided prompts to begin planning and thinking
+5. **Stay Organized** - Return regularly to update, reflect, and track progress
+
+Visit **templata.org** to begin.
+
+---
 
 ## Support
 
-- **Email**: templata.app@gmail.com
-- **GitHub**: [github.com/yourusername/templata](https://github.com/yourusername/templata)
+Questions or feedback? Reach us at **templata.app@gmail.com**
 
 ---
 
