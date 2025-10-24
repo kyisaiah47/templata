@@ -60,14 +60,6 @@ export default function NotesPage() {
     fetchOrCreateUserGuide();
   }, [guideId, workspaceId]);
 
-  if (loading) {
-    return (
-      <div className="h-full w-full flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-      </div>
-    );
-  }
-
   // Fetch page data if pageId is present
   useEffect(() => {
     async function fetchPage() {
@@ -88,6 +80,14 @@ export default function NotesPage() {
 
     fetchPage();
   }, [pageId, workspaceId]);
+
+  if (loading) {
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   const handleCreateBlank = () => {
     // TODO: Create a new blank page
