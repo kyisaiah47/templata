@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { CreateWorkspaceModal } from './CreateWorkspaceModal';
 
 interface WorkspaceSwitcherProps {
   workspaces: Workspace[];
@@ -26,35 +26,9 @@ export function WorkspaceSwitcher({
   pageCount = {},
 }: WorkspaceSwitcherProps) {
   const [open, setOpen] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const router = useRouter();
+  const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const currentWorkspace = workspaces.find(w => w.id === currentWorkspaceId);
-
-  const handleCreateWorkspace = async () => {
-    try {
-      setCreating(true);
-      const response = await fetch('/api/workspaces', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: `Workspace ${workspaces.length + 1}`,
-          icon: '📁',
-        }),
-      });
-
-      if (!response.ok) throw new Error('Failed to create workspace');
-
-      const data = await response.json();
-      setOpen(false);
-      router.push(`/app/${data.workspace.id}`);
-      router.refresh();
-    } catch (error) {
-      console.error('Error creating workspace:', error);
-    } finally {
-      setCreating(false);
-    }
-  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -130,17 +104,21 @@ export function WorkspaceSwitcher({
 
           {/* New Workspace Button */}
           <button
-            onClick={handleCreateWorkspace}
-            disabled={creating}
-            className="w-full flex items-center gap-2 rounded px-2 py-2 text-sm hover:bg-muted/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() => {
+              setOpen(false);
+              setCreateModalOpen(true);
+            }}
+            className="w-full flex items-center gap-2 rounded px-2 py-2 text-sm hover:bg-muted/50 transition-colors"
           >
             <div className="w-[1.125rem] h-[1.125rem] rounded border-2 border-dashed border-muted-foreground/40 flex items-center justify-center shrink-0">
               <Plus className="w-3 h-3 text-muted-foreground" />
             </div>
-            <span className="font-medium">{creating ? 'Creating...' : 'New Workspace'}</span>
+            <span className="font-medium">New Workspace</span>
           </button>
         </div>
       </PopoverContent>
+
+      <CreateWorkspaceModal open={createModalOpen} onOpenChange={setCreateModalOpen} />
     </Popover>
   );
 }
