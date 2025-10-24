@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Briefcase, Heart, Activity, Sprout, DollarSign, Calendar, Search } from 'lucide-react';
-import { PageLayout } from '@/components/layout';
 import { cn } from '@/lib/utils';
 
 interface Category {
@@ -102,11 +101,10 @@ export default function GuidesPage() {
   const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
 
   return (
-    <PageLayout includeFooter={false}>
-      <div className="flex h-screen overflow-hidden">
-        {/* Sidebar Navigation */}
-        <aside className="w-56 flex-shrink-0 border-r border-border/40 overflow-y-auto bg-muted/20">
-          <div className="p-3">
+    <div className="flex h-[calc(100vh-56px)]">
+      {/* Sidebar Navigation */}
+      <aside className="w-56 flex-shrink-0 border-r border-border/40 bg-muted/20 overflow-y-auto">
+        <div className="p-3">
             <div className="px-2 py-1 text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">
               Categories
             </div>
@@ -139,10 +137,10 @@ export default function GuidesPage() {
               })}
             </nav>
           </div>
-        </aside>
+      </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto">
+      {/* Main Content */}
+      <main className="flex-1 overflow-y-auto">
           <div className="p-6">
             {selectedCategoryData ? (
               <>
@@ -213,7 +211,6 @@ export default function GuidesPage() {
             )}
           </div>
         </main>
-      </div>
-    </PageLayout>
+    </div>
   );
 }
