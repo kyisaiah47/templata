@@ -52,7 +52,7 @@ export function TabBar({ tabs, activeTabId, onTabClick, onTabClose, sidebarOpen,
   if (tabs.length === 0) return null;
 
   return (
-    <div className="h-10 border-b border-border/40 bg-background flex items-center gap-px overflow-x-auto scrollbar-hide">
+    <div className="h-10 border-b border-border/40 bg-background flex items-center gap-px overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {/* Sidebar Toggle Button */}
       <motion.button
         onClick={onToggleSidebar}
