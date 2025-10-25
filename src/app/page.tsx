@@ -95,410 +95,87 @@ export default function LandingPage() {
 			</section>
 
 			{/* Hero Screenshot - Wider layout */}
-			<section className="px-6 pb-40">
-				<motion.div
-					className="mx-auto max-w-[1400px]"
-					initial={{ opacity: 0, y: 40 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{ duration: 0.6 }}
-				>
+			<section className="px-6 pb-32">
+				<div className="mx-auto max-w-[1400px]">
 					<HeroWorkspace />
-				</motion.div>
+				</div>
 			</section>
 
 			{/* How It Works - 2x2 grid */}
-			<section className="px-6 py-48 border-t border-border/40">
+			<section className="px-6 py-24 border-t border-border/40">
 				<div className="mx-auto max-w-5xl">
-					<motion.div
-						className="mb-20"
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5 }}
-					>
+					<div className="mb-12">
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							How it works
 						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							No AI. No blank pages. Just expert-designed frameworks ready to use.
-							Pick a guide, answer thoughtful questions, and export when you're done.
-						</p>
-					</motion.div>
+					</div>
 
-					<div className="grid md:grid-cols-2 gap-16">
-						<motion.div
-							className="space-y-4"
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, margin: "-100px" }}
-							transition={{ duration: 0.5, delay: 0.1 }}
-						>
-							<h3 className="text-lg font-semibold">1. Pick a situation</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
-								Browse 1,200+ guides for career, relationships, health, and life events.
+					<div className="grid md:grid-cols-2 gap-12">
+						<div className="space-y-2">
+							<h3 className="text-lg font-semibold">Pick a guide</h3>
+							<p className="text-sm text-muted-foreground">
+								1,200+ guides for life decisions
 							</p>
 							<BrowseGuides />
-						</motion.div>
+						</div>
 
-						<motion.div
-							className="space-y-4"
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, margin: "-100px" }}
-							transition={{ duration: 0.5, delay: 0.2 }}
-						>
-							<h3 className="text-lg font-semibold">2. Open the guide</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
-								See guided questions and curated reading in split-screen.
+						<div className="space-y-2">
+							<h3 className="text-lg font-semibold">Work through it</h3>
+							<p className="text-sm text-muted-foreground">
+								Answer questions, add notes
 							</p>
 							<SplitScreenOpen />
-						</motion.div>
+						</div>
 
-						<motion.div
-							className="space-y-4"
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, margin: "-100px" }}
-							transition={{ duration: 0.5, delay: 0.3 }}
-						>
-							<h3 className="text-lg font-semibold">3. Work through it</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
-								Answer questions and review decisions. Everything saves locally.
+						<div className="space-y-2">
+							<h3 className="text-lg font-semibold">Read curated resources</h3>
+							<p className="text-sm text-muted-foreground">
+								Expert-selected readings
 							</p>
 							<WorkspaceActive />
-						</motion.div>
+						</div>
 
-						<motion.div
-							className="space-y-4"
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, margin: "-100px" }}
-							transition={{ duration: 0.5, delay: 0.4 }}
-						>
-							<h3 className="text-lg font-semibold">4. Export or return</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
-								Download as PDF or come back anytime — your progress is saved.
+						<div className="space-y-2">
+							<h3 className="text-lg font-semibold">Export when done</h3>
+							<p className="text-sm text-muted-foreground">
+								PDF export, auto-save
 							</p>
 							<ExportOverview />
-						</motion.div>
+						</div>
 					</div>
 				</div>
 			</section>
 
 			{/* Categories */}
-			<section className="px-6 py-48 border-t border-border/40">
+			<section className="px-6 py-24 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<motion.div
-						className="mb-20"
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5 }}
-					>
+					<div className="mb-12">
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							Browse by category
 						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							From life events to relationships, career moves to personal growth — find expert frameworks
-							for the decisions that shape your life.
-						</p>
-					</motion.div>
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5, delay: 0.1 }}
-					>
-						<CategorySelection />
-					</motion.div>
-				</div>
-			</section>
-
-			{/* Why different */}
-			<section className="px-6 py-48 border-t border-border/40">
-				<div className="mx-auto max-w-6xl">
-					<motion.div
-						className="mb-20"
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5 }}
-					>
-						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-							Not just another tool
-						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							AI gives you generic advice. Blank journals leave you stuck. Templata gives you
-							expert frameworks with the exact questions you need to answer.
-						</p>
-					</motion.div>
-
-					<div className="grid lg:grid-cols-2 gap-16 items-center">
-						{/* Screenshot */}
-						<motion.div
-							initial={{ opacity: 0, x: -20 }}
-							whileInView={{ opacity: 1, x: 0 }}
-							viewport={{ once: true, margin: "-100px" }}
-							transition={{ duration: 0.5, delay: 0.1 }}
-						>
-							<StructuredGuide />
-						</motion.div>
-
-						{/* Comparisons */}
-						<motion.div
-							className="space-y-8"
-							initial={{ opacity: 0, x: 20 }}
-							whileInView={{ opacity: 1, x: 0 }}
-							viewport={{ once: true, margin: "-100px" }}
-							transition={{ duration: 0.5, delay: 0.2 }}
-						>
-							<div>
-								<h3 className="text-lg font-semibold mb-4">vs. ChatGPT / AI</h3>
-								<div className="space-y-3 text-sm">
-									<div className="flex items-start gap-3">
-										<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-										<div>
-											<div className="font-medium">Expert-curated frameworks</div>
-											<div className="text-muted-foreground">Pre-structured questions and resources, not generic AI responses</div>
-										</div>
-									</div>
-									<div className="flex items-start gap-3">
-										<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-										<div>
-											<div className="font-medium">Ready to use</div>
-											<div className="text-muted-foreground">Start with a complete framework instead of building from scratch</div>
-										</div>
-									</div>
-									<div className="flex items-start gap-3">
-										<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-										<div>
-											<div className="font-medium">Vetted content</div>
-											<div className="text-muted-foreground">Curated readings and resources, no hallucinations</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div>
-								<h3 className="text-lg font-semibold mb-4">vs. Blank journal</h3>
-								<div className="space-y-3 text-sm">
-									<div className="flex items-start gap-3">
-										<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-										<div>
-											<div className="font-medium">Pre-written questions</div>
-											<div className="text-muted-foreground">Know exactly what to think through, no blank page anxiety</div>
-										</div>
-									</div>
-									<div className="flex items-start gap-3">
-										<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-										<div>
-											<div className="font-medium">Comprehensive coverage</div>
-											<div className="text-muted-foreground">Expert frameworks ensure you don't miss important considerations</div>
-										</div>
-									</div>
-									<div className="flex items-start gap-3">
-										<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-										<div>
-											<div className="font-medium">Guided progress</div>
-											<div className="text-muted-foreground">Track completion and see your progress as you work</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</motion.div>
 					</div>
+					<CategorySelection />
 				</div>
 			</section>
 
 			{/* Featured Guides */}
-			<section className="px-6 py-48 border-t border-border/40">
+			<section className="px-6 py-24 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<motion.div
-						className="mb-20"
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5 }}
-					>
+					<div className="mb-12">
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							Popular guides
 						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							See what others are working through. Wedding planning, career changes, relationship decisions,
-							and more — each with expert questions and curated resources.
-						</p>
-					</motion.div>
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5, delay: 0.1 }}
-					>
-						<PopularGuides />
-					</motion.div>
+					</div>
+					<PopularGuides />
 				</div>
 			</section>
 
-			{/* Community */}
-			<section className="px-6 py-48 border-t border-border/40">
+			{/* Simple footer */}
+			<section className="px-6 py-16 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<div className="mb-20">
-						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-							Built by the community
-						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							Like Wikipedia, our guides are created and refined by experts and users who've been there.
-							Submit your own, request what you need, and help others navigate life's big decisions.
-						</p>
-					</div>
-
-					<div className="grid lg:grid-cols-2 gap-16 items-center">
-						{/* Screenshot */}
-						<div>
-							<CommunityHub />
-						</div>
-
-						{/* Benefits */}
-						<div className="space-y-6">
-							<div className="space-y-3 text-sm">
-								<div className="flex items-start gap-3">
-									<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-									<div>
-										<div className="font-medium">Community-curated content</div>
-										<div className="text-muted-foreground">Like Wikipedia, guides are created and refined by experts and users</div>
-									</div>
-								</div>
-								<div className="flex items-start gap-3">
-									<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-									<div>
-										<div className="font-medium">Request what you need</div>
-										<div className="text-muted-foreground">Can't find a guide? Request it and the community will create it</div>
-									</div>
-								</div>
-								<div className="flex items-start gap-3">
-									<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-									<div>
-										<div className="font-medium">Verified experts</div>
-										<div className="text-muted-foreground">Guides are reviewed by domain experts to ensure quality and accuracy</div>
-									</div>
-								</div>
-								<div className="flex items-start gap-3">
-									<Check className="h-4 w-4 mt-0.5 flex-shrink-0 text-green-600 dark:text-green-400" />
-									<div>
-										<div className="font-medium">Submit your own guides</div>
-										<div className="text-muted-foreground">Share your expertise and help others navigate similar situations</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Stats */}
-			<section className="px-6 py-40 border-t border-border/40">
-				<div className="mx-auto max-w-6xl">
-					<div className="mb-16">
-						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-							By the numbers
-						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							A comprehensive library of frameworks, questions, and resources — all free, forever.
-						</p>
-					</div>
-					<div className="grid md:grid-cols-4 gap-12 text-center">
-						<div>
-							<div className="text-5xl font-semibold mb-3">1,200+</div>
-							<div className="text-sm text-muted-foreground">Life guides</div>
-						</div>
-						<div>
-							<div className="text-5xl font-semibold mb-3">104k+</div>
-							<div className="text-sm text-muted-foreground">Expert questions</div>
-						</div>
-						<div>
-							<div className="text-5xl font-semibold mb-3">25k+</div>
-							<div className="text-sm text-muted-foreground">Curated readings</div>
-						</div>
-						<div>
-							<div className="text-5xl font-semibold mb-3">100%</div>
-							<div className="text-sm text-muted-foreground">Free forever</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* FAQ */}
-			<section className="px-6 py-48 border-t border-border/40">
-				<div className="mx-auto max-w-3xl">
-					<div className="mb-20">
-						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-							Common questions
-						</h2>
-						<p className="text-base text-muted-foreground max-w-2xl">
-							Everything you need to know about how Templata works and what makes it different.
-						</p>
-					</div>
-
-					<div className="space-y-8">
-						<div>
-							<h3 className="font-medium mb-2">Is this therapy?</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed">
-								No. Templata provides structured self-guidance for everyday decisions.
-								If you're struggling with mental health, please see a licensed professional.
-							</p>
-						</div>
-
-						<div>
-							<h3 className="font-medium mb-2">Why is it free?</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed">
-								The core library is free — like Wikipedia. We may add optional premium guides later,
-								but the everyday guides stay free forever.
-							</p>
-						</div>
-
-						<div>
-							<h3 className="font-medium mb-2">How does privacy work?</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed">
-								Your answers save locally in your browser. We don't see them. Optional cloud sync
-								coming later, but local-first will always be available.
-							</p>
-						</div>
-
-						<div>
-							<h3 className="font-medium mb-2">Can I request a guide?</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed">
-								Yes. Use the "Request a Guide" button on any page. We review requests and may
-								create guides based on demand.
-							</p>
-						</div>
-
-						<div>
-							<h3 className="font-medium mb-2">How is this different from ChatGPT?</h3>
-							<p className="text-sm text-muted-foreground leading-relaxed">
-								ChatGPT gives generic responses. Templata provides pre-curated expert frameworks
-								with specific questions and vetted readings. You get structure, not generic advice.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* Simple footer CTA */}
-			<section className="px-6 py-32 border-t border-border/40">
-				<div className="mx-auto max-w-2xl text-center">
-					<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-						Ready to get started?
-					</h2>
-					<p className="text-base text-muted-foreground mb-8">
-						Browse 1,200+ expert guides. No signup. No credit card. Just frameworks that work.
-					</p>
-					<Button size="lg" asChild>
-						<Link href="/guides">
-							Browse all guides
-							<ArrowRight className="h-4 w-4" />
-						</Link>
-					</Button>
+					<Link href="/guides" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+						Browse all guides →
+					</Link>
 				</div>
 			</section>
 		</PageLayout>
