@@ -23,7 +23,7 @@ export async function GET(request: Request) {
       .from('questions')
       .select('*')
       .eq('guide_id', guideId)
-      .order('prompt_number', { ascending: true });
+      .order('question_number', { ascending: true });
 
     if (error) {
       console.error('Error fetching questions from DB:', error);
@@ -36,8 +36,8 @@ export async function GET(request: Request) {
     // Transform DB format to match expected API format
     const formattedQuestions = (questions || []).map(q => ({
       id: q.id,
-      prompt: q.prompt,
-      categoryName: q.prompt_group_category || 'Uncategorized',
+      question: q.question,
+      categoryName: q.question_group_category || 'Uncategorized',
       category: q.category
     }));
 

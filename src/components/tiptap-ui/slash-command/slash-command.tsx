@@ -183,7 +183,7 @@ export function SlashCommand({ editor, questions = [] }: SlashCommandProps) {
   )
 
   const filteredQuestions = questions.filter(prompt =>
-    prompt.prompt.toLowerCase().includes(search.toLowerCase()) ||
+    question.question.toLowerCase().includes(search.toLowerCase()) ||
     prompt.category.toLowerCase().includes(search.toLowerCase())
   )
 
@@ -232,7 +232,7 @@ export function SlashCommand({ editor, questions = [] }: SlashCommandProps) {
                       .focus()
                       .insertPrompt({
                         id: prompt.id,
-                        text: prompt.prompt,
+                        text: question.question,
                         category: prompt.category,
                         helpText: prompt.helpText,
                       })
@@ -242,7 +242,7 @@ export function SlashCommand({ editor, questions = [] }: SlashCommandProps) {
                 >
                   <MessageSquare className="w-4 h-4 mt-0.5 text-muted-foreground" />
                   <div className="flex-1">
-                    <div className="text-sm font-medium line-clamp-1">{prompt.prompt}</div>
+                    <div className="text-sm font-medium line-clamp-1">{question.question}</div>
                     <div className="text-xs text-muted-foreground">{prompt.category}</div>
                   </div>
                 </CommandItem>

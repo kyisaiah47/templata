@@ -99,7 +99,7 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
         .focus()
         .insertPrompt({
           id: prompt.id,
-          text: prompt.prompt,
+          text: question.question,
           category: prompt.category || 'General',
           helpText: prompt.helpText,
         })

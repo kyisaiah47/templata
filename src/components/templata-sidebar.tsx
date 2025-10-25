@@ -97,14 +97,14 @@ export function TemplataContentSidebar({
   // Convert registry questions to display format with categoryNumber and categoryName
   const displayPrompts = [...sectionPrompts, ...templateRegistryPrompts.map(p => ({
     id: p.id,
-    prompt: p.prompt,
+    question: p.question,
     category: p.category,
     categoryNumber: p.categoryNumber,
     categoryName: p.categoryName
   }))]
 
   const filteredQuestions = displayPrompts.filter((prompt: any) => {
-    const matchesSearch = prompt.prompt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = question.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       prompt.category?.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesCategoryName = categoryNameFilter === 'all' || prompt.categoryName === categoryNameFilter
     const matchesCategoryType = categoryTypeFilter === 'all' || prompt.category === categoryTypeFilter
@@ -417,7 +417,7 @@ export function TemplataContentSidebar({
                         <ArrowRight className="ml-auto w-3 h-3 opacity-30 group-hover/prompt:opacity-100 group-hover/prompt:translate-x-1 transition-all duration-200" />
                       )}
                     </div>
-                    <span className="font-medium line-clamp-3">{prompt.prompt}</span>
+                    <span className="font-medium line-clamp-3">{question.question}</span>
                     </button>
                   </SubtleGlow>
                 </div>

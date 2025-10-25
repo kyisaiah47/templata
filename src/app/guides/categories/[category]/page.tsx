@@ -219,7 +219,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                           <ol className="space-y-2 pl-6 list-decimal marker:text-sm">
                             {data.questions.slice(0, 5).map((prompt: any) => (
                               <li key={prompt.id} className="py-1 text-sm">
-                                {prompt.prompt}
+                                {question.question}
                               </li>
                             ))}
                           </ol>

@@ -281,7 +281,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
     itemListElement: questions.slice(0, 10).map((prompt, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: prompt.prompt.substring(0, 100),
+      name: question.question.substring(0, 100),
       item: `https://templata.org/guides/${slug}/marketing#prompt-${prompt.id}`
     }))
   } : null;
@@ -508,7 +508,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
                               className="group block py-2 hover:text-primary transition-colors"
                             >
                               <div className="text-sm">
-                                {prompt.prompt}
+                                {question.question}
                               </div>
                             </div>
                           ))}

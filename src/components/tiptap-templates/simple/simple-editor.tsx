@@ -271,7 +271,7 @@ export function SimpleEditor({ content = "", onUpdate, onSwitchMode, guideId }: 
     const templatePrompts = getPromptsByTemplate(guideId)
     return templatePrompts.map(p => ({
       id: p.id,
-      prompt: p.prompt,
+      question: p.question,
       category: p.category,
       helpText: p.helpText
     }))

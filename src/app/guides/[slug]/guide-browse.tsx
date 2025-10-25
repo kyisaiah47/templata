@@ -234,7 +234,7 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
                             key={prompt.id}
                             className="group py-2 text-sm hover:text-primary transition-colors"
                           >
-                            {prompt.prompt}
+                            {question.question}
                           </li>
                         ))}
                       </ol>

@@ -73,7 +73,7 @@ export function SignupForm({
                 const data = JSON.parse(stored);
                 reflectionData.push({
                   date: data.date,
-                  prompt: data.prompt,
+                  question: data.question,
                   content: data.content,
                   mood: data.mood,
                   tags: data.tags,

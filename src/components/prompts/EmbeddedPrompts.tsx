@@ -281,7 +281,7 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
                           transition={{ type: "spring", stiffness: 200, damping: 25 }}
                           containerClassName="text-lg font-semibold mb-2 text-foreground"
                         >
-                          {prompt.prompt}
+                          {question.question}
                         </VerticalCutReveal>
                         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-4">
                           <Badge variant="outline" className="text-xs opacity-60">
@@ -473,7 +473,7 @@ export function EmbeddedPrompts({ section, allItems = [], onResponsesChange, onR
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-sm text-foreground">
-                            {isPrompt ? (item as ReflectionPrompt).prompt : (item as FreeformNote).title}
+                            {isPrompt ? ((item as ReflectionQuestion).question : (item as FreeformNote).title}
                           </span>
                           {isPrompt && (
                             <Badge variant="outline" className="text-xs h-4 px-1 opacity-60">
