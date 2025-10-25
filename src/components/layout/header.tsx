@@ -34,6 +34,7 @@ export function Header() {
 	const [showFeaturesDropdown, setShowFeaturesDropdown] = React.useState(false)
 	const pathname = usePathname()
 	const { isLoggedIn, user, logout } = useAuth()
+	const timeoutRef = React.useRef<NodeJS.Timeout>()
 
 	React.useEffect(() => {
 		const handleScroll = () => {
@@ -57,6 +58,19 @@ export function Header() {
 	const scrollProgress = Math.min(scrollY / 100, 1)
 	const isScrolled = scrollY > 10
 	const isHomePage = pathname === "/"
+
+	const handleMouseEnter = () => {
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current)
+		}
+		setShowFeaturesDropdown(true)
+	}
+
+	const handleMouseLeave = () => {
+		timeoutRef.current = setTimeout(() => {
+			setShowFeaturesDropdown(false)
+		}, 150)
+	}
 
 	const features = [
 		{
@@ -150,14 +164,18 @@ export function Header() {
 						<div className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none">
 							<div className="flex items-center space-x-2 pointer-events-auto">
 								{/* Features Dropdown */}
-								<button
-									onMouseEnter={() => setShowFeaturesDropdown(true)}
-									onMouseLeave={() => setShowFeaturesDropdown(false)}
-									className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
+								<div
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
+									className="relative"
 								>
-									Features
-									<ChevronDown className="h-4 w-4" />
-								</button>
+									<button
+										className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
+									>
+										Features
+										<ChevronDown className="h-4 w-4" />
+									</button>
+								</div>
 
 								{/* How It Works */}
 								<Link
@@ -242,36 +260,40 @@ export function Header() {
 
 			{/* Full-Width Features Dropdown */}
 			<div
-				onMouseEnter={() => setShowFeaturesDropdown(true)}
-				onMouseLeave={() => setShowFeaturesDropdown(false)}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
 				className={cn(
-					"fixed top-[73px] left-0 right-0 z-40 bg-background border-b shadow-lg transition-all duration-200",
-					showFeaturesDropdown ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+					"fixed top-[57px] left-0 right-0 z-40 transition-all duration-200",
+					showFeaturesDropdown ? "opacity-100 visible" : "opacity-0 invisible"
 				)}
 			>
-				<div className="container mx-auto px-4 py-8">
-					<div className="grid grid-cols-3 gap-6 max-w-5xl mx-auto">
-						{features.map((feature) => {
-							const Icon = feature.icon
-							return (
-								<Link
-									key={feature.href}
-									href={feature.href}
-									className="group flex items-start gap-3 p-4 rounded-lg hover:bg-accent transition-colors"
-									onClick={() => setShowFeaturesDropdown(false)}
-								>
-									<div className="flex-shrink-0 h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-										<Icon className="h-5 w-5 text-primary" />
-									</div>
-									<div className="flex-1 min-w-0">
-										<div className="text-sm font-semibold mb-1">{feature.title}</div>
-										<p className="text-xs text-muted-foreground leading-relaxed">
-											{feature.description}
-										</p>
-									</div>
-								</Link>
-							)
-						})}
+				<div className="bg-background border-b shadow-sm">
+					<div className="container mx-auto px-6 py-12">
+						<div className="grid grid-cols-3 gap-x-8 gap-y-6 max-w-6xl mx-auto">
+							{features.map((feature) => {
+								const Icon = feature.icon
+								return (
+									<Link
+										key={feature.href}
+										href={feature.href}
+										className="group flex items-start gap-4 p-3 rounded-md hover:bg-accent/50 transition-all"
+										onClick={() => setShowFeaturesDropdown(false)}
+									>
+										<div className="flex-shrink-0 mt-0.5">
+											<Icon className="h-5 w-5 text-foreground/70 group-hover:text-foreground transition-colors" />
+										</div>
+										<div className="flex-1 min-w-0">
+											<div className="text-sm font-medium mb-1.5 text-foreground group-hover:text-foreground transition-colors">
+												{feature.title}
+											</div>
+											<p className="text-xs text-muted-foreground leading-relaxed">
+												{feature.description}
+											</p>
+										</div>
+									</Link>
+								)
+							})}
+						</div>
 					</div>
 				</div>
 			</div>
