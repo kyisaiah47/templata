@@ -89,7 +89,7 @@ export const getAllGuides = async (): Promise<GuideRegistryEntry[]> => {
 };
 
 // Legacy exports for compatibility
-export const getGuideById = getGuideById;
+export const getTemplateById = getGuideById;
 export const getTemplatesByCategory = getGuidesByCategory;
 export const searchTemplates = searchGuides;
 export const getAllTemplates = getAllGuides;
