@@ -3,10 +3,11 @@
 import React from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ThemeSelector } from "@/components/theme-selector"
 import { useAuth } from "@/contexts/auth-context"
-import { Search, LogOut, User } from "lucide-react"
+import { Search, LogOut, User, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
 	DropdownMenu,
@@ -17,12 +18,15 @@ import {
 
 export function DocsHeader() {
 	const { isLoggedIn, user, logout } = useAuth()
+	const pathname = usePathname()
+
+	const pageLabel = pathname?.startsWith('/guides') ? 'Guides' : 'Docs'
 
 	return (
 		<header className="fixed z-50 w-full border-b border-border bg-background">
 			<nav className="container mx-auto px-4 py-3">
 				<div className="flex items-center gap-6">
-					{/* Left side - Logo and Docs label */}
+					{/* Left side - Logo and Page Selector */}
 					<div className="flex items-center gap-4">
 						<Link href="/" className="flex items-center gap-2">
 							<Image
@@ -37,9 +41,24 @@ export function DocsHeader() {
 
 						<div className="h-4 w-px bg-border" />
 
-						<Link href="/guides" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-							Guides
-						</Link>
+						<DropdownMenu>
+							<DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+								{pageLabel}
+								<ChevronDown className="h-3.5 w-3.5" />
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="start">
+								<DropdownMenuItem asChild>
+									<Link href="/docs" className="w-full cursor-pointer">
+										Docs
+									</Link>
+								</DropdownMenuItem>
+								<DropdownMenuItem asChild>
+									<Link href="/guides" className="w-full cursor-pointer">
+										Guides
+									</Link>
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 
 					{/* Center - Search */}
