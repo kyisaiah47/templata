@@ -46,15 +46,6 @@ export default function DocsPage() {
       ]
     },
     {
-      id: 'community',
-      title: 'Community',
-      items: [
-        { title: 'Discussions', href: '/docs/discussions' },
-        { title: 'Request a Guide', href: '/docs/request-guide' },
-        { title: 'Guidelines', href: '/docs/community-guidelines' }
-      ]
-    },
-    {
       id: 'account',
       title: 'Account & Privacy',
       items: [
