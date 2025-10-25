@@ -117,9 +117,9 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar Navigation */}
-      <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-border h-[calc(100vh-3.5rem)] sticky top-14 overflow-y-auto bg-background">
+      <aside className="hidden lg:block w-64 flex-shrink-0 border-r border-border overflow-y-auto bg-background">
           <div className="py-6 px-4 space-y-6">
             <nav className="space-y-1">
               {sidebarSections.map((section) => (
@@ -162,7 +162,7 @@ export default function DocsPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-6xl mx-auto px-6 lg:px-12 py-8">
+          <div className="px-6 lg:px-12 py-8">
             {renderDocContent()}
           </div>
         </main>
