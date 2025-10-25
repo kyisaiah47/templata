@@ -22,6 +22,7 @@ import { CommunityHub } from "@/components/landing/CommunityHub";
 import { ExpertProfile } from "@/components/landing/ExpertProfile";
 import { SubmitGuide } from "@/components/landing/SubmitGuide";
 import { CommunityActivity } from "@/components/landing/CommunityActivity";
+import { motion } from "framer-motion";
 
 export default function LandingPage() {
 	const jsonLd = {
@@ -50,41 +51,72 @@ export default function LandingPage() {
 			{/* Hero Section - 3-line layout with CTA on right */}
 			<section className="relative px-6 pt-32 pb-20 md:pt-40 md:pb-24">
 				<div className="mx-auto max-w-7xl">
-					<div className="flex items-center justify-between">
+					<div className="flex items-end justify-between">
 						<div className="max-w-3xl">
-							<h1 className="text-6xl font-semibold tracking-tight md:text-8xl leading-[0.95]">
+							<motion.h1
+								className="text-6xl font-semibold tracking-tight md:text-8xl leading-[0.95]"
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.5, delay: 0 }}
+							>
 								Wikipedia
-							</h1>
-							<h2 className="text-6xl font-semibold tracking-tight md:text-8xl leading-[0.95]">
+							</motion.h1>
+							<motion.h2
+								className="text-6xl font-semibold tracking-tight md:text-8xl leading-[0.95]"
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.5, delay: 0.1 }}
+							>
 								×
-							</h2>
-							<h3 className="text-6xl font-semibold tracking-tight md:text-8xl leading-[0.95]">
+							</motion.h2>
+							<motion.h3
+								className="text-6xl font-semibold tracking-tight md:text-8xl leading-[0.95]"
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.5, delay: 0.2 }}
+							>
 								Notion
-							</h3>
+							</motion.h3>
 						</div>
-						<div>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.5, delay: 0.3 }}
+						>
 							<Button size="lg" asChild>
 								<Link href="/guides">
 									Get Started
 									<ArrowRight className="h-4 w-4" />
 								</Link>
 							</Button>
-						</div>
+						</motion.div>
 					</div>
 				</div>
 			</section>
 
 			{/* Hero Screenshot - Wider layout */}
 			<section className="px-6 pb-40">
-				<div className="mx-auto max-w-[1400px]">
+				<motion.div
+					className="mx-auto max-w-[1400px]"
+					initial={{ opacity: 0, y: 40 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, margin: "-100px" }}
+					transition={{ duration: 0.6 }}
+				>
 					<HeroWorkspace />
-				</div>
+				</motion.div>
 			</section>
 
 			{/* How It Works - 2x2 grid */}
 			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-5xl">
-					<div className="mb-20">
+					<motion.div
+						className="mb-20"
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5 }}
+					>
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							How it works
 						</h2>
@@ -92,40 +124,64 @@ export default function LandingPage() {
 							No AI. No blank pages. Just expert-designed frameworks ready to use.
 							Pick a guide, answer thoughtful questions, and export when you're done.
 						</p>
-					</div>
+					</motion.div>
 
 					<div className="grid md:grid-cols-2 gap-16">
-						<div className="space-y-4">
+						<motion.div
+							className="space-y-4"
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.1 }}
+						>
 							<h3 className="text-lg font-semibold">1. Pick a situation</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
 								Browse 1,200+ guides for career, relationships, health, and life events.
 							</p>
 							<BrowseGuides />
-						</div>
+						</motion.div>
 
-						<div className="space-y-4">
+						<motion.div
+							className="space-y-4"
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.2 }}
+						>
 							<h3 className="text-lg font-semibold">2. Open the guide</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
 								See guided questions and curated reading in split-screen.
 							</p>
 							<SplitScreenOpen />
-						</div>
+						</motion.div>
 
-						<div className="space-y-4">
+						<motion.div
+							className="space-y-4"
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.3 }}
+						>
 							<h3 className="text-lg font-semibold">3. Work through it</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
 								Answer questions and review decisions. Everything saves locally.
 							</p>
 							<WorkspaceActive />
-						</div>
+						</motion.div>
 
-						<div className="space-y-4">
+						<motion.div
+							className="space-y-4"
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.4 }}
+						>
 							<h3 className="text-lg font-semibold">4. Export or return</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed mb-4">
 								Download as PDF or come back anytime — your progress is saved.
 							</p>
 							<ExportOverview />
-						</div>
+						</motion.div>
 					</div>
 				</div>
 			</section>
@@ -133,7 +189,13 @@ export default function LandingPage() {
 			{/* Categories */}
 			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<div className="mb-20">
+					<motion.div
+						className="mb-20"
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5 }}
+					>
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							Browse by category
 						</h2>
@@ -141,15 +203,28 @@ export default function LandingPage() {
 							From life events to relationships, career moves to personal growth — find expert frameworks
 							for the decisions that shape your life.
 						</p>
-					</div>
-					<CategorySelection />
+					</motion.div>
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5, delay: 0.1 }}
+					>
+						<CategorySelection />
+					</motion.div>
 				</div>
 			</section>
 
 			{/* Why different */}
 			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<div className="mb-20">
+					<motion.div
+						className="mb-20"
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5 }}
+					>
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							Not just another tool
 						</h2>
@@ -157,16 +232,27 @@ export default function LandingPage() {
 							AI gives you generic advice. Blank journals leave you stuck. Templata gives you
 							expert frameworks with the exact questions you need to answer.
 						</p>
-					</div>
+					</motion.div>
 
 					<div className="grid lg:grid-cols-2 gap-16 items-center">
 						{/* Screenshot */}
-						<div>
+						<motion.div
+							initial={{ opacity: 0, x: -20 }}
+							whileInView={{ opacity: 1, x: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.1 }}
+						>
 							<StructuredGuide />
-						</div>
+						</motion.div>
 
 						{/* Comparisons */}
-						<div className="space-y-8">
+						<motion.div
+							className="space-y-8"
+							initial={{ opacity: 0, x: 20 }}
+							whileInView={{ opacity: 1, x: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.2 }}
+						>
 							<div>
 								<h3 className="text-lg font-semibold mb-4">vs. ChatGPT / AI</h3>
 								<div className="space-y-3 text-sm">
@@ -220,7 +306,7 @@ export default function LandingPage() {
 									</div>
 								</div>
 							</div>
-						</div>
+						</motion.div>
 					</div>
 				</div>
 			</section>
@@ -228,7 +314,13 @@ export default function LandingPage() {
 			{/* Featured Guides */}
 			<section className="px-6 py-48 border-t border-border/40">
 				<div className="mx-auto max-w-6xl">
-					<div className="mb-20">
+					<motion.div
+						className="mb-20"
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5 }}
+					>
 						<h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
 							Popular guides
 						</h2>
@@ -236,8 +328,15 @@ export default function LandingPage() {
 							See what others are working through. Wedding planning, career changes, relationship decisions,
 							and more — each with expert questions and curated resources.
 						</p>
-					</div>
-					<PopularGuides />
+					</motion.div>
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5, delay: 0.1 }}
+					>
+						<PopularGuides />
+					</motion.div>
 				</div>
 			</section>
 
