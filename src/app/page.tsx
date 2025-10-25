@@ -70,13 +70,21 @@ export default function LandingPage() {
 								×
 							</motion.h2>
 							<motion.h3
-								className="text-[4rem] font-medium tracking-[-0.02em] md:text-[6rem] leading-[0.9]"
+								className="text-[4rem] font-medium tracking-[-0.02em] md:text-[6rem] leading-[0.9] mb-6"
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.5, delay: 0.2 }}
 							>
 								Notion
 							</motion.h3>
+							<motion.p
+								className="text-base text-muted-foreground leading-relaxed max-w-lg"
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.5, delay: 0.25 }}
+							>
+								Expert-curated guides for life's biggest decisions
+							</motion.p>
 						</div>
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
@@ -84,8 +92,8 @@ export default function LandingPage() {
 							transition={{ duration: 0.5, delay: 0.3 }}
 						>
 							<Button size="lg" asChild className="font-medium">
-								<Link href="/docs">
-									Learn More
+								<Link href="/guides">
+									Browse Guides
 									<ArrowRight className="h-4 w-4" />
 								</Link>
 							</Button>
