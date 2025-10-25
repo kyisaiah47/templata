@@ -268,31 +268,28 @@ export function Header() {
 				)}
 			>
 				<div className="bg-background border-b shadow-sm">
-					<div className="container mx-auto px-6 py-12">
-						<div className="grid grid-cols-3 gap-x-8 gap-y-6 max-w-6xl mx-auto">
-							{features.map((feature) => {
-								const Icon = feature.icon
-								return (
+					<div className="container mx-auto px-8 py-8">
+						<div className="max-w-5xl mx-auto">
+							<div className="mb-6">
+								<h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Features</h3>
+							</div>
+							<div className="grid grid-cols-3 gap-x-12 gap-y-1">
+								{features.map((feature) => (
 									<Link
 										key={feature.href}
 										href={feature.href}
-										className="group flex items-start gap-4 p-3 rounded-md hover:bg-accent/50 transition-all"
+										className="group block py-2 hover:bg-accent/30 px-2 -mx-2 rounded transition-colors"
 										onClick={() => setShowFeaturesDropdown(false)}
 									>
-										<div className="flex-shrink-0 mt-0.5">
-											<Icon className="h-5 w-5 text-foreground/70 group-hover:text-foreground transition-colors" />
+										<div className="text-[15px] font-medium mb-0.5 text-foreground">
+											{feature.title}
 										</div>
-										<div className="flex-1 min-w-0">
-											<div className="text-sm font-medium mb-1.5 text-foreground group-hover:text-foreground transition-colors">
-												{feature.title}
-											</div>
-											<p className="text-xs text-muted-foreground leading-relaxed">
-												{feature.description}
-											</p>
-										</div>
+										<p className="text-xs text-muted-foreground leading-relaxed">
+											{feature.description}
+										</p>
 									</Link>
-								)
-							})}
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
