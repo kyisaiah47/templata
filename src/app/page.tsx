@@ -47,41 +47,44 @@ export default function LandingPage() {
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
 
-			{/* Hero Section - Linear style: centered, lots of space */}
-			<section className="relative px-6 pt-40 pb-32 md:pt-56 md:pb-40">
-				<div className="mx-auto max-w-4xl text-center">
-					<h1 className="text-5xl font-semibold tracking-tight md:text-7xl mb-8">
-						Wikipedia × Notion
-						<br />
-						<span>for life planning</span>
-					</h1>
+			{/* Hero Section - Left-aligned, 3-line layout */}
+			<section className="relative px-6 pt-32 pb-20 md:pt-40 md:pb-24">
+				<div className="mx-auto max-w-7xl">
+					<div className="max-w-3xl">
+						<h1 className="text-6xl font-semibold tracking-tight md:text-8xl mb-6 leading-[0.95]">
+							Wikipedia × Notion
+						</h1>
+						<h2 className="text-6xl font-semibold tracking-tight md:text-8xl mb-8 leading-[0.95]">
+							for life planning
+						</h2>
 
-					<p className="text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-						Expert-curated guides for life's biggest decisions.
-						Get the framework — not a blank page.
-					</p>
+						<p className="text-xl mb-10 leading-relaxed text-muted-foreground max-w-2xl">
+							Expert-curated guides for life's biggest decisions.
+							Get the framework — not a blank page.
+						</p>
 
-					<div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
-						<Button size="lg" asChild>
-							<Link href="/guides">
-								Browse Guides
-								<ArrowRight className="h-4 w-4" />
-							</Link>
-						</Button>
-						<Button variant="outline" size="lg" asChild>
-							<Link href="/app">Try Demo</Link>
-						</Button>
+						<div className="flex flex-col sm:flex-row items-start gap-3 mb-10">
+							<Button size="lg" asChild>
+								<Link href="/guides">
+									Browse Guides
+									<ArrowRight className="h-4 w-4" />
+								</Link>
+							</Button>
+							<Button variant="outline" size="lg" asChild>
+								<Link href="/app">Try Demo</Link>
+							</Button>
+						</div>
+
+						<p className="text-sm text-muted-foreground">
+							No signup needed · Export to PDF anytime · 100% free
+						</p>
 					</div>
-
-					<p className="text-sm text-muted-foreground">
-						No signup needed · Export to PDF anytime · 100% free
-					</p>
 				</div>
 			</section>
 
-			{/* Hero Screenshot - Code-based UI */}
+			{/* Hero Screenshot - Wider layout */}
 			<section className="px-6 pb-40">
-				<div className="mx-auto max-w-6xl">
+				<div className="mx-auto max-w-[1400px]">
 					<HeroWorkspace />
 				</div>
 			</section>
