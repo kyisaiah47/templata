@@ -151,7 +151,7 @@ export async function shareTemplate(
 
 // Add comment to template
 export function addComment(
-  template: ShareableTemplate,
+  guide: ShareableTemplate,
   sectionId: string,
   text: string,
   questionId?: string
@@ -227,17 +227,17 @@ export function getRecentCollaborations(userId: string, limit: number = 5): Shar
 }
 
 // Permission helpers
-export function canEdit(template: ShareableTemplate, userId: string): boolean {
+export function canEdit(guide: ShareableTemplate, userId: string): boolean {
   const collaborator = template.collaborators.find(c => c.id === userId)
   return collaborator?.role === "owner" || collaborator?.role === "editor" || template.permissions.edit
 }
 
-export function canComment(template: ShareableTemplate, userId: string): boolean {
+export function canComment(guide: ShareableTemplate, userId: string): boolean {
   const collaborator = template.collaborators.find(c => c.id === userId)
   return collaborator !== undefined || template.permissions.comment
 }
 
-export function canShare(template: ShareableTemplate, userId: string): boolean {
+export function canShare(guide: ShareableTemplate, userId: string): boolean {
   const collaborator = template.collaborators.find(c => c.id === userId)
   return collaborator?.role === "owner" || template.permissions.share
 }

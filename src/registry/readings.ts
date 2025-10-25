@@ -6,7 +6,7 @@ export const articleRegistry: any[] = [];
 // Export all readings as array for backward compatibility
 export const readings = articleRegistry;
 
-// Helper function to get article by ID
+// Helper function to get reading by ID
 export async function getArticleById(id: string) {
   const { data, error } = await supabase
     .from('readings')
@@ -33,12 +33,12 @@ export async function getArticleById(id: string) {
       metaTitle: data.meta_title,
       metaDescription: data.meta_description
     },
-    template: data.template
+    guide: data.template
   };
 }
 
-// Helper function to get article by slug
-export async function getArticleBySlug(slug: string) {
+// Helper function to get reading by slug
+export async function getReadingBySlug(slug: string) {
   const { data, error } = await supabase
     .from('readings')
     .select('*')
@@ -64,7 +64,7 @@ export async function getArticleBySlug(slug: string) {
       metaTitle: data.meta_title,
       metaDescription: data.meta_description
     },
-    template: data.template
+    guide: data.template
   };
 }
 
@@ -102,14 +102,14 @@ export async function getArticlesByTemplate(guideId: string) {
   return data;
 }
 
-// Helper function to get all available article IDs
+// Helper function to get all available reading IDs
 export async function getArticleIds(): Promise<string[]> {
   const { data, error } = await supabase
     .from('readings')
     .select('id');
 
   if (error || !data) return [];
-  return data.map((reading: any) => article.id);
+  return data.map((reading: any) => reading.id);
 }
 
 // Helper function to get paginated readings
@@ -129,27 +129,27 @@ export async function getArticles(page = 1, pageSize = 50) {
   }
 
   const readings = data.map((reading: any) => ({
-    id: article.id,
-    title: article.title,
-    excerpt: article.excerpt,
-    content: article.content,
-    author: article.author,
-    publishedAt: article.published_at,
-    updatedAt: article.updated_at,
-    readTime: article.read_time,
-    category: article.category,
-    featured: article.featured,
-    tags: article.tags,
-    slug: article.slug,
-    type: article.type,
-    difficulty: article.difficulty,
+    id: reading.id,
+    title: reading.title,
+    excerpt: reading.excerpt,
+    content: reading.content,
+    author: reading.author,
+    publishedAt: reading.published_at,
+    updatedAt: reading.updated_at,
+    readTime: reading.read_time,
+    category: reading.category,
+    featured: reading.featured,
+    tags: reading.tags,
+    slug: reading.slug,
+    type: reading.type,
+    difficulty: reading.difficulty,
     seo: {
-      metaTitle: article.meta_title,
-      metaDescription: article.meta_description,
-      ogImage: article.og_image
+      metaTitle: reading.meta_title,
+      metaDescription: reading.meta_description,
+      ogImage: reading.og_image
     },
-    template: article.template,
-    relatedPosts: article.related_posts
+    guide: reading.template,
+    relatedPosts: reading.related_posts
   }));
 
   return { readings, total: count || 0 };

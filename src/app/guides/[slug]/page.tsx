@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
-import { getTemplateById } from '@/registry/guides';
+import { getGuideById } from '@/registry/guides';
 import GuideBrowse from './guide-browse';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const template = await getTemplateById(slug);
+  const guide = await getGuideById(slug);
 
-  if (!template?.template) {
+  if (!guide?.template) {
     return {
       title: 'Template Not Found | Templata',
-      description: 'The requested template could not be found.',
+      description: 'The requested guide could not be found.',
       robots: {
         index: false,
         follow: false,
@@ -17,14 +17,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
-  const guideData = template.template;
+  const guideData = guide.guide;
   const title = `${guideData.title} Template | Templata`;
-  const description = `${guideData.description} Complete template with questions, readings, and guided steps. Save 80+ hours with our AI-powered ${guideData.title.toLowerCase()} template.`;
+  const description = `${guideData.description} Complete guide with questions, readings, and guided steps. Save 80+ hours with our AI-powered ${guideData.title.toLowerCase()} guide.`;
 
   return {
     title,
     description,
-    keywords: `${guideData.title.toLowerCase()} template, ${guideData.category.toLowerCase()}, life planning template, structured planning, templata`,
+    keywords: `${guideData.title.toLowerCase()} guide, ${guideData.category.toLowerCase()}, life planning guide, structured planning, templata`,
     authors: [{ name: 'Templata Team' }],
     creator: 'Templata',
     publisher: 'Templata',

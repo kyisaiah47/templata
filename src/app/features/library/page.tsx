@@ -77,7 +77,7 @@ export default function LibraryPage() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Full-Text Search</h3>
                 <p className="text-muted-foreground">
-                  Search across all saved resources—titles, content, your notes. Instantly find that article you remember reading.
+                  Search across all saved resources—titles, content, your notes. Instantly find that reading you remember reading.
                 </p>
               </div>
 

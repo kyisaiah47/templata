@@ -97,7 +97,7 @@ export default function ChangelogPage() {
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Public Beta Launch</h3>
                   <p className="mb-4">
-                    Templata is now live in public beta with a comprehensive template library for life planning.
+                    Templata is now live in public beta with a comprehensive guide library for life planning.
                   </p>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>1,298 guides across all life categories</li>

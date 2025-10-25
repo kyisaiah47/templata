@@ -81,7 +81,7 @@ export interface UseKnowledgeGraphReturn {
   getArticlesForTemplate: (guideId: string, limit?: number) => ArticleConnection[];
   getRelatedPrompts: (questionId: string, limit?: number) => PromptConnection[];
   getPromptsForTemplate: (guideId: string, limit?: number) => PromptConnection[];
-  getCrossRecommendations: (contentType: 'template' | 'article' | 'question', contentId: string) => CrossConnection[];
+  getCrossRecommendations: (contentType: 'template' | 'reading' | 'question', contentId: string) => CrossConnection[];
 }
 
 export function useKnowledgeGraph(): UseKnowledgeGraphReturn {
@@ -110,13 +110,13 @@ export function useKnowledgeGraph(): UseKnowledgeGraphReturn {
     }
   }, [clearError]);
 
-  // Get related templates with memoization
+  // Get related guides with memoization
   const getRelatedTemplatesMemo = useCallback((guideId: string, limit = 5) => {
     try {
       clearError();
       return getRelatedTemplates(guideId, limit);
     } catch (err) {
-      setError(`Failed to get related templates for ${guideId}`);
+      setError(`Failed to get related guides for ${guideId}`);
       return [];
     }
   }, [clearError]);

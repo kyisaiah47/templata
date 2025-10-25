@@ -7,7 +7,7 @@ export interface FavoriteItem {
   name: string
   url: string
   category: string
-  type: "template" | "article"
+  type: "template" | "reading"
   addedAt: number
 }
 

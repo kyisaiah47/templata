@@ -3,7 +3,7 @@
 import { use, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import type { TemplateRegistryEntry } from '@/registry/guides';
+import type { GuideRegistryEntry } from '@/registry/guides';
 import { PageLayout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -35,10 +35,10 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
   const router = useRouter();
   const { slug } = use(params);
 
-  const [template, setTemplate] = useState<TemplateRegistryEntry | null>(null);
+  const [template, setTemplate] = useState<GuideRegistryEntry | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [readings, setReadings] = useState<Reading[]>([]);
-  const [relatedGuides, setRelatedTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [relatedGuides, setRelatedTemplates] = useState<GuideRegistryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
 
@@ -47,25 +47,25 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
       try {
         setLoading(true);
 
-        // Fetch template data
+        // Fetch guide data
         const templatesRes = await fetch('/api/guides');
         const guidesData = await templatesRes.json();
         const foundGuide = guidesData.templates?.find((t:GuideRegistryEntry) => t.id === slug);
-        setTemplate(foundGuide || null);
+        setGuide(foundGuide || null);
 
         // Fetch questions
         const questionsRes = await fetch(`/api/questions?guideId=${slug}`);
         const questionsData = await questionsRes.json();
         setQuestions(questionsData.questions || []);
 
-        // Fetch readings for this template (server-side filtering)
-        const readingsRes = await fetch(`/api/readings?template=${slug}&pageSize=1000`);
+        // Fetch readings for this guide (server-side filtering)
+        const readingsRes = await fetch(`/api/readings?guide=${slug}&pageSize=1000`);
         const readingsData = await readingsRes.json();
 
         console.log('[Template Browse] Articles for', slug, ':', readingsData.readings?.length || 0);
         setReadings(readingsData.readings || []);
 
-        // Fetch related templates (same category, exclude current)
+        // Fetch related guides (same category, exclude current)
         if (foundGuide) {
           const related = guidesData.templates
             ?.filter((t:GuideRegistryEntry) =>
@@ -75,7 +75,7 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
           setRelatedTemplates(related);
         }
       } catch (error) {
-        console.error('Error fetching template data:', error);
+        console.error('Error fetching guide data:', error);
       } finally {
         setLoading(false);
       }
@@ -96,7 +96,7 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
 
   const questionCategories = Object.keys(groupedQuestions).sort();
 
-  if (!template?.template) {
+  if (!guide?.template) {
     return (
       <PageLayout>
         <div className="container mx-auto px-4 py-16">
@@ -106,7 +106,7 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
     );
   }
 
-  const guideData = template.template;
+  const guideData = guide.guide;
 
   const handleInsertQuestion = async (question: Question) => {
     try {
@@ -123,14 +123,14 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
 
   const handleReadArticle = async (reading: Reading) => {
     try {
-      // Store article data for workspace to use
-      sessionStorage.setItem('workspace-open-article', JSON.stringify(article));
+      // Store reading data for workspace to use
+      sessionStorage.setItem('workspace-open-reading', JSON.stringify(reading));
 
       // Redirect to workspace
       router.push('/workspace');
     } catch (error) {
-      console.error('Error opening article:', error);
-      alert('Failed to open article. Please try again.');
+      console.error('Error opening reading:', error);
+      alert('Failed to open reading. Please try again.');
     }
   };
 
@@ -267,15 +267,15 @@ export default function GuideBrowse({ params }: GuideBrowseProps) {
             <ol className="space-y-3 pl-6 list-decimal marker:text-sm border-t pt-6">
               {readings.map((reading) => (
                 <li
-                  key={article.id}
+                  key={reading.id}
                   className="group py-2"
                 >
-                  <Link href={`/readings/${article.slug}`}>
+                  <Link href={`/readings/${reading.slug}`}>
                     <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
-                      {article.title}
+                      {reading.title}
                     </h3>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                      <span>{article.readTime}</span>
+                      <span>{reading.readTime}</span>
                     </div>
                   </Link>
                 </li>

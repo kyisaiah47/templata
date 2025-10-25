@@ -127,7 +127,7 @@ export default function DailyPage() {
                 <div className="md:order-2">
                   <h3 className="text-2xl font-bold mb-4">Track micro-progress between milestones</h3>
                   <p className="text-muted-foreground mb-4">
-                    Big projects have long gaps between major wins. Daily notes capture the small stuff: a good conversation, a helpful article, a small realization.
+                    Big projects have long gaps between major wins. Daily notes capture the small stuff: a good conversation, a helpful reading, a small realization.
                   </p>
                   <p className="text-muted-foreground">
                     Week to week, you see progress accumulating even when nothing dramatic happened.

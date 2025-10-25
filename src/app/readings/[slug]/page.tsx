@@ -2,18 +2,18 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
 import { PageLayout } from "@/components/layout";
-import { getArticleBySlug, getRelatedArticles, getArticlesByCategory } from "@/registry/readings";
-import { getTemplateById } from "@/registry/guides";
+import { getReadingBySlug, getRelatedArticles, getArticlesByCategory } from "@/registry/readings";
+import { getGuideById } from "@/registry/guides";
 import { ReadingContent } from "./reading-content";
 
 // Metadata is handled in layout.tsx
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const blogPost = await getArticleBySlug(slug);
+  const blogPost = await getReadingBySlug(slug);
 
-  // Get template name if article has a template
-  const guideInfo = blogPost?.template ? await getTemplateById(blogPost.template) : null;
+  // Get guide name if reading has a template
+  const guideInfo = blogPost?.template ? await getGuideById(blogPost.template) : null;
 
   // Get related posts with multiple fallback strategies
   let relatedPosts = [];
@@ -34,7 +34,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <PageLayout>
         <div className="py-24 md:py-32 text-center">
           <h1 className="text-4xl font-bold mb-4">Article Not Found</h1>
-          <p className="text-muted-foreground">The article you&apos;re looking for doesn&apos;t exist.</p>
+          <p className="text-muted-foreground">The reading you&apos;re looking for doesn&apos;t exist.</p>
         </div>
       </PageLayout>
     );
@@ -51,7 +51,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               {guideInfo && (
                 <>
                   <Link href={`/guides/${blogPost.template}`} className="hover:text-primary transition-colors">
-                    {guideInfo.template.title}
+                    {guideInfo.guide.title}
                   </Link>
                   <span>·</span>
                 </>

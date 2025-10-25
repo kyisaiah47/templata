@@ -9,11 +9,11 @@ export interface GuideRegistryEntry {
   url: string;
   color: string;
   iconColor: string;
-  template: GuidanceTemplate;
+  guide: GuidanceTemplate;
 }
 
 // Legacy type alias for compatibility
-export type TemplateRegistryEntry = GuideRegistryEntry;
+export type GuideRegistryEntry = GuideRegistryEntry;
 
 // Helper function to get colors based on category
 function getCategoryColors(category: string): { bg: string; icon: string } {
@@ -89,7 +89,7 @@ export const getAllGuides = async (): Promise<GuideRegistryEntry[]> => {
 };
 
 // Legacy exports for compatibility
-export const getTemplateById = getGuideById;
+export const getGuideById = getGuideById;
 export const getTemplatesByCategory = getGuidesByCategory;
 export const searchTemplates = searchGuides;
 export const getAllTemplates = getAllGuides;

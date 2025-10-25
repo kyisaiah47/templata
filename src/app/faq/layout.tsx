@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'FAQ | Frequently Asked Questions About Templata',
-  description: 'Get answers to common questions about Templata\'s life planning templates, pricing, features, and how our intelligently designed frameworks can help organize your biggest moments.',
-  keywords: 'templata faq, frequently asked questions, life planning help, template pricing, how templata works, axiom engine templates guide, life organization questions',
+  description: 'Get answers to common questions about Templata\'s life planning guides, pricing, features, and how our intelligently designed frameworks can help organize your biggest moments.',
+  keywords: 'templata faq, frequently asked questions, life planning help, guide pricing, how templata works, axiom engine guides guide, life organization questions',
   openGraph: {
     title: 'FAQ | Frequently Asked Questions About Templata',
-    description: 'Get answers to common questions about Templata\'s life planning templates, pricing, features, and intelligent frameworks.',
+    description: 'Get answers to common questions about Templata\'s life planning guides, pricing, features, and intelligent frameworks.',
     url: 'https://templata.org/faq',
     siteName: 'Templata',
     images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'FAQ | Frequently Asked Questions About Templata',
-    description: 'Get answers to common questions about Templata\'s life planning templates and intelligent frameworks.',
+    description: 'Get answers to common questions about Templata\'s life planning guides and intelligent frameworks.',
     images: ['https://templata.org/og-image-faq.png'],
   },
   robots: {
@@ -57,7 +57,7 @@ export default function FAQLayout({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             "name": "Templata Frequently Asked Questions",
-            "description": "Common questions and answers about Templata's life planning templates and services",
+            "description": "Common questions and answers about Templata's life planning guides and services",
             "url": "https://templata.org/faq",
             "mainEntity": [
               {

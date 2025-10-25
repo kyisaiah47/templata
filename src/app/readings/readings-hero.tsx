@@ -28,7 +28,7 @@ export function ReadingsHero() {
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Every article is carefully curated to provide actionable guidance, research-backed insights, and practical wisdom for navigating major life decisions.
+            Every reading is carefully curated to provide actionable guidance, research-backed insights, and practical wisdom for navigating major life decisions.
           </p>
         </motion.div>
       </div>

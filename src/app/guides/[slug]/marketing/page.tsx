@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
-import { getTemplateById } from '@/registry/guides';
+import { getGuideById } from '@/registry/guides';
 import MarketingClient from './marketing-client';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const template = await getTemplateById(slug);
+  const guide = await getGuideById(slug);
 
-  if (!template?.template) {
+  if (!guide?.template) {
     return {
       title: 'Template Not Found | Templata',
-      description: 'The requested template could not be found.',
+      description: 'The requested guide could not be found.',
       robots: {
         index: false,
         follow: false,
@@ -17,12 +17,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
-  const guideData = template.template;
+  const guideData = guide.guide;
 
   // Generate long-tail keywords
   const baseKeywords = [
     guideData.title.toLowerCase(),
-    `${guideData.title.toLowerCase()} template`,
+    `${guideData.title.toLowerCase()} guide`,
     `${guideData.title.toLowerCase()} planning`,
     `${guideData.title.toLowerCase()} checklist`,
     `${guideData.title.toLowerCase()} guide`,
@@ -30,20 +30,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     `${guideData.title.toLowerCase()} organization`,
     guideData.category.toLowerCase(),
     `${guideData.category.toLowerCase()} template`,
-    'life planning template',
+    'life planning guide',
     'ai planning tool',
     'templata',
     'life organization',
     'planning questions',
     'expert readings',
     'structured planning',
-    'ai-powered template',
+    'ai-powered guide',
     'life os',
     'planning workspace'
   ];
 
   const title = `${guideData.title} Template - Complete Planning Guide with AI | Templata`;
-  const description = `${guideData.description} Access expert ${guideData.title.toLowerCase()} planning with questions, readings, and AI-powered guidance. Save 80+ hours with our comprehensive ${guideData.title.toLowerCase()} template. Free to start.`;
+  const description = `${guideData.description} Access expert ${guideData.title.toLowerCase()} planning with questions, readings, and AI-powered guidance. Save 80+ hours with our comprehensive ${guideData.title.toLowerCase()} guide. Free to start.`;
 
   return {
     title,

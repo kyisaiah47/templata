@@ -14,7 +14,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import type { TemplateRegistryEntry } from "@/registry/guides"
+import type { GuideRegistryEntry } from "@/registry/guides"
 
 interface NavTemplateSelectorProps {
   selectedGuideId: string | null;
@@ -22,7 +22,7 @@ interface NavTemplateSelectorProps {
 }
 
 export function NavTemplateSelector({ selectedGuideId, onTemplateChange }: NavTemplateSelectorProps) {
-  const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([])
+  const [templates, setTemplates] = useState<GuideRegistryEntry[]>([])
 
   useEffect(() => {
     async function fetchTemplates() {
@@ -50,12 +50,12 @@ export function NavTemplateSelector({ selectedGuideId, onTemplateChange }: NavTe
         <CollapsibleContent>
           <SidebarMenuSub className="max-h-[200px] overflow-y-auto">
             {templates.map((guide) => (
-              <SidebarMenuSubItem key={template.id}>
+              <SidebarMenuSubItem key={guide.id}>
                 <SidebarMenuSubButton
-                  onClick={() => onTemplateChange(template.id)}
-                  isActive={selectedGuideId === template.id}
+                  onClick={() => onTemplateChange(guide.id)}
+                  isActive={selectedGuideId === guide.id}
                 >
-                  {template.name}
+                  {guide.name}
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             ))}

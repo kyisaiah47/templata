@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
-import { getArticleBySlug } from '@/registry/readings';
+import { getReadingBySlug } from '@/registry/readings';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
+  const reading = await getReadingBySlug(slug);
 
-  if (!article) {
+  if (!reading) {
     return {
-      title: 'Article Not Found | Templata',
-      description: 'The requested article could not be found.',
+      title: 'Reading Not Found | Templata',
+      description: 'The requested reading could not be found.',
       robots: {
         index: false,
         follow: false,
@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
-  const title = `${article.title} | Templata`;
-  const description = (article as any).description || `${article.excerpt} Expert guidance and insights for ${article.category?.toLowerCase() || 'life planning'}.`;
+  const title = `${reading.title} | Templata`;
+  const description = (reading as any).description || `${reading.excerpt} Expert guidance and insights for ${reading.category?.toLowerCase() || 'life planning'}.`;
 
   return {
     title,
     description,
-    keywords: `${article.title?.toLowerCase() || 'article'}, ${article.category?.toLowerCase() || 'planning'}, life planning, ${article.tags?.join(', ') || ''}, templata readings, expert guidance`,
+    keywords: `${reading.title?.toLowerCase() || 'reading'}, ${reading.category?.toLowerCase() || 'planning'}, life planning, ${reading.tags?.join(', ') || ''}, templata readings, expert guidance`,
     authors: [{ name: 'Templata Team' }],
     creator: 'Templata',
     publisher: 'Templata',
@@ -40,15 +40,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           url: `/readings/${slug}-preview.jpg`,
           width: 1200,
           height: 630,
-          alt: `${article.title} - Expert Guidance Article`,
+          alt: `${reading.title} - Expert Guidance Reading`,
         },
       ],
       locale: 'en_US',
-      type: 'article',
-      publishedTime: article.publishedAt,
-      modifiedTime: article.updatedAt || article.publishedAt,
-      section: article.category,
-      tags: article.tags,
+      type: 'reading',
+      publishedTime: reading.publishedAt,
+      modifiedTime: reading.updatedAt || reading.publishedAt,
+      section: reading.category,
+      tags: reading.tags,
     },
     twitter: {
       card: 'summary_large_image',
@@ -72,14 +72,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default function ArticleLayout({
+export default function ReadingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <>
-      {/* Article structured data is handled dynamically in the page component */}
+      {/* Reading structured data is handled dynamically in the page component */}
       {children}
     </>
   );

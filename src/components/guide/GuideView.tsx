@@ -29,7 +29,7 @@ import {
 const SimpleEditor = lazy(() => import('@/components/tiptap-templates/simple/simple-editor').then(mod => ({ default: mod.SimpleEditor })));
 
 interface GuideViewProps {
-  template: GuidanceTemplate;
+  guide: GuidanceTemplate;
   onSwitchMode?: (mode: 'guide' | 'reflection' | 'master') => void;
 }
 
@@ -48,7 +48,7 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
     {
       id: 'default',
       name: 'Main Workspace',
-      guideId: template.id,
+      guideId: guide.id,
       allItems: [],
       responses: {},
       createdAt: new Date(),
@@ -67,16 +67,16 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
         completedItems: Array.from(completedItems),
         lastSaved: new Date().toISOString()
       };
-      localStorage.setItem(`guide-${template.id}`, JSON.stringify(saveData));
+      localStorage.setItem(`guide-${guide.id}`, JSON.stringify(saveData));
       console.log('[Auto-save] Workspace saved to localStorage');
     }, 30000); // Save every 30 seconds
 
     return () => clearInterval(saveInterval);
-  }, [workspaces, activeWorkspaceId, responses, completedItems, template.id]);
+  }, [workspaces, activeWorkspaceId, responses, completedItems, guide.id]);
 
   // Load from localStorage on mount
   useEffect(() => {
-    const savedData = localStorage.getItem(`guide-${template.id}`);
+    const savedData = localStorage.getItem(`guide-${guide.id}`);
     if (savedData) {
       try {
         const parsed = JSON.parse(savedData);
@@ -89,7 +89,7 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
         console.error('[Auto-save] Failed to load workspace:', error);
       }
     }
-  }, [template.id]);
+  }, [guide.id]);
 
   const handleInsertQuestion = (question: ReflectionQuestion) => {
     // Insert question into TipTap editor
@@ -229,7 +229,7 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
     const newWorkspace: Workspace = {
       id: `workspace-${Date.now()}`,
       name: `Workspace ${workspaces.length}`,
-      guideId: template.id,
+      guideId: guide.id,
       allItems: [],
       responses: {},
       createdAt: new Date(),
@@ -286,7 +286,7 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="text-sm font-medium">{template.title}</BreadcrumbPage>
+                    <BreadcrumbPage className="text-sm font-medium">{guide.title}</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -329,7 +329,7 @@ export function TemplateView({ template, onSwitchMode }: TemplateViewProps) {
               }>
                 <SimpleEditor
                   content=""
-                  guideId={template.id}
+                  guideId={guide.id}
                   onUpdate={(content) => {
                   }}
                 />

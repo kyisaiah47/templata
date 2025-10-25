@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import type { TemplateRegistryEntry } from '@/registry/guides';
+import type { GuideRegistryEntry } from '@/registry/guides';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Search, Layout, ChevronDown, ChevronUp } from 'lucide-react';
@@ -31,13 +31,13 @@ const categoryDisplayNames: Record<string, string> = {
 export default function CategoryPage({ params }: CategoryPageProps) {
   const { category } = use(params);
   const [searchQuery, setSearchQuery] = useState('');
-  const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [templates, setTemplates] = useState<GuideRegistryEntry[]>([]);
   const [guideData, setGuideData] = useState<Record<string, { questions: any[], readings: any[] }>>({});
-  const [expandedTemplates, setExpandedTemplates] = useState<Set<string>>(new Set());
+  const [expandedGuides, setExpandedTemplates] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
 
-  const toggleTemplate = (guideId: string) => {
-    const newExpanded = new Set(expandedTemplates);
+  const toggleGuide = (guideId: string) => {
+    const newExpanded = new Set(expandedGuides);
     if (newExpanded.has(guideId)) {
       newExpanded.delete(guideId);
     } else {
@@ -68,18 +68,18 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
         setTemplates(filtered);
 
-        // Fetch questions and readings for each template
-        const dataPromises = filtered.map(async (template) => {
+        // Fetch questions and readings for each guide
+        const dataPromises = filtered.map(async (guide)) => {
           const [questionsRes, readingsRes] = await Promise.all([
-            fetch(`/api/questions?guideId=${template.id}`),
-            fetch(`/api/readings?template=${template.id}&pageSize=1000`)
+            fetch(`/api/questions?guideId=${guide.id}`),
+            fetch(`/api/readings?guide=${guide.id}&pageSize=1000`)
           ]);
 
           const questionsData = await questionsRes.json();
           const readingsData = await readingsRes.json();
 
           return {
-            id: template.id,
+            id: guide.id,
             questions: questionsData.questions || [],
             readings: readingsData.readings || []
           };
@@ -137,7 +137,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             </h1>
 
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Expertly crafted templates for {categoryName.toLowerCase()}. Each template includes questions, readings, and structured guidance.
+              Expertly crafted guides for {categoryName.toLowerCase()}. Each guide includes questions, readings, and structured guidance.
             </p>
           </motion.div>
         </div>
@@ -175,26 +175,26 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           ) : (
             <div className="space-y-8">
               {filteredTemplates.map((guide) => {
-                const data = guideData[template.id] || { questions: [], readings: [] };
-                const isExpanded = expandedTemplates.has(template.id);
+                const data = guideData[guide.id] || { questions: [], readings: [] };
+                const isExpanded = expandedGuides.has(guide.id);
 
                 return (
-                  <div key={template.id} className="border-t pt-8">
+                  <div key={guide.id} className="border-t pt-8">
                     {/* Template Header */}
                     <div className="mb-6">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
-                          <Link href={`/guides/${template.id}`}>
+                          <Link href={`/guides/${guide.id}`}>
                             <h2 className="text-2xl font-bold hover:text-primary transition-colors">
-                              {template.name}
+                              {guide.name}
                             </h2>
                           </Link>
                           <p className="text-sm text-muted-foreground mt-2">
-                            {template.description}
+                            {guide.description}
                           </p>
                         </div>
                         <button
-                          onClick={() => toggleTemplate(template.id)}
+                          onClick={() => toggleGuide(guide.id)}
                           className="p-2 hover:bg-muted rounded-lg transition-colors"
                           aria-label={isExpanded ? "Collapse" : "Expand"}
                         >
@@ -225,7 +225,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                           </ol>
                           {data.questions.length > 5 && (
                             <div className="mt-3">
-                              <Link href={`/guides/${template.id}`} className="text-sm text-muted-foreground hover:text-primary italic">
+                              <Link href={`/guides/${guide.id}`} className="text-sm text-muted-foreground hover:text-primary italic">
                                 +{data.questions.length - 5} more questions →
                               </Link>
                             </div>
@@ -241,19 +241,19 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                           </h3>
                           <ol className="space-y-2 pl-6 list-decimal marker:text-sm">
                             {data.readings.slice(0, 5).map((reading: any) => (
-                              <li key={article.id} className="py-1">
+                              <li key={reading.id} className="py-1">
                                 <Link
-                                  href={`/readings/${article.slug}`}
+                                  href={`/readings/${reading.slug}`}
                                   className="text-sm hover:text-primary transition-colors"
                                 >
-                                  {article.title}
+                                  {reading.title}
                                 </Link>
                               </li>
                             ))}
                           </ol>
                           {data.readings.length > 5 && (
                             <div className="mt-3">
-                              <Link href={`/guides/${template.id}`} className="text-sm text-muted-foreground hover:text-primary italic">
+                              <Link href={`/guides/${guide.id}`} className="text-sm text-muted-foreground hover:text-primary italic">
                                 +{data.readings.length - 5} more readings →
                               </Link>
                             </div>

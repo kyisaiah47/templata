@@ -1251,25 +1251,25 @@ export function HeroWorkspace() {
                   { title: 'First-Time Home Buyer Tips', guide: 'Home Buying', read: false, time: '5 min' },
                   { title: 'Interview Preparation Checklist', guide: 'Career Transition', read: false, time: '6 min' },
                   { title: 'Saying No Without Guilt', guide: 'Personal Growth', read: true, time: '4 min' },
-                ].map((article, i) => (
+                ].map((reading, i) => (
                   <div key={i} className="p-3 rounded-lg border border-border/30 bg-background hover:border-border hover:shadow-sm transition-all cursor-pointer group">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-[11px] font-medium truncate">{article.title}</h3>
-                          {!article.read && (
+                          <h3 className="text-[11px] font-medium truncate">{reading.title}</h3>
+                          {!reading.read && (
                             <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                           )}
                         </div>
                         <div className="flex items-center gap-2 text-[9px] text-muted-foreground">
                           <span className={`${
-                            article.guide === 'Wedding Planning' ? 'text-primary' :
-                            article.guide === 'Home Buying' ? 'text-emerald-600' :
-                            article.guide === 'Career Transition' ? 'text-blue-600' :
+                            reading.guide === 'Wedding Planning' ? 'text-primary' :
+                            reading.guide === 'Home Buying' ? 'text-emerald-600' :
+                            reading.guide === 'Career Transition' ? 'text-blue-600' :
                             'text-purple-600'
-                          }`}>{article.guide}</span>
+                          }`}>{reading.guide}</span>
                           <span>·</span>
-                          <span>{article.time} read</span>
+                          <span>{reading.time} read</span>
                         </div>
                       </div>
                       <ChevronRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
@@ -1525,7 +1525,7 @@ export function HeroWorkspace() {
                 {[
                   { title: 'Wedding Planning Timeline', time: '8 min' },
                   { title: 'Budget Management Tips', time: '6 min' },
-                ].map((article, i) => (
+                ].map((reading, i) => (
                   <div
                     key={i}
                     className="p-2 rounded border border-border/60 hover:bg-muted/30 transition-colors cursor-pointer"
@@ -1533,8 +1533,8 @@ export function HeroWorkspace() {
                     <div className="flex items-start gap-2">
                       <BookOpen className="w-3 h-3 text-muted-foreground flex-shrink-0 mt-0.5" />
                       <div className="flex-1 min-w-0">
-                        <div className="text-[10px] font-medium">{article.title}</div>
-                        <div className="text-[9px] text-muted-foreground">{article.time}</div>
+                        <div className="text-[10px] font-medium">{reading.title}</div>
+                        <div className="text-[9px] text-muted-foreground">{reading.time}</div>
                       </div>
                     </div>
                   </div>
@@ -1589,7 +1589,7 @@ export function HeroWorkspace() {
                         <div className="flex-1">
                           <div className="text-[10px] font-medium mb-0.5">Ceremony Planning Essentials</div>
                           <div className="text-[9px] text-muted-foreground mb-1.5">Key elements to consider when planning your wedding ceremony</div>
-                          <button className="text-[9px] text-primary hover:underline">Read article →</button>
+                          <button className="text-[9px] text-primary hover:underline">Read reading →</button>
                         </div>
                       </div>
                     </div>

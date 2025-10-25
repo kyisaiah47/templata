@@ -154,7 +154,7 @@ export function ReadingsList({ initialArticles, initialTotal }: ReadingsListProp
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="guide">Guide</SelectItem>
-                <SelectItem value="article">Article</SelectItem>
+                <SelectItem value="reading">Article</SelectItem>
                 <SelectItem value="checklist">Checklist</SelectItem>
                 <SelectItem value="tutorial">Tutorial</SelectItem>
               </SelectContent>
@@ -179,7 +179,7 @@ export function ReadingsList({ initialArticles, initialTotal }: ReadingsListProp
 
         {/* Results count */}
         <div className="text-sm text-muted-foreground">
-          {total.toLocaleString()} article{total !== 1 ? 's' : ''} {searchQuery || selectedType !== 'all' || selectedDifficulty !== 'all' ? 'found' : 'total'}
+          {total.toLocaleString()} reading{total !== 1 ? 's' : ''} {searchQuery || selectedType !== 'all' || selectedDifficulty !== 'all' ? 'found' : 'total'}
         </div>
       </section>
 
@@ -188,23 +188,23 @@ export function ReadingsList({ initialArticles, initialTotal }: ReadingsListProp
         <div className="space-y-0 divide-y divide-border">
           {readings.map((reading: any) => {
             // Get template name from relatedGuides or fallback to category
-            const guideName = article.relatedGuides?.[0] || article.category;
+            const guideName = reading.relatedGuides?.[0] || reading.category;
 
             return (
               <Link
-                key={article.id}
-                href={`/readings/${article.slug}`}
+                key={reading.id}
+                href={`/readings/${reading.slug}`}
                 className="group block py-3 hover:text-primary transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
                   <h3 className="text-base font-medium group-hover:text-primary transition-colors">
-                    {article.title}
+                    {reading.title}
                   </h3>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground whitespace-nowrap">
                     {guideName && (
                       <span className="hidden sm:inline">{guideName}</span>
                     )}
-                    <span>{article.readTime}</span>
+                    <span>{reading.readTime}</span>
                   </div>
                 </div>
               </Link>

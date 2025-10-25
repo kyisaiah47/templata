@@ -407,7 +407,7 @@ export function TemplatesView({ onViewChange, setActions, workspaceId, userGuide
         const allCategories = Object.keys(groupedQuestions);
         setCollapsedCategories(new Set(allCategories));
 
-        const readingsRes = await fetch(`/api/readings?template=${selectedGuide}&pageSize=50`);
+        const readingsRes = await fetch(`/api/readings?guide=${selectedGuide}&pageSize=50`);
         const readingsData = await readingsRes.json();
         setReadings(readingsData.readings || []);
       } catch (error) {
@@ -496,7 +496,7 @@ export function TemplatesView({ onViewChange, setActions, workspaceId, userGuide
       const res = await fetch(`/api/readings?id=${readingId}`);
       const data = await res.json();
 
-      setSelectedReading(data.article);
+      setSelectedReading(data.reading);
     } catch (error) {
       console.error('Error fetching reading:', error);
     } finally {
@@ -846,7 +846,7 @@ export function TemplatesView({ onViewChange, setActions, workspaceId, userGuide
             <AnimatePresence mode="wait">
               {selectedReading ? (
                 <motion.div
-                  key="article-detail"
+                  key="reading-detail"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
@@ -903,7 +903,7 @@ export function TemplatesView({ onViewChange, setActions, workspaceId, userGuide
                 </motion.div>
               ) : (
                 <motion.div
-                  key="article-list"
+                  key="reading-list"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -1134,21 +1134,21 @@ export function TemplatesView({ onViewChange, setActions, workspaceId, userGuide
                   <div className="space-y-2">
                     {filteredArticles.map((reading) => (
                       <Card
-                        key={article.id}
+                        key={reading.id}
                         className="p-4 cursor-pointer hover:bg-muted/50 transition-colors border-border"
                         onClick={() => {
-                          handleArticleClick(article.id);
+                          handleReadingClick(reading.id);
                           setMobileDrawerOpen(false);
                         }}
                       >
                         <h3 className="text-sm font-medium text-foreground mb-1">
-                          {article.title}
+                          {reading.title}
                         </h3>
                         <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
-                          {article.excerpt}
+                          {reading.excerpt}
                         </p>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <span>{article.readTime}</span>
+                          <span>{reading.readTime}</span>
                           <ChevronRight className="h-3 w-3 ml-auto" />
                         </div>
                       </Card>

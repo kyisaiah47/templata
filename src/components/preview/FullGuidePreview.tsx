@@ -190,12 +190,12 @@ export function FullTemplatePreview({ templateType }: FullTemplatePreviewProps) 
   const [activeSection, setActiveSection] = useState(0);
   const [selectedPrompts, setSelectedPrompts] = useState<string[]>([]);
   
-  const template = guideData[templateType as keyof typeof guideData];
+  const guide = guideData[templateType as keyof typeof guideData];
   if (!template) return null;
 
   // Auto-open resource and add some questions for preview
   const openResource = template.resources[0];
-  const previewPrompts = template.questions.slice(0, 2);
+  const previewPrompts = guide.questions.slice(0, 2);
 
   const TemplateIcon = template.icon;
   const sections = template.sections;
@@ -242,7 +242,7 @@ export function FullTemplatePreview({ templateType }: FullTemplatePreviewProps) 
               <div className="mt-6">
                 <div className="text-xs font-medium text-muted-foreground mb-2 px-2">Reflection Prompts</div>
                 <div className="space-y-1">
-                  {template.questions.slice(0, 3).map((question, index) => (
+                  {guide.questions.slice(0, 3).map((question, index) => (
                     <div
                       key={index}
                       className="w-full p-2 bg-background rounded border text-xs"

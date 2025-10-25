@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import type { TemplateRegistryEntry } from "@/registry/guides"
+import type { GuideRegistryEntry } from "@/registry/guides"
 import { Search } from "lucide-react"
 import { SubtleGlow } from "@/components/ui/glow-variants"
 
@@ -25,7 +25,7 @@ interface GuidesModalProps {
 export function TemplatesModal({ open, onOpenChange }: TemplatesModalProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
-  const [templates, setTemplates] = useState<TemplateRegistryEntry[]>([])
+  const [templates, setTemplates] = useState<GuideRegistryEntry[]>([])
   const [categories, setCategories] = useState<string[]>(["All"])
 
   useEffect(() => {
@@ -43,9 +43,9 @@ export function TemplatesModal({ open, onOpenChange }: TemplatesModalProps) {
 
   const filteredTemplates = templates.filter(template => {
     const matchesSearch = searchQuery === "" ||
-                         template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "All" || template.category === selectedCategory
+                         guide.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         guide.description.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = selectedCategory === "All" || guide.category === selectedCategory
     return matchesSearch && matchesCategory
   })
 
@@ -55,7 +55,7 @@ export function TemplatesModal({ open, onOpenChange }: TemplatesModalProps) {
         <DialogHeader>
           <DialogTitle className="text-2xl">Choose a Template</DialogTitle>
           <DialogDescription>
-            Get started with a pre-built template designed for your needs
+            Get started with a pre-built guide designed for your needs
           </DialogDescription>
         </DialogHeader>
 
@@ -100,21 +100,21 @@ export function TemplatesModal({ open, onOpenChange }: TemplatesModalProps) {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <h4 className="font-semibold truncate">{template.name}</h4>
+                            <h4 className="font-semibold truncate">{guide.name}</h4>
                           </div>
                           <Badge variant="outline" className="text-xs">
-                            {template.category}
+                            {guide.category}
                           </Badge>
                         </div>
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        {template.description}
+                        {guide.description}
                       </p>
                     </>
                   )
 
                   return (
-                    <SubtleGlow key={template.id}>
+                    <SubtleGlow key={guide.id}>
                       <Link
                         href={template.url}
                         className="block p-4 rounded-xl transition-all hover:scale-[1.02] bg-card"

@@ -2,7 +2,7 @@
 
 import { use, useState, useEffect } from 'react';
 import Link from 'next/link';
-import type { TemplateRegistryEntry } from '@/registry/guides';
+import type { GuideRegistryEntry } from '@/registry/guides';
 import { PageLayout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -38,8 +38,8 @@ interface Reading {
 export default function MarketingClient({ params }: MarketingClientProps) {
   const { slug } = use(params);
 
-  const [template, setTemplate] = useState<TemplateRegistryEntry | null>(null);
-  const [relatedGuides, setRelatedTemplates] = useState<TemplateRegistryEntry[]>([]);
+  const [template, setTemplate] = useState<GuideRegistryEntry | null>(null);
+  const [relatedGuides, setRelatedTemplates] = useState<GuideRegistryEntry[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [readings, setReadings] = useState<Reading[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,9 +54,9 @@ export default function MarketingClient({ params }: MarketingClientProps) {
         const templatesRes = await fetch('/api/guides');
         const guidesData = await templatesRes.json();
         const foundGuide = guidesData.templates?.find((t:GuideRegistryEntry) => t.id === slug);
-        setTemplate(foundGuide || null);
+        setGuide(foundGuide || null);
 
-        // Set related templates (same category, different id)
+        // Set related guides (same category, different id)
         if (foundGuide) {
           const related = guidesData.templates?.filter(
             (t:GuideRegistryEntry) => t.category === foundGuide.category && t.id !== slug
@@ -69,12 +69,12 @@ export default function MarketingClient({ params }: MarketingClientProps) {
         const questionsData = await questionsRes.json();
         setQuestions(questionsData.questions || []);
 
-        // Fetch readings for this template (server-side filtering)
-        const readingsRes = await fetch(`/api/readings?template=${slug}&pageSize=1000`);
+        // Fetch readings for this guide (server-side filtering)
+        const readingsRes = await fetch(`/api/readings?guide=${slug}&pageSize=1000`);
         const readingsData = await readingsRes.json();
         setReadings(readingsData.readings || []);
       } catch (error) {
-        console.error('Error fetching template data:', error);
+        console.error('Error fetching guide data:', error);
       } finally {
         setLoading(false);
       }
@@ -95,7 +95,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
 
   const questionCategories = Object.keys(groupedQuestions).sort();
 
-  if (!template?.template) {
+  if (!guide?.template) {
     return (
       <PageLayout>
         <div className="container mx-auto px-4 py-16">
@@ -105,7 +105,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
     );
   }
 
-  const guideData = template.template;
+  const guideData = guide.guide;
 
   const toggleCategory = (category: string) => {
     const newExpanded = new Set(expandedCategories);
@@ -213,7 +213,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
 
   const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'Reading',
     headline: `${guideData.title} - Complete Planning Guide`,
     description: guideData.description,
     author: {
@@ -292,11 +292,11 @@ export default function MarketingClient({ params }: MarketingClientProps) {
     name: `${guideData.title} Readings`,
     description: `${readings.length} expert readings for ${guideData.title.toLowerCase()}`,
     numberOfItems: readings.length,
-    itemListElement: readings.slice(0, 10).map((article, index) => ({
+    itemListElement: readings.slice(0, 10).map((reading, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: article.title,
-      item: `https://templata.org/guides/${slug}/marketing#article-${article.id}`
+      name: reading.title,
+      item: `https://templata.org/guides/${slug}/marketing#reading-${reading.id}`
     }))
   } : null;
 
@@ -542,14 +542,14 @@ export default function MarketingClient({ params }: MarketingClientProps) {
               <div className="border-t">
                 {readings.map((reading) => (
                   <div
-                    key={article.id}
+                    key={reading.id}
                     className="group border-b py-3 hover:bg-muted/50 transition-colors"
                   >
                     <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
-                      {article.title}
+                      {reading.title}
                     </h3>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                      <span>{article.readTime}</span>
+                      <span>{reading.readTime}</span>
                     </div>
                   </div>
                 ))}
@@ -611,7 +611,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
               Ready to organize your {guideData.title.toLowerCase()}?
             </h2>
             <p className="text-xl text-muted-foreground">
-              Start with this template. Everything is free—no credit card required.
+              Start with this guide. Everything is free—no credit card required.
             </p>
           </div>
         </section>

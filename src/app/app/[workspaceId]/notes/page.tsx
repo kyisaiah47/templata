@@ -110,7 +110,7 @@ export default function NotesPage() {
     router.push(`/app/${workspaceId}/notes?id=${guideId}`);
   };
 
-  // If viewing a page (not a guide template)
+  // If viewing a page (not a guide)
   if (pageId && !guideId) {
     // Show guide selection for "Getting Started" page
     if (pageName === 'Getting Started') {

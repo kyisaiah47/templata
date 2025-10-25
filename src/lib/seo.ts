@@ -5,7 +5,7 @@ export interface SEOConfig {
   description: string;
   canonical?: string;
   robots?: string;
-  type?: 'website' | 'article' | 'profile';
+  type?: 'website' | 'article' | 'profile'; // OpenGraph standard type
   image?: string;
   noIndex?: boolean;
   keywords?: string[];
@@ -55,7 +55,7 @@ export function generateStructuredData(type: 'CollectionPage' | 'Article' | 'Web
           '@type': 'ItemList',
           numberOfItems: data.numberOfItems,
           itemListElement: data.items?.map((item: any, index: number) => ({
-            '@type': 'Article',
+            '@type': 'Reading',
             position: index + 1,
             name: item.title,
             description: item.excerpt,
@@ -73,7 +73,7 @@ export function generateStructuredData(type: 'CollectionPage' | 'Article' | 'Web
     case 'Article':
       return {
         ...baseStructure,
-        '@type': 'Article',
+        '@type': 'Reading',
         headline: data.title,
         author: {
           '@type': 'Organization',

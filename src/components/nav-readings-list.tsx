@@ -17,10 +17,10 @@ import {
 
 interface NavReadingsListProps {
   guideId: string | null;
-  onArticleSelect?: (reading: any) => void;
+  onReadingSelect?: (reading: any) => void;
 }
 
-export function NavReadingsList({ guideId, onArticleSelect }: NavReadingsListProps) {
+export function NavReadingsList({ guideId, onReadingSelect }: NavReadingsListProps) {
   const [readings, setReadings] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -65,11 +65,11 @@ export function NavReadingsList({ guideId, onArticleSelect }: NavReadingsListPro
               <div className="text-xs text-muted-foreground p-2">No readings</div>
             ) : (
               readings.map((reading: any) => (
-                <SidebarMenuSubItem key={article.id}>
+                <SidebarMenuSubItem key={reading.id}>
                   <SidebarMenuSubButton
-                    onClick={() => onArticleSelect?.(article)}
+                    onClick={() => onReadingSelect?.(reading)}
                   >
-                    <span>{article.title}</span>
+                    <span>{reading.title}</span>
                   </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
               ))

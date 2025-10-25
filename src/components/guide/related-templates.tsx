@@ -2,7 +2,7 @@
 
 import { useKnowledgeGraph } from "@/hooks/use-knowledge-graph"
 import { templateRegistry } from "@/registry/guides"
-import type { TemplateRegistryEntry } from "@/registry/guides"
+import type { GuideRegistryEntry } from "@/registry/guides"
 import { cn } from "@/lib/utils"
 import { SubtleGlow } from "@/components/ui/glow-variants"
 import { Badge } from "@/components/ui/badge"
@@ -16,7 +16,7 @@ interface RelatedTemplatesProps {
 }
 
 interface GuideCardProps {
-  template: TemplateRegistryEntry
+  guide: GuideRegistryEntry
   strength: number
   reason: string
   level: 'critical' | 'strong' | 'medium'
@@ -49,7 +49,7 @@ function TemplateCard({ template, strength, reason, level, showReasoning, onNavi
           <div className="w-4 h-4 flex items-center justify-center text-sm shrink-0">
             {template.icon}
           </div>
-          <span className="text-sm font-medium truncate flex-1">{template.name}</span>
+          <span className="text-sm font-medium truncate flex-1">{guide.name}</span>
           <Badge variant="outline" className={cn("text-xs", strengthBg, strengthColor)}>
             {strength}%
           </Badge>
@@ -84,7 +84,7 @@ export function RelatedTemplates({
   // Map knowledge graph results to template registry entries
   const relatedGuides = knowledgeRelations
     .map(relation => {
-      const template = templateRegistry.find(t => t.id === relation.guideId)
+      const guide = templateRegistry.find(t => t.id === relation.guideId)
       if (!template) return null
 
       return {
@@ -95,7 +95,7 @@ export function RelatedTemplates({
       }
     })
     .filter(Boolean) as Array<{
-      template: TemplateRegistryEntry
+      guide: GuideRegistryEntry
       strength: number
       reason: string
       level: 'critical' | 'strong' | 'medium'
@@ -118,7 +118,7 @@ export function RelatedTemplates({
       <div className="grid gap-2">
         {relatedGuides.map(({ template, strength, reason, level }) => (
           <TemplateCard
-            key={template.id}
+            key={guide.id}
             template={template}
             strength={strength}
             reason={reason}

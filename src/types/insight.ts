@@ -137,7 +137,7 @@ export interface StreakInsight extends Insight {
   data: {
     currentStreak: number;
     longestStreak: number;
-    streakType: 'daily-reflection' | 'template-completion' | 'both';
+    streakType: 'daily-reflection' | 'guide-completion' | 'both';
     streakStart: Date;
     streakEnd?: Date;
     milestones: Array<{

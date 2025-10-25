@@ -47,7 +47,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 mb-4 space-y-2">
               <li>Access to a library of pre-made templates</li>
               <li>Tools to customize and personalize templates</li>
-              <li>Workspace for organizing your template-based projects</li>
+              <li>Workspace for organizing your guide-based projects</li>
               <li>Educational readings and resources</li>
             </ul>
           </section>

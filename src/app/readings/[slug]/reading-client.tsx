@@ -8,7 +8,7 @@ import { Marquee } from "@/components/ui/marquee";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { Highlighter } from "@/components/ui/highlighter";
 import { PageLayout } from "@/components/layout";
-import { getArticleBySlug, getRelatedArticles, getArticlesByCategory, articleRegistry } from "@/registry/readings";
+import { getReadingBySlug, getRelatedArticles, getArticlesByCategory, articleRegistry } from "@/registry/readings";
 import { TemplateImage } from "@/components/ui/template-image";
 import { use } from "react";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
@@ -35,7 +35,7 @@ interface ReadingClientProps {
 
 export default function ReadingClient({ params }: ReadingClientProps) {
   const { slug } = use(params);
-  const post = getArticleBySlug(slug);
+  const post = getReadingBySlug(slug);
   const [activeSection, setActiveSection] = useState('');
 
   // Knowledge graph integration
@@ -117,7 +117,7 @@ export default function ReadingClient({ params }: ReadingClientProps) {
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Article Not Found</h1>
             <p className="text-muted-foreground mb-8">
-              The article you're looking for doesn't exist or has been moved.
+              The reading you're looking for doesn't exist or has been moved.
             </p>
             <Button asChild>
               <Link href="/readings">
@@ -275,20 +275,20 @@ export default function ReadingClient({ params }: ReadingClientProps) {
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {relatedGuides.map((guide) => (
-                    <div key={template.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                    <div key={guide.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
                       <h4 className="font-medium mb-2">
                         <Link
-                          href={`/${template.id}/template`}
+                          href={`/${guide.id}/template`}
                           className="hover:text-primary transition-colors"
                         >
-                          {template.name}
+                          {guide.name}
                         </Link>
                       </h4>
                       <p className="text-sm text-muted-foreground mb-3">
-                        {template.description}
+                        {guide.description}
                       </p>
                       <Button asChild size="sm" variant="outline">
-                        <Link href={`/${template.id}/template`}>
+                        <Link href={`/${guide.id}/template`}>
                           Use Template
                         </Link>
                       </Button>

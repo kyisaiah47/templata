@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 
 interface ReflectionViewProps {
-  template: GuidanceTemplate;
+  guide: GuidanceTemplate;
   onSwitchMode: (mode: 'guide' | 'reflection' | 'master') => void;
 }
 

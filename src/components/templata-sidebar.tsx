@@ -44,7 +44,7 @@ const getSectionIcon = (iconName?: string) => {
 };
 
 interface TemplataContentSidebarProps {
-  template: GuidanceTemplate
+  guide: GuidanceTemplate
   activeSection: number
   onSectionChange: (section: number) => void
   onInsertQuestion?: (question: ReflectionQuestion) => void
@@ -88,11 +88,11 @@ export function TemplataContentSidebar({
   const [templateRegistryPrompts, setTemplateRegistryPrompts] = React.useState<any[]>([])
 
   React.useEffect(() => {
-    fetch(`/api/questions?guideId=${template.id}`)
+    fetch(`/api/questions?guideId=${guide.id}`)
       .then(res => res.json())
       .then(data => setTemplateRegistryPrompts(data.questions || []))
       .catch(err => console.error('Failed to load questions:', err))
-  }, [template.id])
+  }, [guide.id])
 
   // Convert registry questions to display format with categoryNumber and categoryName
   const displayPrompts = [...sectionPrompts, ...templateRegistryPrompts.map(p => ({
@@ -125,11 +125,11 @@ export function TemplataContentSidebar({
       .then(data => {
         const readings = data.readings || []
         // Filter to only readings that match this template ID
-        const filtered = readings.filter((a: any) => a.template === template.id)
+        const filtered = readings.filter((a: any) => a.template === guide.id)
         setTemplateResources(filtered)
       })
       .catch(err => console.error('Failed to load readings:', err))
-  }, [template.id])
+  }, [guide.id])
 
   const filteredResources = templateResources.filter(resource =>
     resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -454,7 +454,7 @@ export function TemplataContentSidebar({
 
               {activeTab === 'related' && (
                 <div className="p-4">
-                  <RelatedTemplates guideId={template.id} />
+                  <RelatedTemplates guideId={guide.id} />
                 </div>
               )}
             </SidebarGroupContent>
