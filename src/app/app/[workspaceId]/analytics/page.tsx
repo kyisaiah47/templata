@@ -5,6 +5,8 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { TrendingUp, Loader2, Activity, Calendar, CheckCircle2, Clock } from 'lucide-react';
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, isWithinInterval, parseISO, startOfMonth, endOfMonth, subMonths } from 'date-fns';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -42,7 +44,8 @@ interface CalendarEvent {
 export default function AnalyticsPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [allUserGuides, setAllUserGuides] = useState<UserGuide[]>([]);
   const [allTasks, setAllTasks] = useState<Task[]>([]);

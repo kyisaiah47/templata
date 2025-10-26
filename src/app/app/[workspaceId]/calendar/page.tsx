@@ -10,11 +10,14 @@ import { EventList } from '@/components/app/calendar/EventList';
 import { EventCreateForm } from '@/components/app/calendar/EventCreateForm';
 import { CalendarEvent, Task } from '@/types/workspace';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 export default function CalendarPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [allEvents, setAllEvents] = useState<CalendarEvent[]>([]);

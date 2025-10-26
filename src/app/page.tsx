@@ -10,7 +10,6 @@ import { ReadingsLibrary } from "@/components/landing/ReadingsLibrary";
 import { WorkspaceDashboard } from "@/components/landing/WorkspaceDashboard";
 import { BrowseAndFeatured } from "@/components/landing/BrowseAndFeatured";
 import WorkspaceLayout from "@/app/app/[workspaceId]/layout";
-import OverviewPage from "@/app/app/[workspaceId]/page";
 
 export default function LandingPage() {
 	const jsonLd = {
@@ -84,10 +83,18 @@ export default function LandingPage() {
 							</div>
 						</div>
 						{/* App Content */}
-						<div className="h-[600px] overflow-hidden">
-							<WorkspaceLayout demoMode={true}>
-								<OverviewPage />
-							</WorkspaceLayout>
+						<div
+							className="h-[600px] overflow-hidden"
+							onClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+							}}
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+							}}
+						>
+							<WorkspaceLayout demoMode={true} />
 						</div>
 					</div>
 				</div>

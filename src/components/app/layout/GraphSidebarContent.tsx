@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { Network, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -29,7 +31,8 @@ interface GraphSidebarContentProps {
 
 export function GraphSidebarContent({ selectedGuideIds, onGuideToggle }: GraphSidebarContentProps) {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [guides, setGuides] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +56,7 @@ export function GraphSidebarContent({ selectedGuideIds, onGuideToggle }: GraphSi
   }, [workspaceId]);
 
   const filteredGuides = guides.filter(guide =>
-    (guide.custom_name || guide.guides.name).toLowerCase().includes(searchQuery.toLowerCase())
+    (guide.custom_name || guide.guides?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -110,7 +113,7 @@ export function GraphSidebarContent({ selectedGuideIds, onGuideToggle }: GraphSi
           >
             {filteredGuides.map((guide) => {
               const isSelected = selectedGuideIds.has(guide.id);
-              const displayName = guide.custom_name || guide.guides.name;
+              const displayName = guide.custom_name || guide.guides?.name || 'Untitled Guide';
 
               return (
                 <motion.button

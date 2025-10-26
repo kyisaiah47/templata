@@ -33,8 +33,13 @@ export function SettingsSidebarContent({ activeSection, onSectionChange }: Setti
 
             return (
               <button
+                type="button"
                 key={item.id}
-                onClick={() => onSectionChange(item.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onSectionChange(item.id);
+                }}
                 className={cn(
                   "w-full flex items-center gap-2 px-2 py-2 rounded text-sm transition-colors hover:bg-muted/50",
                   isActive ? "bg-primary/10 text-primary" : "text-foreground"

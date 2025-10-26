@@ -41,7 +41,7 @@ export default function OverviewPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const { demoMode } = useDemo();
-  const workspaceId = demoMode ? 'demo' : (params.workspaceId as string);
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [allUserGuides, setAllUserGuides] = useState<UserGuide[]>([]);
   const [allTasks, setAllTasks] = useState<Task[]>([]);

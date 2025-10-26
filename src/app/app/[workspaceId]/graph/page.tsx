@@ -5,6 +5,8 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Network, Loader2 } from 'lucide-react';
 import { GuideGraph } from '@/components/app/graph/GuideGraph';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -23,7 +25,8 @@ export default function GraphPage() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [allUserGuides, setAllUserGuides] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);

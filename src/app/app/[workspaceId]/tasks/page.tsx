@@ -7,6 +7,8 @@ import { ListTodo, Loader2 } from 'lucide-react';
 import { KanbanBoard } from '@/components/app/tasks/KanbanBoard';
 import { Task } from '@/types/workspace';
 import { toast } from 'sonner';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface ExtendedTask extends Task {
   user_guides?: {
@@ -21,7 +23,8 @@ interface ExtendedTask extends Task {
 export default function TasksPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
   const queryClient = useQueryClient();
 
   // Get selected note IDs from URL

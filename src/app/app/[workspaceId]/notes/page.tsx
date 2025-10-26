@@ -7,12 +7,15 @@ import { GuidesView } from '@/app/app/views/GuidesView';
 import { GettingStartedWizard } from '@/components/app/notes/GettingStartedWizard';
 import { NotesListView } from '@/components/app/notes/NotesListView';
 import { Loader2, FileText } from 'lucide-react';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 export default function NotesPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
   const guideId = searchParams.get('id');
   const pageId = searchParams.get('pageId');
 
@@ -43,8 +46,8 @@ export default function NotesPage() {
         if (data.userGuides && data.userGuides.length > 0) {
           // Use existing user_guide
           setUserGuideId(data.userGuides[0].id);
-        } else {
-          // Create new user_guide instance
+        } else if (!demoMode) {
+          // Create new user_guide instance (only if not in demo mode)
           const createResponse = await fetch('/api/user-guides', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -69,7 +72,7 @@ export default function NotesPage() {
     }
 
     fetchOrCreateUserGuide();
-  }, [guideId, workspaceId]);
+  }, [guideId, workspaceId, demoMode]);
 
   // Fetch page data if pageId is present
   useEffect(() => {
@@ -80,7 +83,7 @@ export default function NotesPage() {
         const response = await fetch(`/api/workspaces/${workspaceId}/pages`);
         if (!response.ok) return;
         const data = await response.json();
-        const page = data.pages.find((p: any) => p.id === pageId);
+        const page = data.pages?.find((p: any) => p.id === pageId);
         if (page) {
           setPageName(page.name);
         }

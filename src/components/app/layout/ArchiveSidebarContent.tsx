@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Search, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface ArchivedGuide {
   id: string;
@@ -28,7 +30,8 @@ export function ArchiveSidebarContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [guides, setGuides] = useState<ArchivedGuide[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,7 +55,7 @@ export function ArchiveSidebarContent() {
   }, [workspaceId]);
 
   const filteredGuides = guides.filter(guide =>
-    (guide.custom_name || guide.guides.name).toLowerCase().includes(searchQuery.toLowerCase())
+    (guide.custom_name || guide.guides?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -116,7 +119,7 @@ export function ArchiveSidebarContent() {
             animate="show"
           >
             {filteredGuides.map((guide) => {
-              const displayName = guide.custom_name || guide.guides.name;
+              const displayName = guide.custom_name || guide.guides?.name || 'Untitled Guide';
 
               return (
                 <motion.button

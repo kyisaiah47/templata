@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { Calendar, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -29,7 +31,8 @@ interface CalendarSidebarContentProps {
 
 export function CalendarSidebarContent({ selectedNoteIds, onNoteToggle }: CalendarSidebarContentProps) {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [notes, setNotes] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +56,7 @@ export function CalendarSidebarContent({ selectedNoteIds, onNoteToggle }: Calend
   }, [workspaceId]);
 
   const filteredNotes = notes.filter(note =>
-    (note.custom_name || note.guides.name).toLowerCase().includes(searchQuery.toLowerCase())
+    (note.custom_name || note.guides?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -110,7 +113,7 @@ export function CalendarSidebarContent({ selectedNoteIds, onNoteToggle }: Calend
           >
             {filteredNotes.map((note) => {
               const isSelected = selectedNoteIds.has(note.id);
-              const displayName = note.custom_name || note.guides.name;
+              const displayName = note.custom_name || note.guides?.name || 'Untitled Note';
 
               return (
                 <motion.button

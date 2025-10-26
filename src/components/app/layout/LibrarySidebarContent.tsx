@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { BookOpen, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface Reading {
   id: string;
@@ -27,7 +29,8 @@ interface LibrarySidebarContentProps {
 
 export function LibrarySidebarContent({ selectedReadingId, onReadingClick }: LibrarySidebarContentProps) {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [readings, setReadings] = useState<Reading[]>([]);
   const [progress, setProgress] = useState<ReadingProgress[]>([]);

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { FileText, Plus, Search, Loader2, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
+import { useDemo } from '@/contexts/demo-context';
 
 interface UserGuide {
   id: string;
@@ -27,6 +28,7 @@ interface NotesListViewProps {
 
 export function NotesListView({ workspaceId }: NotesListViewProps) {
   const router = useRouter();
+  const { demoMode } = useDemo();
   const [notes, setNotes] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,7 +47,7 @@ export function NotesListView({ workspaceId }: NotesListViewProps) {
         // Fetch pages to find Getting Started pageId
         const pagesResponse = await fetch(`/api/workspaces/${workspaceId}/pages`);
         const pagesData = await pagesResponse.json();
-        const gettingStartedPage = pagesData.pages.find((p: any) => p.name === 'Getting Started');
+        const gettingStartedPage = pagesData.pages?.find((p: any) => p.name === 'Getting Started');
         if (gettingStartedPage) {
           setGettingStartedPageId(gettingStartedPage.id);
         }
@@ -60,12 +62,14 @@ export function NotesListView({ workspaceId }: NotesListViewProps) {
   }, [workspaceId]);
 
   const filteredNotes = notes.filter(note =>
-    note.guides.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    note.guides.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    (note.guides?.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (note.guides?.description || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleNoteClick = (guideId: string) => {
-    router.push(`/app/${workspaceId}/notes?id=${guideId}`);
+    if (!demoMode) {
+      router.push(`/app/${workspaceId}/notes?id=${guideId}`);
+    }
   };
 
   const handleCreateNote = () => {
@@ -160,9 +164,9 @@ export function NotesListView({ workspaceId }: NotesListViewProps) {
                     <FileText className="h-5 w-5 text-muted-foreground/60 group-hover:text-primary transition-colors flex-shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors truncate">
-                        {note.guides.name}
+                        {note.guides?.name || 'Untitled Note'}
                       </h3>
-                      {note.guides.description && (
+                      {note.guides?.description && (
                         <p className="text-xs text-muted-foreground line-clamp-2">
                           {note.guides.description}
                         </p>

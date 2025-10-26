@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -28,7 +30,8 @@ interface OverviewSidebarContentProps {
 
 export function OverviewSidebarContent({ selectedGuideIds, onGuideToggle }: OverviewSidebarContentProps) {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [guides, setGuides] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,7 +55,7 @@ export function OverviewSidebarContent({ selectedGuideIds, onGuideToggle }: Over
   }, [workspaceId]);
 
   const filteredGuides = guides.filter(guide =>
-    (guide.custom_name || guide.guides.name).toLowerCase().includes(searchQuery.toLowerCase())
+    (guide.custom_name || guide.guides?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -87,12 +90,17 @@ export function OverviewSidebarContent({ selectedGuideIds, onGuideToggle }: Over
           <div className="space-y-0.5">
             {filteredGuides.map((guide) => {
               const isSelected = selectedGuideIds.has(guide.id);
-              const displayName = guide.custom_name || guide.guides.name;
+              const displayName = guide.custom_name || guide.guides?.name || 'Untitled Guide';
 
               return (
                 <button
+                  type="button"
                   key={guide.id}
-                  onClick={() => onGuideToggle(guide.id)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onGuideToggle(guide.id);
+                  }}
                   className={cn(
                     "w-full flex items-center gap-2 px-2 py-2 rounded text-sm transition-colors group hover:bg-muted/50"
                   )}

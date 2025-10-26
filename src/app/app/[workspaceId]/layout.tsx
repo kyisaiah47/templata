@@ -1,10 +1,25 @@
 'use client';
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { DemoProvider } from '@/contexts/demo-context';
 import { DEMO_WORKSPACE_ID, DEMO_USER_ID } from '@/lib/demo-constants';
+import OverviewPage from './page';
+import NotesPage from './notes/page';
+import DiscoverPage from './discover/page';
+import LibraryPage from './library/page';
+import CalendarPage from './calendar/page';
+import TasksPage from './tasks/page';
+import TimelinePage from './timeline/page';
+import DailyPage from './daily/page';
+import JournalPage from './journal/page';
+import GraphPage from './graph/page';
+import AnalyticsPage from './analytics/page';
+import ArchivePage from './archive/page';
+import CommunityPage from './community/page';
+import DocsPage from './docs/page';
+import SettingsPage from './settings/page';
 import { IconBar } from '@/components/app/layout/IconBar';
 import { Sidebar } from '@/components/app/layout/Sidebar';
 import { TabBar } from '@/components/app/layout/TabBar';
@@ -45,15 +60,36 @@ import {
 } from 'lucide-react';
 
 interface WorkspaceLayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   demoMode?: boolean;
 }
 
 export default function WorkspaceLayout({ children, demoMode = false }: WorkspaceLayoutProps) {
   const params = useParams();
-  const router = useRouter();
+  const actualRouter = useRouter();
   const searchParams = useSearchParams();
-  const workspaceId = demoMode ? 'demo' : (params.workspaceId as string);
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
+
+  // Create a no-op router for demo mode (memoized to prevent infinite loops)
+  const noOpRouter = useMemo(() => ({
+    push: (...args: any[]) => {
+      console.log('BLOCKED router.push in demo mode:', args);
+    },
+    replace: (...args: any[]) => {
+      console.log('BLOCKED router.replace in demo mode:', args);
+    },
+    back: () => {
+      console.log('BLOCKED router.back in demo mode');
+    },
+    forward: () => {
+      console.log('BLOCKED router.forward in demo mode');
+    },
+    refresh: () => {
+      console.log('BLOCKED router.refresh in demo mode');
+    },
+    prefetch: () => Promise.resolve(),
+  }), []);
+  const router = demoMode ? noOpRouter as any : actualRouter;
 
   // State
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
@@ -168,8 +204,10 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
         const response = await fetch(`/api/workspaces/${workspaceId}`);
 
         if (response.status === 404) {
-          // Workspace doesn't exist, redirect to /app to create default workspace
-          router.push('/app');
+          if (!demoMode) {
+            // Workspace doesn't exist, redirect to /app to create default workspace
+            router.push('/app');
+          }
           return;
         }
 
@@ -181,8 +219,10 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
         setWorkspace(data.workspace);
       } catch (error) {
         console.error('Error fetching workspace:', error);
-        // On error, redirect to /app to reinitialize
-        router.push('/app');
+        if (!demoMode) {
+          // On error, redirect to /app to reinitialize
+          router.push('/app');
+        }
       }
     }
 
@@ -415,15 +455,20 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
   const handleCategorySelect = useCallback((categoryId: string) => {
     setSelectedCategory(categoryId);
 
-    // Update URL with category param
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('category', categoryId);
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [searchParams, router]);
+    if (!demoMode) {
+      // Update URL with category param
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('category', categoryId);
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+    }
+  }, [searchParams, router, demoMode]);
 
   // Sync tabs to URL and navigate to the correct route
   const syncTabsToURL = useCallback((newTabs: Tab[], newActiveTabId: string | null, navigate: boolean = true) => {
+    // Don't sync URLs in demo mode
+    if (demoMode) return;
+
     const params = new URLSearchParams();
 
     if (newTabs.length > 0) {
@@ -460,7 +505,7 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
       const queryString = params.toString();
       router.replace(`/app/${workspaceId}${queryString ? `?${queryString}` : ''}`, { scroll: false });
     }
-  }, [workspaceId, router]);
+  }, [workspaceId, router, demoMode]);
 
   // Add a new tab
   const addTab = useCallback((tab: Tab) => {
@@ -474,15 +519,19 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     if (existingTab) {
       // Just switch to existing tab
       setActiveTabId(existingTab.id);
-      syncTabsToURL(tabs, existingTab.id, true);
+      if (!demoMode) {
+        syncTabsToURL(tabs, existingTab.id, true);
+      }
     } else {
       // Add new tab
       const newTabs = [...tabs, tab];
       setTabs(newTabs);
       setActiveTabId(tab.id);
-      syncTabsToURL(newTabs, tab.id, true);
+      if (!demoMode) {
+        syncTabsToURL(newTabs, tab.id, true);
+      }
     }
-  }, [tabs, syncTabsToURL]);
+  }, [tabs, syncTabsToURL, demoMode]);
 
   // Remove a tab
   const removeTab = useCallback((tabId: string) => {
@@ -500,18 +549,22 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setTabs(newTabs);
     setActiveTabId(newActiveTabId);
-    syncTabsToURL(newTabs, newActiveTabId, true);
-  }, [tabs, activeTabId, syncTabsToURL]);
+    if (!demoMode) {
+      syncTabsToURL(newTabs, newActiveTabId, true);
+    }
+  }, [tabs, activeTabId, syncTabsToURL, demoMode]);
 
   // Switch to a tab
   const switchTab = useCallback((tabId: string) => {
     setActiveTabId(tabId);
-    syncTabsToURL(tabs, tabId, true);
-  }, [tabs, syncTabsToURL]);
+    if (!demoMode) {
+      syncTabsToURL(tabs, tabId, true);
+    }
+  }, [tabs, syncTabsToURL, demoMode]);
 
   // Handle view click from IconBar
   const handleViewClick = useCallback((viewType: TabType) => {
-    if (demoMode) return; // Disable in demo mode
+    // In demo mode, still allow view switching but don't update URL
 
     const viewLabels: Record<TabType, string> = {
       overview: 'Overview',
@@ -601,12 +654,14 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
   const handleReadingClick = useCallback((readingId: string) => {
     setSelectedReadingId(readingId);
 
-    // Update URL with reading ID
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('readingId', readingId);
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [searchParams, router]);
+    if (!demoMode) {
+      // Update URL with reading ID
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('readingId', readingId);
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+    }
+  }, [searchParams, router, demoMode]);
 
   // Handle calendar note toggle
   const handleCalendarNoteToggle = useCallback((noteId: string) => {
@@ -619,16 +674,18 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedCalendarNoteIds(newSet);
 
-    // Update URL with selected note IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('calendarNotes', Array.from(newSet).join(','));
-    } else {
-      params.delete('calendarNotes');
+    if (!demoMode) {
+      // Update URL with selected note IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('calendarNotes', Array.from(newSet).join(','));
+      } else {
+        params.delete('calendarNotes');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedCalendarNoteIds, searchParams, router]);
+  }, [selectedCalendarNoteIds, searchParams, router, demoMode]);
 
   // Handle tasks note toggle
   const handleTasksNoteToggle = useCallback((noteId: string) => {
@@ -641,16 +698,18 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedTasksNoteIds(newSet);
 
-    // Update URL with selected note IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('tasksNotes', Array.from(newSet).join(','));
-    } else {
-      params.delete('tasksNotes');
+    if (!demoMode) {
+      // Update URL with selected note IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('tasksNotes', Array.from(newSet).join(','));
+      } else {
+        params.delete('tasksNotes');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedTasksNoteIds, searchParams, router]);
+  }, [selectedTasksNoteIds, searchParams, router, demoMode]);
 
   // Handle timeline note toggle
   const handleTimelineNoteToggle = useCallback((noteId: string) => {
@@ -663,16 +722,18 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedTimelineNoteIds(newSet);
 
-    // Update URL with selected note IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('timelineNotes', Array.from(newSet).join(','));
-    } else {
-      params.delete('timelineNotes');
+    if (!demoMode) {
+      // Update URL with selected note IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('timelineNotes', Array.from(newSet).join(','));
+      } else {
+        params.delete('timelineNotes');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedTimelineNoteIds, searchParams, router]);
+  }, [selectedTimelineNoteIds, searchParams, router, demoMode]);
 
   // Handle daily note toggle
   const handleDailyNoteToggle = useCallback((noteId: string) => {
@@ -685,31 +746,35 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedDailyNoteIds(newSet);
 
-    // Update URL with selected note IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('dailyNotes', Array.from(newSet).join(','));
-    } else {
-      params.delete('dailyNotes');
+    if (!demoMode) {
+      // Update URL with selected note IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('dailyNotes', Array.from(newSet).join(','));
+      } else {
+        params.delete('dailyNotes');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedDailyNoteIds, searchParams, router]);
+  }, [selectedDailyNoteIds, searchParams, router, demoMode]);
 
   // Handle journal entry selection
   const handleJournalEntrySelect = useCallback((entryId: string | null) => {
     setSelectedJournalEntryId(entryId);
 
-    // Update URL with selected entry ID
-    const params = new URLSearchParams(searchParams.toString());
-    if (entryId) {
-      params.set('entryId', entryId);
-    } else {
-      params.delete('entryId');
+    if (!demoMode) {
+      // Update URL with selected entry ID
+      const params = new URLSearchParams(searchParams.toString());
+      if (entryId) {
+        params.set('entryId', entryId);
+      } else {
+        params.delete('entryId');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [searchParams, router]);
+  }, [searchParams, router, demoMode]);
 
   // Handle graph guide toggle
   const handleGraphGuideToggle = useCallback((guideId: string) => {
@@ -722,16 +787,18 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedGraphGuideIds(newSet);
 
-    // Update URL with selected guide IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('graphGuides', Array.from(newSet).join(','));
-    } else {
-      params.delete('graphGuides');
+    if (!demoMode) {
+      // Update URL with selected guide IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('graphGuides', Array.from(newSet).join(','));
+      } else {
+        params.delete('graphGuides');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedGraphGuideIds, searchParams, router]);
+  }, [selectedGraphGuideIds, searchParams, router, demoMode]);
 
   // Handle overview guide toggle
   const handleOverviewGuideToggle = useCallback((guideId: string) => {
@@ -744,16 +811,18 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedOverviewGuideIds(newSet);
 
-    // Update URL with selected guide IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('overviewGuides', Array.from(newSet).join(','));
-    } else {
-      params.delete('overviewGuides');
+    if (!demoMode) {
+      // Update URL with selected guide IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('overviewGuides', Array.from(newSet).join(','));
+      } else {
+        params.delete('overviewGuides');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedOverviewGuideIds, searchParams, router]);
+  }, [selectedOverviewGuideIds, searchParams, router, demoMode]);
 
   // Handle analytics guide toggle
   const handleAnalyticsGuideToggle = useCallback((guideId: string) => {
@@ -766,38 +835,82 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
     setSelectedAnalyticsGuideIds(newSet);
 
-    // Update URL with selected guide IDs
-    const params = new URLSearchParams(searchParams.toString());
-    if (newSet.size > 0) {
-      params.set('analyticsGuides', Array.from(newSet).join(','));
-    } else {
-      params.delete('analyticsGuides');
+    if (!demoMode) {
+      // Update URL with selected guide IDs
+      const params = new URLSearchParams(searchParams.toString());
+      if (newSet.size > 0) {
+        params.set('analyticsGuides', Array.from(newSet).join(','));
+      } else {
+        params.delete('analyticsGuides');
+      }
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [selectedAnalyticsGuideIds, searchParams, router]);
+  }, [selectedAnalyticsGuideIds, searchParams, router, demoMode]);
 
   // Handle settings section change
   const handleSettingsSectionChange = useCallback((section: 'profile' | 'privacy' | 'data' | 'notifications' | 'appearance') => {
     setSettingsSection(section);
 
-    // Update URL with section param
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('section', section);
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [searchParams, router]);
+    if (!demoMode) {
+      // Update URL with section param
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('section', section);
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+    }
+  }, [searchParams, router, demoMode]);
 
   // Handle docs section change
   const handleDocsSectionChange = useCallback((section: 'getting-started' | 'notes' | 'discover' | 'library' | 'calendar' | 'tasks' | 'timeline' | 'daily' | 'journal' | 'graph' | 'analytics' | 'archive' | 'faq' | 'support') => {
     setDocsSection(section);
 
-    // Update URL with section param
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('section', section);
-    const queryString = params.toString();
-    router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
-  }, [searchParams, router]);
+    if (!demoMode) {
+      // Update URL with section param
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('section', section);
+      const queryString = params.toString();
+      router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+    }
+  }, [searchParams, router, demoMode]);
+
+  // Render view component based on activeView for demo mode
+  const renderDemoView = () => {
+    switch (activeView) {
+      case 'overview':
+        return <OverviewPage />;
+      case 'notes':
+        return <NotesPage />;
+      case 'discover':
+        return <DiscoverPage />;
+      case 'library':
+        return <LibraryPage />;
+      case 'calendar':
+        return <CalendarPage />;
+      case 'tasks':
+        return <TasksPage />;
+      case 'timeline':
+        return <TimelinePage />;
+      case 'daily':
+        return <DailyPage />;
+      case 'journal':
+        return <JournalPage />;
+      case 'graph':
+        return <GraphPage />;
+      case 'analytics':
+        return <AnalyticsPage />;
+      case 'archive':
+        return <ArchivePage />;
+      case 'community':
+        return <CommunityPage />;
+      case 'docs':
+        return <DocsPage />;
+      case 'settings':
+        return <SettingsPage />;
+      default:
+        return <OverviewPage />;
+    }
+  };
 
   if (loading || !workspace) {
     return (
@@ -918,7 +1031,7 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
           {/* Content Area */}
           <div className="flex-1 overflow-auto">
             <AnimatePresence mode="wait">
-              {children}
+              {demoMode ? renderDemoView() : children}
             </AnimatePresence>
           </div>
         </div>

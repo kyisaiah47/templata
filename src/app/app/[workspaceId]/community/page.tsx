@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 import {
   Users,
   TrendingUp,
@@ -19,7 +21,8 @@ type TabType = 'discussions' | 'requests' | 'feedback' | 'bugs' | 'features' | '
 
 export default function CommunityPage() {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
   const [activeTab, setActiveTab] = useState<TabType>('discussions');
 
   // Mock discussions data

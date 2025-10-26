@@ -5,6 +5,8 @@ import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { FileText, Plus, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -29,7 +31,8 @@ interface NotesSidebarContentProps {
 
 export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: NotesSidebarContentProps) {
   const params = useParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
 
   const [notes, setNotes] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +56,7 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
   }, [workspaceId]);
 
   const filteredNotes = notes.filter(note =>
-    note.guides.name.toLowerCase().includes(searchQuery.toLowerCase())
+    (note.guides?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
 
@@ -129,7 +132,7 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
                 <FileText className="h-4 w-4 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="font-medium truncate text-sm">
-                    {note.guides.name}
+                    {note.guides?.name || 'Untitled Note'}
                   </div>
                   {note.progress > 0 && (
                     <div className="flex items-center gap-1 mt-0.5">
@@ -150,17 +153,19 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
       </div>
 
       {/* New Note Button */}
-      <div className="p-2 border-t border-border/40">
-        <motion.button
-          onClick={onNewNote}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded transition-colors"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <Plus className="h-4 w-4" />
-          <span className="text-sm font-medium">New Note</span>
-        </motion.button>
-      </div>
+      {!demoMode && (
+        <div className="p-2 border-t border-border/40">
+          <motion.button
+            onClick={onNewNote}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Plus className="h-4 w-4" />
+            <span className="text-sm font-medium">New Note</span>
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 }

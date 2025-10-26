@@ -5,6 +5,7 @@ import { PenLine, Search, Loader2, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
+import { useDemo } from '@/contexts/demo-context';
 
 interface JournalEntry {
   id: string;
@@ -22,6 +23,7 @@ interface JournalSidebarContentProps {
 }
 
 export function JournalSidebarContent({ selectedEntryId, onEntrySelect }: JournalSidebarContentProps) {
+  const { demoMode } = useDemo();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,17 +58,19 @@ export function JournalSidebarContent({ selectedEntryId, onEntrySelect }: Journa
   return (
     <div className="flex flex-col h-full">
       {/* Header with New Button */}
-      <div className="px-3 py-2 border-b border-border/40">
-        <motion.button
-          onClick={() => onEntrySelect(null)}
-          className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded bg-primary hover:bg-[#5558e3] text-white text-sm font-medium transition-colors"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <Plus className="w-4 h-4" />
-          New Entry
-        </motion.button>
-      </div>
+      {!demoMode && (
+        <div className="px-3 py-2 border-b border-border/40">
+          <motion.button
+            onClick={() => onEntrySelect(null)}
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded bg-primary hover:bg-[#5558e3] text-white text-sm font-medium transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Plus className="w-4 h-4" />
+            New Entry
+          </motion.button>
+        </div>
+      )}
 
       {/* Search */}
       <div className="px-3 py-2 border-b border-border/40">

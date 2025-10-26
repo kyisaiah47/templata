@@ -88,20 +88,22 @@ export function PageLayout({
 			{/* Recently Used Footer - shows as sticky footer */}
 			<RecentlyUsedFooter />
 
-			{/* Floating Demo Button - Hidden on mobile */}
-			<div className={cn("fixed bottom-8 right-8 z-50", isMobile && "hidden")}>
-				<Button
-					size="lg"
-					variant="outline"
-					asChild
-					className="bg-background hover:bg-background/80 flex items-center gap-2"
-				>
-					<a href="/app">
-						<Play className="h-5 w-5" />
-						<span className="hidden sm:inline">{isLoggedIn ? "Open App" : "Try Demo"}</span>
-					</a>
-				</Button>
-			</div>
+			{/* Floating Demo Button - Hidden on mobile and homepage */}
+			{!isHomePage && (
+				<div className={cn("fixed bottom-8 right-8 z-50", isMobile && "hidden")}>
+					<Button
+						size="lg"
+						variant="outline"
+						asChild
+						className="bg-background hover:bg-background/80 flex items-center gap-2"
+					>
+						<a href="/app">
+							<Play className="h-5 w-5" />
+							<span className="hidden sm:inline">{isLoggedIn ? "Open App" : "Try Demo"}</span>
+						</a>
+					</Button>
+				</div>
+			)}
 
 			{/* Mobile Split FAB */}
 			{isMobile && (

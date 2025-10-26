@@ -72,8 +72,11 @@ export function WorkspaceSwitcher({
 
               return (
                 <button
+                  type="button"
                   key={workspace.id}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     onWorkspaceChange(workspace.id);
                     setOpen(false);
                   }}
@@ -106,7 +109,10 @@ export function WorkspaceSwitcher({
 
           {/* New Workspace Button */}
           <button
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
               setOpen(false);
               setCreateModalOpen(true);
             }}

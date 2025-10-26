@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
+import { useDemo } from '@/contexts/demo-context';
 
 interface PagesSidebarContentProps {
   pages: PageWithSubPages[];
@@ -19,6 +20,7 @@ export function PagesSidebarContent({
   activePageId,
   onPageClick,
 }: PagesSidebarContentProps) {
+  const { demoMode } = useDemo();
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedPages, setExpandedPages] = useState<Set<string>>(new Set());
 
@@ -69,17 +71,19 @@ export function PagesSidebarContent({
       </ScrollArea>
 
       {/* New Page Button */}
-      <div className="px-2 py-2 border-t border-border/40">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full justify-start gap-2"
-          onClick={() => {}}
-        >
-          <Plus className="w-3.5 h-3.5" />
-          <span>New Page</span>
-        </Button>
-      </div>
+      {!demoMode && (
+        <div className="px-2 py-2 border-t border-border/40">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start gap-2"
+            onClick={() => {}}
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>New Page</span>
+          </Button>
+        </div>
+      )}
     </>
   );
 }
@@ -108,7 +112,12 @@ function PageItem({
   return (
     <div>
       <button
-        onClick={() => onPageClick(page.id)}
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onPageClick(page.id);
+        }}
         className={cn(
           "w-full flex items-center gap-1.5 rounded px-2 py-1.5 text-sm transition-colors group",
           isActive
@@ -119,7 +128,9 @@ function PageItem({
       >
         {hasSubPages && (
           <button
+            type="button"
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               onToggleExpanded(page.id);
             }}

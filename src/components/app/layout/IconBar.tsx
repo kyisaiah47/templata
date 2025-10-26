@@ -66,7 +66,12 @@ export function IconBar({ activeView, onViewClick }: IconBarProps) {
           <div key={view.type}>
             {divider}
             <motion.button
-              onClick={() => onViewClick(view.type)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onViewClick(view.type);
+              }}
               className={cn(
                 "w-8 h-8 rounded-md flex items-center justify-center transition-colors",
                 isActive

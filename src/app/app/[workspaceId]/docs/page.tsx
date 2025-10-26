@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
+import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 import { GettingStartedDocs } from '@/components/docs/GettingStartedDocs';
 import { NotesDocs } from '@/components/docs/NotesDocs';
 import { DiscoverDocs } from '@/components/docs/DiscoverDocs';
@@ -24,7 +26,8 @@ type SectionType = 'getting-started' | 'notes' | 'discover' | 'library' | 'calen
 export default function DocsPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
+  const { demoMode } = useDemo();
+  const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
   const [activeSection, setActiveSection] = useState<SectionType>('getting-started');
 
   // Sync active section from URL
