@@ -9,6 +9,7 @@ import { BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useDemo } from '@/contexts/demo-context';
 
 interface Reading {
   id: string;
@@ -32,7 +33,8 @@ interface ReadingListProps {
 
 export function ReadingList({ workspaceId }: ReadingListProps) {
   const searchParams = useSearchParams();
-  const selectedReadingId = searchParams.get('readingId');
+  const { demoMode, selectedReadingId: demoReadingId } = useDemo();
+  const selectedReadingId = demoMode ? demoReadingId : searchParams.get('readingId');
   const queryClient = useQueryClient();
 
   // Fetch user's active guides first

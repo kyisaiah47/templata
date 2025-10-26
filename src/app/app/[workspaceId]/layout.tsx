@@ -70,7 +70,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
   const actualRouter = useRouter();
   const searchParams = useSearchParams();
   const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
-  const { setSelectedGuideId: setDemoGuideId } = useDemo();
+  const { setSelectedGuideId: setDemoGuideId, setSelectedReadingId: setDemoReadingId } = useDemo();
 
   // Create a no-op router for demo mode (memoized to prevent infinite loops)
   const noOpRouter = useMemo(() => ({
@@ -664,16 +664,19 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
 
   // Handle reading click from Library Sidebar
   const handleReadingClick = useCallback((readingId: string) => {
-    setSelectedReadingId(readingId);
-
-    if (!demoMode) {
+    if (demoMode) {
+      // In demo mode, use context
+      setDemoGuideId(null); // Clear selected guide when selecting a reading
+      setDemoReadingId(readingId);
+    } else {
+      setSelectedReadingId(readingId);
       // Update URL with reading ID
       const params = new URLSearchParams(searchParams.toString());
       params.set('readingId', readingId);
       const queryString = params.toString();
       router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
     }
-  }, [searchParams, router, demoMode]);
+  }, [searchParams, router, demoMode, setDemoGuideId, setDemoReadingId]);
 
   // Handle calendar note toggle
   const handleCalendarNoteToggle = useCallback((noteId: string) => {
