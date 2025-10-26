@@ -22,7 +22,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { TabType } from '@/types/workspace';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
+import { supabase } from '@/lib/supabase';
 
 interface IconBarProps {
   activeView: TabType;
@@ -49,7 +49,6 @@ const ICON_VIEWS: { type: TabType; icon: any; label: string }[] = [
 
 export function IconBar({ activeView, onViewClick }: IconBarProps) {
   const router = useRouter();
-  const supabase = createClient();
   let lastWasDivider = false;
 
   const handleLogout = async () => {
