@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/popover';
 import { useState } from 'react';
 import { CreateWorkspaceModal } from './CreateWorkspaceModal';
+import { useDemo } from '@/contexts/demo-context';
+import { toast } from 'sonner';
 
 // Helper to get Lucide icon component by name
 function getLucideIcon(iconName: string | null) {
@@ -33,6 +35,7 @@ export function WorkspaceSwitcher({
   onWorkspaceChange,
   pageCount = {},
 }: WorkspaceSwitcherProps) {
+  const { demoMode } = useDemo();
   const [open, setOpen] = useState(false);
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
@@ -113,6 +116,11 @@ export function WorkspaceSwitcher({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              if (demoMode) {
+                toast.info('Not available in demo mode');
+                setOpen(false);
+                return;
+              }
               setOpen(false);
               setCreateModalOpen(true);
             }}

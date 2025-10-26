@@ -237,6 +237,10 @@ export default function TasksPage() {
     due_date: string | null;
     user_guide_id: string | null;
   }) => {
+    if (demoMode) {
+      toast.info('Not available in demo mode');
+      return;
+    }
     createTaskMutation.mutate(task);
   };
 

@@ -12,6 +12,7 @@ import { CalendarEvent, Task } from '@/types/workspace';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 import { useDemo } from '@/contexts/demo-context';
 import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
+import { toast } from 'sonner';
 
 export default function CalendarPage() {
   const params = useParams();
@@ -88,6 +89,10 @@ export default function CalendarPage() {
   };
 
   const handleCreateEvent = () => {
+    if (demoMode) {
+      toast.info('Not available in demo mode');
+      return;
+    }
     setSelectedDate(undefined);
     setCreateDialogOpen(true);
   };
