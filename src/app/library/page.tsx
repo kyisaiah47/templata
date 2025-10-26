@@ -19,8 +19,10 @@ interface Reading {
   title: string;
   author: string;
   excerpt: string;
+  content: string;
+  read_time: string;
   type: string;
-  source_url: string | null;
+  influences: string[];
   updated_at: string;
 }
 
@@ -271,24 +273,25 @@ export default function LibraryPage() {
                       ← Back to readings
                     </button>
                     <h1 className="text-3xl font-semibold mb-3">{selectedReading.title}</h1>
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground mb-8">
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
                       <span>{selectedReading.author}</span>
                       <span>•</span>
                       <span>{selectedReading.read_time}</span>
-                      {selectedReading.source_url && (
-                        <>
-                          <span>•</span>
-                          <a
-                            href={selectedReading.source_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary hover:underline flex items-center gap-1"
-                          >
-                            View source <ExternalLink className="h-3 w-3" />
-                          </a>
-                        </>
-                      )}
                     </div>
+                    {selectedReading.influences && selectedReading.influences.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        <span className="text-xs text-muted-foreground">Influenced by:</span>
+                        {selectedReading.influences.map((influence, idx) => (
+                          <Badge
+                            key={idx}
+                            variant="secondary"
+                            className="text-xs px-2 py-0.5"
+                          >
+                            {influence}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                     <ReadingContent content={selectedReading.content} />
                   </div>
                 ) : (
@@ -310,21 +313,26 @@ export default function LibraryPage() {
                               <span className="text-[13px] font-medium group-hover:text-primary transition-colors truncate">
                                 {reading.title}
                               </span>
-                              {reading.source_url && (
-                                <a
-                                  href={reading.source_url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-muted-foreground hover:text-primary transition-colors"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              )}
                             </div>
                             <p className="text-[11px] text-muted-foreground mb-1">
                               {reading.author}
                             </p>
+                            {reading.influences && reading.influences.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mb-1">
+                                {reading.influences.slice(0, 3).map((influence, idx) => (
+                                  <Badge
+                                    key={idx}
+                                    variant="outline"
+                                    className="text-[9px] px-1 py-0"
+                                  >
+                                    {influence}
+                                  </Badge>
+                                ))}
+                                {reading.influences.length > 3 && (
+                                  <span className="text-[9px] text-muted-foreground">+{reading.influences.length - 3} more</span>
+                                )}
+                              </div>
+                            )}
                             <p className="text-[11px] text-muted-foreground/80 line-clamp-2">
                               {reading.excerpt}
                             </p>
