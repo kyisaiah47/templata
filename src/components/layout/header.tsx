@@ -178,14 +178,6 @@ export function Header() {
 									</button>
 								</div>
 
-								{/* How It Works */}
-								<Link
-									href="/how-it-works"
-									className="px-4 py-2 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
-								>
-									How It Works
-								</Link>
-
 								{/* About */}
 								<Link
 									href="/about"
@@ -316,18 +308,6 @@ export function Header() {
 											</div>
 											<p className="text-xs text-muted-foreground leading-relaxed">
 												Learn how to use Templata
-											</p>
-										</Link>
-										<Link
-											href="/how-it-works"
-											className="block group"
-											onClick={() => setShowFeaturesDropdown(false)}
-										>
-											<div className="text-[15px] font-medium mb-0.5 text-foreground group-hover:text-primary transition-colors">
-												How it works
-											</div>
-											<p className="text-xs text-muted-foreground leading-relaxed">
-												See how to use guides and workspaces
 											</p>
 										</Link>
 									</div>
