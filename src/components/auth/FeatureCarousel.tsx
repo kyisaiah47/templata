@@ -158,7 +158,7 @@ export function FeatureCarousel() {
           </div>
 
           {/* Feature Content */}
-          <div className="h-[220px] overflow-hidden relative">
+          <div className="h-[320px] overflow-hidden relative">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
