@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { BookOpen, Search, ExternalLink, ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
-import { ReadingContent } from '@/app/readings/[slug]/reading-content';
+import { ReadingContent } from '@/components/readings/ReadingContent';
 
 interface GuideWithReadings {
   guide_id: string;

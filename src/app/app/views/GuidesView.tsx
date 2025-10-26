@@ -22,7 +22,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import { FileText, BookOpen, ChevronRight, ChevronDown, Save, ArrowLeft, X, AlertCircle, ChevronsUpDown, Check, CheckCircle, Star, Menu, Search } from 'lucide-react';
-import { ReadingContent } from '@/app/readings/[slug]/reading-content';
+import { ReadingContent } from '@/components/readings/ReadingContent';
 import Link from 'next/link';
 import { GuideHeader } from '@/components/app/guides/GuideHeader';
 import {
