@@ -614,8 +614,6 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
   // Handle page click from Sidebar
   const handlePageClick = useCallback((pageId: string) => {
-    if (demoMode) return; // Disable in demo mode
-
     const page = pages.find(p => p.id === pageId);
     if (!page) return;
 
@@ -628,12 +626,10 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     };
 
     addTab(newTab);
-  }, [pages, addTab, demoMode]);
+  }, [pages, addTab]);
 
   // Handle note click from Notes Sidebar
   const handleNoteClick = useCallback((guideId: string) => {
-    if (demoMode) return; // Disable in demo mode
-
     const newTab: Tab = {
       id: `note-${guideId}`,
       type: 'notes',
@@ -643,7 +639,7 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     };
 
     addTab(newTab);
-  }, [addTab, demoMode]);
+  }, [addTab]);
 
   // Handle new note button click from Notes Sidebar
   const handleNewNote = useCallback(() => {
