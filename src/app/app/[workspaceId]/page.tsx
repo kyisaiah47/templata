@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { LayoutDashboard, ListTodo, Calendar, CheckCircle2, Circle, Loader2, Clock, AlertCircle } from 'lucide-react';
 import { format, isToday, isTomorrow, isPast, isFuture, parseISO, startOfDay } from 'date-fns';
 import { useDemo } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 
 interface UserGuide {
   id: string;
@@ -39,8 +40,8 @@ interface CalendarEvent {
 export default function OverviewPage() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const workspaceId = params.workspaceId as string;
   const { demoMode } = useDemo();
+  const workspaceId = demoMode ? 'demo' : (params.workspaceId as string);
 
   const [allUserGuides, setAllUserGuides] = useState<UserGuide[]>([]);
   const [allTasks, setAllTasks] = useState<Task[]>([]);
@@ -65,11 +66,41 @@ export default function OverviewPage() {
 
   useEffect(() => {
     if (demoMode) {
-      // Use mock data for demo
-      setAllUserGuides([]);
-      setAllTasks([]);
-      setAllEvents([]);
-      setLoading(false);
+      // Fetch real data from demo workspace
+      
+
+      async function fetchDemoData() {
+        try {
+          setLoading(true);
+
+          const [guidesRes, tasksRes, eventsRes] = await Promise.all([
+            fetch(`/api/user-guides?workspace_id=${DEMO_WORKSPACE_ID}&archived=false`),
+            fetch(`/api/tasks?workspace_id=${DEMO_WORKSPACE_ID}`),
+            fetch(`/api/calendar?workspace_id=${DEMO_WORKSPACE_ID}`)
+          ]);
+
+          if (guidesRes.ok) {
+            const guidesData = await guidesRes.json();
+            setAllUserGuides(guidesData.userGuides || []);
+          }
+
+          if (tasksRes.ok) {
+            const tasksData = await tasksRes.json();
+            setAllTasks(tasksData.tasks || []);
+          }
+
+          if (eventsRes.ok) {
+            const eventsData = await eventsRes.json();
+            setAllEvents(eventsData.events || []);
+          }
+        } catch (error) {
+          console.error('Error fetching demo data:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      fetchDemoData();
       return;
     }
 

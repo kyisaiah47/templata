@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { useState } from 'react';
+import { useDemo } from '@/contexts/demo-context';
 
 interface SidebarProps {
   workspace: Workspace;
@@ -27,6 +28,7 @@ export function Sidebar({
   children,
 }: SidebarProps) {
   const router = useRouter();
+  const { demoMode } = useDemo();
 
   if (!sidebarOpen) {
     return null;
@@ -61,7 +63,9 @@ export function Sidebar({
           workspaces={workspaces}
           currentWorkspaceId={workspace.id}
           onWorkspaceChange={(id) => {
-            router.push(`/app/${id}`);
+            if (!demoMode) {
+              router.push(`/app/${id}`);
+            }
           }}
         />
       </motion.div>

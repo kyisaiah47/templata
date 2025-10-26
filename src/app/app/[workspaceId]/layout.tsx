@@ -4,6 +4,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { DemoProvider } from '@/contexts/demo-context';
+import { DEMO_WORKSPACE_ID, DEMO_USER_ID } from '@/lib/demo-constants';
 import { IconBar } from '@/components/app/layout/IconBar';
 import { Sidebar } from '@/components/app/layout/Sidebar';
 import { TabBar } from '@/components/app/layout/TabBar';
@@ -132,34 +133,33 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
   // Fetch workspace data and all workspaces
   useEffect(() => {
     if (demoMode) {
-      // Use mock data for demo
-      setWorkspace({
-        id: 'demo',
-        name: 'My Life Planning',
-        icon: '🏠',
-        user_id: 'demo-user',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      });
-      setWorkspaces([
-        {
-          id: 'demo',
-          name: 'My Life Planning',
-          icon: '🏠',
-          user_id: 'demo-user',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        },
-        {
-          id: 'demo-2',
-          name: 'Work Projects',
-          icon: '💼',
-          user_id: 'demo-user',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+      // Fetch real data from demo account
+      
+
+      async function fetchDemoData() {
+        try {
+          const [workspaceRes, workspacesRes] = await Promise.all([
+            fetch(`/api/workspaces/${DEMO_WORKSPACE_ID}`),
+            fetch(`/api/workspaces?user_id=${DEMO_USER_ID}`)
+          ]);
+
+          if (workspaceRes.ok) {
+            const workspaceData = await workspaceRes.json();
+            setWorkspace(workspaceData.workspace);
+          }
+
+          if (workspacesRes.ok) {
+            const workspacesData = await workspacesRes.json();
+            setWorkspaces(workspacesData.workspaces || []);
+          }
+        } catch (error) {
+          console.error('Error fetching demo data:', error);
+        } finally {
+          setLoading(false);
         }
-      ]);
-      setLoading(false);
+      }
+
+      fetchDemoData();
       return;
     }
 
@@ -206,33 +206,38 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
   // Fetch pages data
   useEffect(() => {
     if (demoMode) {
-      // Use mock pages for demo
-      setPages([
-        {
-          id: 'demo-page-1',
-          workspace_id: 'demo',
-          name: "Planning Wedding",
-          icon: '💍',
-          content: {},
-          parent_page_id: null,
-          display_order: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          subPages: []
-        },
-        {
-          id: 'demo-page-2',
-          workspace_id: 'demo',
-          name: "Career Transition",
-          icon: '💼',
-          content: {},
-          parent_page_id: null,
-          display_order: 1,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          subPages: []
+      // Fetch real pages from demo workspace
+      
+
+      async function fetchDemoPages() {
+        try {
+          const response = await fetch(`/api/workspaces/${DEMO_WORKSPACE_ID}/pages`);
+          if (!response.ok) throw new Error('Failed to fetch demo pages');
+          const data = await response.json();
+
+          // Transform flat pages into hierarchical structure
+          const pagesMap = new Map(data.pages.map((p: any) => [p.id, { ...p, subPages: [] }]));
+          const rootPages: PageWithSubPages[] = [];
+
+          data.pages.forEach((page: any) => {
+            const pageWithSubs = pagesMap.get(page.id)!;
+            if (page.parent_page_id) {
+              const parent = pagesMap.get(page.parent_page_id);
+              if (parent) {
+                parent.subPages.push(pageWithSubs);
+              }
+            } else {
+              rootPages.push(pageWithSubs);
+            }
+          });
+
+          setPages(rootPages);
+        } catch (error) {
+          console.error('Error fetching demo pages:', error);
         }
-      ]);
+      }
+
+      fetchDemoPages();
       return;
     }
 
@@ -506,6 +511,8 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
   // Handle view click from IconBar
   const handleViewClick = useCallback((viewType: TabType) => {
+    if (demoMode) return; // Disable in demo mode
+
     const viewLabels: Record<TabType, string> = {
       overview: 'Overview',
       notes: 'Notes',
@@ -550,10 +557,12 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     };
 
     addTab(newTab);
-  }, [addTab]);
+  }, [addTab, demoMode]);
 
   // Handle page click from Sidebar
   const handlePageClick = useCallback((pageId: string) => {
+    if (demoMode) return; // Disable in demo mode
+
     const page = pages.find(p => p.id === pageId);
     if (!page) return;
 
@@ -566,10 +575,12 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     };
 
     addTab(newTab);
-  }, [pages, addTab]);
+  }, [pages, addTab, demoMode]);
 
   // Handle note click from Notes Sidebar
   const handleNoteClick = useCallback((guideId: string) => {
+    if (demoMode) return; // Disable in demo mode
+
     const newTab: Tab = {
       id: `note-${guideId}`,
       type: 'notes',
@@ -579,7 +590,7 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     };
 
     addTab(newTab);
-  }, [addTab]);
+  }, [addTab, demoMode]);
 
   // Handle new note button click from Notes Sidebar
   const handleNewNote = useCallback(() => {
