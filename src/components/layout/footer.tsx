@@ -21,7 +21,7 @@ export function Footer() {
 							<span className="font-bold text-xl">Templata</span>
 						</div>
 						<p className="text-muted-foreground">
-							Wikipedia × Notion for life planning.
+							Wikipedia × Notion
 						</p>
 					</div>
 				</div>
