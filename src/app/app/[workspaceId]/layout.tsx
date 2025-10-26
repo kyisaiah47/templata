@@ -65,11 +65,12 @@ interface WorkspaceLayoutProps {
   demoMode?: boolean;
 }
 
-export default function WorkspaceLayout({ children, demoMode = false }: WorkspaceLayoutProps) {
+function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutProps) {
   const params = useParams();
   const actualRouter = useRouter();
   const searchParams = useSearchParams();
   const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
+  const { setSelectedGuideId: setDemoGuideId } = useDemo();
 
   // Create a no-op router for demo mode (memoized to prevent infinite loops)
   const noOpRouter = useMemo(() => ({
@@ -571,6 +572,10 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
   // Handle view click from IconBar
   const handleViewClick = useCallback((viewType: TabType) => {
     // In demo mode, still allow view switching but don't update URL
+    // Clear selected guide ID when switching away from notes view
+    if (demoMode && viewType !== 'notes') {
+      setDemoGuideId(null);
+    }
 
     const viewLabels: Record<TabType, string> = {
       overview: 'Overview',
@@ -616,7 +621,7 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
     };
 
     addTab(newTab);
-  }, [addTab, demoMode]);
+  }, [addTab, demoMode, setDemoGuideId]);
 
   // Handle page click from Sidebar
   const handlePageClick = useCallback((pageId: string) => {
@@ -636,16 +641,21 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
 
   // Handle note click from Notes Sidebar
   const handleNoteClick = useCallback((guideId: string) => {
-    const newTab: Tab = {
-      id: `note-${guideId}`,
-      type: 'notes',
-      label: 'Note', // Will be updated when guide data loads
-      icon: FileText,
-      guideId: guideId,
-    };
+    if (demoMode) {
+      // In demo mode, just set the selected guide ID in context
+      setDemoGuideId(guideId);
+    } else {
+      const newTab: Tab = {
+        id: `note-${guideId}`,
+        type: 'notes',
+        label: 'Note', // Will be updated when guide data loads
+        icon: FileText,
+        guideId: guideId,
+      };
 
-    addTab(newTab);
-  }, [addTab]);
+      addTab(newTab);
+    }
+  }, [addTab, demoMode, setDemoGuideId]);
 
   // Handle new note button click from Notes Sidebar
   const handleNewNote = useCallback(() => {
@@ -923,7 +933,6 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
   }
 
   return (
-    <DemoProvider demoMode={demoMode}>
       <div className={demoMode ? "h-full w-full flex overflow-hidden bg-background" : "h-screen w-screen flex overflow-hidden bg-background"}>
         {/* IconBar - 36px wide */}
         <IconBar activeView={activeView} onViewClick={handleViewClick} />
@@ -1037,18 +1046,25 @@ export default function WorkspaceLayout({ children, demoMode = false }: Workspac
             </AnimatePresence>
           </div>
         </div>
+        {demoMode && (
+          <style jsx global>{`
+            [data-sonner-toaster] {
+              position: fixed !important;
+              top: 50% !important;
+              left: 50% !important;
+              transform: translate(-50%, -50%) !important;
+            }
+          `}</style>
+        )}
+        <Toaster position="top-center" />
       </div>
-      {demoMode && (
-        <style jsx global>{`
-          [data-sonner-toaster] {
-            position: fixed !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-          }
-        `}</style>
-      )}
-      <Toaster position="top-center" />
+  );
+}
+
+export default function WorkspaceLayout(props: WorkspaceLayoutProps) {
+  return (
+    <DemoProvider demoMode={props.demoMode}>
+      <WorkspaceLayoutInner {...props} />
     </DemoProvider>
   );
 }

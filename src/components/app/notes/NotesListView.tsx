@@ -67,9 +67,7 @@ export function NotesListView({ workspaceId }: NotesListViewProps) {
   );
 
   const handleNoteClick = (guideId: string) => {
-    if (!demoMode) {
-      router.push(`/app/${workspaceId}/notes?id=${guideId}`);
-    }
+    router.push(`/app/${workspaceId}/notes?id=${guideId}`);
   };
 
   const handleCreateNote = () => {

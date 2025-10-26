@@ -14,9 +14,9 @@ export default function NotesPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { demoMode } = useDemo();
+  const { demoMode, selectedGuideId: demoGuideId } = useDemo();
   const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
-  const guideId = searchParams.get('id');
+  const guideId = demoMode ? demoGuideId : searchParams.get('id');
   const pageId = searchParams.get('pageId');
 
   const [userGuideId, setUserGuideId] = useState<string | null>(null);

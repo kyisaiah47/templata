@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Briefcase, Heart, Activity, Sprout, DollarSign, Calendar } from 'lucide-react';
+import { Briefcase, Heart, Activity, Sprout, DollarSign, Calendar, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -70,12 +70,12 @@ export function CategorySidebarContent({ selectedCategory, onCategorySelect }: C
   if (loading) {
     return (
       <motion.div
-        className="flex-1 flex items-center justify-center"
+        className="flex-1 flex items-center justify-center py-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="text-xs text-muted-foreground">Loading...</div>
+        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
       </motion.div>
     );
   }

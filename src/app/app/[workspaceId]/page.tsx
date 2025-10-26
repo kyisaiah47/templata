@@ -179,7 +179,7 @@ export default function OverviewPage() {
           >
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </motion.div>
-        ) : selectedNoteIds.length === 0 ? (
+        ) : selectedNoteIds.length === 0 && !demoMode ? (
           <motion.div
             className="flex flex-col items-center justify-center h-96 text-muted-foreground"
             initial={{ opacity: 0, y: 10 }}
