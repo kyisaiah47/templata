@@ -30,11 +30,16 @@ log_colored "$BLUE" "🚀 Generating questions for guide: $GUIDE_ID"
 read -r -d '' PROMPT <<'HEREDOC' || true
 Generate comprehensive, high-quality questions for the GUIDE_ID_PLACEHOLDER guide.
 
-**CONTEXT: Templata = Notion-style Planning App + Wikipedia-depth Content**
-- Templata is a note-taking/planning workspace (like Notion)
-- Users work through structured questions to plan major life situations
-- Questions help users think systematically through their specific situation
-- Readings provide comprehensive background knowledge
+**CONTEXT: Creating a New Category - Structured Knowledge Workspaces**
+
+Most products make people choose: either get information (Wikipedia, articles, books) OR get structure (templates, worksheets). But when facing major life decisions, people need BOTH simultaneously.
+
+This is a new category where:
+- Questions force systematic thinking about YOUR specific situation (not generic advice)
+- Readings provide comprehensive, well-researched knowledge (not shallow templates)
+- Together = informed decisions about YOUR life with expert-level backing
+
+Your job: Create questions that make users think deeply about THEIR specific situation. Not generic prompts, but thoughtful questions that help them work through this decision systematically.
 
 **YOUR TASK**: Create questions that comprehensively cover this guide topic
 
@@ -71,12 +76,12 @@ Quality over quantity - don't create filler questions.
 - Practical and useful for someone working through that situation
 - Mix of types: planning, reflection, research, action
 
-**EXAMPLES OF GOOD NOTION-STYLE QUESTIONS:**
-- 'Write down the key security frameworks and compliance standards that apply to your current environment.'
-- 'Document feedback you've received from supervisors and identify recurring themes.'
-- 'Create a list of continuing education courses that align with your career goals and their associated costs.'
-- 'Research salary ranges for different positions in your region and note factors that influence compensation.'
-- 'Reflect on your communication style with different types of people and identify techniques that have been most effective.'
+**EXAMPLES OF GOOD QUESTIONS (varied topics):**
+- 'List your current monthly expenses by category and identify which are fixed vs variable.'
+- 'Document the last 5 major purchases you made and reflect on what influenced each decision.'
+- 'Research three neighborhoods you're considering and note schools, commute times, and recent sale prices.'
+- 'Write down what fulfillment looks like to you in a career - be specific about daily activities, not just outcomes.'
+- 'Reflect on your last major life transition: what helped you adapt and what made it harder?'
 
 **Example question counts by complexity:**
 - Simple guide (e.g., 'create-budget'): ~15-20 questions

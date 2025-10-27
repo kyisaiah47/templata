@@ -30,11 +30,16 @@ log_colored "$BLUE" "🚀 Generating readings for guide: $GUIDE_ID"
 read -r -d '' PROMPT <<'HEREDOC' || true
 Generate a comprehensive set of readings for the GUIDE_ID_PLACEHOLDER guide.
 
-**CONTEXT: Templata = Notion-style Planning App + Wikipedia-depth Content**
-- Templata is a note-taking/planning workspace (like Notion)
-- Users work through structured questions to plan major life situations
-- Readings provide comprehensive, well-researched content (Wikipedia-depth)
-- Tone is warm and conversational (Notion-style), NOT dry academic writing
+**CONTEXT: Creating a New Category - Structured Knowledge Workspaces**
+
+Most products make people choose: either get information (Wikipedia, articles, books) OR get structure (templates, worksheets). But when facing major life decisions, people need BOTH simultaneously.
+
+This is a new category where:
+- Questions force systematic thinking about YOUR specific situation (not generic advice)
+- Readings provide comprehensive, well-researched knowledge (not shallow templates)
+- Together = informed decisions about YOUR life with expert-level backing
+
+Your job: Create readings that give Wikipedia-depth knowledge in a warm, conversational tone. Someone working through this guide should feel like they have an expert friend who did all the research for them.
 
 **YOUR TASK**: Create readings that comprehensively cover this guide topic
 
@@ -69,19 +74,24 @@ Quality over quantity - don't create filler content. Generate as many or as few 
 Examples of good title sets:
 
 For "asking-for-raise":
-1. "The 5-Minute Conversation Worth $1.5 Million" (psychology/motivation)
-2. "Salary Research: Tools That Actually Work" (research tactics)
-3. "Building Your Case: The Metrics That Matter" (evidence building)
-4. "The Script: Exact Words That Get Results" (conversation templates)
-5. "Timing Strategy: When They Say Yes vs No" (timing/strategy)
+1. "Understanding Your Market Value" (research foundation)
+2. "Building Your Case: What Actually Matters" (evidence building)
+3. "The Conversation: What to Say and When" (execution)
+4. "Handling Common Objections" (problem-solving)
+5. "After the Ask: Next Steps for Yes, No, or Maybe" (follow-through)
 
-For "getting-divorced":
-1. "The First 30 Days: Legal Steps You Can't Skip"
-2. "How to Split Retirement Accounts Without Losing Half"
-3. "Co-Parenting Schedules That Actually Work"
-4. "Your Financial Reset: Budgeting After Divorce"
-5. "Telling Your Kids: What Child Psychologists Recommend"
-6. "The Emotional Timeline: What to Expect Month by Month"
+For "buying-first-home":
+1. "Financial Readiness: Beyond the Down Payment" (financial planning)
+2. "Understanding Mortgages and What Lenders Look For" (financing knowledge)
+3. "The Search Process: From Neighborhoods to Inspections" (practical steps)
+4. "Making an Offer in Different Market Conditions" (strategy)
+5. "From Offer to Closing: What Happens and When" (process navigation)
+
+For "career-change":
+1. "Self-Assessment: Skills, Values, and What Transfers" (foundation)
+2. "Exploring New Fields: Research That Actually Helps" (exploration)
+3. "Building Credibility in a New Industry" (transition tactics)
+4. "The Financial Reality of Career Change" (practical planning)
 
 **STEP 3: GENERATE CONTENT FOR EACH TITLE**
 
@@ -161,7 +171,7 @@ For each title, create 300-400 word content following these requirements:
 
 **YOUR PROCESS**:
 1. Analyze the guide topic to understand what comprehensive coverage looks like
-2. Generate 4-8 titles that cover all major aspects with zero overlap
+2. Generate titles that cover all major aspects with zero overlap (as many or few as needed)
 3. For each title:
    - Find 2-3 real credible sources
    - Generate SHORT content (300-400 words) with quote blocks

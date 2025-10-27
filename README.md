@@ -1,16 +1,18 @@
 # Templata
 
-**Wikipedia × Notion for life**
+**A new category: Structured Knowledge Workspaces**
 
-Browse guides for life situations, transitions, and learning. Each guide gives you questions to think through and a workspace to organize your thinking.
+Most products make you choose - either get information (Wikipedia, articles, books) OR get structure (templates, worksheets). Templata gives you both.
+
+When facing major life decisions, you need to think systematically about YOUR situation AND access comprehensive knowledge. Not generic advice. Not shallow templates. Both, together.
 
 ---
 
 ## What is Templata?
 
-Templata is a structured thinking tool for navigating life.
+Templata combines structured questions with comprehensive readings for life's major decisions.
 
-Pick a guide (career change, learning piano, managing anxiety, planning a wedding, etc.), work through curated questions, and take notes in a split-screen workspace. Everything saves automatically.
+Pick a guide (career change, buying a home, managing divorce, etc.), work through thoughtful questions specific to YOUR situation, and access expert-level knowledge - all in one workspace. Think Wikipedia-depth content meets Notion-style planning.
 
 ## How it works
 
@@ -41,11 +43,15 @@ Pick a guide (career change, learning piano, managing anxiety, planning a weddin
 
 ## Philosophy
 
-**Wikipedia × Notion**
+**Defining a New Category**
 
-Like Wikipedia provides comprehensive coverage and Notion provides flexible workspaces, Templata combines both for navigating life.
+Templata isn't just another tool - it's creating a new category: **Structured Knowledge Workspaces**.
 
-Instead of googling scattered advice across Reddit threads and blog posts, you get structured guides with curated questions and a workspace to organize your thinking.
+The problem: When facing major life decisions (career change, divorce, home buying), you need to both THINK through YOUR specific situation AND ACCESS comprehensive knowledge. No existing product gives you both.
+
+The solution: Combine systematic questions (forcing you to think through YOUR situation) with Wikipedia-depth readings (giving you expert knowledge). Not generic advice. Not shallow templates. Informed decision-making.
+
+This is what makes Templata different: you're not just reading about career change or filling out a worksheet. You're WORKING THROUGH your career change with comprehensive knowledge backing every decision.
 
 ---
 
