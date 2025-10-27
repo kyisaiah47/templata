@@ -35,13 +35,17 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
-  // Get selected note IDs from URL
-  const selectedNoteIds = searchParams.get('calendarNotes')?.split(',').filter(Boolean) || [];
+  // Get selected note IDs from URL, fallback to localStorage if URL is empty
+  const urlIds = searchParams.get('calendarNotes')?.split(',').filter(Boolean);
+  const localStorageIds = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('selectedCalendarNoteIds') || '[]')
+    : [];
+  const selectedNoteIds = urlIds && urlIds.length > 0 ? urlIds : localStorageIds;
 
-  // Filter items by selected notes, then separate events from tasks
+  // Filter items by selected notes, or show all in demo mode
   const filteredItems = selectedNoteIds.length > 0
     ? allItems.filter(item => item.user_guide_id && selectedNoteIds.includes(item.user_guide_id))
-    : [];
+    : (demoMode ? allItems : []);
 
   // Separate events (items with start_time) from tasks (items with due_date but no start_time)
   const events = filteredItems.filter(item => item.start_time);

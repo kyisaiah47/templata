@@ -52,17 +52,21 @@ export default function AnalyticsPage() {
   const [allItems, setAllItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Get selected guide IDs from URL
-  const selectedGuideIds = searchParams.get('analyticsGuides')?.split(',').filter(Boolean) || [];
+  // Get selected guide IDs from URL, fallback to localStorage if URL is empty
+  const urlIds = searchParams.get('analyticsGuides')?.split(',').filter(Boolean);
+  const localStorageIds = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('selectedAnalyticsGuideIds') || '[]')
+    : [];
+  const selectedGuideIds = urlIds && urlIds.length > 0 ? urlIds : localStorageIds;
 
-  // Filter by selected guides - show none if nothing selected
+  // Filter by selected guides - show none if nothing selected, or all in demo mode
   const userGuides = selectedGuideIds.length > 0
     ? allUserGuides.filter(guide => selectedGuideIds.includes(guide.id))
-    : [];
+    : (demoMode ? allUserGuides : []);
 
   const items = selectedGuideIds.length > 0
     ? allItems.filter(item => item.user_guide_id && selectedGuideIds.includes(item.user_guide_id))
-    : [];
+    : (demoMode ? allItems : []);
 
   useEffect(() => {
     async function fetchData() {
@@ -195,7 +199,7 @@ export default function AnalyticsPage() {
           >
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </motion.div>
-        ) : selectedGuideIds.length === 0 ? (
+        ) : selectedGuideIds.length === 0 && !demoMode ? (
           <motion.div
             className="flex flex-col items-center justify-center h-96 text-muted-foreground"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -205,6 +209,17 @@ export default function AnalyticsPage() {
             <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
             <p className="text-lg font-medium">No notes selected</p>
             <p className="text-sm">Select notes from the sidebar to view analytics</p>
+          </motion.div>
+        ) : userGuides.length === 0 && selectedGuideIds.length > 0 ? (
+          <motion.div
+            className="flex flex-col items-center justify-center h-96 text-muted-foreground"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
+            <p className="text-lg font-medium">No data found</p>
+            <p className="text-sm">The selected notes don't have any data yet</p>
           </motion.div>
         ) : (
           <motion.div

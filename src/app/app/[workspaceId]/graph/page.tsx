@@ -32,13 +32,17 @@ export default function GraphPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Get selected guide IDs from URL
-  const selectedGuideIds = searchParams.get('graphGuides')?.split(',').filter(Boolean) || [];
+  // Get selected guide IDs from URL, fallback to localStorage if URL is empty
+  const urlIds = searchParams.get('graphGuides')?.split(',').filter(Boolean);
+  const localStorageIds = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('selectedGraphGuideIds') || '[]')
+    : [];
+  const selectedGuideIds = urlIds && urlIds.length > 0 ? urlIds : localStorageIds;
 
-  // Filter guides by selection - show none if nothing selected
+  // Filter guides by selection - show none if nothing selected, or all in demo mode
   const userGuides = selectedGuideIds.length > 0
     ? allUserGuides.filter(guide => selectedGuideIds.includes(guide.id))
-    : [];
+    : (demoMode ? allUserGuides : []);
 
   useEffect(() => {
     async function fetchUserGuides() {
@@ -112,6 +116,28 @@ export default function GraphPage() {
             transition={{ duration: 0.3 }}
           >
             <p>{error}</p>
+          </motion.div>
+        ) : selectedGuideIds.length === 0 && !demoMode ? (
+          <motion.div
+            className="flex flex-col items-center justify-center h-96 text-muted-foreground rounded-lg border border-border/40 bg-background"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Network className="w-16 h-16 mb-4 opacity-20" />
+            <p className="text-lg font-medium">No notes selected</p>
+            <p className="text-sm">Select notes from the sidebar to see your knowledge graph</p>
+          </motion.div>
+        ) : userGuides.length === 0 && selectedGuideIds.length > 0 ? (
+          <motion.div
+            className="flex flex-col items-center justify-center h-96 text-muted-foreground rounded-lg border border-border/40 bg-background"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Network className="w-16 h-16 mb-4 opacity-20" />
+            <p className="text-lg font-medium">No data found</p>
+            <p className="text-sm">The selected notes don't have any data yet</p>
           </motion.div>
         ) : (
           <motion.div

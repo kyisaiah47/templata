@@ -40,14 +40,21 @@ export default function OverviewPage() {
   // Daily view state
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  // Get selected note IDs from URL
-  const selectedNoteIds = searchParams.get('overviewGuides')?.split(',').filter(Boolean) || [];
+  // Get selected note IDs from URL, fallback to localStorage if URL is empty
+  const urlIds = searchParams.get('overviewGuides')?.split(',').filter(Boolean);
+  const localStorageIds = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('selectedOverviewGuideIds') || '[]')
+    : [];
+  const selectedNoteIds = urlIds && urlIds.length > 0 ? urlIds : localStorageIds;
+  console.log('[Daily View] selectedNoteIds:', selectedNoteIds);
+  console.log('[Daily View] allUserGuides:', allUserGuides.map(g => ({ id: g.id, name: g.guides.name })));
 
   // Filter by selection - only show data from checked notes
   // In demo mode, show all data if nothing is selected
   const userGuides = selectedNoteIds.length > 0
     ? allUserGuides.filter(guide => selectedNoteIds.includes(guide.id))
     : (demoMode ? allUserGuides : []);
+  console.log('[Daily View] Filtered userGuides:', userGuides.map(g => ({ id: g.id, name: g.guides.name })));
 
   const tasks = selectedNoteIds.length > 0
     ? allItems.filter(task => task.user_guide_id && selectedNoteIds.includes(task.user_guide_id))
@@ -201,6 +208,17 @@ export default function OverviewPage() {
             <CalendarDays className="w-16 h-16 mb-4 opacity-20" />
             <p className="text-lg font-medium">No notes selected</p>
             <p className="text-sm">Select notes from the sidebar to see your daily view</p>
+          </motion.div>
+        ) : userGuides.length === 0 && selectedNoteIds.length > 0 ? (
+          <motion.div
+            className="flex flex-col items-center justify-center h-96 text-muted-foreground"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            <CalendarDays className="w-16 h-16 mb-4 opacity-20" />
+            <p className="text-lg font-medium">No data found</p>
+            <p className="text-sm">The selected notes don't have any data yet</p>
           </motion.div>
         ) : (
           <motion.div

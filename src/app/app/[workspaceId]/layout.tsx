@@ -520,7 +520,8 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
     // Don't sync URLs in demo mode
     if (demoMode) return;
 
-    const params = new URLSearchParams();
+    // Preserve existing URL params when syncing tabs (don't wipe out selection params)
+    const params = new URLSearchParams(searchParams.toString());
 
     if (newTabs.length > 0) {
       // Remove icon components before serializing to URL (they can't be serialized)
@@ -886,12 +887,14 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
 
   // Handle overview guide toggle
   const handleOverviewGuideToggle = useCallback((guideId: string) => {
+    console.log('[handleOverviewGuideToggle] Called with guideId:', guideId);
     const newSet = new Set(selectedOverviewGuideIds);
     if (newSet.has(guideId)) {
       newSet.delete(guideId);
     } else {
       newSet.add(guideId);
     }
+    console.log('[handleOverviewGuideToggle] New set:', Array.from(newSet));
 
     setSelectedOverviewGuideIds(newSet);
 
@@ -907,7 +910,10 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
         params.delete('overviewGuides');
       }
       const queryString = params.toString();
+      console.log('[handleOverviewGuideToggle] Updating URL to:', `${window.location.pathname}?${queryString}`);
       router.replace(`${window.location.pathname}?${queryString}`, { scroll: false });
+    } else {
+      console.log('[handleOverviewGuideToggle] Demo mode - not updating URL');
     }
   }, [selectedOverviewGuideIds, searchParams, router, demoMode]);
 

@@ -27,8 +27,12 @@ export default function TasksPage() {
   const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
   const queryClient = useQueryClient();
 
-  // Get selected note IDs from URL
-  const selectedNoteIds = searchParams.get('tasksNotes')?.split(',').filter(Boolean) || [];
+  // Get selected note IDs from URL, fallback to localStorage if URL is empty
+  const urlIds = searchParams.get('tasksNotes')?.split(',').filter(Boolean);
+  const localStorageIds = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('selectedTasksNoteIds') || '[]')
+    : [];
+  const selectedNoteIds = urlIds && urlIds.length > 0 ? urlIds : localStorageIds;
 
   // Fetch tasks
   const { data: allItems, isLoading, error } = useQuery({
@@ -41,10 +45,10 @@ export default function TasksPage() {
     },
   });
 
-  // Filter tasks by selected notes - show none if nothing selected
+  // Filter tasks by selected notes - show none if nothing selected, or all in demo mode
   const data = selectedNoteIds.length > 0
     ? (allItems || []).filter(task => task.user_guide_id && selectedNoteIds.includes(task.user_guide_id))
-    : [];
+    : (demoMode ? (allItems || []) : []);
 
   // Create task mutation
   const createTaskMutation = useMutation({
@@ -322,14 +326,28 @@ export default function TasksPage() {
 
       {/* Kanban Board */}
       <div className="flex-1 overflow-auto">
-        <KanbanBoard
-          tasks={data || []}
-          onCreateTask={handleCreateTask}
-          onDeleteTask={handleDeleteTask}
-          onUpdateTaskStatus={handleUpdateTaskStatus}
-          onUpdateTask={handleUpdateTask}
-          workspaceId={workspaceId}
-        />
+        {selectedNoteIds.length === 0 && !demoMode ? (
+          <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
+            <ListTodo className="w-16 h-16 mb-4 opacity-20" />
+            <p className="text-lg font-medium">No notes selected</p>
+            <p className="text-sm">Select notes from the sidebar to see tasks</p>
+          </div>
+        ) : (data || []).length === 0 && selectedNoteIds.length > 0 ? (
+          <div className="flex-col items-center justify-center h-96 text-muted-foreground px-6 py-12">
+            <ListTodo className="w-16 h-16 mb-4 opacity-20 mx-auto" />
+            <p className="text-lg font-medium text-center">No tasks found</p>
+            <p className="text-sm text-center">The selected notes don't have any tasks yet</p>
+          </div>
+        ) : (
+          <KanbanBoard
+            tasks={data || []}
+            onCreateTask={handleCreateTask}
+            onDeleteTask={handleDeleteTask}
+            onUpdateTaskStatus={handleUpdateTaskStatus}
+            onUpdateTask={handleUpdateTask}
+            workspaceId={workspaceId}
+          />
+        )}
       </div>
     </motion.div>
   );
