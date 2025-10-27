@@ -55,7 +55,9 @@ import {
   Settings
 } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import { getIconComponent } from '@/lib/icon-utils';
+import { NewNoteDialog } from '@/components/app/dialogs/NewNoteDialog';
 
 interface WorkspaceLayoutProps {
   children?: React.ReactNode;
@@ -109,6 +111,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
   const [settingsSection, setSettingsSection] = useState<'profile' | 'privacy' | 'data' | 'notifications' | 'appearance'>('profile');
   const [communityTab, setCommunityTab] = useState<'discussions' | 'requests' | 'feedback' | 'bugs' | 'features' | 'experts'>('discussions');
   const [docsSection, setDocsSection] = useState<'getting-started' | 'notes' | 'discover' | 'library' | 'calendar' | 'tasks' | 'timeline' | 'graph' | 'analytics' | 'archive' | 'faq' | 'support'>('getting-started');
+  const [newNoteDialogOpen, setNewNoteDialogOpen] = useState(false);
 
   // Icon component mapping for converting emoji strings to components
   const iconComponentMap: Record<TabType, any> = {
@@ -645,8 +648,59 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
 
   // Handle new note button click from Notes Sidebar
   const handleNewNote = useCallback(() => {
-    handleViewClick('discover');
-  }, [handleViewClick]);
+    if (demoMode) {
+      toast.info('Not available in demo mode');
+      return;
+    }
+    setNewNoteDialogOpen(true);
+  }, [demoMode]);
+
+  // Handle creating a new note from the dialog
+  const handleCreateNote = useCallback(async (guideId: string | null) => {
+    try {
+      const response = await fetch('/api/user-guides', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          guide_id: guideId,
+          workspace_id: workspaceId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create note');
+      }
+
+      const data = await response.json();
+      const userGuide = data.userGuide;
+
+      // Show success toast
+      toast.success(guideId ? 'Note created from guide' : 'Blank note created');
+
+      // Open the new note in a tab
+      if (userGuide.guides) {
+        handleNoteClick(userGuide.guide_id, userGuide.guides.name, userGuide.guides.icon);
+      } else {
+        // For blank notes, create a tab with generic title
+        const newTab: Tab = {
+          id: `note-${userGuide.id}`,
+          type: 'notes',
+          label: 'Untitled Note',
+          icon: FileText,
+          iconName: 'file-text',
+          guideId: null,
+          guideName: null,
+          guideIcon: null,
+        };
+        addTab(newTab);
+      }
+    } catch (error) {
+      console.error('Error creating note:', error);
+      toast.error('Failed to create note');
+    }
+  }, [workspaceId, addTab, handleNoteClick]);
 
   // Handle reading click from Library Sidebar
   const handleReadingClick = useCallback((readingId: string) => {
@@ -991,6 +1045,12 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
           `}</style>
         )}
         <Toaster position="top-center" />
+        <NewNoteDialog
+          open={newNoteDialogOpen}
+          onOpenChange={setNewNoteDialogOpen}
+          onCreateNote={handleCreateNote}
+          workspaceId={workspaceId}
+        />
       </div>
   );
 }
