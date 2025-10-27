@@ -1057,8 +1057,8 @@ export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId,
                 <Input
                   type="text"
                   placeholder="Filter questions..."
-                  value={promptSearchQuery}
-                  onChange={(e) => setPromptSearchQuery(e.target.value)}
+                  value={questionSearchQuery}
+                  onChange={(e) => setQuestionSearchQuery(e.target.value)}
                   className="h-8 text-sm -mt-2"
                 />
                 <p className="text-xs text-muted-foreground -mt-2">
