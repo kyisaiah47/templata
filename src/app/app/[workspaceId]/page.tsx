@@ -215,11 +215,6 @@ export default function OverviewPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.25 }}
             >
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold mb-1">Today's Agenda</h2>
-                <p className="text-xs text-muted-foreground">Tasks due on the selected date</p>
-              </div>
-
               {/* Date Navigation */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
