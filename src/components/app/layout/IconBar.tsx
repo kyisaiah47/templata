@@ -39,9 +39,9 @@ const ICON_VIEWS: { type: TabType; icon: any; label: string }[] = [
   { type: 'timeline', icon: BarChart3, label: 'Timeline' },
   { type: 'graph', icon: Network, label: 'Graph' },
   { type: 'analytics', icon: TrendingUp, label: 'Analytics' },
-  { type: 'archive', icon: Archive, label: 'Archive' },
   { type: 'community', icon: Users, label: 'Community' },
   { type: 'docs', icon: BookOpen, label: 'Docs' },
+  { type: 'archive', icon: Archive, label: 'Archive' },
   { type: 'settings', icon: Settings, label: 'Settings' },
 ];
 
@@ -60,8 +60,8 @@ export function IconBar({ activeView, onViewClick }: IconBarProps) {
         const Icon = view.icon;
         const isActive = activeView === view.type;
 
-        // Add dividers after: Library (3), Timeline (6), Graph (7), Archive (9), Docs (11)
-        const showDivider = index === 3 || index === 6 || index === 7 || index === 9 || index === 11;
+        // Add dividers after: Library (3), Timeline (6), Analytics (8), Docs (10)
+        const showDivider = index === 3 || index === 6 || index === 8 || index === 10;
         const divider = showDivider && !lastWasDivider ? (
           <div key={`divider-${index}`} className="w-8 h-px bg-border my-1" />
         ) : null;
@@ -71,7 +71,6 @@ export function IconBar({ activeView, onViewClick }: IconBarProps) {
 
         return (
           <div key={view.type}>
-            {divider}
             <motion.button
               type="button"
               onClick={(e) => {
@@ -81,9 +80,9 @@ export function IconBar({ activeView, onViewClick }: IconBarProps) {
               }}
               className={cn(
                 "w-8 h-8 rounded-md flex items-center justify-center transition-colors",
-                isActive
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:bg-muted/50'
+                view.type === 'overview'
+                  ? (isActive ? 'bg-amber-500/20 text-amber-500' : 'text-amber-500/70 hover:bg-amber-500/10')
+                  : (isActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted/50')
               )}
               title={view.label}
               whileHover={{ scale: 1.05 }}
@@ -101,6 +100,7 @@ export function IconBar({ activeView, onViewClick }: IconBarProps) {
                 <Icon className="w-4 h-4" />
               </motion.div>
             </motion.button>
+            {divider}
           </div>
         );
       })}

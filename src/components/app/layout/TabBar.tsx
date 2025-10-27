@@ -36,7 +36,7 @@ interface TabBarProps {
 export function TabBar({ tabs, activeTabId, onTabClick, onTabClose, sidebarOpen, onToggleSidebar }: TabBarProps) {
   // Map tab types to icon components
   const iconMap: Record<string, any> = {
-    overview: LayoutDashboard,
+    overview: CalendarDays,
     notes: FileText,
     discover: Compass,
     library: Library,

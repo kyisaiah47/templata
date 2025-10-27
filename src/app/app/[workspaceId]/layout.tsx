@@ -111,7 +111,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
 
   // Icon component mapping for converting emoji strings to components
   const iconComponentMap: Record<TabType, any> = {
-    overview: LayoutDashboard,
+    overview: CalendarDays,
     notes: FileText,
     discover: Compass,
     library: Library,
@@ -143,7 +143,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
         const defaultTab: Tab = {
           id: 'overview-default',
           type: 'overview',
-          label: 'Overview',
+          label: 'Daily',
         };
         setTabs([defaultTab]);
         setActiveTabId(defaultTab.id);
@@ -153,7 +153,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
       const defaultTab: Tab = {
         id: 'overview-default',
         type: 'overview',
-        label: 'Overview',
+        label: 'Daily',
       };
       setTabs([defaultTab]);
       setActiveTabId(defaultTab.id);
@@ -549,7 +549,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
     }
 
     const viewLabels: Record<TabType, string> = {
-      overview: 'Overview',
+      overview: 'Daily',
       notes: 'Notes',
       discover: 'Discover',
       library: 'Library',
@@ -567,7 +567,7 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
     };
 
     const viewIcons: Record<TabType, any> = {
-      overview: LayoutDashboard,
+      overview: CalendarDays,
       notes: FileText,
       discover: Compass,
       library: Library,
