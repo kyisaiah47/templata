@@ -81,7 +81,7 @@ export function TabBar({ tabs, activeTabId, onTabClick, onTabClose, sidebarOpen,
       <AnimatePresence mode="popLayout">
         {tabs.map((tab) => {
           const isActive = tab.id === activeTabId;
-          const IconComponent = iconMap[tab.type] || FileText;
+          const IconComponent = tab.icon || iconMap[tab.type] || FileText;
 
           return (
             <motion.div

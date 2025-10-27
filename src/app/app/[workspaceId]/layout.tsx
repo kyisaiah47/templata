@@ -55,6 +55,7 @@ import {
   Settings
 } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
+import { getIconComponent } from '@/lib/icon-utils';
 
 interface WorkspaceLayoutProps {
   children?: React.ReactNode;
@@ -134,9 +135,20 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
     if (tabsParam) {
       try {
         const parsedTabs = JSON.parse(decodeURIComponent(tabsParam));
-        // Don't set icons from URL - they'll be added when needed
-        setTabs(parsedTabs);
-        setActiveTabId(activeParam || parsedTabs[0]?.id || null);
+
+        // Restore icons for tabs using iconName
+        const tabsWithIcons = parsedTabs.map((tab: Tab) => {
+          if (tab.iconName) {
+            return {
+              ...tab,
+              icon: getIconComponent(tab.iconName)
+            };
+          }
+          return tab;
+        });
+
+        setTabs(tabsWithIcons);
+        setActiveTabId(activeParam || tabsWithIcons[0]?.id || null);
       } catch (error) {
         console.error('Error parsing tabs from URL:', error);
         // Default to overview tab
@@ -611,16 +623,19 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
   }, [pages, addTab]);
 
   // Handle note click from Notes Sidebar
-  const handleNoteClick = useCallback((guideId: string) => {
+  const handleNoteClick = useCallback((guideId: string, guideName?: string, guideIcon?: string | null) => {
     if (demoMode) {
       // In demo mode, just set the selected guide ID in context
       setDemoGuideId(guideId);
     } else {
+      const IconComponent = getIconComponent(guideIcon);
+
       const newTab: Tab = {
         id: `note-${guideId}`,
         type: 'notes',
-        label: 'Note', // Will be updated when guide data loads
-        icon: FileText,
+        label: guideName || 'Note',
+        icon: IconComponent,
+        iconName: guideIcon || undefined,
         guideId: guideId,
       };
 
