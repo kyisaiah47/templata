@@ -61,7 +61,7 @@ export default function SettingsPage() {
 
       {/* Content - All settings in one scrollable page */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-2xl mx-auto px-6 py-8 space-y-12">
+        <div className="px-6 py-8 space-y-12">
 
           {/* Profile Section */}
           <motion.div
