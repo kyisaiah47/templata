@@ -41,6 +41,23 @@ This is a new category where:
 
 Your job: Create questions that make users think deeply about THEIR specific situation. Not generic prompts, but thoughtful questions that help them work through this decision systematically.
 
+**THE QUALITY BAR - What Makes Content Category-Defining:**
+
+This is NOT just good content. This defines a new category. Every question must be:
+- Impossible to answer without thinking about YOUR specific situation (not Googleable)
+- Forces deep reflection, not surface-level answers
+- Someone else's answer to this question would be completely different from yours
+- Gives you clarity you couldn't get from reading articles or using generic templates
+
+**HOW THIS IS DIFFERENT:**
+
+vs Generic Templates: Not "What are your goals?" but questions that make you excavate YOUR specific situation
+vs Blog Posts: Not tips to read, but prompts that force systematic thinking
+vs Consultants: Not expensive advice, but questions that guide you to YOUR answers
+vs Wikipedia: Not information lookup, but self-discovery through structured reflection
+
+Someone working through these should think: "I've never thought about it this way before"
+
 **YOUR TASK**: Create questions that comprehensively cover this guide topic
 
 **STEP 0: CHECK FOR EXISTING QUESTIONS**
@@ -76,12 +93,19 @@ Quality over quantity - don't create filler questions.
 - Practical and useful for someone working through that situation
 - Mix of types: planning, reflection, research, action
 
-**EXAMPLES OF GOOD QUESTIONS (varied topics):**
-- 'List your current monthly expenses by category and identify which are fixed vs variable.'
-- 'Document the last 5 major purchases you made and reflect on what influenced each decision.'
-- 'Research three neighborhoods you're considering and note schools, commute times, and recent sale prices.'
-- 'Write down what fulfillment looks like to you in a career - be specific about daily activities, not just outcomes.'
-- 'Reflect on your last major life transition: what helped you adapt and what made it harder?'
+**EXAMPLES - What TO Create vs What NOT to Create:**
+
+❌ BAD (Generic, Googleable): "What are your career goals?"
+✅ GOOD (Category-defining): "List 5 moments in the past year where you felt energized at work. What specific activities were you doing in each?"
+
+❌ BAD (Surface-level): "How much do you spend per month?"
+✅ GOOD (Forces deep thinking): "List your current monthly expenses by category and identify which are fixed vs variable."
+
+❌ BAD (Yes/no answer): "Do you want to change careers?"
+✅ GOOD (Requires reflection): "Reflect on your last major life transition: what helped you adapt and what made it harder?"
+
+❌ BAD (Too broad): "Research neighborhoods."
+✅ GOOD (Specific framework): "Research three neighborhoods you're considering and note schools, commute times, and recent sale prices."
 
 **Example question counts by complexity:**
 - Simple guide (e.g., 'create-budget'): ~15-20 questions

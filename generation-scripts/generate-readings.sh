@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Generate 5-7 readings per guide with real sources
+# Generate comprehensive readings for a guide with real sources
 set -e
 
 # Colors
@@ -40,6 +40,23 @@ This is a new category where:
 - Together = informed decisions about YOUR life with expert-level backing
 
 Your job: Create readings that give Wikipedia-depth knowledge in a warm, conversational tone. Someone working through this guide should feel like they have an expert friend who did all the research for them.
+
+**THE QUALITY BAR - What Makes Content Category-Defining:**
+
+This is NOT just good content. This defines a new category. Every reading must be:
+- Gives knowledge you'd get from reading 3-5 books + consulting an expert
+- Comprehensive yet actionable (not just "here's what X is" but "here's how to use X")
+- You can't find this synthesized anywhere else in one place
+- Saves hours of research while giving deeper insight than blog posts
+
+**HOW THIS IS DIFFERENT:**
+
+vs Wikipedia: Not just information, but HOW to apply it to YOUR situation
+vs Blog Posts: Not 5 tips, but comprehensive frameworks with depth and nuance
+vs Books: Not 200 pages, but distilled expert knowledge in 400 words
+vs Consultants: Not expensive personalized advice, but systematized expert knowledge anyone can use
+
+Someone reading this should think: "I could read 5 books and still not have this clarity"
 
 **YOUR TASK**: Create readings that comprehensively cover this guide topic
 
@@ -93,17 +110,34 @@ For "career-change":
 3. "Building Credibility in a New Industry" (transition tactics)
 4. "The Financial Reality of Career Change" (practical planning)
 
+**WHAT NOT TO CREATE:**
+
+❌ BAD (Blog post): "5 Tips for Career Change" (surface-level list)
+✅ GOOD (Category-defining): "Skills Transfer Framework: What Actually Carries Over vs What You Need to Build"
+
+❌ BAD (Wikipedia): "Career change is when you switch careers..." (just definition)
+✅ GOOD (Category-defining): "The Hidden Costs of Career Change: A Financial Model for Decision-Making"
+
+❌ BAD (Generic advice): "Research your target industry" (tells you what, not how)
+✅ GOOD (Category-defining): "Exploring New Fields: Research That Actually Helps" (gives you the framework)
+
 **STEP 3: GENERATE CONTENT FOR EACH TITLE**
 
 For each title, create 300-400 word content following these requirements:
 
 **CRITICAL REQUIREMENTS**:
 
-1. **LENGTH**: 300-400 words MAX - KEEP IT SHORT
+1. **EXCERPT** (1-2 sentences):
+   The hook that makes someone want to read. Should convey:
+   - What specific problem this solves
+   - Why it's different from generic advice
+   - Example: "Most people research careers by Googling job titles. Here's the framework recruiters actually use to evaluate transferable skills."
+
+2. **LENGTH**: 300-400 words MAX - KEEP IT SHORT
    - NOT 600-800 words
    - Think Twitter thread length, not blog post
 
-2. **Tone & Style**:
+3. **Tone & Style**:
    - Warm, friendly, conversational (like Notion docs)
    - NOT corporate or stiff
    - Be OPINIONATED - have a clear POV, call out bad advice
@@ -111,31 +145,31 @@ For each title, create 300-400 word content following these requirements:
    - Practical and immediately actionable
    - Memorable and quotable
 
-3. **Formatting**:
+4. **Formatting**:
    - Use headers to break up sections
    - Tables when comparing options/data
    - Bulleted lists for steps or key points
    - Quote blocks to highlight important insights from sources
    - Mix of prose and structured content (not just bullets)
 
-4. **Real Sources**: 2-3 credible sources THAT ACTUALLY EXIST
+5. **Real Sources**: 2-3 credible sources THAT ACTUALLY EXIST
    - Books, articles, podcasts, videos
    - IMPORTANT: After selecting sources, verify they exist. If you cannot verify a source is real, find a different one.
    - Example: "Patrick McKenzie - Salary Negotiation (kalzumeus.com)" - verify this article exists before citing
    - Store in sources array: ARRAY['Source 1', 'Source 2']
 
-5. **Type** (pick ONE based on content - do not invent new types):
+6. **Type** (pick ONE based on content - do not invent new types):
    - 'guide' - Educational overview/framework (use for: explaining concepts, providing mental models)
    - 'article' - Insight/analysis piece (use for: thought-provoking perspectives, research-backed insights)
    - 'checklist' - Step-by-step list (use for: actionable processes, verification steps)
    - 'tool' - Template/worksheet/framework to use (use for: copy-paste scripts, calculators, templates)
 
-6. **Slug**: URL-friendly version of title
+7. **Slug**: URL-friendly version of title
    - Format: lowercase-with-hyphens
    - Example: "The 5-Minute Conversation Worth $1.5M" → slug: "the-5-minute-conversation-worth-1-5m"
    - Remove special characters, use hyphens for spaces
 
-7. **Structure** (300-400 words):
+8. **Structure** (300-400 words):
    - Hook with a specific example or controversial statement
    - 2-3 main sections with clear headers
    - Include at least ONE of these:
