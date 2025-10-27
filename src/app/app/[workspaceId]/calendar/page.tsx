@@ -38,10 +38,14 @@ export default function CalendarPage() {
   // Get selected note IDs from URL
   const selectedNoteIds = searchParams.get('calendarNotes')?.split(',').filter(Boolean) || [];
 
-  // Filter events by selected notes - show none if nothing selected
-  const events = selectedNoteIds.length > 0
-    ? allItems.filter(event => event.user_guide_id && selectedNoteIds.includes(event.user_guide_id))
+  // Filter items by selected notes, then separate events from tasks
+  const filteredItems = selectedNoteIds.length > 0
+    ? allItems.filter(item => item.user_guide_id && selectedNoteIds.includes(item.user_guide_id))
     : [];
+
+  // Separate events (items with start_time) from tasks (items with due_date but no start_time)
+  const events = filteredItems.filter(item => item.start_time);
+  const filteredTasks = filteredItems.filter(item => item.due_date && !item.start_time);
 
   // Fetch calendar events
   const fetchEvents = useCallback(async () => {
@@ -211,7 +215,7 @@ export default function CalendarPage() {
                 currentDate={currentDate}
                 onDateChange={setCurrentDate}
                 events={events}
-                tasks={tasks}
+                tasks={filteredTasks}
                 onDateClick={handleDateClick}
                 onEventClick={handleEventClick}
               />
@@ -221,7 +225,7 @@ export default function CalendarPage() {
                 currentDate={currentDate}
                 onDateChange={setCurrentDate}
                 events={events}
-                tasks={tasks}
+                tasks={filteredTasks}
                 onDateClick={handleDateClick}
                 onEventClick={handleEventClick}
               />
@@ -231,7 +235,7 @@ export default function CalendarPage() {
                 currentDate={currentDate}
                 onDateChange={setCurrentDate}
                 events={events}
-                tasks={tasks}
+                tasks={filteredTasks}
                 onDateClick={handleDateClick}
                 onEventClick={handleEventClick}
               />
@@ -242,7 +246,7 @@ export default function CalendarPage() {
           <div className="lg:col-span-1 overflow-y-auto space-y-6">
             <EventList
               events={events}
-              tasks={tasks}
+              tasks={filteredTasks}
               onEventClick={handleEventClick}
             />
 

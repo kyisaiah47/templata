@@ -13,7 +13,7 @@ interface GanttViewProps {
 export function GanttView({ events, tasks }: GanttViewProps) {
   const timelineData = useMemo(() => {
     const allItems = [
-      ...events.map(e => ({ ...e, type: 'event' as const, date: new Date(e.date) })),
+      ...events.filter(e => e.start_time).map(e => ({ ...e, type: 'event' as const, date: new Date(e.start_time!) })),
       ...tasks.filter(t => t.due_date).map(t => ({ ...t, type: 'task' as const, date: new Date(t.due_date!) }))
     ];
 
