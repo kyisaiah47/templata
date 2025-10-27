@@ -267,7 +267,12 @@ export const KanbanProvider = <
       const overIndex = newData.findIndex((item) => item.id === over.id);
 
       newData[activeIndex].column = overColumn;
-      newData = arrayMove(newData, activeIndex, overIndex);
+
+      // Only use arrayMove if dropping on another item (overIndex !== -1)
+      // For empty columns, just update the column property
+      if (overIndex !== -1) {
+        newData = arrayMove(newData, activeIndex, overIndex);
+      }
 
       onDataChange?.(newData);
     }
