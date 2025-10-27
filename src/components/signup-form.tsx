@@ -52,7 +52,7 @@ export function SignupForm({
 
       // Create user profile
       const { error: profileError } = await supabase
-        .from('user_profiles')
+        .from('users')
         .insert({
           id: authData.user.id,
           user_id: authData.user.id,

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// This is a one-time migration script to move users from public.user_profiles to auth.users
+// This is a one-time migration script to move users from public.users to auth.users
 // Run this once and then delete it
 
 const supabase = createClient(
@@ -11,9 +11,9 @@ const supabase = createClient(
 
 export async function POST() {
   try {
-    // Get all users from user_profiles that don't have a user_id yet
+    // Get all users from users that don't have a user_id yet
     const { data: profiles, error: profilesError } = await supabase
-      .from('user_profiles')
+      .from('users')
       .select('*')
       .is('user_id', null);
 
@@ -50,9 +50,9 @@ export async function POST() {
           continue;
         }
 
-        // Update user_profile to link to auth user
+        // Update user to link to auth user
         const { error: updateError } = await supabase
-          .from('user_profiles')
+          .from('users')
           .update({ user_id: authUser.user.id })
           .eq('id', profile.id);
 
