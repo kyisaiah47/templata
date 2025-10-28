@@ -64,7 +64,8 @@
       "mcp__supabase__get_logs",
       "Bash(./generate-readings.sh:*)",
       "Bash(npm run db:execute:*)",
-      "Bash(./generation-scripts/generate-readings.sh:*)"
+      "Bash(./generation-scripts/generate-readings.sh:*)",
+      "Bash(./generation-scripts/generate-questions.sh:*)"
     ],
     "deny": [],
     "ask": []

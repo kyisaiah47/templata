@@ -14,6 +14,7 @@ interface BlankNoteEditorProps {
 
 export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
   const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
@@ -31,6 +32,7 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
 
         const data = await response.json();
         setContent(data.userGuide?.content || '');
+        setTitle(data.userGuide?.custom_name || '');
       } catch (error) {
         console.error('Error fetching note:', error);
         toast.error('Failed to load note');
@@ -43,8 +45,8 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
   }, [noteId]);
 
   // Debounced save function
-  const saveContent = useCallback(
-    debounce(async (newContent: string) => {
+  const saveNote = useCallback(
+    debounce(async (updates: { content?: string; name?: string }) => {
       try {
         setSaving(true);
         const response = await fetch(`/api/notes/${noteId}`, {
@@ -52,9 +54,7 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            content: newContent,
-          }),
+          body: JSON.stringify(updates),
         });
 
         if (!response.ok) {
@@ -73,9 +73,15 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
   );
 
   // Handle content updates
-  const handleUpdate = (newContent: string) => {
+  const handleContentUpdate = (newContent: string) => {
     setContent(newContent);
-    saveContent(newContent);
+    saveNote({ content: newContent });
+  };
+
+  // Handle title updates
+  const handleTitleUpdate = (newTitle: string) => {
+    setTitle(newTitle);
+    saveNote({ name: newTitle });
   };
 
   if (loading) {
@@ -99,21 +105,35 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Header with save indicator */}
-      <div className="border-b border-border/40 px-6 py-3 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Untitled Note</h1>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          {saving ? (
-            <>
-              <Loader2 className="w-3 h-3 animate-spin" />
-              <span>Saving...</span>
-            </>
-          ) : lastSaved ? (
-            <>
-              <Check className="w-3 h-3 text-green-500" />
-              <span>Saved {lastSaved.toLocaleTimeString()}</span>
-            </>
-          ) : null}
+      {/* Title Editor */}
+      <div className="border-b border-border/40 px-6 py-4">
+        <div className="max-w-4xl mx-auto">
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => handleTitleUpdate(e.target.value)}
+            placeholder="Untitled Note"
+            className="w-full text-3xl font-bold bg-transparent border-none outline-none placeholder:text-muted-foreground/40"
+          />
+        </div>
+      </div>
+
+      {/* Save Indicator */}
+      <div className="border-b border-border/40 px-6 py-2">
+        <div className="max-w-4xl mx-auto flex items-center justify-end">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            {saving ? (
+              <>
+                <Loader2 className="w-3 h-3 animate-spin" />
+                <span>Saving...</span>
+              </>
+            ) : lastSaved ? (
+              <>
+                <Check className="w-3 h-3 text-green-500" />
+                <span>Saved {lastSaved.toLocaleTimeString()}</span>
+              </>
+            ) : null}
+          </div>
         </div>
       </div>
 
@@ -122,7 +142,7 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
         <div className="max-w-4xl mx-auto py-8">
           <SimpleEditor
             content={content}
-            onUpdate={handleUpdate}
+            onUpdate={handleContentUpdate}
             placeholder="Start writing..."
             className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl dark:prose-invert focus:outline-none max-w-none"
           />

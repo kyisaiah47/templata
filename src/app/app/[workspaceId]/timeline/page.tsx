@@ -2,14 +2,21 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
-import { BarChart3, Loader2, Calendar, CheckSquare, Trash2 } from 'lucide-react';
+import { BarChart3, Loader2, Calendar, CheckSquare, Trash2, X } from 'lucide-react';
 import { GanttView } from '@/components/app/timeline/GanttView';
 import { Item, CalendarEvent, Task } from '@/types/workspace';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useDemo } from '@/contexts/demo-context';
 import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 export default function TimelinePage() {
   const params = useParams();
@@ -96,21 +103,8 @@ export default function TimelinePage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Header */}
-      <div className="border-b border-border/40 px-6 py-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-            <BarChart3 className="w-4 h-4 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-xl font-semibold">Timeline</h1>
-            <p className="text-xs text-muted-foreground">Visualize your active guides</p>
-          </div>
-        </div>
-      </div>
-
       {/* Content */}
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 overflow-hidden">
         {loading ? (
           <motion.div
             className="flex items-center justify-center h-96"
@@ -152,105 +146,93 @@ export default function TimelinePage() {
             <p className="text-sm">The selected notes don't have any timeline data yet</p>
           </motion.div>
         ) : (
-          <>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            >
-              <GanttView events={events} tasks={tasks} onItemClick={handleItemClick} />
-            </motion.div>
-
-            {/* Selected Item Details */}
-            {selectedItem && (
-              <motion.div
-                className="mt-6 rounded-lg border border-border/40 bg-background overflow-hidden"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="px-4 py-3 border-b border-border/40 flex items-center justify-between">
-                  <h3 className="text-sm font-semibold">
-                    {selectedItem.type === 'event' ? 'Event Details' : 'Task Details'}
-                  </h3>
-                  <button
-                    onClick={() => setSelectedItem(null)}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="p-4 space-y-4">
-                  <div>
-                    <h4 className="text-base font-semibold mb-2">{selectedItem.item.title}</h4>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      {selectedItem.type === 'event' ? (
-                        <>
-                          <Calendar className="w-4 h-4" />
-                          <span>
-                            {selectedItem.item.start_time
-                              ? format(new Date(selectedItem.item.start_time), 'EEEE, MMMM d, yyyy')
-                              : 'No date set'}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <CheckSquare className="w-4 h-4" />
-                          <span>
-                            Due: {selectedItem.item.due_date
-                              ? format(new Date(selectedItem.item.due_date), 'EEEE, MMMM d, yyyy')
-                              : 'No due date'}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-
-                  {selectedItem.item.description && (
-                    <div>
-                      <p className="text-sm text-foreground/80 leading-relaxed">
-                        {selectedItem.item.description}
-                      </p>
-                    </div>
-                  )}
-
-                  {selectedItem.type === 'task' && 'status' in selectedItem.item && (
-                    <div>
-                      <span className="text-xs font-medium text-muted-foreground">Status: </span>
-                      <span className={`text-xs font-medium ${
-                        selectedItem.item.status === 'done'
-                          ? 'text-green-600'
-                          : selectedItem.item.status === 'in_progress'
-                            ? 'text-blue-600'
-                            : 'text-orange-500'
-                      }`}>
-                        {selectedItem.item.status === 'done'
-                          ? 'Done'
-                          : selectedItem.item.status === 'in_progress'
-                            ? 'In Progress'
-                            : 'To Do'}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="pt-2">
-                    <button
-                      onClick={() => handleDeleteItem(selectedItem.item.id)}
-                      className="text-sm text-destructive hover:text-destructive/80 transition-colors flex items-center gap-2"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Delete {selectedItem.type === 'event' ? 'Event' : 'Task'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </>
+          <motion.div
+            className="h-full"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <GanttView events={events} tasks={tasks} onItemClick={handleItemClick} />
+          </motion.div>
         )}
       </div>
+
+      {/* Item Details Modal */}
+      <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {selectedItem?.type === 'event' ? 'Event Details' : 'Task Details'}
+            </DialogTitle>
+          </DialogHeader>
+
+          {selectedItem && (
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-base font-semibold mb-2">{selectedItem.item.title}</h4>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  {selectedItem.type === 'event' ? (
+                    <>
+                      <Calendar className="w-4 h-4" />
+                      <span>
+                        {selectedItem.item.start_time
+                          ? format(new Date(selectedItem.item.start_time), 'EEEE, MMMM d, yyyy')
+                          : 'No date set'}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckSquare className="w-4 h-4" />
+                      <span>
+                        Due: {selectedItem.item.due_date
+                          ? format(new Date(selectedItem.item.due_date), 'EEEE, MMMM d, yyyy')
+                          : 'No due date'}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {selectedItem.item.description && (
+                <div>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    {selectedItem.item.description}
+                  </p>
+                </div>
+              )}
+
+              {selectedItem.type === 'task' && 'status' in selectedItem.item && (
+                <div>
+                  <span className="text-xs font-medium text-muted-foreground">Status: </span>
+                  <span className={`text-xs font-medium ${
+                    selectedItem.item.status === 'done'
+                      ? 'text-green-600'
+                      : selectedItem.item.status === 'in_progress'
+                        ? 'text-blue-600'
+                        : 'text-orange-500'
+                  }`}>
+                    {selectedItem.item.status === 'done'
+                      ? 'Done'
+                      : selectedItem.item.status === 'in_progress'
+                        ? 'In Progress'
+                        : 'To Do'}
+                  </span>
+                </div>
+              )}
+
+              <div className="pt-2 border-t">
+                <button
+                  onClick={() => handleDeleteItem(selectedItem.item.id)}
+                  className="text-sm text-destructive hover:text-destructive/80 transition-colors flex items-center gap-2"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Delete {selectedItem.type === 'event' ? 'Event' : 'Task'}
+                </button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 }

@@ -234,7 +234,7 @@ export default function OverviewPage() {
               transition={{ duration: 0.3, delay: 0.25 }}
             >
               {/* Date Navigation */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 max-w-4xl mx-auto">
                 <div className="flex items-center gap-2">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button
@@ -293,7 +293,7 @@ export default function OverviewPage() {
               </div>
 
               {/* Agenda List */}
-              <div className="max-w-2xl">
+              <div className="max-w-4xl mx-auto">
                 <AgendaList
                   tasks={todayFilteredTasks}
                   date={formatDateForAPI(selectedDate)}
@@ -304,7 +304,7 @@ export default function OverviewPage() {
               <AnimatePresence>
                 {isFutureDate && (
                   <motion.div
-                    className="mt-4 p-3 bg-muted/50 rounded-lg border border-border/60 text-center max-w-2xl"
+                    className="mt-4 p-3 bg-muted/50 rounded-lg border border-border/60 text-center max-w-4xl mx-auto"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}

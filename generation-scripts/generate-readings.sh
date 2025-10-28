@@ -57,15 +57,15 @@ This is NOT just good content. This defines a new category. Every reading must b
 - Addresses nuance and edge cases (not just happy path)
 - Gives specific numbers, timelines, costs where relevant (what consultants charge for)
 
-**"Wikipedia-depth in 400 words" means:**
+**"Wikipedia-depth in 800-1200 words" means:**
 - Cover 3-5 key concepts/frameworks (not just one tip)
 - Include cause-and-effect relationships (why things work, not just what to do)
 - Address common misconceptions or mistakes
 - Provide decision-making frameworks, not just information
 
-**Enforcement:**
-- If content goes over 400 words, CUT IT. No exceptions.
-- If you can't fit comprehensive coverage in 400 words, your title is too broad.
+**Length guideline:**
+- Target 800-1200 words for comprehensive coverage
+- This gives room for proper depth without feeling rushed
 
 **HOW THIS IS DIFFERENT:**
 
@@ -173,7 +173,7 @@ For "career-change":
 
 **STEP 4: GENERATE CONTENT FOR EACH TITLE**
 
-For each title, create 300-400 word content following these requirements:
+For each title, create 800-1200 word content following these requirements:
 
 **HOW TO ACHIEVE CATEGORY-DEFINING DEPTH:**
 
@@ -195,9 +195,9 @@ For each title, create 300-400 word content following these requirements:
 
    Why it works: Calls out what doesn't work + promises specific expert framework
 
-2. **LENGTH**: 300-400 words MAX - KEEP IT SHORT
-   - NOT 600-800 words
-   - Think Twitter thread length, not blog post
+2. **LENGTH**: 800-1200 words for comprehensive coverage
+   - Enough room to properly explain frameworks and edge cases
+   - More depth than a blog post, less than a book chapter
 
 3. **Tone & Style**:
    - Warm, friendly, conversational (like Notion docs)
@@ -233,10 +233,10 @@ For each title, create 300-400 word content following these requirements:
    - Example: "The 5-Minute Conversation Worth $1.5M" → slug: "the-5-minute-conversation-worth-1-5m"
    - Remove special characters, use hyphens for spaces
 
-7. **Structure** (300-400 words):
+7. **Structure** (800-1200 words):
    - Hook with a specific example or controversial statement
-   - 2-3 main sections with clear headers
-   - Include at least ONE of these:
+   - 4-6 main sections with clear headers
+   - Include at least TWO of these:
      * Real case study with specific numbers (e.g. "$85k → $110k in 6 months")
      * Copy-paste template (email/script/checklist)
      * Data table comparing options
@@ -278,10 +278,10 @@ Why it works: Specific timeframe, specific ask, shows you've done research."
 - Provides copy-paste template
 - Explains WHY it works (cause and effect)
 - Covers edge cases (what each type reveals)
-- Under 400 words but feels comprehensive
+- Comprehensive coverage in 800-1200 words
 
 **IMPORTANT**:
-- 300-400 words MAX
+- 800-1200 words for comprehensive coverage
 - Include quote blocks from your sources (use > for blockquotes)
 - Tables when comparing data/options makes sense
 - Notion-style tone: warm, helpful, not corporate
@@ -292,7 +292,7 @@ Why it works: Specific timeframe, specific ask, shows you've done research."
 - ❌ Generic advice without frameworks: "be confident", "do your research", "network more"
 - ❌ Corporate jargon: "leverage synergies", "touch base", "circle back"
 - ❌ Vague examples: "someone I know" instead of "Sarah Chen, $85k → $110k at Microsoft"
-- ❌ Going over 400 words - NO EXCEPTIONS. If you can't fit it, your scope is too broad
+- ❌ Going under 800 words or over 1200 words - aim for comprehensive but focused coverage
 - ❌ OVERLAPPING with existing readings - check the database first!
 - ❌ Surface-level lists: "5 tips for..." "10 ways to..."
 - ❌ Just information with no decision framework
@@ -313,7 +313,7 @@ Why it works: Specific timeframe, specific ask, shows you've done research."
 2. Generate titles that cover all major aspects with zero overlap (as many or few as needed)
 3. For each title:
    - Find 2-3 real credible sources
-   - Generate SHORT content (300-400 words) with quote blocks
+   - Generate comprehensive content (800-1200 words) with quote blocks
    - Insert to database using mcp__supabase__execute_sql
 
 INSERT INTO readings (id, title, excerpt, content, author, read_time, guide, slug, published_at, sources)
@@ -342,7 +342,7 @@ Before considering yourself done, run this self-check rubric:
 □ Can someone make ALL necessary decisions with just these readings?
 
 **Quality Check (for EACH reading):**
-□ Is it 300-400 words? (NOT 500+)
+□ Is it 800-1200 words? (comprehensive but focused)
 □ Does it have a named framework or method? ("The 3-Interview Method", not "how to interview")
 □ Does it include specific numbers or examples?
 □ Does it call out what DOESN'T work?
@@ -363,7 +363,7 @@ After verification, OUTPUT A SUMMARY:
 - List of all decision points covered
 - List of all knowledge domains covered
 - List of all titles
-- Word count for each reading (verify all are 300-400)
+- Word count for each reading (verify all are 800-1200)
 - Confirmation that ALL quality checks passed
 
 Respond with: GENERATION COMPLETE and show the summary
