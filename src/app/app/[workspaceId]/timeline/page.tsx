@@ -103,8 +103,21 @@ export default function TimelinePage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Header */}
+      <div className="border-b border-border/40 px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+            <BarChart3 className="w-4 h-4 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold">Timeline</h1>
+            <p className="text-xs text-muted-foreground">Visualize your active guides</p>
+          </div>
+        </div>
+      </div>
+
       {/* Content */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-auto p-6">
         {loading ? (
           <motion.div
             className="flex items-center justify-center h-96"

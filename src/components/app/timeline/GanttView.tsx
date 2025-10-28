@@ -91,19 +91,9 @@ export const GanttView = memo(function GanttView({ events, tasks, onItemClick }:
   }
 
   return (
-    <div className="space-y-4">
-      {/* Timeline Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-semibold">Timeline View</h2>
-          <p className="text-xs text-muted-foreground">
-            {timelineData.items.length} {timelineData.items.length === 1 ? 'item' : 'items'}
-          </p>
-        </div>
-      </div>
-
+    <div className="h-full flex flex-col">
       {/* Gantt Chart */}
-      <div className="border border-border/40 rounded-lg overflow-x-auto bg-background">
+      <div className="flex-1 border border-border/40 rounded-lg overflow-x-auto bg-background">
         <div style={{ width: `${timelineData.totalDays * 40}px`, minWidth: '100%' }}>
           {/* Month Headers Row */}
           <div className="sticky top-0 z-20 relative h-8 bg-muted/30 border-b border-border/40">
