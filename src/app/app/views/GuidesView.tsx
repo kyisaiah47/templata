@@ -99,14 +99,11 @@ interface GuidesViewProps {
 }
 
 export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId, defaultGuideId }: GuidesViewProps) {
-  console.log('[GuidesView] Props:', { defaultGuideId, workspaceId, userGuideId });
   const [selectedGuide, setSelectedGuide] = useState(defaultGuideId || 'wedding-planning');
-  console.log('[GuidesView] Initial selectedGuide:', selectedGuide);
 
   // Update selectedGuide when defaultGuideId changes
   useEffect(() => {
     if (defaultGuideId && defaultGuideId !== selectedGuide) {
-      console.log('[GuidesView] Updating selectedGuide from', selectedGuide, 'to', defaultGuideId);
       setSelectedGuide(defaultGuideId);
     }
   }, [defaultGuideId, selectedGuide]);
@@ -141,11 +138,14 @@ export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId,
 
   // Define handleReadingClick early so it can be used in setActions
   const handleReadingClick = useCallback(async (readingId: string) => {
+    console.log('[handleReadingClick] Called with readingId:', readingId);
     try {
       setLoadingReading(true);
       const res = await fetch(`/api/readings?id=${readingId}`);
       const data = await res.json();
+      console.log('[handleReadingClick] API response:', data);
       setSelectedReading(data.reading);
+      console.log('[handleReadingClick] Set selectedReading to:', data.reading);
     } catch (error) {
       console.error('Error fetching reading:', error);
     } finally {
@@ -413,7 +413,6 @@ export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId,
       }
 
       try {
-        console.log('[GuidesView] Fetching data for guide:', selectedGuide);
         setLoading(true);
 
         const guide = guides.find(g => g.id === selectedGuide);
@@ -421,11 +420,8 @@ export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId,
           setGuideInfo({ id: guide.id, name: guide.name });
         }
 
-        const questionsUrl = `/api/guides/${selectedGuide}/questions`;
-        console.log('[GuidesView] Fetching questions from:', questionsUrl);
-        const questionsRes = await fetch(questionsUrl);
+        const questionsRes = await fetch(`/api/guides/${selectedGuide}/questions`);
         const questionsData = await questionsRes.json();
-        console.log('[GuidesView] Questions response:', questionsData);
         const fetchedQuestions = questionsData.questions || [];
         setQuestions(fetchedQuestions);
 
@@ -441,11 +437,8 @@ export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId,
         const allCategories = Object.keys(groupedQuestions);
         setCollapsedCategories(new Set(allCategories));
 
-        const readingsUrl = `/api/guides/${selectedGuide}/readings`;
-        console.log('[GuidesView] Fetching readings from:', readingsUrl);
-        const readingsRes = await fetch(readingsUrl);
+        const readingsRes = await fetch(`/api/guides/${selectedGuide}/readings`);
         const readingsData = await readingsRes.json();
-        console.log('[GuidesView] Readings response:', readingsData);
         setReadings(readingsData.readings || []);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -1147,13 +1140,13 @@ export function GuidesView({ onViewChange, setActions, workspaceId, userGuideId,
                 />
                 {loading ? (
                   <p className="text-sm text-muted-foreground">Loading readings...</p>
-                ) : filteredArticles.length === 0 ? (
+                ) : filteredReadings.length === 0 ? (
                   <p className="text-sm text-muted-foreground">
                     {readingSearchQuery.trim() ? 'No readings match your search' : 'No readings available for this guide yet.'}
                   </p>
                 ) : (
                   <div className="space-y-2">
-                    {filteredArticles.map((reading) => (
+                    {filteredReadings.map((reading) => (
                       <Card
                         key={reading.id}
                         className="p-4 cursor-pointer hover:bg-muted/50 transition-colors border-border"

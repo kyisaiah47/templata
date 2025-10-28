@@ -16,6 +16,53 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const workspace_id = searchParams.get('workspace_id');
+    const reading_id = searchParams.get('id');
+
+    // If requesting a specific reading by ID
+    if (reading_id) {
+      const { data: reading, error } = await supabase
+        .from('readings')
+        .select(`
+          id,
+          title,
+          content,
+          excerpt,
+          read_time,
+          guide,
+          tags,
+          author
+        `)
+        .eq('id', reading_id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching reading:', error);
+        return errorResponse('Failed to fetch reading');
+      }
+
+      if (!reading) {
+        return errorResponse('Reading not found', 404);
+      }
+
+      // Fetch guide name
+      const { data: guide } = await supabase
+        .from('guides')
+        .select('name')
+        .eq('id', reading.guide)
+        .single();
+
+      return successResponse({
+        reading: {
+          id: reading.id,
+          title: reading.title,
+          content: reading.content,
+          excerpt: reading.excerpt || '',
+          readTime: `${reading.read_time} min read`,
+          author: reading.author || 'Templata',
+          publishedAt: new Date().toISOString(),
+        }
+      });
+    }
 
     // First, get user's active guides
     let userGuideIds: string[] = [];
