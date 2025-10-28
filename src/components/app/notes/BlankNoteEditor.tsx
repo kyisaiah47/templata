@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { SimpleEditor } from '@/components/ui/simple-editor';
+import { GuideHeader } from '@/components/app/guides/GuideHeader';
 import { Loader2, Save, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { debounce } from '@/lib/utils';
@@ -15,6 +16,8 @@ interface BlankNoteEditorProps {
 export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
   const [content, setContent] = useState<string>('');
   const [title, setTitle] = useState<string>('');
+  const [icon, setIcon] = useState<string | null>(null);
+  const [coverImage, setCoverImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
@@ -32,7 +35,9 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
 
         const data = await response.json();
         setContent(data.userGuide?.content || '');
-        setTitle(data.userGuide?.custom_name || '');
+        setTitle(data.userGuide?.custom_name || 'Untitled Note');
+        setIcon(data.userGuide?.icon || null);
+        setCoverImage(data.userGuide?.cover_image || null);
       } catch (error) {
         console.error('Error fetching note:', error);
         toast.error('Failed to load note');
@@ -84,6 +89,18 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
     saveNote({ name: newTitle });
   };
 
+  // Handle icon updates
+  const handleIconUpdate = (newIcon: string) => {
+    setIcon(newIcon);
+    saveNote({ icon: newIcon });
+  };
+
+  // Handle cover image updates
+  const handleCoverUpdate = (newCover: string) => {
+    setCoverImage(newCover);
+    saveNote({ cover_image: newCover });
+  };
+
   if (loading) {
     return (
       <motion.div
@@ -99,39 +116,39 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
 
   return (
     <div className="h-full w-full flex flex-col overflow-hidden bg-background">
-      {/* Header Bar */}
-      <div className="flex-shrink-0 border-b border-border/40 bg-muted/20">
-        <div className="max-w-5xl mx-auto px-8 py-4">
-          {/* Title Input */}
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => handleTitleUpdate(e.target.value)}
-            placeholder="Untitled Note"
-            className="w-full text-4xl font-bold bg-transparent border-none outline-none placeholder:text-muted-foreground/30 mb-2"
-          />
+      {/* Notion-style Header */}
+      <div className="flex-shrink-0">
+        <GuideHeader
+          guideName={title}
+          guideIcon={icon}
+          coverImage={coverImage}
+          onNameChange={handleTitleUpdate}
+          onIconChange={handleIconUpdate}
+          onCoverChange={handleCoverUpdate}
+        />
+      </div>
 
-          {/* Save Indicator */}
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            {saving ? (
-              <>
-                <Loader2 className="w-3 h-3 animate-spin" />
-                <span>Saving...</span>
-              </>
-            ) : lastSaved ? (
-              <>
-                <Check className="w-3 h-3 text-green-500" />
-                <span>Saved {lastSaved.toLocaleTimeString()}</span>
-              </>
-            ) : (
-              <span>Start typing...</span>
-            )}
-          </div>
+      {/* Save Indicator */}
+      <div className="flex-shrink-0 px-8 py-2 border-b border-border/40">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          {saving ? (
+            <>
+              <Loader2 className="w-3 h-3 animate-spin" />
+              <span>Saving...</span>
+            </>
+          ) : lastSaved ? (
+            <>
+              <Check className="w-3 h-3 text-green-500" />
+              <span>Saved {lastSaved.toLocaleTimeString()}</span>
+            </>
+          ) : (
+            <span>Start typing...</span>
+          )}
         </div>
       </div>
 
       {/* Editor Area */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto h-full">
         <div className="h-full max-w-5xl mx-auto px-8 py-8">
           <SimpleEditor
             content={content}
