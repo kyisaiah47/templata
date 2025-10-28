@@ -48,7 +48,7 @@ export function ReadingCard({
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Clock className="w-3 h-3" />
-              <span>{readingTime} min read</span>
+              <span>{readingTime}</span>
             </div>
 
             {isRead && (

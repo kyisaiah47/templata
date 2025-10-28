@@ -705,16 +705,47 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
     }
   }, [addTab, demoMode, setDemoGuideId]);
 
-  // Handle new note button click from Notes Sidebar
-  const handleNewNote = useCallback(() => {
-    if (demoMode) {
-      toast.info('Not available in demo mode');
-      return;
-    }
-    setNewNoteDialogOpen(true);
-  }, [demoMode]);
+  // Handle creating a blank note
+  const handleCreateBlankNote = useCallback(async () => {
+    try {
+      const response = await fetch('/api/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          guide_id: null,
+          workspace_id: workspaceId,
+        }),
+      });
 
-  // Handle creating a new note from the dialog
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('API Error Response:', errorData);
+        throw new Error(`Failed to create note: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      const note = data.note;
+
+      if (!note) {
+        throw new Error('No note returned from API');
+      }
+
+      toast.success('Blank note created');
+      router.push(`/app/${workspaceId}/notes?noteId=${note.id}`);
+    } catch (error) {
+      console.error('Error creating blank note:', error);
+      toast.error('Failed to create blank note');
+    }
+  }, [workspaceId, router]);
+
+  // Handle creating a guided note (open dialog for guide selection)
+  const handleCreateGuidedNote = useCallback(() => {
+    setNewNoteDialogOpen(true);
+  }, []);
+
+  // Handle creating a note from a guide (from the dialog)
   const handleCreateNote = useCallback(async (guideId: string | null) => {
     try {
       const response = await fetch('/api/notes', {
@@ -1035,7 +1066,8 @@ function WorkspaceLayoutInner({ children, demoMode = false }: WorkspaceLayoutPro
             <NotesSidebarContent
               activeGuideId={activeGuideId}
               onNoteClick={handleNoteClick}
-              onNewNote={handleNewNote}
+              onCreateBlankNote={handleCreateBlankNote}
+              onCreateGuidedNote={handleCreateGuidedNote}
             />
           ) : activeView === 'library' ? (
             <LibrarySidebarContent

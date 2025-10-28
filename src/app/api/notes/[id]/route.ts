@@ -53,7 +53,7 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await request.json();
-    const { progress, archived, name, icon, cover_image } = body;
+    const { progress, archived, name, icon, cover_image, content } = body;
 
     // Build update object
     const updateData: any = {};
@@ -92,6 +92,9 @@ export async function PATCH(
         return errorResponse('Cover image must be a string', 400);
       }
       updateData.custom_cover_image = cover_image;
+    }
+    if (content !== undefined) {
+      updateData.content = content;
     }
 
     if (Object.keys(updateData).length === 0) {

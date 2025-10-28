@@ -47,14 +47,14 @@ export default function OverviewPage() {
     : [];
   const selectedNoteIds = urlIds && urlIds.length > 0 ? urlIds : localStorageIds;
   console.log('[Daily View] selectedNoteIds:', selectedNoteIds);
-  console.log('[Daily View] allUserGuides:', allUserGuides.map(g => ({ id: g.id, name: g.guides.name })));
+  console.log('[Daily View] allUserGuides:', allUserGuides.map(g => ({ id: g.id, name: g.guides?.name || 'Blank Note' })));
 
   // Filter by selection - only show data from checked notes
   // In demo mode, show all data if nothing is selected
   const userGuides = selectedNoteIds.length > 0
     ? allUserGuides.filter(guide => selectedNoteIds.includes(guide.id))
     : (demoMode ? allUserGuides : []);
-  console.log('[Daily View] Filtered userGuides:', userGuides.map(g => ({ id: g.id, name: g.guides.name })));
+  console.log('[Daily View] Filtered userGuides:', userGuides.map(g => ({ id: g.id, name: g.guides?.name || 'Blank Note' })));
 
   const tasks = selectedNoteIds.length > 0
     ? allItems.filter(task => task.user_guide_id && selectedNoteIds.includes(task.user_guide_id))

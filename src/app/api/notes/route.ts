@@ -143,12 +143,25 @@ export async function POST(request: NextRequest) {
         progress: 0,
         archived: false,
       })
-      .select('*, guides(id, name, description, icon)')
+      .select('*')
       .single();
 
     if (error) {
       console.error('Error creating note:', error);
       return errorResponse('Failed to create note');
+    }
+
+    // If there's a guide_id, fetch the guide separately
+    if (note && note.guide_id) {
+      const { data: guide } = await supabase
+        .from('guides')
+        .select('id, name, description, icon')
+        .eq('id', note.guide_id)
+        .single();
+
+      note.guides = guide || null;
+    } else {
+      note.guides = null;
     }
 
     return successResponse({ note }, 201);

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { GuidesView } from '@/app/app/views/GuidesView';
 import { GettingStartedWizard } from '@/components/app/notes/GettingStartedWizard';
 import { NotesListView } from '@/components/app/notes/NotesListView';
+import { BlankNoteEditor } from '@/components/app/notes/BlankNoteEditor';
 import { Loader2, FileText } from 'lucide-react';
 import { useDemo } from '@/contexts/demo-context';
 import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
@@ -18,15 +19,23 @@ export default function NotesPage() {
   const workspaceId = demoMode ? DEMO_WORKSPACE_ID : (params.workspaceId as string);
   const guideId = demoMode ? demoGuideId : searchParams.get('id');
   const pageId = searchParams.get('pageId');
+  const noteId = searchParams.get('noteId');
 
   const [userGuideId, setUserGuideId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [pageName, setPageName] = useState<string>('');
 
+  // Debug logging
+  useEffect(() => {
+    console.log('[NotesPage] Params:', { noteId, guideId, pageId, workspaceId });
+  }, [noteId, guideId, pageId, workspaceId]);
+
   // Fetch or create user_guide instance for this guide
   useEffect(() => {
     async function fetchOrCreateUserGuide() {
+      // If we have a noteId without guideId, or no params at all, don't need to load
       if (!guideId) {
+        console.log('[NotesPage] No guideId, setting loading to false');
         setLoading(false);
         return;
       }
@@ -115,6 +124,7 @@ export default function NotesPage() {
 
   // If viewing a page (not a guide)
   if (pageId && !guideId) {
+    console.log('[NotesPage] Rendering page view, pageName:', pageName);
     // Show guide selection for "Getting Started" page
     if (pageName === 'Getting Started') {
       return (
@@ -156,10 +166,18 @@ export default function NotesPage() {
     );
   }
 
+  // If viewing a blank note (noteId without guide)
+  if (noteId && !guideId) {
+    console.log('[NotesPage] Rendering blank note view, noteId:', noteId);
+    return <BlankNoteEditor noteId={noteId} workspaceId={workspaceId} />;
+  }
+
   if (!guideId && !pageId) {
+    console.log('[NotesPage] Rendering notes list view (no guideId, no pageId)');
     return <NotesListView workspaceId={workspaceId} />;
   }
 
+  console.log('[NotesPage] Rendering GuidesView with guideId:', guideId);
   return (
     <GuidesView
       workspaceId={workspaceId}

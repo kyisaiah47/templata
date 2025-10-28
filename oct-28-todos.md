@@ -52,21 +52,35 @@
 - [ ] Redesign daily view for better use of space
 - [ ] Improve visual layout and alignment
 
-## Architecture Questions to Resolve
+## Architecture Decisions (RESOLVED)
 
-1. **Note-scoped vs Global views**: What's the best UX pattern?
-   - Drag & drop to transform sidebar?
-   - Toggle mode switch?
-   - Separate navigation paradigm?
+1. **Note-scoped vs Global views**: ✅ DECISION MADE
+   - **Solution**: Toggle/drag mode switch
+   - Click toggle or drag note → entire dashboard changes color to indicate "note-scoped mode"
+   - All views (Calendar, Timeline, Tasks, etc.) filter to ONLY that note's data
+   - Same views, just filtered - not separate views
+   - User can toggle back to global mode
+   - Visual indicator: Dashboard color shift when in note-scoped mode
 
-2. **Caching strategy**:
-   - What data to cache on load?
-   - Cache invalidation strategy?
-   - Optimistic updates?
-   - Background refetch patterns?
+2. **Caching strategy**: 🔄 TO BE IMPLEMENTED
+   - Cache everything on login/first load
+   - Only refetch on mutations/stale data
+   - Research Notion's patterns for instant loading
+   - Implement SWR (stale-while-revalidate) pattern
+   - Optimistic UI updates for mutations
 
-3. **Create note flow**:
-   - Inline creation?
-   - Popover menu?
-   - Command palette?
-   - Quick actions?
+3. **Create note flow**: ✅ DECISION MADE
+   - **Solution**: Popover menu
+   - Single "+ New Note" button
+   - Opens popover with 2 options: "Blank Note" | "Guided Note"
+
+4. **Blank note editor**: ✅ DECISION MADE
+   - **Solution**: Tiptap editor (same as existing)
+   - Add nice accessories/features
+   - Keep simple for now, skip block-based
+   - Can evolve to block-based later if needed
+
+5. **Notes view default behavior**: ✅ DECISION MADE
+   - Default to last selected note (localStorage cache)
+   - Fallback to first note if no cache exists
+   - No empty list view - always show a note

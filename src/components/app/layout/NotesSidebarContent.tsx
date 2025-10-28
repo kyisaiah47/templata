@@ -9,6 +9,7 @@ import { useDemo } from '@/contexts/demo-context';
 import { DEMO_WORKSPACE_ID } from '@/lib/demo-constants';
 import { toast } from 'sonner';
 import { getIconComponent } from '@/lib/icon-utils';
+import { NewNotePopover } from '@/components/app/dialogs/NewNotePopover';
 
 interface UserGuide {
   id: string;
@@ -28,10 +29,11 @@ interface UserGuide {
 interface NotesSidebarContentProps {
   activeGuideId: string | null;
   onNoteClick: (guideId: string, guideName?: string, guideIcon?: string | null) => void;
-  onNewNote: () => void;
+  onCreateBlankNote: () => void;
+  onCreateGuidedNote: () => void;
 }
 
-export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: NotesSidebarContentProps) {
+export function NotesSidebarContent({ activeGuideId, onNoteClick, onCreateBlankNote, onCreateGuidedNote }: NotesSidebarContentProps) {
   const params = useParams();
   const router = useRouter();
   const { demoMode } = useDemo();
@@ -168,21 +170,31 @@ export function NotesSidebarContent({ activeGuideId, onNoteClick, onNewNote }: N
 
       {/* New Note Button */}
       <div className="p-2 border-t border-border/40">
-        <motion.button
-          onClick={() => {
+        <NewNotePopover
+          onCreateBlankNote={() => {
             if (demoMode) {
               toast.info('Not available in demo mode');
               return;
             }
-            onNewNote();
+            onCreateBlankNote();
           }}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded transition-colors"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          onCreateGuidedNote={() => {
+            if (demoMode) {
+              toast.info('Not available in demo mode');
+              return;
+            }
+            onCreateGuidedNote();
+          }}
         >
-          <Plus className="h-4 w-4" />
-          <span className="text-sm font-medium">New Note</span>
-        </motion.button>
+          <motion.button
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Plus className="h-4 w-4" />
+            <span className="text-sm font-medium">New Note</span>
+          </motion.button>
+        </NewNotePopover>
       </div>
     </div>
   );
