@@ -16,9 +16,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'Templata | Wikipedia × Notion',
-  description: 'Comprehensive guides meet flexible workspaces. Navigate major life decisions with expert-curated guides, guided questions, and split-screen note-taking.',
-  keywords: 'life planning, decision making, guided questions, note taking, career change, personal development, life guides, workspace, planning tools',
+  title: 'Templata | Guided Productivity',
+  description: 'Defining Guided Productivity - work through life\'s biggest decisions with systematic questions, expert knowledge, and workspace in one integrated experience.',
+  keywords: 'guided productivity, life planning, decision making, guided questions, note taking, career change, personal development, life guides, workspace, planning tools',
   authors: [{ name: 'Templata' }],
   icons: {
     icon: "/brand/favicon-white.svg",
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     maximumScale: 5,
   },
   openGraph: {
-    title: 'Templata | Wikipedia × Notion',
-    description: 'Comprehensive guides meet flexible workspaces. Navigate major life decisions with expert-curated guides and split-screen note-taking.',
+    title: 'Templata | Guided Productivity',
+    description: 'Defining Guided Productivity - work through life\'s biggest decisions with systematic questions, expert knowledge, and workspace in one place.',
     url: 'https://templata.org',
     siteName: 'Templata',
     images: [
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
         url: 'https://templata.org/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Templata - Wikipedia × Notion',
+        alt: 'Templata - Guided Productivity',
       },
     ],
     locale: 'en_US',
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Templata | Wikipedia × Notion',
-    description: 'Comprehensive guides meet flexible workspaces. Navigate major life decisions with expert-curated guides.',
+    title: 'Templata | Guided Productivity',
+    description: 'Defining Guided Productivity - work through life\'s biggest decisions with systematic questions and expert knowledge.',
     images: ['https://templata.org/og-image.png'],
   },
   robots: {
@@ -83,7 +83,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               "name": "Templata",
-              "description": "Wikipedia × Notion - Comprehensive guides meet flexible workspaces",
+              "description": "Guided Productivity - combining systematic questions, expert knowledge, and workspace into one integrated experience for life's biggest decisions",
               "url": "https://templata.org",
               "applicationCategory": "ProductivityApplication",
               "operatingSystem": "Web",

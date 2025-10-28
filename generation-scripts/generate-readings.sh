@@ -30,20 +30,22 @@ log_colored "$BLUE" "🚀 Generating readings for guide: $GUIDE_ID"
 read -r -d '' PROMPT <<'HEREDOC' || true
 Generate a comprehensive set of readings for the GUIDE_ID_PLACEHOLDER guide.
 
-**CONTEXT: Creating a New Category - Guided Productivity**
+**CONTEXT: Defining a New Category - Guided Productivity**
 
-Just like Uber created "ride-sharing" and Airbnb created "home-sharing," we're defining a new category: **Guided Productivity**.
+Templata is defining a new category: **Guided Productivity**.
 
-Most products make people choose: either get information (Wikipedia, articles, books) OR get structure (templates, worksheets). But when facing major life decisions, people need BOTH simultaneously.
+Just like Notion combined notes + wikis + databases into one workspace and created something fundamentally new, Templata combines systematic questions + expert knowledge + note-taking workspace into one integrated experience.
 
-Guided Productivity = Expert guidance (Wikipedia-depth knowledge) + Productivity workspace (Notion-style planning)
+This isn't incremental improvement (like Linear vs Jira). This is category creation (like Notion revolutionizing workspaces).
 
-This is a new category where:
-- Questions force systematic thinking about YOUR specific situation (not generic advice)
-- Readings provide comprehensive, well-researched knowledge (not shallow templates)
-- Together = informed decisions about YOUR life with expert-level backing
+**What Guided Productivity means:**
+- Most products make you choose: get information (articles, books) OR get structure (templates, worksheets)
+- Guided Productivity gives you BOTH in one workspace
+- Questions force systematic thinking about YOUR specific situation
+- Readings provide comprehensive, expert-level knowledge (not shallow blog posts)
+- Together in one workspace = you work through major life decisions with expert backing
 
-Your job: Create readings that DEFINE this new category. Give Wikipedia-depth knowledge in a warm, conversational tone. Someone working through this guide should feel like they have an expert friend who did all the research for them.
+**Your job:** Create readings that are category-defining quality. Not just "better blog posts" - but content worthy of defining a new way people work through major life decisions. Think Notion-level polish and thoughtfulness, not incremental improvement.
 
 **THE QUALITY BAR - What Makes Content Category-Defining:**
 

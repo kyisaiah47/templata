@@ -4,35 +4,35 @@ import { BookOpen, FileText, HelpCircle, CheckSquare, Calendar, BookMarked, Kanb
 import { useState } from "react";
 
 export function FeatureBreakdown() {
-  const [activeTab, setActiveTab] = useState<"wikipedia" | "notion">("wikipedia");
+  const [activeTab, setActiveTab] = useState<"knowledge" | "workspace">("knowledge");
 
   return (
     <div className="w-full max-w-sm bg-muted/10 rounded-2xl overflow-hidden shadow-[0_20px_70px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_70px_-10px_rgba(0,0,0,0.8)]">
       {/* Tab Headers */}
       <div className="flex border-b border-border/60">
         <button
-          onClick={() => setActiveTab("wikipedia")}
+          onClick={() => setActiveTab("knowledge")}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors relative ${
-            activeTab === "wikipedia"
+            activeTab === "knowledge"
               ? "text-foreground bg-background"
               : "text-muted-foreground bg-muted/20 hover:bg-muted/30"
           }`}
         >
-          Wikipedia
-          {activeTab === "wikipedia" && (
+          Expert Knowledge
+          {activeTab === "knowledge" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
           )}
         </button>
         <button
-          onClick={() => setActiveTab("notion")}
+          onClick={() => setActiveTab("workspace")}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors relative ${
-            activeTab === "notion"
+            activeTab === "workspace"
               ? "text-foreground bg-background"
               : "text-muted-foreground bg-muted/20 hover:bg-muted/30"
           }`}
         >
-          Notion
-          {activeTab === "notion" && (
+          Workspace
+          {activeTab === "workspace" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
           )}
         </button>
@@ -40,7 +40,7 @@ export function FeatureBreakdown() {
 
       {/* Content */}
       <div className="bg-background p-5">
-        {activeTab === "wikipedia" ? (
+        {activeTab === "knowledge" ? (
           <div className="space-y-3 animate-in fade-in duration-300">
             <div className="group p-3 rounded-lg border border-border bg-muted/20 hover:bg-muted/40 transition-colors cursor-pointer">
               <div className="flex items-center gap-3">

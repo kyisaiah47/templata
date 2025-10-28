@@ -2,13 +2,13 @@
 
 **Defining a new category: Guided Productivity**
 
-Just like Uber created "ride-sharing" and Airbnb created "home-sharing," Templata is creating **Guided Productivity**.
+Just like Notion combined notes + wikis + databases into one workspace and created something fundamentally new, Templata combines systematic questions + expert knowledge + note-taking into one integrated experience.
 
-Most products make you choose - either get information (Wikipedia, articles, books) OR get structure (templates, worksheets). Templata gives you both.
+This isn't just a better template tool or a better content library. This is a new way to work through major life decisions.
 
-Guided Productivity = Expert guidance (Wikipedia-depth knowledge) + Productivity workspace (Notion-style planning)
+**Guided Productivity** = Questions that make you think about YOUR situation + Expert knowledge to inform your decisions + Workspace to plan your next steps. All in one place.
 
-When facing major life decisions, you need to think systematically about YOUR situation AND access comprehensive knowledge. Not generic advice. Not shallow templates. Both, together.
+When facing major life decisions, you no longer choose between reading articles OR filling out templates. You get both, working together.
 
 ---
 
@@ -49,13 +49,19 @@ Pick a guide (career change, buying a home, managing divorce, etc.), work throug
 
 **Defining a New Category: Guided Productivity**
 
-Just like Uber created "ride-sharing" and Airbnb created "home-sharing," Templata is defining **Guided Productivity**.
+Just like Notion revolutionized workspaces by combining notes + wikis + databases into one integrated experience, Templata is defining **Guided Productivity** by combining systematic questions + expert knowledge + workspace into one place.
 
-The problem: When facing major life decisions (career change, divorce, home buying), you need to both THINK through YOUR specific situation AND ACCESS comprehensive knowledge. No existing product gives you both.
+**The problem:** When facing major life decisions (career change, divorce, home buying), existing tools make you choose:
+- Read articles/books → Get information but no structure for YOUR situation
+- Use templates/worksheets → Get structure but no expert knowledge
+- Both exist separately, you have to integrate them yourself
 
-The solution: Guided Productivity = Expert guidance (Wikipedia-depth knowledge) + Productivity workspace (Notion-style planning). Combine systematic questions (forcing you to think through YOUR situation) with comprehensive readings (giving you expert knowledge). Not generic advice. Not shallow templates. Informed decision-making.
+**The solution:** Guided Productivity gives you both in one workspace:
+- Questions force systematic thinking about YOUR specific situation
+- Readings provide comprehensive expert knowledge to inform your decisions
+- Workspace lets you plan and work through it all in one place
 
-This is what makes Templata different: you're not just reading about career change or filling out a worksheet. You're WORKING THROUGH your career change with comprehensive knowledge backing every decision.
+This is what makes Templata different: you're not just consuming content or filling out generic templates. You're WORKING THROUGH your specific situation with expert knowledge backing every decision.
 
 ---
 

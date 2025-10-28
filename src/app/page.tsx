@@ -17,7 +17,7 @@ export default function LandingPage() {
 		'@context': 'https://schema.org',
 		'@type': 'SoftwareApplication',
 		name: 'Templata',
-		description: 'Wikipedia × Notion for life planning. Comprehensive guides for life\'s biggest decisions.',
+		description: 'Guided Productivity - combining systematic questions, expert knowledge, and workspace into one integrated experience for life\'s biggest decisions.',
 		url: 'https://templata.org',
 		applicationCategory: 'ProductivityApplication',
 		operatingSystem: 'Web',
@@ -42,16 +42,13 @@ export default function LandingPage() {
 					<div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-12">
 						<div className="max-w-3xl">
 							<h1 className="text-[3.5rem] font-medium tracking-[-0.02em] md:text-[6rem] leading-[0.9]">
-								Wikipedia
+								Guided
 							</h1>
-							<h2 className="text-[3.5rem] font-medium tracking-[-0.02em] md:text-[6rem] leading-[0.9]">
-								×
+							<h2 className="text-[3.5rem] font-medium tracking-[-0.02em] md:text-[6rem] leading-[0.9] mb-6">
+								Productivity
 							</h2>
-							<h3 className="text-[3.5rem] font-medium tracking-[-0.02em] md:text-[6rem] leading-[0.9] mb-6">
-								Notion
-							</h3>
 							<p className="text-base text-muted-foreground leading-relaxed max-w-lg">
-								Comprehensive guides meet flexible workspaces
+								Work through life's biggest decisions with systematic questions, expert knowledge, and workspace—all in one place
 							</p>
 						</div>
 						<div>
