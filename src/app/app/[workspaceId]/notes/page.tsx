@@ -116,6 +116,53 @@ export default function NotesPage() {
     fetchPage();
   }, [pageId, workspaceId]);
 
+  // Load default note if no params
+  useEffect(() => {
+    if (!guideId && !pageId && !noteId) {
+      console.log('[NotesPage] No params - redirecting to last/first note');
+
+      async function loadDefaultNote() {
+        try {
+          // Try to get last selected from localStorage
+          const lastNoteId = localStorage.getItem('lastSelectedNoteId');
+          const lastGuideId = localStorage.getItem('lastSelectedGuideId');
+
+          if (lastNoteId) {
+            // Check if it's a blank note or guided note
+            if (lastGuideId) {
+              router.push(`/app/${workspaceId}/notes?id=${lastGuideId}`);
+            } else {
+              router.push(`/app/${workspaceId}/notes?noteId=${lastNoteId}`);
+            }
+            return;
+          }
+
+          // Fallback: fetch first note
+          const response = await fetch(`/api/notes?workspace_id=${workspaceId}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.notes && data.notes.length > 0) {
+              const firstNote = data.notes[0];
+              if (firstNote.guide_id) {
+                router.push(`/app/${workspaceId}/notes?id=${firstNote.guide_id}`);
+              } else {
+                router.push(`/app/${workspaceId}/notes?noteId=${firstNote.id}`);
+              }
+              return;
+            }
+          }
+
+          // No notes at all - show empty state
+          console.log('[NotesPage] No notes found');
+        } catch (error) {
+          console.error('Error loading default note:', error);
+        }
+      }
+
+      loadDefaultNote();
+    }
+  }, [guideId, pageId, noteId, workspaceId, router]);
+
   if (loading) {
     return (
       <motion.div
@@ -184,54 +231,7 @@ export default function NotesPage() {
     return <BlankNoteEditor noteId={noteId} workspaceId={workspaceId} />;
   }
 
-  // Load default note if no params
-  useEffect(() => {
-    if (!guideId && !pageId && !noteId) {
-      console.log('[NotesPage] No params - redirecting to last/first note');
-
-      async function loadDefaultNote() {
-        try {
-          // Try to get last selected from localStorage
-          const lastNoteId = localStorage.getItem('lastSelectedNoteId');
-          const lastGuideId = localStorage.getItem('lastSelectedGuideId');
-
-          if (lastNoteId) {
-            // Check if it's a blank note or guided note
-            if (lastGuideId) {
-              router.push(`/app/${workspaceId}/notes?id=${lastGuideId}`);
-            } else {
-              router.push(`/app/${workspaceId}/notes?noteId=${lastNoteId}`);
-            }
-            return;
-          }
-
-          // Fallback: fetch first note
-          const response = await fetch(`/api/notes?workspace_id=${workspaceId}`);
-          if (response.ok) {
-            const data = await response.json();
-            if (data.notes && data.notes.length > 0) {
-              const firstNote = data.notes[0];
-              if (firstNote.guide_id) {
-                router.push(`/app/${workspaceId}/notes?id=${firstNote.guide_id}`);
-              } else {
-                router.push(`/app/${workspaceId}/notes?noteId=${firstNote.id}`);
-              }
-              return;
-            }
-          }
-
-          // No notes at all - show empty state
-          console.log('[NotesPage] No notes found');
-        } catch (error) {
-          console.error('Error loading default note:', error);
-        }
-      }
-
-      loadDefaultNote();
-    }
-  }, [guideId, pageId, noteId, workspaceId, router]);
-
-  // If no params, show loading
+  // If no params, show loading (redirect happens in useEffect)
   if (!guideId && !pageId && !noteId) {
     return (
       <div className="flex items-center justify-center h-full">
