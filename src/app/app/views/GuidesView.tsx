@@ -263,10 +263,10 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
             );
 
             if (response) {
-              setPromptResponse(response.answer || '');
+              setQuestionResponse(response.answer || '');
               setLastSaved(response.updated_at ? new Date(response.updated_at) : null);
             } else {
-              setPromptResponse('');
+              setQuestionResponse('');
               setLastSaved(null);
             }
           }
@@ -277,21 +277,21 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
           if (saved) {
             try {
               const data = JSON.parse(saved);
-              setPromptResponse(data.answer || '');
+              setQuestionResponse(data.answer || '');
               setLastSaved(data.savedAt ? new Date(data.savedAt) : null);
             } catch (e) {
               console.error('Error loading from localStorage:', e);
-              setPromptResponse('');
+              setQuestionResponse('');
               setLastSaved(null);
             }
           } else {
-            setPromptResponse('');
+            setQuestionResponse('');
             setLastSaved(null);
           }
         }
       } catch (e) {
         console.error('Error loading saved data:', e);
-        setPromptResponse('');
+        setQuestionResponse('');
         setLastSaved(null);
       }
     }
@@ -345,8 +345,8 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         setGuides(allGuides);
 
         // Initially load first batch
-        setDisplayedTemplates(allGuides.slice(0, TEMPLATES_PER_LOAD));
-        setHasMoreTemplates(allGuides.length > TEMPLATES_PER_LOAD);
+        setDisplayedGuides(allGuides.slice(0, TEMPLATES_PER_LOAD));
+        setHasMoreGuides(allGuides.length > TEMPLATES_PER_LOAD);
       } catch (error) {
         console.error('Error fetching guides:', error);
       }
@@ -362,8 +362,8 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
     const nextBatch = guides.slice(currentLength, currentLength + TEMPLATES_PER_LOAD);
 
     if (nextBatch.length > 0) {
-      setDisplayedTemplates(prev => [...prev, ...nextBatch]);
-      setHasMoreTemplates(currentLength + nextBatch.length < guides.length);
+      setDisplayedGuides(prev => [...prev, ...nextBatch]);
+      setHasMoreGuides(currentLength + nextBatch.length < guides.length);
     }
   };
 
@@ -413,7 +413,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
 
         // Collapse all categories by default
         const groupedQuestions = fetchedQuestions.reduce((acc: Record<string, Question[]>, question: Question) => {
-          const category = prompt.categoryName || 'General';
+          const category = question.categoryName || 'General';
           if (!acc[category]) {
             acc[category] = [];
           }
@@ -479,42 +479,42 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         });
       }
 
-      // Optimistically show checkmark for current prompt if it has content
+      // Optimistically show checkmark for current question if it has content
       if (selectedQuestionId && questionResponse.trim().length > 0) {
         answered.add(selectedQuestionId);
       }
 
-      setAnsweredPrompts(answered);
+      setAnsweredQuestions(answered);
     }
 
     checkAnsweredQuestions();
   }, [selectedGuide, questions, isAuthenticated, lastSaved, selectedQuestionId, questionResponse]);
 
-  const handleGuideChange = (newTemplateId: string) => {
-    setSelectedGuide(newTemplateId);
-    setSelectedPromptId(null);
-    setPromptResponse('');
+  const handleGuideChange = (newGuideId: string) => {
+    setSelectedGuide(newGuideId);
+    setSelectedQuestionId(null);
+    setQuestionResponse('');
     setSearchQuery('');
     setOpen(false);
   };
 
   const handleReadingClick = async (readingId: string) => {
     try {
-      setLoadingArticle(true);
+      setLoadingReading(true);
       const res = await fetch(`/api/readings/${readingId}`);
       const data = await res.json();
 
-      setSelectedArticle(data);
+      setSelectedReading(data);
     } catch (error) {
       console.error('Error fetching reading:', error);
     } finally {
-      setLoadingArticle(false);
+      setLoadingReading(false);
     }
   };
 
   const handleCloseReading = () => {
-    setSelectedArticle(null);
-    setArticleContentSearchQuery(''); // Clear search when closing article
+    setSelectedReading(null);
+    setReadingContentSearchQuery(''); // Clear search when closing reading
   };
 
   const toggleCategory = (category: string) => {
@@ -562,14 +562,14 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
 
   // Filter questions based on search query
   const filteredQuestions = questionSearchQuery.trim()
-    ? questions.filter(p =>
-        p.question.toLowerCase().includes(questionSearchQuery.toLowerCase()) ||
-        (p.categoryName && p.categoryName.toLowerCase().includes(questionSearchQuery.toLowerCase()))
+    ? questions.filter(question =>
+        question.question.toLowerCase().includes(questionSearchQuery.toLowerCase()) ||
+        (question.categoryName && question.categoryName.toLowerCase().includes(questionSearchQuery.toLowerCase()))
       )
     : questions;
 
-  const groupedQuestions = filteredQuestions.reduce((acc, prompt) => {
-    const category = prompt.categoryName || 'General';
+  const groupedQuestions = filteredQuestions.reduce((acc, question) => {
+    const category = question.categoryName || 'General';
     if (!acc[category]) {
       acc[category] = [];
     }
@@ -578,7 +578,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
   }, {} as Record<string, Question[]>);
 
   const categories = Object.keys(groupedQuestions).sort();
-  const selectedQuestion = questions.find(p => p.id === selectedQuestionId);
+  const selectedQuestion = questions.find(question => question.id === selectedQuestionId);
 
   // Auto-expand all categories when filtering
   useEffect(() => {
@@ -587,8 +587,8 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
       setCollapsedCategories(new Set());
     } else {
       // Collapse all categories when filter is cleared
-      const allCategories = Object.keys(questions.reduce((acc, prompt) => {
-        const category = prompt.categoryName || 'General';
+      const allCategories = Object.keys(questions.reduce((acc, question) => {
+        const category = question.categoryName || 'General';
         acc[category] = true;
         return acc;
       }, {} as Record<string, boolean>));
@@ -598,9 +598,9 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
 
   // Filter readings based on search query
   const filteredReadings = readingSearchQuery.trim()
-    ? readings.filter(a =>
-        a.title.toLowerCase().includes(readingSearchQuery.toLowerCase()) ||
-        a.excerpt.toLowerCase().includes(readingSearchQuery.toLowerCase())
+    ? readings.filter(reading =>
+        reading.title.toLowerCase().includes(readingSearchQuery.toLowerCase()) ||
+        reading.excerpt.toLowerCase().includes(readingSearchQuery.toLowerCase())
       )
     : readings;
 
@@ -664,7 +664,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                 type="text"
                 placeholder="Filter questions..."
                 value={questionSearchQuery}
-                onChange={(e) => setPromptSearchQuery(e.target.value)}
+                onChange={(e) => setQuestionSearchQuery(e.target.value)}
                 className="h-8 text-sm mb-2"
               />
               <p className="text-xs text-muted-foreground">
@@ -709,9 +709,9 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ duration: 0.2, delay: index * 0.03 }}
-                              onClick={() => setSelectedPromptId(prompt.id)}
+                              onClick={() => setSelectedQuestionId(question.id)}
                               className={`w-full text-left p-3 rounded-lg transition-colors text-sm flex items-start gap-2 ${
-                                selectedQuestionId === prompt.id
+                                selectedQuestionId === question.id
                                   ? 'bg-primary/10 text-primary border border-primary/20'
                                   : 'bg-muted/50 text-foreground hover:bg-muted'
                               }`}
@@ -764,7 +764,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                       className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-[15px] leading-relaxed font-normal placeholder:text-muted-foreground/60"
                       placeholder="Start writing your response here..."
                       value={questionResponse}
-                      onChange={(e) => setPromptResponse(e.target.value)}
+                      onChange={(e) => setQuestionResponse(e.target.value)}
                       style={{ fontFamily: 'inherit' }}
                     />
                   </Card>
@@ -829,7 +829,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                         type="text"
                         placeholder="Search in reading..."
                         value={readingContentSearchQuery}
-                        onChange={(e) => setArticleContentSearchQuery(e.target.value)}
+                        onChange={(e) => setReadingContentSearchQuery(e.target.value)}
                         className="h-9 text-sm pl-9"
                       />
                     </div>
@@ -878,7 +878,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                       type="text"
                       placeholder="Filter readings..."
                       value={readingSearchQuery}
-                      onChange={(e) => setArticleSearchQuery(e.target.value)}
+                      onChange={(e) => setReadingSearchQuery(e.target.value)}
                       className="h-8 text-sm mb-2"
                     />
                     <p className="text-xs text-muted-foreground">
@@ -954,7 +954,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                   type="text"
                   placeholder="Search in reading..."
                   value={readingContentSearchQuery}
-                  onChange={(e) => setArticleContentSearchQuery(e.target.value)}
+                  onChange={(e) => setReadingContentSearchQuery(e.target.value)}
                   className="h-9 text-sm pl-9"
                 />
               </div>
@@ -1006,7 +1006,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                   type="text"
                   placeholder="Filter questions..."
                   value={questionSearchQuery}
-                  onChange={(e) => setPromptSearchQuery(e.target.value)}
+                  onChange={(e) => setQuestionSearchQuery(e.target.value)}
                   className="h-8 text-sm -mt-2"
                 />
                 <p className="text-xs text-muted-foreground -mt-2">
@@ -1047,11 +1047,11 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                                 <button
                                   key={question.id}
                                   onClick={() => {
-                                    setSelectedPromptId(prompt.id);
+                                    setSelectedQuestionId(question.id);
                                     setMobileDrawerOpen(false);
                                   }}
                                   className={`w-full text-left p-3 rounded-lg transition-colors text-sm flex items-start gap-2 ${
-                                    selectedQuestionId === prompt.id
+                                    selectedQuestionId === question.id
                                       ? 'bg-primary/10 text-primary border border-primary/20'
                                       : 'bg-muted/50 text-foreground hover:bg-muted'
                                   }`}
@@ -1078,7 +1078,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                   type="text"
                   placeholder="Filter readings..."
                   value={readingSearchQuery}
-                  onChange={(e) => setArticleSearchQuery(e.target.value)}
+                  onChange={(e) => setReadingSearchQuery(e.target.value)}
                   className="h-8 text-sm -mt-2"
                 />
                 {loading ? (
