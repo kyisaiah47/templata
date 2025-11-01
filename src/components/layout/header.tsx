@@ -184,21 +184,33 @@ export function Header() {
 									<NavigationMenuItem>
 										<NavigationMenuTrigger className="!bg-transparent hover:!bg-transparent focus:!bg-transparent data-[state=open]:!bg-transparent hover:text-foreground">Browse</NavigationMenuTrigger>
 										<NavigationMenuContent>
-											<ul className="grid w-[200px] gap-4">
+											<ul className="grid w-[200px] gap-3 p-4">
 												<li>
 													<NavigationMenuLink asChild>
-														<Link href="/templates">
-															<div className="text-sm leading-none font-medium">Templates</div>
+														<Link href="/guides" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+															<div className="text-sm leading-none font-medium">Guides</div>
 															<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-																1,298 templates for life's moments
+																Expert-curated guides for major life decisions
 															</p>
 														</Link>
 													</NavigationMenuLink>
+												</li>
+												<li>
 													<NavigationMenuLink asChild>
-														<Link href="/articles">
-															<div className="text-sm leading-none font-medium">Articles</div>
+														<Link href="/library" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+															<div className="text-sm leading-none font-medium">Library</div>
 															<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-																In-depth guidance and insights
+																Curated readings and resources
+															</p>
+														</Link>
+													</NavigationMenuLink>
+												</li>
+												<li>
+													<NavigationMenuLink asChild>
+														<Link href="/docs" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+															<div className="text-sm leading-none font-medium">Docs</div>
+															<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+																Learn how to use Templata
 															</p>
 														</Link>
 													</NavigationMenuLink>
