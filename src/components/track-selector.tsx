@@ -210,7 +210,7 @@ export function TrackSelector({ selectedTrackIds, onSelectionChange }: TrackSele
                               />
                               <div className="flex-1 min-w-0">
                                 <div className="truncate text-sm">{displayName}</div>
-                                {track.custom_name && (
+                                {track.custom_name && track.guides && (
                                   <div className="text-xs text-muted-foreground truncate">
                                     {track.guides.name}
                                   </div>

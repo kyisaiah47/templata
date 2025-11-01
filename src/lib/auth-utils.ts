@@ -30,17 +30,21 @@ export async function getAuthenticatedUser(): Promise<AuthSession | null> {
       return null;
     }
 
-    // Get user profile
+    // Get user profile - we need the users.id, not auth.users.id for foreign keys
     const { data: profile } = await supabase
       .from('users')
-      .select('name')
+      .select('id, name')
       .eq('user_id', user.id)
       .single();
 
+    if (!profile) {
+      return null;
+    }
+
     return {
-      userId: user.id,
+      userId: profile.id, // Use users.id for foreign key relationships
       email: user.email!,
-      name: profile?.name || user.user_metadata?.name || undefined,
+      name: profile.name || user.user_metadata?.name || undefined,
       createdAt: new Date(user.created_at).getTime(),
     };
   } catch (error) {

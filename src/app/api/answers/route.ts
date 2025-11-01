@@ -1,35 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { cookies } from 'next/headers';
+import { getAuthenticatedUser, unauthorizedResponse, errorResponse } from '@/lib/auth-utils';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-async function getUserFromSession(request: NextRequest) {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get('session');
-
-  if (!sessionCookie) {
-    return null;
-  }
-
-  try {
-    const session = JSON.parse(sessionCookie.value);
-    return session.userId;
-  } catch {
-    return null;
-  }
-}
-
 // GET - Fetch user's answers
 export async function GET(request: NextRequest) {
-  const userId = await getUserFromSession(request);
+  const user = await getAuthenticatedUser();
 
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!user) {
+    return unauthorizedResponse();
   }
+
+  const userId = user.userId;
 
   const { searchParams } = new URL(request.url);
   const trackId = searchParams.get('trackId');
@@ -57,11 +43,13 @@ export async function GET(request: NextRequest) {
 
 // POST - Save/update answer
 export async function POST(request: NextRequest) {
-  const userId = await getUserFromSession(request);
+  const user = await getAuthenticatedUser();
 
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!user) {
+    return unauthorizedResponse();
   }
+
+  const userId = user.userId;
 
   const { trackId, guideId, questionId, answer } = await request.json();
 

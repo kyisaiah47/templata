@@ -59,6 +59,19 @@ interface Template {
   category: string;
 }
 
+interface Track {
+  id: string;
+  guide_id: string;
+  custom_name: string | null;
+  progress: number;
+  guides: {
+    id: string;
+    name: string;
+    description: string;
+    icon: string | null;
+  } | null;
+}
+
 const TEMPLATES_PER_LOAD = 50;
 
 // Featured guides for demo mode
@@ -86,6 +99,7 @@ const FEATURED_HEALTH_IDS = [
 const FEATURED_TEMPLATE_IDS = [...FEATURED_GENERAL_IDS, ...FEATURED_GENZ_IDS, ...FEATURED_HEALTH_IDS];
 
 interface GuidesViewProps {
+  trackId?: string;
   onViewChange?: (view: 'guides' | 'reflection' | 'overview') => void;
   setActions?: (actions: {
     openTemplateDropdown?: () => void;
@@ -94,7 +108,7 @@ interface GuidesViewProps {
   }) => void;
 }
 
-export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
+export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProps) {
   const [selectedTemplate, setSelectedTemplate] = useState('wedding-planning');
   const [guides, setTemplates] = useState<Template[]>([]);
   const [displayedTemplates, setDisplayedTemplates] = useState<Template[]>([]);
@@ -124,6 +138,9 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
   const [mobileDrawerTab, setMobileDrawerTab] = useState<'questions' | 'readings'>('questions');
   const [isMobile, setIsMobile] = useState(false);
 
+  // Track state - when a trackId is provided, fetch the track and use its guide_id
+  const [track, setTrack] = useState<Track | null>(null);
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -132,6 +149,42 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Fetch track when trackId is provided
+  useEffect(() => {
+    if (!trackId) {
+      setTrack(null);
+      return;
+    }
+
+    async function fetchTrack() {
+      try {
+        const res = await fetch('/api/tracks?archived=false');
+        if (!res.ok) {
+          console.error('Failed to fetch tracks');
+          return;
+        }
+
+        const data = await res.json();
+        const tracks = data.tracks || [];
+        const foundTrack = tracks.find((t: Track) => t.id === trackId);
+
+        if (foundTrack) {
+          setTrack(foundTrack);
+          // Update selectedTemplate to the guide_id from the track
+          if (foundTrack.guide_id) {
+            setSelectedTemplate(foundTrack.guide_id);
+          }
+        } else {
+          console.error('Track not found:', trackId);
+        }
+      } catch (error) {
+        console.error('Error fetching track:', error);
+      }
+    }
+
+    fetchTrack();
+  }, [trackId]);
 
   // Set up actions for parent to call
   useEffect(() => {
@@ -197,15 +250,16 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
       try {
         if (isAuthenticated) {
           // Load from Supabase
-          const res = await fetch(
-            `/api/answers?guideId=${selectedTemplate}`
-          );
+          const url = trackId
+            ? `/api/answers?trackId=${trackId}`
+            : `/api/answers?guideId=${selectedTemplate}`;
+          const res = await fetch(url);
           const data = await res.json();
 
           if (data.answers) {
             const response = data.answers.find(
               (r: any) =>
-                r.template_id === selectedTemplate && r.prompt_id === selectedPromptId
+                r.prompt_id === selectedPromptId
             );
 
             if (response) {
@@ -343,12 +397,16 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
       try {
         setLoading(true);
 
-        const template = guides.find(t => t.id === selectedTemplate);
+        // Use track guide info if in track mode, otherwise find in guides array
+        const template = track?.guides
+          ? { id: track.guides.id, name: track.guides.name }
+          : guides.find(t => t.id === selectedTemplate);
+
         if (template) {
           setTemplateInfo({ id: template.id, name: template.name });
         }
 
-        const questionsRes = await fetch(`/api/questions?guideId=${selectedTemplate}`);
+        const questionsRes = await fetch(`/api/guides/${selectedTemplate}/questions`);
         const questionsData = await questionsRes.json();
         const fetchedPrompts = questionsData.questions || [];
         setPrompts(fetchedPrompts);
@@ -365,7 +423,7 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
         const allCategories = Object.keys(groupedPrompts);
         setCollapsedCategories(new Set(allCategories));
 
-        const readingsRes = await fetch(`/api/readings?template=${selectedTemplate}&pageSize=50`);
+        const readingsRes = await fetch(`/api/guides/${selectedTemplate}/readings`);
         const readingsData = await readingsRes.json();
         setArticles(readingsData.readings || []);
       } catch (error) {
@@ -375,10 +433,11 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
       }
     }
 
-    if (guides.length > 0) {
+    // Fetch data if we have guides loaded OR if we have a track (which provides the guide info)
+    if (guides.length > 0 || track) {
       fetchData();
     }
-  }, [selectedTemplate, guides]);
+  }, [selectedTemplate, guides, track]);
 
   // Check which questions have been answered
   useEffect(() => {
@@ -545,6 +604,24 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
       )
     : readings;
 
+  // Browse mode - no track selected
+  if (!trackId) {
+    return (
+      <div className="h-full flex items-center justify-center bg-background">
+        <div className="text-center max-w-md px-4">
+          <FileText className="w-16 h-16 mx-auto mb-4 opacity-20" />
+          <h2 className="text-2xl font-semibold mb-2">Select a Track to Begin</h2>
+          <p className="text-muted-foreground mb-6">
+            Choose one or more tracks from the dropdown above to start working on your guides.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Don't have any tracks yet? Create one by clicking the track selector.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-full flex flex-col bg-background">
       {/* Anonymous User Banner */}
@@ -569,212 +646,6 @@ export function GuidesView({ onViewChange, setActions }: GuidesViewProps) {
           </div>
         </div>
       )}
-
-      {/* Stage Header */}
-      <div className="border-b bg-background">
-        <div className="container mx-auto max-w-7xl px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              {/* Template Selector */}
-              <Popover
-                open={open}
-                onOpenChange={(isOpen) => {
-                  setOpen(isOpen);
-                  if (!isOpen) {
-                    setSearchQuery('');
-                  }
-                }}
-              >
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-full md:w-[350px] justify-between"
-                  >
-                    {selectedTemplate
-                      ? guides.find((t) => t.id === selectedTemplate)?.name
-                      : "Select template..."}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[calc(100vw-2rem)] md:w-[350px] p-0">
-                  <Command>
-                    <CommandInput
-                      placeholder="Search guides..."
-                      value={searchQuery}
-                      onValueChange={setSearchQuery}
-                    />
-                    <CommandList
-                      onScroll={(e) => {
-                        const target = e.target as HTMLElement;
-                        const scrollPercentage = (target.scrollTop + target.clientHeight) / target.scrollHeight;
-
-                        // Load more when scrolled 80% down
-                        if (scrollPercentage > 0.8 && !searchQuery.trim()) {
-                          loadMoreTemplates();
-                        }
-                      }}
-                    >
-                      <CommandEmpty>No template found.</CommandEmpty>
-
-                      {/* Featured Templates - General */}
-                      {showFeatured && featuredGeneralTemplates.length > 0 && (
-                        <>
-                          <CommandGroup heading="Featured - General">
-                            {featuredGeneralTemplates.map((template) => (
-                              <CommandItem
-                                key={template.id}
-                                value={template.name}
-                                onSelect={() => {
-                                  handleTemplateChange(template.id);
-                                }}
-                              >
-                                <Check
-                                  className={`mr-2 h-4 w-4 ${
-                                    selectedTemplate === template.id ? "opacity-100" : "opacity-0"
-                                  }`}
-                                />
-                                {template.name}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                          <CommandSeparator />
-                        </>
-                      )}
-
-                      {/* Featured Templates - Gen Z */}
-                      {showFeatured && featuredGenZTemplates.length > 0 && (
-                        <>
-                          <CommandGroup heading="Featured - Gen Z">
-                            {featuredGenZTemplates.map((template) => (
-                              <CommandItem
-                                key={template.id}
-                                value={template.name}
-                                onSelect={() => {
-                                  handleTemplateChange(template.id);
-                                }}
-                              >
-                                <Check
-                                  className={`mr-2 h-4 w-4 ${
-                                    selectedTemplate === template.id ? "opacity-100" : "opacity-0"
-                                  }`}
-                                />
-                                {template.name}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                          <CommandSeparator />
-                        </>
-                      )}
-
-                      {/* Featured Templates - Health & Wellness */}
-                      {showFeatured && featuredHealthTemplates.length > 0 && (
-                        <>
-                          <CommandGroup heading="Featured - Health & Wellness">
-                            {featuredHealthTemplates.map((template) => (
-                              <CommandItem
-                                key={template.id}
-                                value={template.name}
-                                onSelect={() => {
-                                  handleTemplateChange(template.id);
-                                }}
-                              >
-                                <Check
-                                  className={`mr-2 h-4 w-4 ${
-                                    selectedTemplate === template.id ? "opacity-100" : "opacity-0"
-                                  }`}
-                                />
-                                {template.name}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                          <CommandSeparator />
-                        </>
-                      )}
-
-                      {/* All Templates */}
-                      <CommandGroup heading={showFeatured ? "All Templates" : undefined}>
-                        {regularTemplates.map((template) => (
-                          <CommandItem
-                            key={template.id}
-                            value={template.name}
-                            onSelect={() => {
-                              handleTemplateChange(template.id);
-                            }}
-                          >
-                            <Check
-                              className={`mr-2 h-4 w-4 ${
-                                selectedTemplate === template.id ? "opacity-100" : "opacity-0"
-                              }`}
-                            />
-                            {template.name}
-                          </CommandItem>
-                        ))}
-                        {!searchQuery.trim() && hasMoreTemplates && (
-                          <div className="py-2 text-center text-xs text-muted-foreground">
-                            Scroll for more...
-                          </div>
-                        )}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-
-              {/* Helper Text */}
-              <div className="hidden lg:block text-xs text-muted-foreground max-w-md">
-                <p>This isn't graded - work at your own pace.</p>
-                <p>
-                  See all your answered questions in the{' '}
-                  <button
-                    onClick={() => {
-                      sessionStorage.setItem('overview-tab', 'answers');
-                      onViewChange?.('overview');
-                    }}
-                    className="text-primary hover:underline"
-                  >
-                    Overview
-                  </button>{' '}
-                  tab.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 md:gap-3">
-              {/* Autosave Toggle */}
-              <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-md border border-border">
-                <Checkbox
-                  id="autosave"
-                  checked={autoSave}
-                  onCheckedChange={setAutoSave}
-                />
-                <label htmlFor="autosave" className="text-sm text-foreground cursor-pointer">
-                  Auto-save
-                </label>
-              </div>
-
-              {/* Manual Save Button */}
-              <Button
-                onClick={handleManualSave}
-                disabled={!selectedPromptId || !promptResponse}
-                size="sm"
-                variant="outline"
-              >
-                <Save className="h-4 w-4 md:mr-2" />
-                <span className="hidden md:inline">Save</span>
-              </Button>
-
-              {/* Last Saved Indicator */}
-              {lastSaved && (
-                <span className="hidden sm:inline text-xs text-muted-foreground">
-                  Saved {lastSaved.toLocaleTimeString()}
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Main Content - 3 Column Layout */}
       <div className="flex-1 flex overflow-hidden">

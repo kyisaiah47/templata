@@ -18,8 +18,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LayoutGrid, Calendar, BarChart3, FileText, Heart, TrendingUp, Flame, Download } from 'lucide-react';
+import { LayoutGrid, Calendar, BarChart3, FileText, Heart, TrendingUp, Flame, Download, Archive } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { AnalyticsView } from './AnalyticsView';
+import { ArchiveView } from './ArchiveView';
 
 interface TemplateProgress {
   guideId: string;
@@ -67,7 +69,7 @@ interface TemplateResponses {
 }
 
 export function OverviewView() {
-  const [view, setView] = useState<'board' | 'timeline' | 'insights' | 'answers' | 'reflections'>('board');
+  const [view, setView] = useState<'board' | 'timeline' | 'insights' | 'answers' | 'analytics' | 'archive'>('board');
   const [templateResponses, setTemplateResponses] = useState<TemplateResponses[]>([]);
   const [guides, setTemplates] = useState<TemplateProgress[]>([]);
   const [reflections, setReflections] = useState<ReflectionSummary[]>([]);
@@ -752,9 +754,13 @@ export function OverviewView() {
                 <FileText className="h-4 w-4 mr-2" />
                 Responses
               </TabsTrigger>
-              <TabsTrigger value="reflections" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
-                <Heart className="h-4 w-4 mr-2" />
-                Reflections
+              <TabsTrigger value="analytics" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+                <TrendingUp className="h-4 w-4 mr-2" />
+                Analytics
+              </TabsTrigger>
+              <TabsTrigger value="archive" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
+                <Archive className="h-4 w-4 mr-2" />
+                Archive
               </TabsTrigger>
             </TabsList>
           </div>
@@ -1273,89 +1279,15 @@ export function OverviewView() {
               </motion.div>
             </TabsContent>
 
-            {/* Reflections View */}
-            <TabsContent value="reflections" className="mt-0">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
-                {reflectionDetails.length === 0 ? (
-                  <Card className="p-8">
-                    <p className="text-center text-muted-foreground">
-                      No reflections yet. Go to Reflection to start writing!
-                    </p>
-                  </Card>
-                ) : (
-                  <>
-                    {/* Export Button */}
-                    <div className="flex justify-end">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="sm">
-                            <Download className="h-4 w-4 mr-2" />
-                            Export All Reflections
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem onClick={exportReflectionsAsText}>
-                            Plain Text (.txt)
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={exportReflectionsAsPDF}>
-                            PDF (Styled)
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
 
-                    {reflectionDetails.map((reflection, index) => (
-                    <motion.div
-                      key={reflection.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                    >
-                      <Card className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <h3 className="text-lg font-bold text-foreground">
-                              {new Date(reflection.date + 'T00:00:00').toLocaleDateString('en-US', {
-                                weekday: 'long',
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric',
-                              })}
-                            </h3>
-                            {reflection.mood && <span className="text-2xl">{reflection.mood}</span>}
-                          </div>
-                        </div>
-                        {reflection.prompt && (
-                          <p className="text-sm text-muted-foreground italic mb-4">
-                            "{reflection.prompt}"
-                          </p>
-                        )}
-                        <div className="p-4 bg-muted/30 rounded-lg">
-                          <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">
-                            {reflection.content}
-                          </p>
-                        </div>
-                        {reflection.tags.length > 0 && (
-                          <div className="flex gap-2 flex-wrap mt-4">
-                            {reflection.tags.map((tag) => (
-                              <Badge key={tag} variant="secondary" className="text-xs">
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-                        )}
-                      </Card>
-                    </motion.div>
-                  ))}
-                  </>
-                )}
-              </motion.div>
+            {/* Analytics View */}
+            <TabsContent value="analytics" className="mt-0">
+              <AnalyticsView selectedTrackIds={[]} />
+            </TabsContent>
+
+            {/* Archive View */}
+            <TabsContent value="archive" className="mt-0">
+              <ArchiveView />
             </TabsContent>
           </div>
         </div>
