@@ -102,9 +102,9 @@ interface GuidesViewProps {
   trackId?: string;
   onViewChange?: (view: 'guides' | 'reflection' | 'overview') => void;
   setActions?: (actions: {
-    openTemplateDropdown?: () => void;
-    selectFirstPrompt?: () => void;
-    openFirstArticle?: () => void;
+    openGuideDropdown?: () => void;
+    selectFirstQuestion?: () => void;
+    openFirstReading?: () => void;
   }) => void;
 }
 
@@ -173,7 +173,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
           setTrack(foundTrack);
           // Update selectedGuide to the guide_id from the track
           if (foundTrack.guide_id) {
-            setSelectedTemplate(foundTrack.guide_id);
+            setSelectedGuide(foundTrack.guide_id);
           }
         } else {
           console.error('Track not found:', trackId);
@@ -190,10 +190,10 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
   useEffect(() => {
     if (setActions) {
       setActions({
-        openTemplateDropdown: () => {
+        openGuideDropdown: () => {
           setOpen(true);
         },
-        selectFirstPrompt: () => {
+        selectFirstQuestion: () => {
           if (questions.length > 0) {
             const groupedQuestions = questions.reduce((acc, question) => {
               const category = question.categoryName || 'General';
@@ -210,14 +210,14 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
               newSet.delete(firstCategory);
               return newSet;
             });
-            // Select first prompt
-            const firstPrompt = groupedQuestions[firstCategory][0];
-            if (firstPrompt) {
-              setSelectedPromptId(firstPrompt.id);
+            // Select first question
+            const firstQuestion = groupedQuestions[firstCategory][0];
+            if (firstQuestion) {
+              setSelectedQuestionId(firstQuestion.id);
             }
           }
         },
-        openFirstArticle: () => {
+        openFirstReading: () => {
           if (readings.length > 0) {
             handleReadingClick(readings[0].id);
           }
@@ -339,14 +339,14 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
       try {
         const res = await fetch('/api/guides');
         const data = await res.json();
-        const allTemplates = (data.guides || []).sort((a: Template, b: Template) =>
+        const allGuides = (data.guides || []).sort((a: Template, b: Template) =>
           a.name.localeCompare(b.name)
         );
-        setGuides(allTemplates);
+        setGuides(allGuides);
 
         // Initially load first batch
-        setDisplayedTemplates(allTemplates.slice(0, TEMPLATES_PER_LOAD));
-        setHasMoreTemplates(allTemplates.length > TEMPLATES_PER_LOAD);
+        setDisplayedTemplates(allGuides.slice(0, TEMPLATES_PER_LOAD));
+        setHasMoreTemplates(allGuides.length > TEMPLATES_PER_LOAD);
       } catch (error) {
         console.error('Error fetching guides:', error);
       }
@@ -378,16 +378,16 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
   // Split into featured and regular guides (only when no search)
   // Always pull featured from full guides array to ensure they're included
   const showFeatured = !searchQuery.trim();
-  const featuredGeneralTemplates = showFeatured
+  const featuredGeneralGuides = showFeatured
     ? guides.filter(t => FEATURED_GENERAL_IDS.includes(t.id))
     : [];
-  const featuredGenZTemplates = showFeatured
+  const featuredGenZGuides = showFeatured
     ? guides.filter(t => FEATURED_GENZ_IDS.includes(t.id))
     : [];
-  const featuredHealthTemplates = showFeatured
+  const featuredHealthGuides = showFeatured
     ? guides.filter(t => FEATURED_HEALTH_IDS.includes(t.id))
     : [];
-  const regularTemplates = showFeatured
+  const regularGuides = showFeatured
     ? filteredGuides.filter(t => !FEATURED_TEMPLATE_IDS.includes(t.id))
     : filteredGuides;
 
@@ -398,18 +398,18 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         setLoading(true);
 
         // Use track guide info if in track mode, otherwise find in guides array
-        const template = track?.guides
+        const guide = track?.guides
           ? { id: track.guides.id, name: track.guides.name }
           : guides.find(t => t.id === selectedGuide);
 
-        if (template) {
-          setTemplateInfo({ id: template.id, name: template.name });
+        if (guide) {
+          setGuideInfo({ id: guide.id, name: guide.name });
         }
 
         const questionsRes = await fetch(`/api/guides/${selectedGuide}/questions`);
         const questionsData = await questionsRes.json();
         const fetchedQuestions = questionsData.questions || [];
-        setPrompts(fetchedQuestions);
+        setQuestions(fetchedQuestions);
 
         // Collapse all categories by default
         const groupedQuestions = fetchedQuestions.reduce((acc: Record<string, Question[]>, question: Question) => {
@@ -425,7 +425,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
 
         const readingsRes = await fetch(`/api/guides/${selectedGuide}/readings`);
         const readingsData = await readingsRes.json();
-        setArticles(readingsData.readings || []);
+        setReadings(readingsData.readings || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -490,8 +490,8 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
     checkAnsweredQuestions();
   }, [selectedGuide, questions, isAuthenticated, lastSaved, selectedQuestionId, questionResponse]);
 
-  const handleTemplateChange = (newTemplateId: string) => {
-    setSelectedTemplate(newTemplateId);
+  const handleGuideChange = (newTemplateId: string) => {
+    setSelectedGuide(newTemplateId);
     setSelectedPromptId(null);
     setPromptResponse('');
     setSearchQuery('');
@@ -649,13 +649,13 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
 
       {/* Main Content - 3 Column Layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Sidebar - Prompts (Desktop only) */}
+        {/* Left Sidebar - Questions (Desktop only) */}
         <div className="hidden md:block w-80 border-r bg-background overflow-y-auto">
           <div className="p-4 space-y-4">
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <FileText className="h-4 w-4 text-primary" />
-                <h2 className="font-semibold text-foreground">Action Prompts</h2>
+                <h2 className="font-semibold text-foreground">Action Questions</h2>
                 <Badge variant="outline" className="ml-auto text-xs">
                   {questions.length}
                 </Badge>
@@ -793,7 +793,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
           </div>
         </div>
 
-        {/* Right Sidebar - Articles or Article Content (Desktop only) */}
+        {/* Right Sidebar - Readings or Reading Content (Desktop only) */}
         <motion.div
           className="hidden md:block border-l bg-background overflow-y-auto"
           animate={{ width: selectedReading ? 600 : 320 }}
@@ -869,7 +869,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                   <div className="mb-4">
                     <div className="flex items-center gap-2 mb-2">
                       <BookOpen className="h-4 w-4 text-primary" />
-                      <h2 className="font-semibold text-foreground">Related Articles</h2>
+                      <h2 className="font-semibold text-foreground">Related Readings</h2>
                       <Badge variant="outline" className="ml-auto text-xs">
                         {readings.length}
                       </Badge>
@@ -927,7 +927,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         </motion.div>
       </div>
 
-      {/* Mobile Article Viewer */}
+      {/* Mobile Reading Viewer */}
       {isMobile && selectedReading && (
         <Drawer open={!!selectedReading} onOpenChange={(open) => !open && handleCloseReading()}>
           <DrawerContent className="max-h-[90vh]">
@@ -972,7 +972,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         </Drawer>
       )}
 
-      {/* Mobile Drawer - Prompts & Articles */}
+      {/* Mobile Drawer - Questions & Readings */}
       {isMobile && (
         <Drawer open={mobileDrawerOpen} onOpenChange={setMobileDrawerOpen}>
           <DrawerTrigger asChild>
@@ -992,11 +992,11 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="questions" className="gap-1.5">
                 <FileText className="h-4 w-4" />
-                <span>Prompts</span>
+                <span>Questions</span>
               </TabsTrigger>
               <TabsTrigger value="readings" className="gap-1.5">
                 <BookOpen className="h-4 w-4" />
-                <span>Articles</span>
+                <span>Readings</span>
               </TabsTrigger>
             </TabsList>
 
@@ -1085,7 +1085,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                   <p className="text-sm text-muted-foreground">Loading readings...</p>
                 ) : filteredReadings.length === 0 ? (
                   <p className="text-sm text-muted-foreground">
-                    {readingSearchQuery.trim() ? 'No readings match your search' : 'No readings available for this template yet.'}
+                    {readingSearchQuery.trim() ? 'No readings match your search' : 'No readings available for this guide yet.'}
                   </p>
                 ) : (
                   <div className="space-y-2">
