@@ -11,6 +11,28 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const search = searchParams.get('search');
+    const all = searchParams.get('all'); // New param to fetch all guides
+
+    // If all=true, return all guides
+    if (all === 'true') {
+      const { data: guides, error } = await supabase
+        .from('guides')
+        .select('id, name, description, category, icon, tags')
+        .eq('active', true)
+        .order('name', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching guides:', error);
+        return NextResponse.json(
+          { error: 'Failed to fetch guides' },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.json({
+        guides: guides || []
+      });
+    }
 
     // If no category specified, return all categories
     if (!category) {

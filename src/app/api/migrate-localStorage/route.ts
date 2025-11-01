@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { getAuthenticatedUser, unauthorizedResponse, errorResponse, successResponse } from '@/lib/auth-utils';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,44 +9,40 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
-    // Get user session from cookie
-    const sessionCookie = request.cookies.get('session');
-    if (!sessionCookie) {
-      return NextResponse.json(
-        { error: 'Not authenticated' },
-        { status: 401 }
-      );
+    const user = await getAuthenticatedUser();
+
+    if (!user) {
+      return unauthorizedResponse();
     }
 
-    const session = JSON.parse(sessionCookie.value);
-    const userId = session.userId;
+    const userId = user.userId;
 
     const { workspace, reflections } = await request.json();
 
     let migratedWorkspace = 0;
     let migratedReflections = 0;
 
-    // Migrate workspace responses
+    // Migrate workspace responses (answers)
     if (workspace && workspace.length > 0) {
       for (const item of workspace) {
         try {
           // Check if already exists
           const { data: existing } = await supabase
-            .from('workspace_responses')
+            .from('answers')
             .select('id')
             .eq('user_id', userId)
-            .eq('template_id', item.templateId)
-            .eq('prompt_id', item.promptId)
+            .eq('guide_id', item.templateId)
+            .eq('question_id', item.promptId)
             .single();
 
           if (!existing && item.response && item.response.trim()) {
             await supabase
-              .from('workspace_responses')
+              .from('answers')
               .insert({
                 user_id: userId,
-                template_id: item.templateId,
-                prompt_id: item.promptId,
-                response: item.response,
+                guide_id: item.templateId,
+                question_id: item.promptId,
+                answer: item.response,
               });
             migratedWorkspace++;
           }

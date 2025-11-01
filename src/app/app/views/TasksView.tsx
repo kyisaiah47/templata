@@ -9,7 +9,7 @@ import { Task } from '@/types/workspace';
 import { toast } from 'sonner';
 
 interface ExtendedTask extends Task {
-  user_guides?: {
+  tracks?: {
     id: string;
     guides: {
       name: string;
@@ -18,19 +18,12 @@ interface ExtendedTask extends Task {
   } | null;
 }
 
-export function TasksView() {
-  const searchParams = useSearchParams();
-  const queryClient = useQueryClient();
+interface TasksViewProps {
+  selectedTrackIds: string[];
+}
 
-  // Get selected note IDs from URL, fallback to localStorage if URL is empty
-  const scopedNoteId = searchParams.get('scopedNoteId');
-  const urlIds = searchParams.get('tasksNotes')?.split(',').filter(Boolean);
-  const localStorageIds = typeof window !== 'undefined'
-    ? JSON.parse(localStorage.getItem('selectedTasksNoteIds') || '[]')
-    : [];
-  const selectedNoteIds = scopedNoteId
-    ? [scopedNoteId]
-    : (urlIds && urlIds.length > 0 ? urlIds : localStorageIds);
+export function TasksView({ selectedTrackIds }: TasksViewProps) {
+  const queryClient = useQueryClient();
 
   // Fetch tasks
   const { data: allItems, isLoading, error } = useQuery({
@@ -49,9 +42,9 @@ export function TasksView() {
     },
   });
 
-  // Filter tasks by selected notes
-  const data = selectedNoteIds.length > 0
-    ? (allItems || []).filter(task => task.user_guide_id && selectedNoteIds.includes(task.user_guide_id))
+  // Filter tasks by selected tracks
+  const data = selectedTrackIds.length > 0
+    ? (allItems || []).filter(task => task.track_id && selectedTrackIds.includes(task.track_id))
     : (allItems || []);
 
   // Create task mutation
@@ -61,7 +54,7 @@ export function TasksView() {
       description: string;
       status: 'todo' | 'in_progress' | 'done';
       due_date: string | null;
-      user_guide_id: string | null;
+      track_id: string | null;
     }) => {
       const res = await fetch('/api/items', {
         method: 'POST',
@@ -85,7 +78,7 @@ export function TasksView() {
           description: newTask.description,
           status: newTask.status as 'todo' | 'in_progress' | 'done',
           due_date: newTask.due_date,
-          user_guide_id: newTask.user_guide_id,
+          track_id: newTask.track_id,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         } as ExtendedTask,
@@ -239,7 +232,7 @@ export function TasksView() {
     description: string;
     status: 'todo' | 'in_progress' | 'done';
     due_date: string | null;
-    user_guide_id: string | null;
+    track_id: string | null;
   }) => {
     createTaskMutation.mutate(task);
   };
@@ -322,17 +315,17 @@ export function TasksView() {
 
       {/* Kanban Board */}
       <div className="flex-1 overflow-auto">
-        {selectedNoteIds.length === 0 ? (
+        {selectedTrackIds.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
             <ListTodo className="w-16 h-16 mb-4 opacity-20" />
-            <p className="text-lg font-medium">No notes selected</p>
-            <p className="text-sm">Select notes from the sidebar to see tasks</p>
+            <p className="text-lg font-medium">No tracks selected</p>
+            <p className="text-sm">Select tracks from the header to see tasks</p>
           </div>
-        ) : (data || []).length === 0 && selectedNoteIds.length > 0 ? (
+        ) : (data || []).length === 0 && selectedTrackIds.length > 0 ? (
           <div className="flex-col items-center justify-center h-96 text-muted-foreground px-6 py-12">
             <ListTodo className="w-16 h-16 mb-4 opacity-20 mx-auto" />
             <p className="text-lg font-medium text-center">No tasks found</p>
-            <p className="text-sm text-center">The selected notes don't have any tasks yet</p>
+            <p className="text-sm text-center">The selected tracks don't have any tasks yet</p>
           </div>
         ) : (
           <KanbanBoard

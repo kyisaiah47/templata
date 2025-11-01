@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import bcrypt from 'bcryptjs';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,49 +17,46 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Find user by email
-    const { data: user, error: userError } = await supabase
+    // Use Supabase Auth to sign in
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.toLowerCase(),
+      password,
+    });
+
+    if (error || !data.session) {
+      console.error('Login error:', error);
+      return NextResponse.json(
+        { error: 'Invalid email or password' },
+        { status: 401 }
+      );
+    }
+
+    // Get user profile from users table
+    const { data: profile } = await supabase
       .from('users')
-      .select('*')
-      .eq('email', email.toLowerCase())
+      .select('name')
+      .eq('user_id', data.user.id)
       .single();
-
-    if (userError || !user) {
-      return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
-      );
-    }
-
-    // Verify password
-    const passwordMatch = await bcrypt.compare(password, user.password_hash);
-
-    if (!passwordMatch) {
-      return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
-      );
-    }
-
-    // Create session (simple JWT-like approach)
-    const sessionData = {
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      createdAt: Date.now(),
-    };
 
     const response = NextResponse.json({
       success: true,
       user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
+        id: data.user.id,
+        email: data.user.email,
+        name: profile?.name || data.user.user_metadata?.name || null,
       },
     });
 
-    // Set session cookie
-    response.cookies.set('session', JSON.stringify(sessionData), {
+    // Set session cookies with Supabase session
+    response.cookies.set('sb-access-token', data.session.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: data.session.expires_in,
+      path: '/',
+    });
+
+    response.cookies.set('sb-refresh-token', data.session.refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

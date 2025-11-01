@@ -16,7 +16,7 @@ export async function GET(
     const { data: questions, error } = await supabase
       .from('questions')
       .select('id, question, category, question_number')
-      .eq('template_id', guideId)
+      .eq('guide_id', guideId)
       .order('question_number', { ascending: true });
 
     if (error) {

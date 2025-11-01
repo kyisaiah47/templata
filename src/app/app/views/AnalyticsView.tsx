@@ -40,31 +40,22 @@ interface CalendarEvent {
   user_guide_id: string | null;
 }
 
-export function AnalyticsView() {
-  const searchParams = useSearchParams();
+interface AnalyticsViewProps {
+  selectedTrackIds: string[];
+}
 
+export function AnalyticsView({ selectedTrackIds }: AnalyticsViewProps) {
   const [allUserGuides, setAllUserGuides] = useState<UserGuide[]>([]);
   const [allItems, setAllItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Get selected guide IDs from URL, fallback to localStorage if URL is empty
-  // If note-scoped mode is active, only show data for that single note
-  const scopedNoteId = searchParams.get('scopedNoteId');
-  const urlIds = searchParams.get('analyticsGuides')?.split(',').filter(Boolean);
-  const localStorageIds = typeof window !== 'undefined'
-    ? JSON.parse(localStorage.getItem('selectedAnalyticsGuideIds') || '[]')
-    : [];
-  const selectedGuideIds = scopedNoteId
-    ? [scopedNoteId]
-    : (urlIds && urlIds.length > 0 ? urlIds : localStorageIds);
-
-  // Filter by selected guides
-  const userGuides = selectedGuideIds.length > 0
-    ? allUserGuides.filter(guide => selectedGuideIds.includes(guide.id))
+  // Filter by selected tracks
+  const userGuides = selectedTrackIds.length > 0
+    ? allUserGuides.filter(guide => selectedTrackIds.includes(guide.id))
     : allUserGuides;
 
-  const items = selectedGuideIds.length > 0
-    ? allItems.filter(item => item.user_guide_id && selectedGuideIds.includes(item.user_guide_id))
+  const items = selectedTrackIds.length > 0
+    ? allItems.filter(item => item.track_id && selectedTrackIds.includes(item.track_id))
     : allItems;
 
   useEffect(() => {
@@ -72,14 +63,14 @@ export function AnalyticsView() {
       try {
         setLoading(true);
 
-        const [guidesRes, itemsRes] = await Promise.all([
-          fetch('/api/notes?archived=false'),
+        const [tracksRes, itemsRes] = await Promise.all([
+          fetch('/api/tracks?archived=false'),
           fetch('/api/items')
         ]);
 
         // If unauthorized, just show empty state
-        if (!guidesRes.ok || !itemsRes.ok) {
-          if (guidesRes.status === 401 || itemsRes.status === 401) {
+        if (!tracksRes.ok || !itemsRes.ok) {
+          if (tracksRes.status === 401 || itemsRes.status === 401) {
             setAllUserGuides([]);
             setAllItems([]);
             setLoading(false);
@@ -88,12 +79,12 @@ export function AnalyticsView() {
           throw new Error('Failed to fetch data');
         }
 
-        const [guidesData, itemsData] = await Promise.all([
-          guidesRes.json(),
+        const [tracksData, itemsData] = await Promise.all([
+          tracksRes.json(),
           itemsRes.json()
         ]);
 
-        setAllUserGuides(guidesData.notes || []);
+        setAllUserGuides(tracksData.tracks || []);
         setAllItems(itemsData.items || []);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -181,9 +172,9 @@ export function AnalyticsView() {
           <div>
             <h1 className="text-xl font-semibold">Analytics</h1>
             <p className="text-xs text-muted-foreground">
-              {selectedGuideIds.length > 0
-                ? `${selectedGuideIds.length} note${selectedGuideIds.length > 1 ? 's' : ''} selected`
-                : 'Select notes to view analytics'}
+              {selectedTrackIds.length > 0
+                ? `${selectedTrackIds.length} track${selectedTrackIds.length > 1 ? 's' : ''} selected`
+                : 'Select tracks to view analytics'}
             </p>
           </div>
         </div>
@@ -195,17 +186,17 @@ export function AnalyticsView() {
           <div className="flex items-center justify-center h-96">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
-        ) : selectedGuideIds.length === 0 ? (
+        ) : selectedTrackIds.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
             <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
-            <p className="text-lg font-medium">No notes selected</p>
-            <p className="text-sm">Select notes from the sidebar to view analytics</p>
+            <p className="text-lg font-medium">No tracks selected</p>
+            <p className="text-sm">Select tracks from the header to view analytics</p>
           </div>
-        ) : userGuides.length === 0 && selectedGuideIds.length > 0 ? (
+        ) : userGuides.length === 0 && selectedTrackIds.length > 0 ? (
           <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
             <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
             <p className="text-lg font-medium">No data found</p>
-            <p className="text-sm">The selected notes don't have any data yet</p>
+            <p className="text-sm">The selected tracks don't have any data yet</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -262,8 +253,8 @@ export function AnalyticsView() {
               <div className="space-y-3">
                 {userGuides.map((guide) => {
                   const displayName = guide.custom_name || guide.guides.name;
-                  const guideTasks = items.filter(t => t.user_guide_id === guide.id && !t.start_time);
-                  const guideEvents = items.filter(e => e.user_guide_id === guide.id && e.start_time);
+                  const guideTasks = items.filter(t => t.track_id === guide.id && !t.start_time);
+                  const guideEvents = items.filter(e => e.track_id === guide.id && e.start_time);
                   const guideCompletedTasks = guideTasks.filter(t => t.status === 'done').length;
 
                   return (

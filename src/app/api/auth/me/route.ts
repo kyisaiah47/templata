@@ -1,28 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getAuthenticatedUser } from '@/lib/auth-utils';
 
 export async function GET(request: NextRequest) {
   try {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('session');
+    const user = await getAuthenticatedUser();
 
-    if (!sessionCookie) {
-      return NextResponse.json({ user: null });
-    }
-
-    const session = JSON.parse(sessionCookie.value);
-
-    // Simple session validation (check if not expired - 7 days)
-    const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
-    if (Date.now() - session.createdAt > sevenDaysInMs) {
+    if (!user) {
       return NextResponse.json({ user: null });
     }
 
     return NextResponse.json({
       user: {
-        id: session.userId,
-        email: session.email,
-        name: session.name,
+        id: user.userId,
+        email: user.email,
+        name: user.name,
       },
     });
   } catch (error) {

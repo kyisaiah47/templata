@@ -17,9 +17,11 @@ import { cn } from '@/lib/utils';
 
 type CalendarViewType = 'month' | 'week' | 'day';
 
-export function CalendarView() {
-  const searchParams = useSearchParams();
+interface CalendarViewProps {
+  selectedTrackIds: string[];
+}
 
+export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarViewType>('month');
   const [allItems, setAllItems] = useState<CalendarEvent[]>([]);
@@ -30,19 +32,9 @@ export function CalendarView() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
-  // Get selected note IDs from URL, fallback to localStorage if URL is empty
-  const scopedNoteId = searchParams.get('scopedNoteId');
-  const urlIds = searchParams.get('calendarNotes')?.split(',').filter(Boolean);
-  const localStorageIds = typeof window !== 'undefined'
-    ? JSON.parse(localStorage.getItem('selectedCalendarNoteIds') || '[]')
-    : [];
-  const selectedNoteIds = scopedNoteId
-    ? [scopedNoteId]
-    : (urlIds && urlIds.length > 0 ? urlIds : localStorageIds);
-
-  // Filter items by selected notes, or show all
-  const filteredItems = selectedNoteIds.length > 0
-    ? allItems.filter(item => item.user_guide_id && selectedNoteIds.includes(item.user_guide_id))
+  // Filter items by selected tracks, or show all
+  const filteredItems = selectedTrackIds.length > 0
+    ? allItems.filter(item => item.track_id && selectedTrackIds.includes(item.track_id))
     : allItems;
 
   // Separate events (items with start_time) from tasks (items with due_date but no start_time)

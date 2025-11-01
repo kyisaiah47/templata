@@ -50,3 +50,23 @@ export interface ReflectionEntry {
   content: string;
   templateId?: string;
 }
+
+export interface Item {
+  id: string;
+  user_id: string;
+  track_id: string | null;
+  title: string;
+  description: string | null;
+  status: 'todo' | 'in_progress' | 'done';
+  due_date: string | null;
+  start_time: string | null;
+  end_time: string | null;
+  all_day: boolean;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// Type aliases for different item uses
+export type Task = Item;
+export type CalendarEvent = Item & { date: string };

@@ -23,7 +23,7 @@ async function getUserFromSession(request: NextRequest) {
   }
 }
 
-// GET - Fetch user's workspace responses
+// GET - Fetch user's answers
 export async function GET(request: NextRequest) {
   const userId = await getUserFromSession(request);
 
@@ -32,15 +32,18 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = new URL(request.url);
-  const templateId = searchParams.get('templateId');
+  const trackId = searchParams.get('trackId');
+  const guideId = searchParams.get('guideId');
 
   let query = supabase
-    .from('workspace_responses')
+    .from('answers')
     .select('*')
     .eq('user_id', userId);
 
-  if (templateId) {
-    query = query.eq('template_id', templateId);
+  if (trackId) {
+    query = query.eq('track_id', trackId);
+  } else if (guideId) {
+    query = query.eq('guide_id', guideId);
   }
 
   const { data, error } = await query;
@@ -49,10 +52,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ responses: data });
+  return NextResponse.json({ answers: data });
 }
 
-// POST - Save/update workspace response
+// POST - Save/update answer
 export async function POST(request: NextRequest) {
   const userId = await getUserFromSession(request);
 
@@ -60,34 +63,58 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { templateId, promptId, response } = await request.json();
+  const { trackId, guideId, questionId, answer } = await request.json();
 
-  if (!templateId || !promptId) {
+  if (!questionId) {
     return NextResponse.json(
-      { error: 'templateId and promptId are required' },
+      { error: 'questionId is required' },
       { status: 400 }
     );
   }
 
+  // trackId OR guideId must be provided
+  if (!trackId && !guideId) {
+    return NextResponse.json(
+      { error: 'trackId or guideId is required' },
+      { status: 400 }
+    );
+  }
+
+  // If trackId provided, verify track ownership
+  if (trackId) {
+    const { data: track, error: trackError } = await supabase
+      .from('tracks')
+      .select('id')
+      .eq('id', trackId)
+      .eq('user_id', userId)
+      .single();
+
+    if (trackError || !track) {
+      return NextResponse.json({ error: 'Track not found' }, { status: 404 });
+    }
+  }
+
   // Upsert (insert or update)
   const { data, error } = await supabase
-    .from('workspace_responses')
+    .from('answers')
     .upsert(
       {
         user_id: userId,
-        template_id: templateId,
-        prompt_id: promptId,
-        response: response || '',
+        track_id: trackId || null,
+        guide_id: guideId || null,
+        question_id: questionId,
+        answer: answer || '',
         updated_at: new Date().toISOString(),
       },
       {
-        onConflict: 'user_id,template_id,prompt_id',
+        onConflict: 'user_id,question_id,track_id',
       }
     )
     .select()
     .single();
 
   if (error) {
+    console.error('Error upserting answer:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 

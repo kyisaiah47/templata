@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import bcrypt from 'bcryptjs';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,61 +17,70 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user already exists
-    const { data: existingUser } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email.toLowerCase())
-      .single();
+    // Use Supabase Auth to create user
+    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+      email: email.toLowerCase(),
+      password,
+      email_confirm: true, // Auto-confirm for now, can enable email verification later
+      user_metadata: {
+        name: name || null,
+      },
+    });
 
-    if (existingUser) {
+    if (authError || !authData.user) {
+      console.error('Signup error:', authError);
       return NextResponse.json(
-        { error: 'User already exists' },
-        { status: 409 }
+        { error: authError?.message || 'Failed to create user' },
+        { status: 400 }
       );
     }
 
-    // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    // Create user
-    const { data: user, error: createError } = await supabase
+    // Create profile in users table (linked to auth.users)
+    const { error: profileError } = await supabase
       .from('users')
       .insert({
-        email: email.toLowerCase(),
-        password_hash: passwordHash,
+        user_id: authData.user.id,
+        email: authData.user.email,
         name: name || null,
-      })
-      .select()
-      .single();
+      });
 
-    if (createError || !user) {
-      console.error('Create user error:', createError);
+    if (profileError) {
+      console.error('Profile creation error:', profileError);
+      // Don't fail the signup if profile creation fails, user can complete it later
+    }
+
+    // Sign in the user to get a session
+    const { data: sessionData, error: signInError } = await supabase.auth.signInWithPassword({
+      email: email.toLowerCase(),
+      password,
+    });
+
+    if (signInError || !sessionData.session) {
       return NextResponse.json(
-        { error: 'Failed to create user' },
+        { error: 'User created but failed to sign in' },
         { status: 500 }
       );
     }
 
-    // Create session
-    const sessionData = {
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      createdAt: Date.now(),
-    };
-
     const response = NextResponse.json({
       success: true,
       user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
+        id: authData.user.id,
+        email: authData.user.email,
+        name: name,
       },
     });
 
-    // Set session cookie
-    response.cookies.set('session', JSON.stringify(sessionData), {
+    // Set session cookie with Supabase session
+    response.cookies.set('sb-access-token', sessionData.session.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: sessionData.session.expires_in,
+      path: '/',
+    });
+
+    response.cookies.set('sb-refresh-token', sessionData.session.refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

@@ -10,75 +10,47 @@ const supabase = createClient(
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const workspace_id = searchParams.get('workspace_id');
-    const guide_id = searchParams.get('guide_id');
-    const archived = searchParams.get('archived');
+    const track_id = searchParams.get('track_id');
 
-    // Require authentication
     const user = await getAuthenticatedUser();
     if (!user) {
       return unauthorizedResponse();
     }
-    const userId = user.userId;
 
-    // Build query for notes
-    let notesQuery = supabase
+    if (!track_id) {
+      return errorResponse('track_id is required', 400);
+    }
+
+    // Verify track ownership
+    const { data: track, error: trackError } = await supabase
+      .from('tracks')
+      .select('id')
+      .eq('id', track_id)
+      .eq('user_id', user.userId)
+      .single();
+
+    if (trackError || !track) {
+      return errorResponse('Track not found', 404);
+    }
+
+    // Get notes for this track
+    const { data: note, error: noteError } = await supabase
       .from('notes')
       .select('*')
-      .eq('user_id', userId);
+      .eq('track_id', track_id)
+      .single();
 
-    // Filter by workspace if provided
-    if (workspace_id) {
-      notesQuery = notesQuery.eq('workspace_id', workspace_id);
+    // Return empty content if no note exists yet
+    if (noteError && noteError.code === 'PGRST116') {
+      return successResponse({ content: '' });
     }
 
-    // Filter by guide_id if provided
-    if (guide_id) {
-      notesQuery = notesQuery.eq('guide_id', guide_id);
+    if (noteError) {
+      console.error('Error fetching note:', noteError);
+      return errorResponse('Failed to fetch note');
     }
 
-    // Filter by archived status if provided
-    if (archived !== null) {
-      notesQuery = notesQuery.eq('archived', archived === 'true');
-    }
-
-    notesQuery = notesQuery.order('created_at', { ascending: false });
-
-    const { data: notes, error: notesError } = await notesQuery;
-
-    if (notesError) {
-      console.error('Error fetching notes:', notesError);
-      return errorResponse('Failed to fetch notes');
-    }
-
-    if (!notes || notes.length === 0) {
-      return successResponse({ notes: [] });
-    }
-
-    // Get unique guide IDs
-    const guideIds = [...new Set(notes.map(n => n.guide_id))];
-
-    // Fetch guides separately
-    const { data: guides, error: guidesError } = await supabase
-      .from('guides')
-      .select('id, name, description, icon')
-      .in('id', guideIds);
-
-    if (guidesError) {
-      console.error('Error fetching guides:', guidesError);
-      return errorResponse('Failed to fetch guides');
-    }
-
-    // Create a map of guides by ID
-    const guidesMap = new Map((guides || []).map(g => [g.id, g]));
-
-    // Manually join notes with guides
-    const notesWithGuides = notes.map(note => ({
-      ...note,
-      guides: guidesMap.get(note.guide_id) || null
-    }));
-
-    return successResponse({ notes: notesWithGuides });
+    return successResponse({ content: note?.content || '' });
   } catch (error) {
     console.error('Error in GET /api/notes:', error);
     return errorResponse('Internal server error');
@@ -93,68 +65,58 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { guide_id, workspace_id } = body;
+    const { track_id, content } = body;
 
-    // guide_id is now optional - if not provided, creates a blank note
-    if (guide_id) {
-      // Verify guide exists if guide_id is provided
-      const { data: guide, error: guideError } = await supabase
-        .from('guides')
-        .select('id')
-        .eq('id', guide_id)
-        .single();
-
-      if (guideError || !guide) {
-        console.error('Guide not found for guide_id:', guide_id, 'Error:', guideError);
-        return errorResponse(`Guide not found: ${guide_id}`, 404);
-      }
+    if (!track_id) {
+      return errorResponse('track_id is required', 400);
     }
 
-    // If workspace_id is provided, verify it belongs to the user
-    if (workspace_id) {
-      const { data: workspace, error: workspaceError } = await supabase
-        .from('workspaces')
-        .select('id')
-        .eq('id', workspace_id)
-        .eq('user_id', user.userId)
-        .single();
-
-      if (workspaceError || !workspace) {
-        return errorResponse('Workspace not found', 404);
-      }
-    }
-
-    const { data: note, error } = await supabase
-      .from('notes')
-      .insert({
-        user_id: user.userId,
-        guide_id: guide_id || null,
-        workspace_id: workspace_id || null,
-        progress: 0,
-        archived: false,
-      })
-      .select('*')
+    // Verify track ownership
+    const { data: track, error: trackError } = await supabase
+      .from('tracks')
+      .select('id')
+      .eq('id', track_id)
+      .eq('user_id', user.userId)
       .single();
 
-    if (error) {
-      console.error('Error creating note:', error);
-      return errorResponse('Failed to create note');
+    if (trackError || !track) {
+      return errorResponse('Track not found', 404);
     }
 
-    // If there's a guide_id, fetch the guide separately
-    if (note && note.guide_id) {
-      const { data: guide } = await supabase
-        .from('guides')
-        .select('id, name, description, icon')
-        .eq('id', note.guide_id)
-        .single();
+    // Check if note already exists
+    const { data: existingNote } = await supabase
+      .from('notes')
+      .select('id')
+      .eq('track_id', track_id)
+      .single();
 
-      note.guides = guide || null;
+    if (existingNote) {
+      // Update existing note
+      const { error: updateError } = await supabase
+        .from('notes')
+        .update({ content })
+        .eq('id', existingNote.id);
+
+      if (updateError) {
+        console.error('Error updating note:', updateError);
+        return errorResponse('Failed to update note');
+      }
     } else {
-      note.guides = null;
+      // Create new note
+      const { error: insertError } = await supabase
+        .from('notes')
+        .insert({
+          track_id,
+          content,
+        });
+
+      if (insertError) {
+        console.error('Error creating note:', insertError);
+        return errorResponse('Failed to create note');
+      }
     }
 
-    return successResponse({ note }, 201);
+    return successResponse({ success: true });
   } catch (error) {
     console.error('Error in POST /api/notes:', error);
     return errorResponse('Internal server error');

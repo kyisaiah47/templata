@@ -1,5 +1,11 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export interface AuthSession {
   userId: string;
@@ -11,25 +17,31 @@ export interface AuthSession {
 export async function getAuthenticatedUser(): Promise<AuthSession | null> {
   try {
     const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('session');
+    const accessToken = cookieStore.get('sb-access-token');
 
-    if (!sessionCookie) {
+    if (!accessToken) {
       return null;
     }
 
-    const session = JSON.parse(sessionCookie.value);
+    // Verify the token with Supabase
+    const { data: { user }, error } = await supabase.auth.getUser(accessToken.value);
 
-    // Simple session validation (check if not expired - 7 days)
-    const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
-    if (Date.now() - session.createdAt > sevenDaysInMs) {
+    if (error || !user) {
       return null;
     }
+
+    // Get user profile
+    const { data: profile } = await supabase
+      .from('users')
+      .select('name')
+      .eq('user_id', user.id)
+      .single();
 
     return {
-      userId: session.userId,
-      email: session.email,
-      name: session.name,
-      createdAt: session.createdAt,
+      userId: user.id,
+      email: user.email!,
+      name: profile?.name || user.user_metadata?.name || undefined,
+      createdAt: new Date(user.created_at).getTime(),
     };
   } catch (error) {
     console.error('Session error:', error);

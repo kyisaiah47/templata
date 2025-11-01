@@ -44,7 +44,12 @@
       "Bash(for img in geometric-architecture.png crystal-variety.png chaos-to-order.png floating-papers.png geometric-emergence.png prompt-matrix.png neural-networks.png knowledge-architecture.png cosmic-energy.png paper-fragments.png)",
       "Bash(do echo \"Converting $img...\")",
       "Bash(ls:*)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(cat:*)",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__execute_sql"
     ],
     "deny": [],
     "ask": []

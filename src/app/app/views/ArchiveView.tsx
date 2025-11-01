@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function ArchiveView() {
   const searchParams = useSearchParams();
-  const selectedNoteId = searchParams.get('noteId');
+  const selectedTrackId = searchParams.get('trackId');
 
   return (
     <motion.div
@@ -25,7 +25,7 @@ export function ArchiveView() {
           <div>
             <h1 className="text-xl font-semibold">Archive</h1>
             <p className="text-xs text-muted-foreground">
-              Click on a note in the sidebar to view it
+              Click on a track in the sidebar to view it
             </p>
           </div>
         </div>
@@ -34,16 +34,16 @@ export function ArchiveView() {
       {/* Content */}
       <div className="flex-1 overflow-auto">
         <AnimatePresence mode="wait">
-          {selectedNoteId ? (
+          {selectedTrackId ? (
             <motion.div
-              key={selectedNoteId}
+              key={selectedTrackId}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
               className="h-full"
             >
-              <GuidesView userGuideId={selectedNoteId} />
+              <GuidesView trackId={selectedTrackId} />
             </motion.div>
           ) : (
             <motion.div
@@ -55,8 +55,8 @@ export function ArchiveView() {
             >
               <div className="text-center text-muted-foreground">
                 <Archive className="w-16 h-16 mx-auto mb-4 opacity-20" />
-                <p className="text-lg font-medium">No note selected</p>
-                <p className="text-sm">Click on an archived note from the sidebar</p>
+                <p className="text-lg font-medium">No track selected</p>
+                <p className="text-sm">Click on an archived track from the sidebar</p>
               </div>
             </motion.div>
           )}

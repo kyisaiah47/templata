@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GuidesView } from './views/GuidesView';
+import { GuidesViewWrapper } from './views/GuidesViewWrapper';
+import { NotesViewWrapper } from './views/NotesViewWrapper';
 import { OverviewView } from './views/OverviewView';
 import { CalendarView } from './views/CalendarView';
 import { TasksView } from './views/TasksView';
@@ -21,13 +22,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ThemeSelector } from '@/components/theme-selector';
+import { TrackSelector } from '@/components/track-selector';
 
-type View = 'guides' | 'overview' | 'calendar' | 'tasks' | 'analytics' | 'archive';
+type View = 'guides' | 'notes' | 'overview' | 'calendar' | 'tasks' | 'analytics' | 'archive';
 
 export default function StudioPage() {
   const [currentView, setCurrentView] = useState<View>('guides');
   const [viewKeys, setViewKeys] = useState({
     guides: 0,
+    notes: 0,
     overview: 0,
     calendar: 0,
     tasks: 0,
@@ -36,6 +39,7 @@ export default function StudioPage() {
   });
   const [userEmail, setUserEmail] = useState('');
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
 
   // Callbacks for interactive banner
   const [templatesActions, setTemplatesActions] = useState<{
@@ -47,6 +51,7 @@ export default function StudioPage() {
   useEffect(() => {
     loadUser();
     checkOnboarding();
+    loadSelectedTracks();
 
     async function loadUser() {
       try {
@@ -69,7 +74,23 @@ export default function StudioPage() {
         setShowOnboarding(true);
       }
     }
+
+    function loadSelectedTracks() {
+      const saved = localStorage.getItem('selectedTrackIds');
+      if (saved) {
+        try {
+          setSelectedTrackIds(JSON.parse(saved));
+        } catch (e) {
+          console.error('Error loading selected tracks:', e);
+        }
+      }
+    }
   }, []);
+
+  // Persist selected tracks to localStorage
+  useEffect(() => {
+    localStorage.setItem('selectedTrackIds', JSON.stringify(selectedTrackIds));
+  }, [selectedTrackIds]);
 
   const handleCloseOnboarding = () => {
     localStorage.setItem('templata-onboarding-seen', 'true');
@@ -100,7 +121,7 @@ export default function StudioPage() {
       <div className="border-b bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-3">
           <div className="flex items-center gap-2 w-full relative">
-            {/* Left side - Templata Logo */}
+            {/* Left side - Templata Logo + Track Selector */}
             <div className="flex items-center gap-4">
               <Link href="/" className="flex items-center gap-2">
                 <Image
@@ -112,6 +133,13 @@ export default function StudioPage() {
                 />
                 <span className="hidden md:block font-semibold text-lg">Templata</span>
               </Link>
+
+              <div className="hidden lg:block">
+                <TrackSelector
+                  selectedTrackIds={selectedTrackIds}
+                  onSelectionChange={setSelectedTrackIds}
+                />
+              </div>
             </div>
 
             {/* View Switcher - Centered */}
@@ -123,6 +151,14 @@ export default function StudioPage() {
                 className="text-xs md:text-sm px-2 md:px-4"
               >
                 Guides
+              </Button>
+              <Button
+                variant={currentView === 'notes' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => handleViewChange('notes')}
+                className="text-xs md:text-sm px-2 md:px-4"
+              >
+                Notes
               </Button>
               <Button
                 variant={currentView === 'calendar' ? 'default' : 'ghost'}
@@ -282,10 +318,29 @@ export default function StudioPage() {
             zIndex: currentView === 'guides' ? 10 : 0
           }}
         >
-          <GuidesView
+          <GuidesViewWrapper
             key={`guides-${viewKeys.guides}`}
             onViewChange={handleViewChange}
             setActions={setTemplatesActions}
+            selectedTrackIds={selectedTrackIds}
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{
+            opacity: currentView === 'notes' ? 1 : 0,
+            y: currentView === 'notes' ? 0 : 20,
+          }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className="absolute inset-0"
+          style={{
+            pointerEvents: currentView === 'notes' ? 'auto' : 'none',
+            zIndex: currentView === 'notes' ? 10 : 0
+          }}
+        >
+          <NotesViewWrapper
+            key={`notes-${viewKeys.notes}`}
+            selectedTrackIds={selectedTrackIds}
           />
         </motion.div>
         <motion.div
@@ -301,7 +356,10 @@ export default function StudioPage() {
             zIndex: currentView === 'calendar' ? 10 : 0
           }}
         >
-          <CalendarView key={`calendar-${viewKeys.calendar}`} />
+          <CalendarView
+            key={`calendar-${viewKeys.calendar}`}
+            selectedTrackIds={selectedTrackIds}
+          />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -316,7 +374,10 @@ export default function StudioPage() {
             zIndex: currentView === 'tasks' ? 10 : 0
           }}
         >
-          <TasksView key={`tasks-${viewKeys.tasks}`} />
+          <TasksView
+            key={`tasks-${viewKeys.tasks}`}
+            selectedTrackIds={selectedTrackIds}
+          />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -331,7 +392,10 @@ export default function StudioPage() {
             zIndex: currentView === 'analytics' ? 10 : 0
           }}
         >
-          <AnalyticsView key={`analytics-${viewKeys.analytics}`} />
+          <AnalyticsView
+            key={`analytics-${viewKeys.analytics}`}
+            selectedTrackIds={selectedTrackIds}
+          />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
