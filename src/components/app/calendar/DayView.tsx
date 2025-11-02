@@ -50,7 +50,8 @@ export function DayView({
 
   // Get events for the current date
   const dayEvents = events.filter(event => {
-    const eventDate = new Date(event.date);
+    if (!event.start_time) return false;
+    const eventDate = new Date(event.start_time);
     return isSameDay(eventDate, currentDate);
   });
 

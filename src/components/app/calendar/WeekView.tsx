@@ -64,7 +64,8 @@ export function WeekView({
   // Get events for a specific date
   const getEventsForDate = (date: Date) => {
     return events.filter(event => {
-      const eventDate = new Date(event.date);
+      if (!event.start_time) return false;
+      const eventDate = new Date(event.start_time);
       return isSameDay(eventDate, date);
     });
   };
