@@ -87,14 +87,7 @@ export function NotesView({ trackId, trackName }: NotesViewProps) {
         >
           <textarea
             className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-[15px] leading-relaxed font-normal placeholder:text-muted-foreground/40 p-8 focus:placeholder:text-muted-foreground/60 transition-colors"
-            placeholder="Start writing your notes here...
-
-This is your personal space to write anything related to this track. Use it for:
-• Brainstorming ideas
-• Tracking thoughts and reflections
-• Writing drafts
-• Organizing information
-• Or anything else you want!"
+            placeholder="Start writing..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
             style={{ fontFamily: 'inherit' }}
