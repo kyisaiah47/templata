@@ -47,12 +47,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Set session cookies with Supabase session
+    // Set session cookies with Supabase session - never expire (365 days)
     response.cookies.set('sb-access-token', data.session.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: data.session.expires_in,
+      maxAge: 60 * 60 * 24 * 365, // 365 days
       path: '/',
     });
 
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 365, // 365 days
       path: '/',
     });
 
