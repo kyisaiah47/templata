@@ -226,7 +226,7 @@ export default function MarketingClient({ params }: MarketingClientProps) {
       name: 'Templata',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://templata.org/brand/templata-logo.svg'
+        url: 'https://templata.org/brand/shadcn-logo.svg'
       }
     },
     mainEntityOfPage: {

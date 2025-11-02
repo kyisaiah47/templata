@@ -15,7 +15,7 @@ export default function ResetPasswordPage() {
           transition={{ duration: 0.6 }}
         >
           <Link href="/" className="flex items-center gap-2 font-medium text-white">
-            <img src="/brand/templata-logo.svg" alt="Templata" className="h-8 w-8 brightness-0 invert" />
+            <img src="/brand/shadcn-logo.svg" alt="Templata" className="h-8 w-8 brightness-0 invert" />
             <span className="text-lg">Templata</span>
           </Link>
         </motion.div>

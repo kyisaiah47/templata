@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   keywords: 'life planning templates, wedding planning, career change, home buying, business planning, expert guidance, structured frameworks, life organization',
   authors: [{ name: 'Templata Team' }],
   icons: {
-    icon: "/brand/favicon-white.svg",
+    icon: "/favicon.svg",
   },
   manifest: '/manifest.json',
   viewport: {
@@ -83,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

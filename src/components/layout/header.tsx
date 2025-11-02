@@ -84,7 +84,7 @@ export function Header() {
 						<div className="flex items-center space-x-2 md:space-x-4">
 							<Link href="/" className="flex items-center space-x-2">
 								<Image
-									src="/brand/templata-logo.svg"
+									src="/brand/shadcn-logo.svg"
 									alt="Templata"
 									width={28}
 									height={28}

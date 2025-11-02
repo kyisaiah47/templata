@@ -12,7 +12,7 @@ export function Footer() {
 					<div className="space-y-4 max-w-md">
 						<div className="flex items-center space-x-2">
 							<Image
-								src="/brand/templata-logo.svg"
+								src="/brand/shadcn-logo.svg"
 								alt="Templata"
 								width={24}
 								height={24}

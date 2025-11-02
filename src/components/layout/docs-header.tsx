@@ -31,7 +31,7 @@ export function DocsHeader() {
 					<div className="flex items-center gap-4">
 						<Link href="/" className="flex items-center gap-2">
 							<Image
-								src="/brand/templata-logo.svg"
+								src="/brand/shadcn-logo.svg"
 								alt="Templata"
 								width={24}
 								height={24}

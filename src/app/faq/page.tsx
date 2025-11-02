@@ -165,7 +165,7 @@ export default function FAQPage() {
 							<CardHeader>
 								<div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
 									<Image
-										src="/brand/templata-logo.svg"
+										src="/brand/shadcn-logo.svg"
 										alt="Templata"
 										width={32}
 										height={32}

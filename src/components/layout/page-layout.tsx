@@ -50,44 +50,44 @@ export function PageLayout({
 	}, []);
 
 	// Initialize Lenis smooth scrolling site-wide
-	useEffect(() => {
-		const lenis = new Lenis({
-			duration: 1.2,
-			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-			orientation: 'vertical',
-			smoothWheel: true,
-			wheelMultiplier: 1,
-			touchMultiplier: 2,
-		});
+	// useEffect(() => {
+	// 	const lenis = new Lenis({
+	// 		duration: 1.2,
+	// 		easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+	// 		orientation: 'vertical',
+	// 		smoothWheel: true,
+	// 		wheelMultiplier: 1,
+	// 		touchMultiplier: 2,
+	// 	});
 
-		function raf(time: number) {
-			lenis.raf(time);
-			requestAnimationFrame(raf);
-		}
-		requestAnimationFrame(raf);
+	// 	function raf(time: number) {
+	// 		lenis.raf(time);
+	// 		requestAnimationFrame(raf);
+	// 	}
+	// 	requestAnimationFrame(raf);
 
-		return () => {
-			lenis.destroy();
-		};
-	}, []);
+	// 	return () => {
+	// 		lenis.destroy();
+	// 	};
+	// }, []);
 
 	return (
 		<div className="min-h-screen bg-transparent">
-			{includeHeader && <Header />}
+			{/* {includeHeader && <Header />}
 
 			{includeHeader && includeHeaderPadding && (
 				<div className="pt-24" />
-			)}
+			)} */}
 
 			{children}
 
-			{includeFooter && <Footer />}
+			{/* {includeFooter && <Footer />} */}
 
 			{/* Recently Used Footer - shows as sticky footer */}
-			<RecentlyUsedFooter />
+			{/* <RecentlyUsedFooter /> */}
 
 			{/* Floating Demo Button - Hidden on mobile */}
-			<div className={cn("fixed bottom-8 right-8 z-50", isMobile && "hidden")}>
+			{/* <div className={cn("fixed bottom-8 right-8 z-50", isMobile && "hidden")}>
 				<Button
 					size="lg"
 					asChild
@@ -98,10 +98,10 @@ export function PageLayout({
 						<span className="hidden sm:inline">{isLoggedIn ? "Open App" : "Try Demo"}</span>
 					</a>
 				</Button>
-			</div>
+			</div> */}
 
 			{/* Mobile Split FAB */}
-			{isMobile && (
+			{/* {isMobile && (
 				<Drawer open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
 					<div className="fixed bottom-6 right-6 z-50 flex items-center bg-background border rounded-lg shadow-lg overflow-hidden">
 						<DrawerTrigger asChild>
@@ -151,7 +151,7 @@ export function PageLayout({
 						</div>
 					</DrawerContent>
 				</Drawer>
-			)}
+			)} */}
 		</div>
 	);
 }

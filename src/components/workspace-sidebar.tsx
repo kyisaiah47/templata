@@ -98,7 +98,7 @@ export function WorkspaceSidebar({ viewMode, onViewModeChange, ...props }: Works
             >
               <a href="#">
                 <Image
-                  src="/brand/templata-logo.svg"
+                  src="/brand/shadcn-logo.svg"
                   alt="Templata"
                   width={20}
                   height={20}

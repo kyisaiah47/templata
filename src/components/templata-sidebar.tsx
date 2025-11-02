@@ -175,7 +175,7 @@ export function TemplataContentSidebar({
               <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0 justify-center hover:[&_img]:scale-110 hover:[&_img]:animate-bounce">
                 <Link href="/" className="flex justify-center">
                   <Image
-                    src="/brand/templata-logo.svg"
+                    src="/brand/shadcn-logo.svg"
                     alt="Templata"
                     width={16}
                     height={16}

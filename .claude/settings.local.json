@@ -54,7 +54,10 @@
       "Bash(xargs:*)",
       "Bash(git restore:*)",
       "Bash(git mv:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "mcp__playwright__browser_navigate",
+      "Bash(printf:*)",
+      "Bash(yes:*)"
     ],
     "deny": [],
     "ask": []
