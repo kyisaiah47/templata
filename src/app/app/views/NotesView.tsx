@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Save, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
 interface NotesViewProps {
   trackId: string;
@@ -68,21 +67,6 @@ export function NotesView({ trackId, trackName }: NotesViewProps) {
     return () => clearTimeout(timeoutId);
   }, [content, autoSave, trackId, loading]);
 
-  const handleManualSave = async () => {
-    if (!trackId) return;
-
-    try {
-      await fetch('/api/notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ track_id: trackId, content }),
-      });
-      setLastSaved(new Date());
-    } catch (error) {
-      console.error('Error saving notes:', error);
-    }
-  };
-
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center">
@@ -93,27 +77,6 @@ export function NotesView({ trackId, trackName }: NotesViewProps) {
 
   return (
     <div className="h-full flex flex-col bg-background">
-      {/* Header */}
-      <div className="border-b border-border/40 px-6 py-3">
-        <div className="flex items-center justify-end gap-3">
-            <Button
-              onClick={handleManualSave}
-              disabled={!content}
-              size="sm"
-              variant="outline"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              Save
-            </Button>
-
-            {lastSaved && (
-              <span className="text-xs text-muted-foreground">
-                Saved {lastSaved.toLocaleTimeString()}
-              </span>
-            )}
-        </div>
-      </div>
-
       {/* Editor */}
       <div className="flex-1 overflow-auto p-6">
         <motion.div
