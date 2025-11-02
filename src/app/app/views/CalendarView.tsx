@@ -150,14 +150,57 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-hidden p-6">
           {/* Calendar View - Takes 2 columns on large screens */}
           <div className="lg:col-span-2 flex flex-col min-h-0">
+            {/* Static view controls */}
+            <div className="flex items-center justify-end gap-2 mb-6">
+              <div className="flex border border-border/40 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setView('month')}
+                  className={cn(
+                    'px-3 py-1.5 text-xs font-medium transition-colors',
+                    view === 'month'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-transparent text-foreground hover:bg-muted/50'
+                  )}
+                >
+                  Month
+                </button>
+                <button
+                  onClick={() => setView('week')}
+                  className={cn(
+                    'px-3 py-1.5 text-xs font-medium transition-colors border-x border-border/40',
+                    view === 'week'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-transparent text-foreground hover:bg-muted/50'
+                  )}
+                >
+                  Week
+                </button>
+                <button
+                  onClick={() => setView('day')}
+                  className={cn(
+                    'px-3 py-1.5 text-xs font-medium transition-colors',
+                    view === 'day'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-transparent text-foreground hover:bg-muted/50'
+                  )}
+                >
+                  Day
+                </button>
+              </div>
+              <Button onClick={handleCreateEvent} size="sm">
+                <Plus className="w-4 h-4" />
+                Add Event
+              </Button>
+            </div>
+
             <AnimatePresence mode="wait">
               {view === 'month' && (
                 <motion.div
-                  key={`month-${currentDate.toISOString()}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  key="month"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                   className="flex flex-col h-full"
                 >
                   <MonthView
@@ -167,19 +210,16 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
                     tasks={filteredTasks}
                     onDateClick={handleDateClick}
                     onEventClick={handleEventClick}
-                    view={view}
-                    onViewChange={setView}
-                    onCreateEvent={handleCreateEvent}
                   />
                 </motion.div>
               )}
               {view === 'week' && (
                 <motion.div
-                  key={`week-${currentDate.toISOString()}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  key="week"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                   className="flex flex-col h-full"
                 >
                   <WeekView
@@ -189,19 +229,16 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
                     tasks={filteredTasks}
                     onDateClick={handleDateClick}
                     onEventClick={handleEventClick}
-                    view={view}
-                    onViewChange={setView}
-                    onCreateEvent={handleCreateEvent}
                   />
                 </motion.div>
               )}
               {view === 'day' && (
                 <motion.div
-                  key={`day-${currentDate.toISOString()}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  key="day"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                   className="flex flex-col h-full"
                 >
                   <DayView
@@ -211,9 +248,6 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
                     tasks={filteredTasks}
                     onDateClick={handleDateClick}
                     onEventClick={handleEventClick}
-                    view={view}
-                    onViewChange={setView}
-                    onCreateEvent={handleCreateEvent}
                   />
                 </motion.div>
               )}
