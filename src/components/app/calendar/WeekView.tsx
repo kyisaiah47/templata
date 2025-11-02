@@ -174,11 +174,13 @@ export function WeekView({
                         key={event.id}
                         onClick={(e) => {
                           e.stopPropagation();
+                          alert('CLICKED WEEK HOUR EVENT: ' + event.title);
                           onEventClick?.(event);
                         }}
-                        className="w-full text-left px-1.5 py-0.5 bg-primary text-primary-foreground rounded text-xs truncate hover:bg-primary/90 transition-colors mb-1"
+                        className="w-full text-left px-3 py-2 bg-red-500 text-white rounded font-bold border-4 border-yellow-400 hover:bg-red-700 transition-colors mb-1"
+                        style={{ pointerEvents: 'auto', zIndex: 9999 }}
                       >
-                        {event.title}
+                        🔴 CLICK ME 🔴 {event.title}
                       </button>
                     ))}
                   </button>

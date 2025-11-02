@@ -88,14 +88,16 @@ export const MonthGrid = memo(function MonthGrid({
                     key={event.id}
                     onClick={(e) => {
                       e.stopPropagation();
+                      alert('CLICKED EVENT: ' + event.title);
                       if (onEventClick) {
                         onEventClick(event);
                       }
                     }}
-                    className="w-full text-left px-1 sm:px-1.5 py-0.5 rounded text-[10px] sm:text-xs truncate bg-primary/10 text-primary hover:bg-primary/20 transition-colors cursor-pointer relative z-10"
+                    className="w-full text-left px-2 py-1 rounded text-xs font-bold bg-red-500 text-white hover:bg-red-700 transition-colors cursor-pointer relative z-[9999] border-4 border-yellow-400"
+                    style={{ pointerEvents: 'auto' }}
                     title={event.title}
                   >
-                    {event.title}
+                    🔴 CLICK ME 🔴 {event.title}
                   </div>
                 ))}
 
