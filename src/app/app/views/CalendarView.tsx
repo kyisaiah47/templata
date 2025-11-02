@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar as CalendarIcon, Plus, Loader2, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MonthView } from '@/components/app/calendar/MonthView';
@@ -150,45 +150,74 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-hidden p-6">
           {/* Calendar View - Takes 2 columns on large screens */}
           <div className="lg:col-span-2 flex flex-col min-h-0">
-            {view === 'month' && (
-              <MonthView
-                currentDate={currentDate}
-                onDateChange={setCurrentDate}
-                events={events}
-                tasks={filteredTasks}
-                onDateClick={handleDateClick}
-                onEventClick={handleEventClick}
-                view={view}
-                onViewChange={setView}
-                onCreateEvent={handleCreateEvent}
-              />
-            )}
-            {view === 'week' && (
-              <WeekView
-                currentDate={currentDate}
-                onDateChange={setCurrentDate}
-                events={events}
-                tasks={filteredTasks}
-                onDateClick={handleDateClick}
-                onEventClick={handleEventClick}
-                view={view}
-                onViewChange={setView}
-                onCreateEvent={handleCreateEvent}
-              />
-            )}
-            {view === 'day' && (
-              <DayView
-                currentDate={currentDate}
-                onDateChange={setCurrentDate}
-                events={events}
-                tasks={filteredTasks}
-                onDateClick={handleDateClick}
-                onEventClick={handleEventClick}
-                view={view}
-                onViewChange={setView}
-                onCreateEvent={handleCreateEvent}
-              />
-            )}
+            <AnimatePresence mode="wait">
+              {view === 'month' && (
+                <motion.div
+                  key={`month-${currentDate.toISOString()}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  className="flex flex-col h-full"
+                >
+                  <MonthView
+                    currentDate={currentDate}
+                    onDateChange={setCurrentDate}
+                    events={events}
+                    tasks={filteredTasks}
+                    onDateClick={handleDateClick}
+                    onEventClick={handleEventClick}
+                    view={view}
+                    onViewChange={setView}
+                    onCreateEvent={handleCreateEvent}
+                  />
+                </motion.div>
+              )}
+              {view === 'week' && (
+                <motion.div
+                  key={`week-${currentDate.toISOString()}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  className="flex flex-col h-full"
+                >
+                  <WeekView
+                    currentDate={currentDate}
+                    onDateChange={setCurrentDate}
+                    events={events}
+                    tasks={filteredTasks}
+                    onDateClick={handleDateClick}
+                    onEventClick={handleEventClick}
+                    view={view}
+                    onViewChange={setView}
+                    onCreateEvent={handleCreateEvent}
+                  />
+                </motion.div>
+              )}
+              {view === 'day' && (
+                <motion.div
+                  key={`day-${currentDate.toISOString()}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  className="flex flex-col h-full"
+                >
+                  <DayView
+                    currentDate={currentDate}
+                    onDateChange={setCurrentDate}
+                    events={events}
+                    tasks={filteredTasks}
+                    onDateClick={handleDateClick}
+                    onEventClick={handleEventClick}
+                    view={view}
+                    onViewChange={setView}
+                    onCreateEvent={handleCreateEvent}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Upcoming Events Sidebar - Takes 1 column */}
