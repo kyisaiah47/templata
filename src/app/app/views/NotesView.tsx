@@ -78,17 +78,16 @@ export function NotesView({ trackId, trackName }: NotesViewProps) {
   return (
     <div className="h-full flex flex-col bg-background">
       {/* Editor */}
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 overflow-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
           className="h-full max-w-4xl mx-auto"
         >
-          <Card className="p-8 h-full border-border bg-muted/30">
-            <textarea
-              className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-[15px] leading-relaxed font-normal placeholder:text-muted-foreground/60"
-              placeholder="Start writing your notes here...
+          <textarea
+            className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-[15px] leading-relaxed font-normal placeholder:text-muted-foreground/40 p-8 focus:placeholder:text-muted-foreground/60 transition-colors"
+            placeholder="Start writing your notes here...
 
 This is your personal space to write anything related to this track. Use it for:
 • Brainstorming ideas
@@ -96,11 +95,10 @@ This is your personal space to write anything related to this track. Use it for:
 • Writing drafts
 • Organizing information
 • Or anything else you want!"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              style={{ fontFamily: 'inherit' }}
-            />
-          </Card>
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            style={{ fontFamily: 'inherit' }}
+          />
         </motion.div>
       </div>
     </div>
