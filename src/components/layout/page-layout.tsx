@@ -90,9 +90,8 @@ export function PageLayout({
 			<div className={cn("fixed bottom-8 right-8 z-50", isMobile && "hidden")}>
 				<Button
 					size="lg"
-					variant="outline"
 					asChild
-					className="bg-background hover:bg-background/80 flex items-center gap-2"
+					className="bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 hover:bg-yellow-500/20 border border-yellow-500/20 flex items-center gap-2"
 				>
 					<a href="/app">
 						<Play className="h-5 w-5" />
@@ -117,8 +116,7 @@ export function PageLayout({
 						<Link href="/app">
 							<Button
 								size="lg"
-								variant="ghost"
-								className="rounded-r-md rounded-l-none h-14 w-14"
+								className="rounded-r-md rounded-l-none h-14 w-14 bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 hover:bg-yellow-500/20"
 							>
 								<Play className="h-5 w-5" />
 							</Button>

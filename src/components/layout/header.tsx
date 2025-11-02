@@ -92,7 +92,7 @@ export function Header() {
 								/>
 								<div className="flex items-center gap-2 md:gap-3">
 									<span className="font-bold text-xl md:text-2xl">Templata</span>
-									<span className="px-2 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full border border-primary/20">
+									<span className="px-2 py-1 text-xs font-semibold bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 rounded-full border border-yellow-500/20">
 										Beta
 									</span>
 								</div>
@@ -244,9 +244,8 @@ export function Header() {
 									</DropdownMenu>
 								) : (
 									<Button
-										variant="outline"
 										size="sm"
-										className="text-base font-medium"
+										className="text-base font-medium bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 hover:bg-yellow-500/20 border border-yellow-500/20"
 										asChild
 									>
 										<Link href="/login">Get Started</Link>
@@ -257,9 +256,8 @@ export function Header() {
 							{/* Mobile Get Started Button (only when not logged in) */}
 							{!isLoggedIn && (
 								<Button
-									variant="outline"
 									size="sm"
-									className="md:hidden text-sm"
+									className="md:hidden text-sm bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 hover:bg-yellow-500/20 border border-yellow-500/20"
 									asChild
 								>
 									<Link href="/login">Get Started</Link>

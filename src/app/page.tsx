@@ -90,20 +90,6 @@ export default function LandingPage() {
 							Comprehensive questions covering 90%+ of what you need to consider.<br />
 							Expert readings to guide your decisions. Integrated planning to execute.
 						</p>
-
-						<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-							<Button size="lg" className="h-12 px-8 text-base" asChild>
-								<Link href="/guides">
-									Browse Guides
-									<ArrowRight className="ml-2 h-5 w-5" />
-								</Link>
-							</Button>
-							{!isLoggedIn && (
-								<Button variant="outline" size="lg" className="h-12 px-8 text-base bg-white hover:bg-white/90 text-foreground" asChild>
-									<Link href="/signup">Get Started Free</Link>
-								</Button>
-							)}
-						</div>
 					</div>
 				</div>
 			</section>
@@ -120,42 +106,36 @@ export default function LandingPage() {
 						</p>
 					</div>
 
-					<div className="grid md:grid-cols-3 gap-8">
-						<Card className="border-0 shadow-none bg-background/50 text-center">
-							<CardHeader>
-								<div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-									<FileText className="h-8 w-8 text-primary" />
-								</div>
-								<CardTitle className="text-xl">Comprehensive Questions</CardTitle>
-								<CardDescription className="text-base">
-									90%+ coverage guarantee. AI-refined over months to ensure nothing important is missed.
-								</CardDescription>
-							</CardHeader>
-						</Card>
+					<div className="grid md:grid-cols-3 gap-12">
+						<div className="space-y-4">
+							<div className="w-12 h-12 bg-muted/50 rounded-lg flex items-center justify-center">
+								<FileText className="h-6 w-6 text-muted-foreground" />
+							</div>
+							<h3 className="text-xl font-semibold">Comprehensive Questions</h3>
+							<p className="text-muted-foreground leading-relaxed">
+								90%+ coverage guarantee. AI-refined over months to ensure nothing important is missed.
+							</p>
+						</div>
 
-						<Card className="border-0 shadow-none bg-background/50 text-center">
-							<CardHeader>
-								<div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-									<BookOpen className="h-8 w-8 text-primary" />
-								</div>
-								<CardTitle className="text-xl">Expert Readings</CardTitle>
-								<CardDescription className="text-base">
-									Curated knowledge saves you hundreds of hours of research. Wikipedia for life planning.
-								</CardDescription>
-							</CardHeader>
-						</Card>
+						<div className="space-y-4">
+							<div className="w-12 h-12 bg-muted/50 rounded-lg flex items-center justify-center">
+								<BookOpen className="h-6 w-6 text-muted-foreground" />
+							</div>
+							<h3 className="text-xl font-semibold">Expert Readings</h3>
+							<p className="text-muted-foreground leading-relaxed">
+								Curated knowledge saves you hundreds of hours of research. Wikipedia for life planning.
+							</p>
+						</div>
 
-						<Card className="border-0 shadow-none bg-background/50 text-center">
-							<CardHeader>
-								<div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-									<Calendar className="h-8 w-8 text-primary" />
-								</div>
-								<CardTitle className="text-xl">Integrated Planning</CardTitle>
-								<CardDescription className="text-base">
-									Calendar and tasks tied to specific life events—not a generic task manager.
-								</CardDescription>
-							</CardHeader>
-						</Card>
+						<div className="space-y-4">
+							<div className="w-12 h-12 bg-muted/50 rounded-lg flex items-center justify-center">
+								<Calendar className="h-6 w-6 text-muted-foreground" />
+							</div>
+							<h3 className="text-xl font-semibold">Integrated Planning</h3>
+							<p className="text-muted-foreground leading-relaxed">
+								Calendar and tasks tied to specific life events—not a generic task manager.
+							</p>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -180,54 +160,46 @@ export default function LandingPage() {
 							</div>
 						</div>
 
-						<div className="grid grid-cols-2 gap-4">
-							<Card className="p-6 border-dashed">
-								<div className="space-y-3">
-									<FileText className="h-8 w-8 text-muted-foreground" />
-									<div className="font-semibold text-muted-foreground">
-										Blank Documents
-									</div>
-									<div className="text-sm text-muted-foreground">
-										Where do I even start?
-									</div>
+						<div className="grid grid-cols-2 gap-6">
+							<div className="space-y-3">
+								<FileText className="h-6 w-6 text-muted-foreground/60" />
+								<div className="font-medium">
+									Blank Documents
 								</div>
-							</Card>
+								<div className="text-sm text-muted-foreground">
+									Where do I even start?
+								</div>
+							</div>
 
-							<Card className="p-6 border-dashed">
-								<div className="space-y-3">
-									<Layout className="h-8 w-8 text-muted-foreground" />
-									<div className="font-semibold text-muted-foreground">
-										Scattered Research
-									</div>
-									<div className="text-sm text-muted-foreground">
-										Hours on Google, nothing organized
-									</div>
+							<div className="space-y-3">
+								<Layout className="h-6 w-6 text-muted-foreground/60" />
+								<div className="font-medium">
+									Scattered Research
 								</div>
-							</Card>
+								<div className="text-sm text-muted-foreground">
+									Hours on Google, nothing organized
+								</div>
+							</div>
 
-							<Card className="p-6 border-dashed">
-								<div className="space-y-3">
-									<CheckCircle2 className="h-8 w-8 text-muted-foreground" />
-									<div className="font-semibold text-muted-foreground">
-										Forgotten Details
-									</div>
-									<div className="text-sm text-muted-foreground">
-										Constant fear of missing something
-									</div>
+							<div className="space-y-3">
+								<CheckCircle2 className="h-6 w-6 text-muted-foreground/60" />
+								<div className="font-medium">
+									Forgotten Details
 								</div>
-							</Card>
+								<div className="text-sm text-muted-foreground">
+									Constant fear of missing something
+								</div>
+							</div>
 
-							<Card className="p-6 border-dashed">
-								<div className="space-y-3">
-									<Target className="h-8 w-8 text-muted-foreground" />
-									<div className="font-semibold text-muted-foreground">
-										Generic Advice
-									</div>
-									<div className="text-sm text-muted-foreground">
-										One-size-fits-all doesn't fit you
-									</div>
+							<div className="space-y-3">
+								<Target className="h-6 w-6 text-muted-foreground/60" />
+								<div className="font-medium">
+									Generic Advice
 								</div>
-							</Card>
+								<div className="text-sm text-muted-foreground">
+									One-size-fits-all doesn't fit you
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

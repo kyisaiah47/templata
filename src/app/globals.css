@@ -118,14 +118,15 @@
   --card-foreground: oklch(0 0 0);
   --popover: oklch(0.9900 0 0);
   --popover-foreground: oklch(0 0 0);
-  --primary: oklch(0 0 0);
-  --primary-foreground: oklch(1 0 0);
+  --primary: oklch(0.75 0.15 85); /* yellow-500 */
+  --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.9400 0 0);
   --secondary-foreground: oklch(0 0 0);
   --muted: oklch(0.9700 0 0);
   --muted-foreground: oklch(0.4400 0 0);
-  --accent: oklch(0.9400 0 0);
-  --accent-foreground: oklch(0 0 0);
+  /* Yellow accent - like Linear's purple */
+  --accent: oklch(0.75 0.15 85); /* yellow-500 */
+  --accent-foreground: oklch(0.1 0 0);
   --destructive: oklch(0.6300 0.1900 23.0300);
   --border: oklch(0.9200 0 0);
   --input: oklch(0.9400 0 0);
@@ -177,13 +178,14 @@
   --card-foreground: oklch(1 0 0);
   --popover: oklch(0.1800 0 0);
   --popover-foreground: oklch(1 0 0);
-  --primary: oklch(1 0 0);
+  --primary: oklch(0.70 0.15 85); /* yellow-500 for dark mode */
   --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.2500 0 0);
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(0.2300 0 0);
   --muted-foreground: oklch(0.7200 0 0);
-  --accent: oklch(0.3200 0 0);
+  /* Yellow accent - like Linear's purple (dark mode) */
+  --accent: oklch(0.70 0.15 85); /* yellow-500 for dark mode */
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.6900 0.2000 23.9100);
   --border: oklch(0.2600 0 0);
