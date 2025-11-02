@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Lazy load SimpleEditor to reduce initial bundle size
-const SimpleEditor = lazy(() => import('@/components/tiptap-templates/simple/simple-editor').then(mod => ({ default: mod.SimpleEditor })));
+const SimpleEditor = lazy(() => import('@/components/tiptap-guides/simple/simple-editor').then(mod => ({ default: mod.SimpleEditor })));
 
 interface TemplateViewProps {
   template: Guide;

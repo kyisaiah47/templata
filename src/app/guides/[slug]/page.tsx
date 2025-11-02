@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTemplateById } from '@/registry/templates';
+import { getTemplateById } from '@/registry/guides';
 import GuideBrowse from './guide-browse';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

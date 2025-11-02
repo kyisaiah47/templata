@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
 import { PageLayout } from "@/components/layout";
-import { getArticleBySlug, getRelatedArticles, getArticlesByCategory } from "@/registry/articles";
-import { getTemplateById } from "@/registry/templates";
+import { getArticleBySlug, getRelatedArticles, getArticlesByCategory } from "@/registry/readings";
+import { getTemplateById } from "@/registry/guides";
 import { ReadingContent } from "./reading-content";
 
 // Metadata is handled in layout.tsx

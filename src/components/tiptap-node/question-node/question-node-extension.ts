@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/react"
 import { ReactNodeViewRenderer } from "@tiptap/react"
-import { PromptNode as PromptNodeComponent } from "@/components/tiptap-node/prompt-node/prompt-node"
+import { PromptNode as PromptNodeComponent } from "@/components/tiptap-node/question-node/question-node"
 
 export interface PromptNodeOptions {
   /**

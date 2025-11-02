@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import type { TemplateRegistryEntry } from "@/registry/templates"
+import type { TemplateRegistryEntry } from "@/registry/guides"
 import { Search } from "lucide-react"
 import { SubtleGlow } from "@/components/ui/glow-variants"
 

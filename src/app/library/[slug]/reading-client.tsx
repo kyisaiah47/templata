@@ -8,12 +8,12 @@ import { Marquee } from "@/components/ui/marquee";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { Highlighter } from "@/components/ui/highlighter";
 import { PageLayout } from "@/components/layout";
-import { getArticleBySlug, getRelatedArticles, getArticlesByCategory, articleRegistry } from "@/registry/articles";
+import { getArticleBySlug, getRelatedArticles, getArticlesByCategory, articleRegistry } from "@/registry/readings";
 import { TemplateImage } from "@/components/ui/template-image";
 import { use } from "react";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useKnowledgeGraph } from "@/hooks/use-knowledge-graph";
-import { templateRegistry } from "@/registry/templates";
+import { templateRegistry } from "@/registry/guides";
 
 // Category icon mapping
 const getCategoryIcon = (category: string) => {

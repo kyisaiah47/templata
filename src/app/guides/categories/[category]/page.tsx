@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import type { TemplateRegistryEntry } from '@/registry/templates';
+import type { TemplateRegistryEntry } from '@/registry/guides';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Search, Layout, ChevronDown, ChevronUp } from 'lucide-react';

@@ -2,7 +2,7 @@
 // STUBBED VERSION - Returns empty data
 // Provides clean TypeScript interface to the knowledge graph system
 
-import type { TemplateRegistryEntry } from '@/registry/templates';
+import type { TemplateRegistryEntry } from '@/registry/guides';
 
 // TypeScript interfaces
 export interface TemplateConnection {

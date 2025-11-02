@@ -14,7 +14,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import type { TemplateRegistryEntry } from "@/registry/templates"
+import type { TemplateRegistryEntry } from "@/registry/guides"
 
 interface NavTemplateSelectorProps {
   selectedTemplateId: string | null;

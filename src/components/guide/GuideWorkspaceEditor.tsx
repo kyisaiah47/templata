@@ -5,8 +5,8 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { Typography } from '@tiptap/extension-typography'
 
-import { PromptNode } from '@/components/tiptap-node/prompt-node/prompt-node-extension'
-import '@/components/tiptap-node/prompt-node/prompt-node.scss'
+import { PromptNode } from '@/components/tiptap-node/question-node/question-node-extension'
+import '@/components/tiptap-node/question-node/question-node.scss'
 
 import { ReflectionPrompt } from '@/types/guide'
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
