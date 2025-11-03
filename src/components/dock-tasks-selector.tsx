@@ -291,7 +291,7 @@ export function DockTasksSelector({
                       key={task.id}
                       draggable
                       onDragStart={() => handleDragStart(task)}
-                      className="bg-muted hover:bg-muted/80 relative rounded-md p-2 text-xs cursor-move transition-colors border border-border/50 flex items-start justify-between gap-1.5"
+                      className="bg-blue-500/10 hover:bg-blue-500/20 relative rounded-md p-2 text-xs cursor-move transition-colors border border-blue-500/20 flex items-start justify-between gap-1.5"
                     >
                       <div className="flex-1 min-w-0">
                         <div className="font-medium mb-0.5 text-xs truncate">{task.title}</div>
@@ -341,7 +341,7 @@ export function DockTasksSelector({
                       key={task.id}
                       draggable
                       onDragStart={() => handleDragStart(task)}
-                      className="bg-blue-500/10 hover:bg-blue-500/20 relative rounded-md p-2 text-xs cursor-move transition-colors border border-blue-500/20 flex items-start justify-between gap-1.5"
+                      className="bg-orange-500/10 hover:bg-orange-500/20 relative rounded-md p-2 text-xs cursor-move transition-colors border border-orange-500/20 flex items-start justify-between gap-1.5"
                     >
                       <div className="flex-1 min-w-0">
                         <div className="font-medium mb-0.5 text-xs truncate">{task.title}</div>
