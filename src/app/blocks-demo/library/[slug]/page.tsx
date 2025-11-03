@@ -55,7 +55,7 @@ export default async function ReadingPage({ params }: { params: Promise<{ slug: 
 
   return (
     <PageLayout>
-      <div className="py-16">
+      <div className="pt-52 pb-16">
         <div className="container max-w-7xl">
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-4">
             {/* Sidebar */}
