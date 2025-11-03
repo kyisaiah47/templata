@@ -55,10 +55,10 @@ export function DockCalendarSelector({
           console.log('Raw data from API:', data);
           console.log('All items:', data.items);
 
-          // Filter only items with start_time (calendar events)
-          const calendarEvents = (data.items || []).filter((item: CalendarEvent) => item.start_time);
-          console.log('Filtered calendar events (with start_time):', calendarEvents);
-          setEvents(calendarEvents);
+          // Get all items (both events with start_time and tasks with due_date)
+          const allItems = data.items || [];
+          console.log('All items (events + tasks):', allItems);
+          setEvents(allItems);
         } else {
           console.error('Failed to fetch items:', res.status, res.statusText);
           setEvents([]);
@@ -79,12 +79,17 @@ export function DockCalendarSelector({
     if (!date) return [];
 
     const filtered = events.filter(event => {
-      if (!event.start_time) return false;
-      return isSameDay(new Date(event.start_time), date);
+      // Check if item has start_time (calendar event) or due_date (task)
+      if (event.start_time) {
+        return isSameDay(new Date(event.start_time), date);
+      } else if (event.due_date) {
+        return isSameDay(new Date(event.due_date), date);
+      }
+      return false;
     });
 
     console.log('Selected date:', date);
-    console.log('Filtered events for date:', filtered);
+    console.log('Filtered items for date:', filtered);
     return filtered;
   }, [date, events])
 
