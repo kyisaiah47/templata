@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FloatingDockNav } from "@/components/floating-dock-nav";
+import { TrackSelector } from "@/components/track-selector";
 import { GuidesViewWrapper } from '@/app/app/views/GuidesViewWrapper';
 import { NotesViewWrapper } from '@/app/app/views/NotesViewWrapper';
 import { OverviewView } from '@/app/app/views/OverviewView';
@@ -80,6 +81,14 @@ export default function AppPage() {
 
 	return (
 		<div className="h-screen flex flex-col bg-background">
+			{/* Track Selector - Fixed in top-right */}
+			<div className="fixed top-4 right-4 z-50">
+				<TrackSelector
+					selectedTrackIds={selectedTrackIds}
+					onSelectionChange={setSelectedTrackIds}
+				/>
+			</div>
+
 			{/* Info Banner */}
 			<div className="border-b bg-primary/5 border-primary/20 overflow-hidden">
 				<div className="py-3">
