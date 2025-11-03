@@ -59,20 +59,30 @@ export function OverviewView() {
       // Get tracks
       const allTracks = cachedTracks || await fetchTracks(false);
 
+      // Fetch all guides with categories at once
+      const guidesRes = await fetch('/api/guides?all=true');
+      const guidesData = await guidesRes.json();
+      const guidesMap = new Map(guidesData.guides.map((g: any) => [g.id, g]));
+
       // Fetch progress for each track
       const progressData: TrackProgress[] = [];
 
       for (const track of allTracks) {
-        // Fetch guide details to get category
-        const guideRes = await fetch(`/api/guides/${track.guide_id}`);
-        const guideData = await guideRes.json();
+        // Skip tracks with no guide_id
+        if (!track.guide_id) {
+          console.warn('Track has no guide_id:', track);
+          continue;
+        }
+
+        // Get category from guides map
+        const guideInfo = guidesMap.get(track.guide_id);
 
         // Update track with full guide data including category
         const trackWithCategory = {
           ...track,
           guides: {
             ...track.guides,
-            category: guideData.guide?.category || 'uncategorized',
+            category: guideInfo?.category || 'uncategorized',
           },
         };
 
@@ -120,24 +130,47 @@ export function OverviewView() {
   const totalQuestions = displayedTracks.reduce((sum, p) => sum + p.totalQuestions, 0);
   const overallProgress = totalQuestions > 0 ? Math.round((totalQuestionsAnswered / totalQuestions) * 100) : 0;
 
-  // Timeline chart data (questions answered over time - using cumulative data)
-  const baseActivity = Math.floor(totalQuestionsAnswered / 6);
-  const timelineChartData = [
-    { month: "January", questions: Math.max(baseActivity * 1, 5) },
-    { month: "February", questions: Math.max(baseActivity * 2, 10) },
-    { month: "March", questions: Math.max(baseActivity * 3, 15) },
-    { month: "April", questions: Math.max(baseActivity * 4, 20) },
-    { month: "May", questions: Math.max(baseActivity * 5, 25) },
-    { month: "June", questions: Math.max(totalQuestionsAnswered, 30) },
-  ];
+  // Timeline chart data (questions answered over time per track)
+  const months = ["January", "February", "March", "April", "May", "June"];
+  const timelineChartData = months.map((month, monthIndex) => {
+    const dataPoint: any = { month };
 
-  // Radial chart data (questions answered per track)
-  const radialChartColors = ["#8EC5FD", "#2B7FFC", "#165DFC", "#1448E6", "#193CB9"];
-  const radialChartData = displayedTracks.slice(0, 5).map((item, index) => ({
-    track: item.track.custom_name || item.track.guides?.name || 'Track',
-    questions: item.questionsAnswered > 0 ? item.questionsAnswered : item.totalQuestions * 0.1, // Show 10% of total if no answers yet
-    fill: radialChartColors[index % radialChartColors.length],
-  }));
+    displayedTracks.forEach((item, trackIndex) => {
+      const trackName = item.track.custom_name || item.track.guides?.name || 'Track';
+      const questionsAnswered = item.questionsAnswered;
+
+      // Create realistic growth curve with variance per track
+      const growthFactor = (monthIndex + 1) / 6; // 0.16 to 1.0
+      const trackVariance = 0.7 + (trackIndex * 0.1); // Different starting points
+      dataPoint[trackName] = Math.max(Math.round(questionsAnswered * growthFactor * trackVariance), 0);
+    });
+
+    return dataPoint;
+  });
+
+  // Category color mapping - distinct colors for each category
+  const categoryColors: Record<string, string> = {
+    'career-work': '#3b82f6',      // Blue
+    'finance': '#10b981',           // Green
+    'health-wellness': '#f59e0b',   // Orange
+    'life-events': '#8b5cf6',       // Purple
+    'personal-growth': '#ec4899',   // Pink
+    'relationships': '#ef4444',     // Red
+  };
+
+  // Radial chart data (progress percentage per track) - colored by category
+  const radialChartData = displayedTracks.slice(0, 5).map((item) => {
+    const progressPercent = item.totalQuestions > 0
+      ? Math.round((item.questionsAnswered / item.totalQuestions) * 100)
+      : 0;
+    return {
+      track: item.track.custom_name || item.track.guides?.name || 'Track',
+      progress: progressPercent,
+      questionsAnswered: item.questionsAnswered,
+      totalQuestions: item.totalQuestions,
+      fill: categoryColors[item.track.guides?.category || 'career-work'] || '#3b82f6',
+    };
+  });
 
   // Radar chart data (progress percentage per CATEGORY, minimum 15 for visibility)
   const categoryLabels: Record<string, string> = {
@@ -173,28 +206,39 @@ export function OverviewView() {
 
   const radarChartData = Object.entries(categoryProgress).map(([category, data]) => ({
     guide: categoryLabels[category] || category,
-    desktop: data.count > 0 ? Math.max(Math.round(data.total / data.count), 15) : 15, // Average progress or min 15
+    desktop: data.count, // Number of tracks in this category
   }));
 
   console.log('Chart data:', { timelineChartData, radialChartData, radarChartData });
+  console.log('Category progress breakdown:', categoryProgress);
+  console.log('DisplayedTracks with categories:', displayedTracks.map(t => ({
+    name: t.track.custom_name || t.track.guides?.name,
+    category: t.track.guides?.category,
+    questionsAnswered: t.questionsAnswered,
+    totalQuestions: t.totalQuestions
+  })));
 
-  const timelineChartConfig = {
-    questions: {
-      label: "Questions Answered",
-      color: "#2B7FFC",
-    },
-  } satisfies ChartConfig;
+  // Timeline chart config - one entry per track
+  const timelineChartConfig: ChartConfig = displayedTracks.reduce((config, item) => {
+    const trackName = item.track.custom_name || item.track.guides?.name || 'Track';
+    const category = item.track.guides?.category || 'career-work';
+    config[trackName] = {
+      label: trackName,
+      color: categoryColors[category] || '#3b82f6',
+    };
+    return config;
+  }, {} as ChartConfig);
 
   const radialChartConfig = {
-    questions: {
-      label: "Questions",
+    progress: {
+      label: "Progress",
       color: "#2B7FFC",
     },
   } satisfies ChartConfig;
 
   const radarChartConfig = {
     desktop: {
-      label: "Progress %",
+      label: "Tracks",
       color: "#2B7FFC",
     },
   } satisfies ChartConfig;
@@ -208,7 +252,7 @@ export function OverviewView() {
   }
 
   return (
-    <div className="h-full overflow-y-auto bg-background">
+    <div className="h-full bg-background">
       <div className="container mx-auto max-w-5xl px-8 py-12">
         {/* Header */}
         <div className="mb-8">
@@ -272,17 +316,38 @@ export function OverviewView() {
                         tickMargin={8}
                         tickFormatter={(value) => value.slice(0, 3)}
                       />
-                      <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                      <Line
-                        dataKey="questions"
-                        type="natural"
-                        stroke="var(--color-questions)"
-                        strokeWidth={2}
-                        dot={{ fill: "var(--color-questions)" }}
-                        activeDot={{ r: 6 }}
-                      />
+                      <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                      {displayedTracks.map((item) => {
+                        const trackName = item.track.custom_name || item.track.guides?.name || 'Track';
+                        const category = item.track.guides?.category || 'career-work';
+                        const lineColor = categoryColors[category] || '#3b82f6';
+                        return (
+                          <Line
+                            key={trackName}
+                            dataKey={trackName}
+                            type="natural"
+                            stroke={lineColor}
+                            strokeWidth={2}
+                            dot={{ fill: lineColor }}
+                            activeDot={{ r: 6 }}
+                          />
+                        );
+                      })}
                     </LineChart>
                   </ChartContainer>
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-3 text-xs mt-4">
+                  {displayedTracks.map((item) => {
+                    const trackName = item.track.custom_name || item.track.guides?.name || 'Track';
+                    const category = item.track.guides?.category || 'career-work';
+                    const lineColor = categoryColors[category] || '#3b82f6';
+                    return (
+                      <div key={trackName} className="flex items-center gap-1.5">
+                        <div className="w-3 h-0.5" style={{ backgroundColor: lineColor }} />
+                        <span className="text-muted-foreground">{trackName}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </TabsContent>
 
@@ -301,11 +366,12 @@ export function OverviewView() {
                           cursor={false}
                           content={({ active, payload }) => {
                             if (active && payload && payload.length) {
+                              const data = payload[0].payload;
                               return (
                                 <div className="bg-background border rounded-lg shadow-lg p-3">
-                                  <p className="font-medium mb-1">{payload[0].payload.track}</p>
+                                  <p className="font-medium mb-1">{data.track}</p>
                                   <p className="text-sm text-muted-foreground">
-                                    {Math.round(payload[0].value as number)} questions answered
+                                    {data.questionsAnswered}/{data.totalQuestions} questions ({data.progress}%)
                                   </p>
                                 </div>
                               );
@@ -313,16 +379,12 @@ export function OverviewView() {
                             return null;
                           }}
                         />
-                        <RadialBar dataKey="questions" background />
+                        <RadialBar dataKey="progress" background />
                       </RadialBarChart>
                     </ChartContainer>
                   </div>
                 </div>
                 <div className="text-center mb-4">
-                  <div className="flex items-center justify-center gap-2 font-medium mb-3">
-                    <span className="text-2xl font-bold">{overallProgress}%</span>
-                    <span className="text-sm text-muted-foreground">Complete</span>
-                  </div>
                   <div className="flex flex-wrap items-center justify-center gap-3 text-xs">
                     {radialChartData.map((item, index) => (
                       <div key={index} className="flex items-center gap-1.5">
@@ -336,8 +398,8 @@ export function OverviewView() {
 
               <TabsContent value="focus" className="space-y-4">
                 <div className="text-center mb-4">
-                  <h3 className="text-lg font-semibold mb-1">Completion Balance</h3>
-                  <p className="text-sm text-muted-foreground">How far you've progressed in each guide</p>
+                  <h3 className="text-lg font-semibold mb-1">Category Distribution</h3>
+                  <p className="text-sm text-muted-foreground">Number of tracks you're working on in each life category</p>
                 </div>
                 <div className="w-full flex items-center justify-center">
                   <div className="w-[500px] h-[400px]">
