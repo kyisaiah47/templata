@@ -3,6 +3,13 @@
 import { NotesView } from './NotesView';
 import { TrackTabsWrapper } from '@/components/TrackTabsWrapper';
 import { FileText } from 'lucide-react';
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 
 interface NotesViewWrapperProps {
   selectedTrackIds: string[];
@@ -14,11 +21,17 @@ export function NotesViewWrapper({ selectedTrackIds }: NotesViewWrapperProps) {
       selectedTrackIds={selectedTrackIds}
       emptyState={
         <div className="h-full flex items-center justify-center">
-          <div className="text-center text-muted-foreground">
-            <FileText className="w-16 h-16 mx-auto mb-4 opacity-20" />
-            <p className="text-lg font-medium">No tracks selected</p>
-            <p className="text-sm">Select a track to write freeform notes</p>
-          </div>
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <FileText />
+              </EmptyMedia>
+              <EmptyTitle>No tracks selected</EmptyTitle>
+              <EmptyDescription>
+                Select a track to write freeform notes
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         </div>
       }
       renderView={(track) => {

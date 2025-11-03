@@ -23,6 +23,14 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Plus, FolderOpen, Settings, Trash2, Archive, Loader2 } from 'lucide-react';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 
 interface Guide {
   id: string;
@@ -219,14 +227,24 @@ export function TracksView({ onSelectTrack }: TracksViewProps) {
       {/* Tracks Grid */}
       <div className="flex-1 overflow-auto p-6">
         {tracks.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
-            <FolderOpen className="w-16 h-16 mb-4 opacity-20" />
-            <p className="text-lg font-medium">No tracks yet</p>
-            <p className="text-sm mb-4">Start a track from a guide to begin working</p>
-            <Button onClick={() => setCreateDialogOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Create Your First Track
-            </Button>
+          <div className="flex items-center justify-center h-96">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <FolderOpen />
+                </EmptyMedia>
+                <EmptyTitle>No tracks yet</EmptyTitle>
+                <EmptyDescription>
+                  Start a track from a guide to begin working
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent>
+                <Button onClick={() => setCreateDialogOpen(true)}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Your First Track
+                </Button>
+              </EmptyContent>
+            </Empty>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

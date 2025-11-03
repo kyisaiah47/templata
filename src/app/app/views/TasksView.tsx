@@ -7,6 +7,14 @@ import { ListTodo, Loader2 } from 'lucide-react';
 import { KanbanBoard } from '@/components/app/tasks/KanbanBoard';
 import { Task } from '@/types/workspace';
 import { toast } from 'sonner';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 
 interface ExtendedTask extends Task {
   tracks?: {
@@ -303,16 +311,32 @@ export function TasksView({ selectedTrackIds }: TasksViewProps) {
       {/* Kanban Board */}
       <div className="flex-1 overflow-auto">
         {selectedTrackIds.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
-            <ListTodo className="w-16 h-16 mb-4 opacity-20" />
-            <p className="text-lg font-medium">No tracks selected</p>
-            <p className="text-sm">Select tracks from the header to see tasks</p>
+          <div className="flex items-center justify-center h-96">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <ListTodo />
+                </EmptyMedia>
+                <EmptyTitle>No tracks selected</EmptyTitle>
+                <EmptyDescription>
+                  Select tracks from the header to see tasks
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           </div>
         ) : (data || []).length === 0 && selectedTrackIds.length > 0 ? (
-          <div className="flex-col items-center justify-center h-96 text-muted-foreground px-6 py-12">
-            <ListTodo className="w-16 h-16 mb-4 opacity-20 mx-auto" />
-            <p className="text-lg font-medium text-center">No tasks found</p>
-            <p className="text-sm text-center">The selected tracks don't have any tasks yet</p>
+          <div className="flex items-center justify-center h-96">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <ListTodo />
+                </EmptyMedia>
+                <EmptyTitle>No tasks found</EmptyTitle>
+                <EmptyDescription>
+                  The selected tracks don't have any tasks yet
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           </div>
         ) : (
           <KanbanBoard

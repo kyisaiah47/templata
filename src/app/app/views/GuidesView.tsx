@@ -33,6 +33,14 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 
 interface Question {
   id: string;
@@ -608,16 +616,18 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
   if (!trackId) {
     return (
       <div className="h-full flex items-center justify-center bg-background">
-        <div className="text-center max-w-md px-4">
-          <FileText className="w-16 h-16 mx-auto mb-4 opacity-20" />
-          <h2 className="text-2xl font-semibold mb-2">Select a Track to Begin</h2>
-          <p className="text-muted-foreground mb-6">
-            Choose one or more tracks from the dropdown above to start working on your guides.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Don't have any tracks yet? Create one by clicking the track selector.
-          </p>
-        </div>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <FileText />
+            </EmptyMedia>
+            <EmptyTitle>Select a Track to Begin</EmptyTitle>
+            <EmptyDescription>
+              Choose one or more tracks from the dropdown above to start working on your guides.
+              Don't have any tracks yet? Create one by clicking the track selector.
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       </div>
     );
   }
@@ -778,15 +788,17 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
                   transition={{ duration: 0.2 }}
                   className="flex items-center justify-center h-full"
                 >
-                  <div className="text-center space-y-2">
-                    <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-foreground">
-                      Select a question to begin
-                    </h3>
-                    <p className="text-sm text-muted-foreground max-w-md">
-                      Choose a question from the left sidebar to start working on your guide
-                    </p>
-                  </div>
+                  <Empty>
+                    <EmptyHeader>
+                      <EmptyMedia variant="icon">
+                        <FileText />
+                      </EmptyMedia>
+                      <EmptyTitle>Select a question to begin</EmptyTitle>
+                      <EmptyDescription>
+                        Choose a question from the left sidebar to start working on your guide
+                      </EmptyDescription>
+                    </EmptyHeader>
+                  </Empty>
                 </motion.div>
               )}
             </AnimatePresence>

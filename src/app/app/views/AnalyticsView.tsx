@@ -6,6 +6,13 @@ import { TrendingUp, Loader2, Activity, Calendar, CheckCircle2, Clock } from 'lu
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, isWithinInterval, parseISO, startOfMonth, endOfMonth, subMonths } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Item } from '@/types/workspace';
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 
 interface UserGuide {
   id: string;
@@ -187,16 +194,32 @@ export function AnalyticsView({ selectedTrackIds }: AnalyticsViewProps) {
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : selectedTrackIds.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
-            <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
-            <p className="text-lg font-medium">No tracks selected</p>
-            <p className="text-sm">Select tracks from the header to view analytics</p>
+          <div className="flex items-center justify-center h-96">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <TrendingUp />
+                </EmptyMedia>
+                <EmptyTitle>No tracks selected</EmptyTitle>
+                <EmptyDescription>
+                  Select tracks from the header to view analytics
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           </div>
         ) : userGuides.length === 0 && selectedTrackIds.length > 0 ? (
-          <div className="flex flex-col items-center justify-center h-96 text-muted-foreground">
-            <TrendingUp className="w-16 h-16 mb-4 opacity-20" />
-            <p className="text-lg font-medium">No data found</p>
-            <p className="text-sm">The selected tracks don't have any data yet</p>
+          <div className="flex items-center justify-center h-96">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <TrendingUp />
+                </EmptyMedia>
+                <EmptyTitle>No data found</EmptyTitle>
+                <EmptyDescription>
+                  The selected tracks don't have any data yet
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           </div>
         ) : (
           <div className="space-y-6">
