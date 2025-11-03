@@ -223,7 +223,7 @@ export function DockTasksSelector({
   if (!isOpen) return null;
 
   return (
-    <div className="w-[400px] py-4">
+    <div className="w-[320px] py-4">
       <div className="px-4 pb-4 flex items-center justify-between border-b">
         <h3 className="text-sm font-semibold">Tasks</h3>
         <Button
