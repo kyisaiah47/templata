@@ -6,7 +6,6 @@ import { PlusIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
 
 const events = [
   {
@@ -44,8 +43,8 @@ export function DockCalendarSelector({
   if (!isOpen) return null;
 
   return (
-    <Card className="w-fit py-4">
-      <CardContent className="px-4">
+    <div className="w-fit py-4">
+      <div className="px-4">
         <Calendar
           mode="single"
           selected={date}
@@ -53,8 +52,8 @@ export function DockCalendarSelector({
           className="bg-transparent p-0"
           required
         />
-      </CardContent>
-      <CardFooter className="flex flex-col items-start gap-3 border-t px-4 !pt-4">
+      </div>
+      <div className="flex flex-col items-start gap-3 border-t px-4 !pt-4">
         <div className="flex w-full items-center justify-between px-1">
           <div className="text-sm font-medium">
             {date?.toLocaleDateString("en-US", {
@@ -86,7 +85,7 @@ export function DockCalendarSelector({
             </div>
           ))}
         </div>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   )
 }
