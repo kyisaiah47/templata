@@ -76,46 +76,52 @@ const Feature65 = () => {
   const [activeTabId, setActiveTabId] = useState<number | null>(null);
 
   return (
-    <section className="py-32">
+    <section className="py-16">
       <div className="container">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Four integrated systems working together for life's biggest moments
+          </p>
+        </div>
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-4">
           {integrations.map((item, index) => (
             <div
               key={index}
               className="flex h-full flex-col justify-between gap-2"
             >
-              <div className="bg-muted-foreground/5 flex items-center justify-between rounded-xl p-6">
-                <div className="flex items-center gap-3">
-                  <div className={clsx("h-16 w-3 rounded-md", item.color)} />
-                  <h3 className="text-xl font-bold">{item.title}</h3>
+              <div className="bg-muted-foreground/5 flex items-center justify-between rounded-xl p-4">
+                <div className="flex items-center gap-2">
+                  <div className={clsx("h-10 w-2 rounded-md", item.color)} />
+                  <h3 className="text-lg font-bold">{item.title}</h3>
                 </div>
-                <div className="flex items-center gap-6">
-                  {item.image}
+                <div className="flex items-center gap-4">
+                  <div className="w-6 h-6">{item.image}</div>
                   <div
-                    className="bg-background flex h-12 w-12 items-center justify-center rounded-lg lg:hidden"
+                    className="bg-background flex h-8 w-8 items-center justify-center rounded-lg lg:hidden"
                     onClick={() =>
                       setActiveTabId(activeTabId === index ? null : index)
                     }
                   >
                     {activeTabId === index ? (
-                      <ChevronUp className="h-8" />
+                      <ChevronUp className="h-5" />
                     ) : (
-                      <ChevronDown className="h-8" />
+                      <ChevronDown className="h-5" />
                     )}
                   </div>
                 </div>
               </div>
               <div
-                className={` ${activeTabId === index ? "flex" : "hidden"} bg-muted-foreground/5 h-full flex-col items-start justify-between gap-64 rounded-xl p-6 transition-all duration-300 lg:flex`}
+                className={` ${activeTabId === index ? "flex" : "hidden"} bg-muted-foreground/5 h-full flex-col items-start justify-between gap-8 rounded-xl p-4 transition-all duration-300 lg:flex`}
               >
-                <div className="text-muted-foreground/90 text-xl font-medium">
+                <div className="text-muted-foreground/90 text-sm font-medium">
                   {item.description}
                 </div>
-                <div className="flex flex-col items-start gap-4">
+                <div className="flex flex-col items-start gap-2">
                   {item.tags.map((tag, index) => (
                     <Badge
                       variant="outline"
-                      className={`${index == 0 ? "bg-muted/5" : "bg-background"} rounded-2xl border-0 px-4 py-3 text-base font-medium`}
+                      className={`${index == 0 ? "bg-muted/5" : "bg-background"} rounded-xl border-0 px-3 py-1.5 text-xs font-medium`}
                       key={tag}
                     >
                       {tag}
