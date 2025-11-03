@@ -70,17 +70,21 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
         const stored = sessionStorage.getItem(CACHE_KEY);
         if (stored) {
           const parsed = JSON.parse(stored);
-          // Check if cache is still valid (within 5 minutes)
+          // Check if cache is still valid (within cache duration)
           const now = Date.now();
-          const tracksValid = parsed.lastFetch.tracks && (now - parsed.lastFetch.tracks < CACHE_DURATION);
-          const guidesValid = parsed.lastFetch.guides && (now - parsed.lastFetch.guides < CACHE_DURATION);
+          const tracksValid = parsed.lastFetch?.tracks && (now - parsed.lastFetch.tracks < CACHE_DURATION);
+          const guidesValid = parsed.lastFetch?.guides && (now - parsed.lastFetch.guides < CACHE_DURATION);
 
           return {
             tracks: tracksValid ? parsed.tracks : null,
             guides: guidesValid ? parsed.guides : null,
+            questionsByGuide: parsed.questionsByGuide || {},
+            readingsByGuide: parsed.readingsByGuide || {},
             lastFetch: {
               tracks: tracksValid ? parsed.lastFetch.tracks : null,
               guides: guidesValid ? parsed.lastFetch.guides : null,
+              questionsByGuide: parsed.lastFetch?.questionsByGuide || {},
+              readingsByGuide: parsed.lastFetch?.readingsByGuide || {},
             },
           };
         }
@@ -205,7 +209,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     const currentCache = cacheRef.current;
 
     // Return cached data if available and not forcing refresh
-    if (!force && currentCache.questionsByGuide[guideId] && currentCache.lastFetch.questionsByGuide[guideId]) {
+    if (!force && currentCache.questionsByGuide?.[guideId] && currentCache.lastFetch?.questionsByGuide?.[guideId]) {
       const age = Date.now() - currentCache.lastFetch.questionsByGuide[guideId];
       if (age < CACHE_DURATION) {
         return currentCache.questionsByGuide[guideId];
@@ -240,7 +244,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     const currentCache = cacheRef.current;
 
     // Return cached data if available and not forcing refresh
-    if (!force && currentCache.readingsByGuide[guideId] && currentCache.lastFetch.readingsByGuide[guideId]) {
+    if (!force && currentCache.readingsByGuide?.[guideId] && currentCache.lastFetch?.readingsByGuide?.[guideId]) {
       const age = Date.now() - currentCache.lastFetch.readingsByGuide[guideId];
       if (age < CACHE_DURATION) {
         return currentCache.readingsByGuide[guideId];
