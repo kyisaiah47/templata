@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { FileText } from 'lucide-react';
+import { useDataCache } from '@/contexts/DataCacheContext';
 
 interface NotesViewProps {
   trackId: string;
@@ -11,34 +12,25 @@ interface NotesViewProps {
 }
 
 export function NotesView({ trackId, trackName }: NotesViewProps) {
+  const { fetchNotes, saveNotes } = useDataCache();
   const [content, setContent] = useState('');
   const [autoSave, setAutoSave] = useState(true);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
-  // Load notes content for this track
+  // Load notes content for this track from cache
   useEffect(() => {
     async function loadNotes() {
       try {
-        setLoading(true);
-        const res = await fetch(`/api/notes?track_id=${trackId}`);
-
-        if (!res.ok) {
-          if (res.status === 401) {
-            setContent('');
-            setLoading(false);
-            return;
-          }
-          throw new Error('Failed to load notes');
+        const cachedContent = await fetchNotes(trackId);
+        setContent(cachedContent);
+        if (loading) {
+          setLoading(false);
         }
-
-        const data = await res.json();
-        setContent(data.content || '');
       } catch (error) {
         console.error('Error loading notes:', error);
         setContent('');
-      } finally {
         setLoading(false);
       }
     }
@@ -50,10 +42,14 @@ export function NotesView({ trackId, trackName }: NotesViewProps) {
 
   // Autosave functionality
   useEffect(() => {
-    if (!autoSave || !trackId || loading) return;
+    if (!autoSave || !trackId) return;
 
     const timeoutId = setTimeout(async () => {
       try {
+        // Save to cache immediately
+        saveNotes(trackId, content);
+
+        // Save to API
         await fetch('/api/notes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -66,7 +62,7 @@ export function NotesView({ trackId, trackName }: NotesViewProps) {
     }, 2000);
 
     return () => clearTimeout(timeoutId);
-  }, [content, autoSave, trackId, loading]);
+  }, [content, autoSave, trackId]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Check for Cmd+B or Cmd+I

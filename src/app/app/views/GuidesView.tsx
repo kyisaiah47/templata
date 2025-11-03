@@ -410,8 +410,6 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
   useEffect(() => {
     async function fetchData() {
       try {
-        setLoading(true);
-
         // Use track guide info if in track mode, otherwise find in guides array
         const guide = track?.guides
           ? { id: track.guides.id, name: track.guides.name }
@@ -421,7 +419,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
           setGuideInfo({ id: guide.id, name: guide.name });
         }
 
-        // Fetch questions and readings from cache
+        // Fetch questions and readings from cache - NO LOADING STATE
         const fetchedQuestions = await fetchQuestions(selectedGuide);
         setQuestions(fetchedQuestions);
 
@@ -439,9 +437,13 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
 
         const fetchedReadings = await fetchReadings(selectedGuide);
         setReadings(fetchedReadings);
+
+        // Only set loading to false if it was true (for initial load)
+        if (loading) {
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
         setLoading(false);
       }
     }

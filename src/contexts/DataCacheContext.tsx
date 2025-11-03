@@ -37,11 +37,13 @@ interface CacheState {
   guides: Guide[] | null;
   questionsByGuide: Record<string, Question[]>;
   readingsByGuide: Record<string, Reading[]>;
+  notesByTrack: Record<string, string>;
   lastFetch: {
     tracks: number | null;
     guides: number | null;
     questionsByGuide: Record<string, number>;
     readingsByGuide: Record<string, number>;
+    notesByTrack: Record<string, number>;
   };
 }
 
@@ -52,6 +54,8 @@ interface DataCacheContextType {
   fetchGuides: (force?: boolean) => Promise<Guide[]>;
   fetchQuestions: (guideId: string, force?: boolean) => Promise<Question[]>;
   fetchReadings: (guideId: string, force?: boolean) => Promise<Reading[]>;
+  fetchNotes: (trackId: string, force?: boolean) => Promise<string>;
+  saveNotes: (trackId: string, content: string) => void;
   invalidateTracks: () => void;
   invalidateGuides: () => void;
   invalidateAll: () => void;
@@ -80,11 +84,13 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
             guides: guidesValid ? parsed.guides : null,
             questionsByGuide: parsed.questionsByGuide || {},
             readingsByGuide: parsed.readingsByGuide || {},
+            notesByTrack: parsed.notesByTrack || {},
             lastFetch: {
               tracks: tracksValid ? parsed.lastFetch.tracks : null,
               guides: guidesValid ? parsed.lastFetch.guides : null,
               questionsByGuide: parsed.lastFetch?.questionsByGuide || {},
               readingsByGuide: parsed.lastFetch?.readingsByGuide || {},
+              notesByTrack: parsed.lastFetch?.notesByTrack || {},
             },
           };
         }
@@ -97,11 +103,13 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       guides: null,
       questionsByGuide: {},
       readingsByGuide: {},
+      notesByTrack: {},
       lastFetch: {
         tracks: null,
         guides: null,
         questionsByGuide: {},
         readingsByGuide: {},
+        notesByTrack: {},
       },
     };
   });
@@ -275,17 +283,65 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const fetchNotes = useCallback(async (trackId: string, force = false): Promise<string> => {
+    const currentCache = cacheRef.current;
+
+    // Return cached data if available and not forcing refresh
+    if (!force && currentCache.notesByTrack?.[trackId] !== undefined && currentCache.lastFetch?.notesByTrack?.[trackId]) {
+      const age = Date.now() - currentCache.lastFetch.notesByTrack[trackId];
+      if (age < CACHE_DURATION) {
+        return currentCache.notesByTrack[trackId];
+      }
+    }
+
+    try {
+      const res = await fetch(`/api/notes?track_id=${trackId}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch notes');
+      }
+      const data = await res.json();
+      const content = data.content || '';
+
+      setCache(prev => ({
+        ...prev,
+        notesByTrack: { ...prev.notesByTrack, [trackId]: content },
+        lastFetch: {
+          ...prev.lastFetch,
+          notesByTrack: { ...prev.lastFetch.notesByTrack, [trackId]: Date.now() },
+        },
+      }));
+
+      return content;
+    } catch (error) {
+      console.error('Error fetching notes:', error);
+      return currentCache.notesByTrack?.[trackId] || '';
+    }
+  }, []);
+
+  const saveNotes = useCallback((trackId: string, content: string) => {
+    setCache(prev => ({
+      ...prev,
+      notesByTrack: { ...prev.notesByTrack, [trackId]: content },
+      lastFetch: {
+        ...prev.lastFetch,
+        notesByTrack: { ...prev.lastFetch.notesByTrack, [trackId]: Date.now() },
+      },
+    }));
+  }, []);
+
   const invalidateAll = useCallback(() => {
     setCache({
       tracks: null,
       guides: null,
       questionsByGuide: {},
       readingsByGuide: {},
+      notesByTrack: {},
       lastFetch: {
         tracks: null,
         guides: null,
         questionsByGuide: {},
         readingsByGuide: {},
+        notesByTrack: {},
       },
     });
     if (typeof window !== 'undefined') {
@@ -302,6 +358,8 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
         fetchGuides,
         fetchQuestions,
         fetchReadings,
+        fetchNotes,
+        saveNotes,
         invalidateTracks,
         invalidateGuides,
         invalidateAll,
