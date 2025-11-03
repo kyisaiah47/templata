@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import { useDataCache } from '@/contexts/DataCacheContext';
 import {
   Popover,
   PopoverContent,
@@ -117,6 +118,7 @@ interface GuidesViewProps {
 }
 
 export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProps) {
+  const { tracks: cachedTracks, fetchTracks } = useDataCache();
   const [selectedGuide, setSelectedGuide] = useState('wedding-planning');
   const [guides, setGuides] = useState<Template[]>([]);
   const [displayedGuides, setDisplayedGuides] = useState<Template[]>([]);
@@ -158,28 +160,33 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Fetch track when trackId is provided
+  // Use cached track data when trackId is provided
   useEffect(() => {
     if (!trackId) {
       setTrack(null);
       return;
     }
 
-    async function fetchTrack() {
-      try {
-        const res = await fetch('/api/tracks?archived=false');
-        if (!res.ok) {
-          console.error('Failed to fetch tracks');
+    async function loadTrack() {
+      // Try cached tracks first
+      if (cachedTracks && cachedTracks.length > 0) {
+        const foundTrack = cachedTracks.find((t: Track) => t.id === trackId);
+        if (foundTrack) {
+          setTrack(foundTrack);
+          if (foundTrack.guide_id) {
+            setSelectedGuide(foundTrack.guide_id);
+          }
           return;
         }
+      }
 
-        const data = await res.json();
-        const tracks = data.tracks || [];
+      // Only fetch if not in cache
+      try {
+        const tracks = await fetchTracks(false);
         const foundTrack = tracks.find((t: Track) => t.id === trackId);
 
         if (foundTrack) {
           setTrack(foundTrack);
-          // Update selectedGuide to the guide_id from the track
           if (foundTrack.guide_id) {
             setSelectedGuide(foundTrack.guide_id);
           }
@@ -187,12 +194,12 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
           console.error('Track not found:', trackId);
         }
       } catch (error) {
-        console.error('Error fetching track:', error);
+        console.error('Error loading track:', error);
       }
     }
 
-    fetchTrack();
-  }, [trackId]);
+    loadTrack();
+  }, [trackId, cachedTracks]);
 
   // Set up actions for parent to call
   useEffect(() => {
