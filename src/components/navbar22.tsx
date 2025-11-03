@@ -3,6 +3,7 @@
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -86,9 +87,11 @@ const Navbar22 = () => {
                     </span>
                   </a>
                 ))}
+                <ModeToggle />
               </div>
 
-              <div className="md:hidden">
+              <div className="flex items-center gap-2 md:hidden">
+                <ModeToggle />
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>
                   <SheetTrigger asChild>
                     <Button
@@ -130,8 +133,9 @@ const Navbar22 = () => {
                         ))}
                       </div>
                       <div className="border-border border-t pt-6">
-                        <div className="text-muted-foreground text-center text-sm">
+                        <div className="text-muted-foreground flex items-center justify-between px-4 text-sm">
                           <div className="font-medium">Beta</div>
+                          <ModeToggle />
                         </div>
                       </div>
                     </div>

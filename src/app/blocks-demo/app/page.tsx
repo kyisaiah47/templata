@@ -6,7 +6,7 @@ import { PageLayout } from "@/components/layout";
 
 export default function AppPage() {
 	return (
-		<PageLayout includeHeader={false}>
+		<PageLayout includeHeader={false} includeFooter={false}>
 			<FeaturesShowcase />
 			<FloatingDockNav />
 			{/* More blocks will be added here */}

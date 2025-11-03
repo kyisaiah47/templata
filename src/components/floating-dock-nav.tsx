@@ -62,7 +62,7 @@ const FloatingDockNav = () => {
     },
   ];
   return (
-    <section className="py-32">
+    <section>
       <div className="container flex justify-center">
         <FloatingDock
           desktopClassName="

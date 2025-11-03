@@ -19,8 +19,8 @@ const FeaturesShowcase = () => {
     "AutoSave (features)",
   ];
   return (
-    <section className="bg-background">
-      <div className="container relative flex flex-col items-center overflow-hidden pt-56 pb-32">
+    <section className="bg-background min-h-screen flex items-center">
+      <div className="container relative flex flex-col items-center overflow-hidden">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-foreground text-5xl font-semibold tracking-tighter md:text-7xl">
             Loaded with Features

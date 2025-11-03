@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { CustomThemeProvider } from "@/components/theme-provider-custom"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { UIProvider } from "@/components/providers/ui-provider"
 import { QueryProvider } from "@/components/providers/QueryProvider"
@@ -86,6 +85,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -119,19 +130,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ErrorBoundary>
-          <CustomThemeProvider>
-            <QueryProvider>
-              <SessionProvider>
-                <AuthProvider>
-                  <UIProvider>
-                    <Analytics />
-                    <SpeedInsights />
-                    {children}
-                  </UIProvider>
-                </AuthProvider>
-              </SessionProvider>
-            </QueryProvider>
-          </CustomThemeProvider>
+          <QueryProvider>
+            <SessionProvider>
+              <AuthProvider>
+                <UIProvider>
+                  <Analytics />
+                  <SpeedInsights />
+                  {children}
+                </UIProvider>
+              </AuthProvider>
+            </SessionProvider>
+          </QueryProvider>
         </ErrorBoundary>
       </body>
     </html>
