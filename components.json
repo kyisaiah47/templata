@@ -19,13 +19,6 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@magicui": "https://magicui.design/r/{name}.json",
-    "@shadcnblocks": {
-      "url": "https://shadcnblocks.com/r/{name}",
-      "headers": {
-        "Authorization": "Bearer ${SHADCNBLOCKS_API_KEY}"
-      }
-    },
-    "@svgl": "https://svgl.app/r/{name}.json"
+    "@magicui": "https://magicui.design/r/{name}.json"
   }
 }
