@@ -191,17 +191,47 @@ export default function GuideDetail({ params }: GuideDetailProps) {
               initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 1 }}
-              className="relative z-20 mt-10"
+              className="relative z-20 mt-10 flex items-center justify-center gap-4"
             >
-              <div
-                className={cn(
-                  "border-muted relative flex size-32 items-center justify-center overflow-hidden rounded-3xl border p-4",
-                  "from-muted/50 to-background bg-gradient-to-b",
-                  "dark:bg-transparent dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
-                )}
-              >
-                <IconComponent className="size-16" />
-              </div>
+              <SkiperUiMarquee
+                showCard={1}
+                className=""
+                reverse={true}
+                Icon={IconComponent}
+              />
+              <SkiperUiMarquee
+                showCard={2}
+                className=""
+                Icon={IconComponent}
+              />
+              <SkiperUiMarquee
+                showCard={3}
+                reverse={true}
+                className=""
+                Icon={IconComponent}
+              />
+              <SkiperUiMarquee
+                showCard={2}
+                className=""
+                Icon={IconComponent}
+              />
+              <SkiperUiMarquee
+                showCard={3}
+                reverse={true}
+                className=""
+                Icon={IconComponent}
+              />
+              <SkiperUiMarquee
+                showCard={2}
+                className=""
+                Icon={IconComponent}
+              />
+              <SkiperUiMarquee
+                reverse={true}
+                showCard={1}
+                className=""
+                Icon={IconComponent}
+              />
             </motion.div>
           )}
 
@@ -213,10 +243,6 @@ export default function GuideDetail({ params }: GuideDetailProps) {
             <div className="text-center">
               <div className="text-3xl font-bold">{readings.length}</div>
               <p className="text-sm text-muted-foreground">Readings</p>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold">{questionCategories.length}</div>
-              <p className="text-sm text-muted-foreground">Categories</p>
             </div>
           </div>
 
@@ -236,29 +262,17 @@ export default function GuideDetail({ params }: GuideDetailProps) {
           <div className="flex flex-col gap-7">
             <h2 className="text-xl">/ QUESTIONS</h2>
             <div>
-              {questionCategories.map((category) => {
-                const categoryQuestions = groupedQuestions[category];
-                return (
-                  <div key={category}>
-                    <Separator />
-                    <div className="my-2.5 grid gap-2.5 text-sm sm:grid-cols-3">
-                      <div className="text-muted-foreground flex items-center gap-2">
-                        {category}
-                      </div>
-                      <p className="font-medium">{categoryQuestions.length} questions</p>
-                      <div className="text-muted-foreground">
-                        {categoryQuestions.slice(0, 3).map((q, idx) => (
-                          <div key={q.id}>
-                            {idx > 0 && ', '}
-                            {q.question}
-                          </div>
-                        ))}
-                        {categoryQuestions.length > 3 && ` +${categoryQuestions.length - 3} more`}
-                      </div>
+              {questions.map((question) => (
+                <div key={question.id}>
+                  <Separator />
+                  <div className="my-2.5 grid gap-2.5 text-sm sm:grid-cols-3">
+                    <div className="text-muted-foreground flex items-center gap-2">
+                      {question.category_name}
                     </div>
+                    <p className="font-medium col-span-2">{question.question}</p>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -270,18 +284,20 @@ export default function GuideDetail({ params }: GuideDetailProps) {
           <div className="flex flex-col gap-7">
             <h2 className="text-xl">/ READINGS</h2>
             <div>
-              {readings.map((reading, idx) => (
+              {readings.map((reading) => (
                 <div key={reading.id}>
                   <Separator />
-                  <div className="my-2.5 grid gap-2.5 text-sm sm:grid-cols-3">
-                    <div className="text-muted-foreground flex items-center gap-2">
-                      {reading.read_time}
+                  <Link href={`/blocks-demo/library/${reading.slug}`}>
+                    <div className="my-2.5 grid gap-2.5 text-sm sm:grid-cols-3 hover:text-primary transition-colors cursor-pointer">
+                      <div className="text-muted-foreground flex items-center gap-2">
+                        {reading.read_time}
+                      </div>
+                      <p className="font-medium">{reading.title}</p>
+                      <p className="text-muted-foreground">
+                        {reading.excerpt}
+                      </p>
                     </div>
-                    <p className="font-medium">{reading.title}</p>
-                    <p className="text-muted-foreground">
-                      {reading.excerpt}
-                    </p>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -290,5 +306,91 @@ export default function GuideDetail({ params }: GuideDetailProps) {
       </section>
 
     </PageLayout>
+  );
+}
+
+function Marquee({
+  className,
+  reverse,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: any) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)]",
+        {
+          "flex-row": !vertical,
+          "flex-col": vertical,
+        },
+        className,
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              "flex shrink-0 justify-around ![animation-duration:12s] [animation-play-state:running] [gap:var(--gap)] group-hover:[animation-play-state:paused]",
+              {
+                "animate-marquee flex-row": !vertical,
+                "animate-marquee-vertical flex-col": vertical,
+                "[animation-direction:reverse]": reverse,
+              },
+            )}
+          >
+            {children}
+          </div>
+        ))}
+    </div>
+  );
+}
+
+interface SkiperUiMarqueeProps {
+  showCard: number;
+  reverse?: boolean;
+  className?: string;
+  Icon: React.ComponentType<{ className?: string }>;
+}
+
+function SkiperUiMarquee({
+  showCard,
+  reverse = false,
+  className,
+  Icon,
+}: SkiperUiMarqueeProps) {
+  return (
+    <div
+      className={cn("relative overflow-hidden", className)}
+      style={{
+        height: showCard * 113,
+      }}
+    >
+      <Marquee reverse={reverse} vertical={true}>
+        {Array(4).fill(0).map((_, idx) => (
+          <Card key={idx} Icon={Icon} />
+        ))}
+      </Marquee>
+      <div className="from-background absolute top-0 z-10 h-8 w-full bg-gradient-to-b to-transparent" />
+      <div className="from-background absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t to-transparent" />
+    </div>
+  );
+}
+
+function Card({ Icon }: { Icon: React.ComponentType<{ className?: string }> }) {
+  return (
+    <div
+      className={cn(
+        "border-muted relative flex size-24 items-center justify-center overflow-hidden rounded-3xl border p-4",
+        "from-muted/50 to-background bg-gradient-to-b",
+        "dark:bg-transparent dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+      )}
+    >
+      <Icon className="size-8" />
+    </div>
   );
 }
