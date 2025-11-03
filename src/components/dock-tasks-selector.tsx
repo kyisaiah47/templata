@@ -3,6 +3,7 @@
 import * as React from "react"
 import { format } from "date-fns"
 import { PlusIcon, ChevronDownIcon, PencilIcon } from "lucide-react"
+import { useDataCache } from "@/contexts/DataCacheContext"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -39,8 +40,9 @@ export function DockTasksSelector({
   isOpen,
   onClose,
 }: DockTasksSelectorProps) {
+  const { items: cachedItems, fetchItems, invalidateItems } = useDataCache();
   const [tasks, setTasks] = React.useState<Task[]>([])
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(false)
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false)
   const [taskTitle, setTaskTitle] = React.useState('')
   const [taskDescription, setTaskDescription] = React.useState('')
@@ -53,40 +55,37 @@ export function DockTasksSelector({
   const [deleting, setDeleting] = React.useState(false)
   const [draggedTask, setDraggedTask] = React.useState<Task | null>(null)
 
-  // Fetch tasks from the API
+  // Fetch tasks using cache
   React.useEffect(() => {
     if (!isOpen) return;
 
-    async function fetchTasks() {
+    async function loadTasks() {
+      // Try cached items first
+      if (cachedItems && cachedItems.length > 0) {
+        const allTasks = cachedItems.filter((item: any) =>
+          !item.start_time || item.type === 'task'
+        );
+        setTasks(allTasks);
+        return;
+      }
+
       try {
         setLoading(true);
-        const res = await fetch('/api/items');
-
-        if (res.status === 401) {
-          setTasks([]);
-          setLoading(false);
-          return;
-        }
-
-        if (res.ok) {
-          const data = await res.json();
-          // Get tasks (items without start_time or explicitly marked as tasks)
-          const allTasks = (data.items || []).filter((item: any) =>
-            !item.start_time || item.type === 'task'
-          );
-          setTasks(allTasks);
-        } else {
-          setTasks([]);
-        }
+        const items = await fetchItems(false);
+        const allTasks = items.filter((item: any) =>
+          !item.start_time || item.type === 'task'
+        );
+        setTasks(allTasks);
       } catch (error) {
+        console.error('Error loading tasks:', error);
         setTasks([]);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchTasks();
-  }, [isOpen]);
+    loadTasks();
+  }, [isOpen, cachedItems, fetchItems]);
 
   const tasksByStatus = React.useMemo(() => {
     return {
@@ -97,15 +96,13 @@ export function DockTasksSelector({
   }, [tasks]);
 
   const refreshTasks = React.useCallback(async () => {
-    const refreshRes = await fetch('/api/items');
-    if (refreshRes.ok) {
-      const data = await refreshRes.json();
-      const allTasks = (data.items || []).filter((item: any) =>
-        !item.start_time || item.type === 'task'
-      );
-      setTasks(allTasks);
-    }
-  }, []);
+    invalidateItems();
+    const items = await fetchItems(true);
+    const allTasks = items.filter((item: any) =>
+      !item.start_time || item.type === 'task'
+    );
+    setTasks(allTasks);
+  }, [invalidateItems, fetchItems]);
 
   const resetForm = React.useCallback(() => {
     setTaskTitle('');

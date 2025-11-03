@@ -5,6 +5,7 @@ import { formatDateRange } from "little-date"
 import { format } from "date-fns"
 import { PlusIcon, ChevronDownIcon } from "lucide-react"
 import { isSameDay } from "date-fns"
+import { useDataCache } from "@/contexts/DataCacheContext"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -43,9 +44,10 @@ export function DockCalendarSelector({
   onClose,
   noWrapper = false
 }: DockCalendarSelectorProps) {
+  const { items: cachedItems, fetchItems, invalidateItems } = useDataCache();
   const [date, setDate] = React.useState<Date | undefined>(new Date())
   const [events, setEvents] = React.useState<CalendarEvent[]>([])
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(false)
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false)
   const [eventTitle, setEventTitle] = React.useState('')
   const [eventDescription, setEventDescription] = React.useState('')
@@ -62,39 +64,31 @@ export function DockCalendarSelector({
   const [editing, setEditing] = React.useState(false)
   const [deleting, setDeleting] = React.useState(false)
 
-  // Fetch events from the API
+  // Fetch events using cache
   React.useEffect(() => {
     if (!isOpen) return;
 
-    async function fetchEvents() {
+    async function loadEvents() {
+      // Try cached items first
+      if (cachedItems && cachedItems.length > 0) {
+        setEvents(cachedItems as any);
+        return;
+      }
+
       try {
         setLoading(true);
-        const res = await fetch('/api/items');
-
-        // Handle unauthorized users (show empty state)
-        if (res.status === 401) {
-          setEvents([]);
-          setLoading(false);
-          return;
-        }
-
-        if (res.ok) {
-          const data = await res.json();
-          // Get all items (both events with start_time and tasks with due_date)
-          const allItems = data.items || [];
-          setEvents(allItems);
-        } else {
-          setEvents([]);
-        }
+        const items = await fetchItems(false);
+        setEvents(items as any);
       } catch (error) {
+        console.error('Error loading events:', error);
         setEvents([]);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchEvents();
-  }, [isOpen]);
+    loadEvents();
+  }, [isOpen, cachedItems, fetchItems]);
 
   // Filter events for the selected date
   const eventsForSelectedDate = React.useMemo(() => {
@@ -114,12 +108,10 @@ export function DockCalendarSelector({
   }, [date, events])
 
   const refreshEvents = React.useCallback(async () => {
-    const refreshRes = await fetch('/api/items');
-    if (refreshRes.ok) {
-      const data = await refreshRes.json();
-      setEvents(data.items || []);
-    }
-  }, []);
+    invalidateItems();
+    const items = await fetchItems(true);
+    setEvents(items as any);
+  }, [invalidateItems, fetchItems]);
 
   const resetForm = React.useCallback(() => {
     setEventTitle('');

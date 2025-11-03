@@ -32,32 +32,51 @@ interface Reading {
   readTime: string;
 }
 
+interface Item {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string | null;
+  status: 'todo' | 'in_progress' | 'done';
+  due_date: string | null;
+  start_time: string | null;
+  end_time: string | null;
+  track_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 interface CacheState {
   tracks: Track[] | null;
   guides: Guide[] | null;
   questionsByGuide: Record<string, Question[]>;
   readingsByGuide: Record<string, Reading[]>;
   notesByTrack: Record<string, string>;
+  items: Item[] | null;
   lastFetch: {
     tracks: number | null;
     guides: number | null;
     questionsByGuide: Record<string, number>;
     readingsByGuide: Record<string, number>;
     notesByTrack: Record<string, number>;
+    items: number | null;
   };
 }
 
 interface DataCacheContextType {
   tracks: Track[] | null;
   guides: Guide[] | null;
+  items: Item[] | null;
   fetchTracks: (force?: boolean) => Promise<Track[]>;
   fetchGuides: (force?: boolean) => Promise<Guide[]>;
   fetchQuestions: (guideId: string, force?: boolean) => Promise<Question[]>;
   fetchReadings: (guideId: string, force?: boolean) => Promise<Reading[]>;
   fetchNotes: (trackId: string, force?: boolean) => Promise<string>;
+  fetchItems: (force?: boolean) => Promise<Item[]>;
   saveNotes: (trackId: string, content: string) => void;
   invalidateTracks: () => void;
   invalidateGuides: () => void;
+  invalidateItems: () => void;
   invalidateAll: () => void;
 }
 
@@ -79,18 +98,22 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
           const tracksValid = parsed.lastFetch?.tracks && (now - parsed.lastFetch.tracks < CACHE_DURATION);
           const guidesValid = parsed.lastFetch?.guides && (now - parsed.lastFetch.guides < CACHE_DURATION);
 
+          const itemsValid = parsed.lastFetch?.items && (now - parsed.lastFetch.items < CACHE_DURATION);
+
           return {
             tracks: tracksValid ? parsed.tracks : null,
             guides: guidesValid ? parsed.guides : null,
             questionsByGuide: parsed.questionsByGuide || {},
             readingsByGuide: parsed.readingsByGuide || {},
             notesByTrack: parsed.notesByTrack || {},
+            items: itemsValid ? parsed.items : null,
             lastFetch: {
               tracks: tracksValid ? parsed.lastFetch.tracks : null,
               guides: guidesValid ? parsed.lastFetch.guides : null,
               questionsByGuide: parsed.lastFetch?.questionsByGuide || {},
               readingsByGuide: parsed.lastFetch?.readingsByGuide || {},
               notesByTrack: parsed.lastFetch?.notesByTrack || {},
+              items: itemsValid ? parsed.lastFetch.items : null,
             },
           };
         }
@@ -104,12 +127,14 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       questionsByGuide: {},
       readingsByGuide: {},
       notesByTrack: {},
+      items: null,
       lastFetch: {
         tracks: null,
         guides: null,
         questionsByGuide: {},
         readingsByGuide: {},
         notesByTrack: {},
+        items: null,
       },
     };
   });
@@ -197,6 +222,43 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     }
   }, []); // No dependencies - stable function
 
+  const fetchItems = useCallback(async (force = false): Promise<Item[]> => {
+    const currentCache = cacheRef.current;
+
+    // Return cached data if available and not forcing refresh
+    if (!force && currentCache.items && currentCache.lastFetch.items) {
+      const age = Date.now() - currentCache.lastFetch.items;
+      if (age < CACHE_DURATION) {
+        return currentCache.items;
+      }
+    }
+
+    try {
+      const res = await fetch('/api/items');
+      if (!res.ok) {
+        // If unauthorized, return empty array
+        if (res.status === 401) {
+          return [];
+        }
+        throw new Error('Failed to fetch items');
+      }
+      const data = await res.json();
+      const items = data.items || [];
+
+      setCache(prev => ({
+        ...prev,
+        items,
+        lastFetch: { ...prev.lastFetch, items: Date.now() },
+      }));
+
+      return items;
+    } catch (error) {
+      console.error('Error fetching items:', error);
+      // Return cached data if fetch fails
+      return currentCache.items || [];
+    }
+  }, []); // No dependencies - stable function
+
   const invalidateTracks = useCallback(() => {
     setCache(prev => ({
       ...prev,
@@ -210,6 +272,14 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       guides: null,
       lastFetch: { ...prev.lastFetch, guides: null },
+    }));
+  }, []);
+
+  const invalidateItems = useCallback(() => {
+    setCache(prev => ({
+      ...prev,
+      items: null,
+      lastFetch: { ...prev.lastFetch, items: null },
     }));
   }, []);
 
@@ -336,12 +406,14 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       questionsByGuide: {},
       readingsByGuide: {},
       notesByTrack: {},
+      items: null,
       lastFetch: {
         tracks: null,
         guides: null,
         questionsByGuide: {},
         readingsByGuide: {},
         notesByTrack: {},
+        items: null,
       },
     });
     if (typeof window !== 'undefined') {
@@ -354,14 +426,17 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       value={{
         tracks: cache.tracks,
         guides: cache.guides,
+        items: cache.items,
         fetchTracks,
         fetchGuides,
         fetchQuestions,
         fetchReadings,
         fetchNotes,
+        fetchItems,
         saveNotes,
         invalidateTracks,
         invalidateGuides,
+        invalidateItems,
         invalidateAll,
       }}
     >

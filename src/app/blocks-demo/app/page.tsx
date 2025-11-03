@@ -14,13 +14,6 @@ type View = 'guides' | 'notes' | 'overview' | 'calendar' | 'tasks';
 
 export default function AppPage() {
 	const [currentView, setCurrentView] = useState<View>('guides');
-	const [viewKeys, setViewKeys] = useState({
-		guides: 0,
-		notes: 0,
-		overview: 0,
-		calendar: 0,
-		tasks: 0,
-	});
 	const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
 	const [isDark, setIsDark] = useState(false);
 	const [userEmail, setUserEmail] = useState('');
@@ -76,11 +69,6 @@ export default function AppPage() {
 
 	const handleViewChange = (newView: View) => {
 		setCurrentView(newView);
-		// Increment the key for the new view to retrigger animations
-		setViewKeys(prev => ({
-			...prev,
-			[newView]: prev[newView] + 1,
-		}));
 	};
 
 	const handleThemeToggle = () => {
@@ -306,7 +294,6 @@ export default function AppPage() {
 					}}
 				>
 					<GuidesViewWrapper
-						key={`guides-${viewKeys.guides}`}
 						onViewChange={handleViewChange}
 						setActions={setTemplatesActions}
 						selectedTrackIds={selectedTrackIds}
@@ -326,7 +313,6 @@ export default function AppPage() {
 					}}
 				>
 					<NotesViewWrapper
-						key={`notes-${viewKeys.notes}`}
 						selectedTrackIds={selectedTrackIds}
 					/>
 				</motion.div>
@@ -344,7 +330,6 @@ export default function AppPage() {
 					}}
 				>
 					<CalendarView
-						key={`calendar-${viewKeys.calendar}`}
 						selectedTrackIds={selectedTrackIds}
 					/>
 				</motion.div>
@@ -362,7 +347,6 @@ export default function AppPage() {
 					}}
 				>
 					<TasksView
-						key={`tasks-${viewKeys.tasks}`}
 						selectedTrackIds={selectedTrackIds}
 					/>
 				</motion.div>
@@ -379,7 +363,7 @@ export default function AppPage() {
 						zIndex: currentView === 'overview' ? 10 : 0
 					}}
 				>
-					<OverviewView key={`overview-${viewKeys.overview}`} />
+					<OverviewView />
 				</motion.div>
 			</div>
 

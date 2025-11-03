@@ -1,12 +1,13 @@
 'use client';
 
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ListTodo, Loader2 } from 'lucide-react';
 import { KanbanBoard } from '@/components/app/tasks/KanbanBoard';
 import { Task } from '@/types/workspace';
 import { toast } from 'sonner';
+import { useDataCache } from '@/contexts/DataCacheContext';
 import {
   Empty,
   EmptyContent,
@@ -31,209 +32,123 @@ interface TasksViewProps {
 }
 
 export function TasksView({ selectedTrackIds }: TasksViewProps) {
-  const queryClient = useQueryClient();
+  const { items: cachedItems, fetchItems, invalidateItems } = useDataCache();
+  const [allItems, setAllItems] = useState<ExtendedTask[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  // Fetch tasks
-  const { data: allItems, isLoading, error } = useQuery({
-    queryKey: ['items'],
-    queryFn: async () => {
-      const res = await fetch('/api/items');
-      if (!res.ok) {
-        // If unauthorized, return empty array instead of throwing
-        if (res.status === 401) {
-          return [];
-        }
-        throw new Error('Failed to fetch tasks');
-      }
-      const data = await res.json();
-      return data.items as ExtendedTask[];
-    },
-  });
+  // Fetch tasks using cache
+  const loadTasks = useCallback(async () => {
+    // Try cached items first
+    if (cachedItems && cachedItems.length > 0) {
+      setAllItems(cachedItems as any);
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+      const items = await fetchItems(false);
+      setAllItems(items as any);
+    } catch (err) {
+      console.error('Error fetching tasks:', err);
+      setError(err instanceof Error ? err : new Error('Failed to fetch tasks'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [cachedItems, fetchItems]);
+
+  useEffect(() => {
+    loadTasks();
+  }, [loadTasks]);
 
   // Filter tasks by selected tracks
   const data = selectedTrackIds.length > 0
     ? (allItems || []).filter(task => task.track_id && selectedTrackIds.includes(task.track_id))
     : (allItems || []);
 
-  // Create task mutation
-  const createTaskMutation = useMutation({
-    mutationFn: async (task: {
-      title: string;
-      description: string;
-      status: 'todo' | 'in_progress' | 'done';
-      due_date: string | null;
-      track_id: string | null;
-    }) => {
+  // Create task
+  const createTask = async (task: {
+    title: string;
+    description: string;
+    status: 'todo' | 'in_progress' | 'done';
+    due_date: string | null;
+    track_id: string | null;
+  }) => {
+    try {
       const res = await fetch('/api/items', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task),
       });
       if (!res.ok) throw new Error('Failed to create task');
-      return res.json();
-    },
-    onMutate: async (newTask) => {
-      await queryClient.cancelQueries({ queryKey: ['items'] });
 
-      const previousTasks = queryClient.getQueryData<ExtendedTask[]>(['tasks']);
-
-      queryClient.setQueryData<ExtendedTask[]>(['tasks'], (old = []) => [
-        ...old,
-        {
-          id: `temp-${Date.now()}`,
-          user_id: '',
-          title: newTask.title,
-          description: newTask.description,
-          status: newTask.status as 'todo' | 'in_progress' | 'done',
-          due_date: newTask.due_date,
-          track_id: newTask.track_id,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        } as ExtendedTask,
-      ]);
-
-      return { previousTasks };
-    },
-    onError: (err, newTask, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(['tasks'], context.previousTasks);
-      }
-      toast.error('Failed to create task');
-    },
-    onSuccess: () => {
+      invalidateItems();
+      await loadTasks();
       toast.success('Task created successfully');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['items'] });
-    },
-  });
+    } catch (err) {
+      console.error('Error creating task:', err);
+      toast.error('Failed to create task');
+    }
+  };
 
-  // Delete task mutation
-  const deleteTaskMutation = useMutation({
-    mutationFn: async (taskId: string) => {
+  // Delete task
+  const deleteTask = async (taskId: string) => {
+    try {
       const res = await fetch(`/api/items/${taskId}`, {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Failed to delete task');
-      return res.json();
-    },
-    onMutate: async (taskId) => {
-      await queryClient.cancelQueries({ queryKey: ['items'] });
 
-      const previousTasks = queryClient.getQueryData<ExtendedTask[]>(['tasks']);
-
-      queryClient.setQueryData<ExtendedTask[]>(['tasks'], (old = []) =>
-        old.filter((task) => task.id !== taskId)
-      );
-
-      return { previousTasks };
-    },
-    onError: (err, taskId, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(['tasks'], context.previousTasks);
-      }
-      toast.error('Failed to delete task');
-    },
-    onSuccess: () => {
+      invalidateItems();
+      await loadTasks();
       toast.success('Task deleted successfully');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['items'] });
-    },
-  });
+    } catch (err) {
+      console.error('Error deleting task:', err);
+      toast.error('Failed to delete task');
+    }
+  };
 
-  // Update task status mutation
-  const updateTaskStatusMutation = useMutation({
-    mutationFn: async ({
-      taskId,
-      status,
-    }: {
-      taskId: string;
-      status: 'todo' | 'in_progress' | 'done';
-    }) => {
+  // Update task status
+  const updateTaskStatus = async (taskId: string, status: 'todo' | 'in_progress' | 'done') => {
+    try {
       const res = await fetch(`/api/items/${taskId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
       });
       if (!res.ok) throw new Error('Failed to update task');
-      return res.json();
-    },
-    onMutate: async ({ taskId, status }) => {
-      await queryClient.cancelQueries({ queryKey: ['items'] });
 
-      const previousTasks = queryClient.getQueryData<ExtendedTask[]>(['tasks']);
-
-      queryClient.setQueryData<ExtendedTask[]>(['tasks'], (old = []) =>
-        old.map((task) =>
-          task.id === taskId
-            ? { ...task, status: status as 'todo' | 'in_progress' | 'done' }
-            : task
-        )
-      );
-
-      return { previousTasks };
-    },
-    onError: (err, variables, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(['tasks'], context.previousTasks);
-      }
+      invalidateItems();
+      await loadTasks();
+    } catch (err) {
+      console.error('Error updating task status:', err);
       toast.error('Failed to update task status');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['items'] });
-    },
-  });
+    }
+  };
 
-  // Update task mutation
-  const updateTaskMutation = useMutation({
-    mutationFn: async ({
-      taskId,
-      updates,
-    }: {
-      taskId: string;
-      updates: {
-        title: string;
-        description: string;
-        due_date: string | null;
-      };
-    }) => {
+  // Update task
+  const updateTask = async (taskId: string, updates: {
+    title: string;
+    description: string;
+    due_date: string | null;
+  }) => {
+    try {
       const res = await fetch(`/api/items/${taskId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates),
       });
       if (!res.ok) throw new Error('Failed to update task');
-      return res.json();
-    },
-    onMutate: async ({ taskId, updates }) => {
-      await queryClient.cancelQueries({ queryKey: ['items'] });
 
-      const previousTasks = queryClient.getQueryData<ExtendedTask[]>(['tasks']);
-
-      queryClient.setQueryData<ExtendedTask[]>(['tasks'], (old = []) =>
-        old.map((task) =>
-          task.id === taskId
-            ? { ...task, ...updates }
-            : task
-        )
-      );
-
-      return { previousTasks };
-    },
-    onError: (err, variables, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(['tasks'], context.previousTasks);
-      }
-      toast.error('Failed to update task');
-    },
-    onSuccess: () => {
+      invalidateItems();
+      await loadTasks();
       toast.success('Task updated successfully');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['items'] });
-    },
-  });
+    } catch (err) {
+      console.error('Error updating task:', err);
+      toast.error('Failed to update task');
+    }
+  };
 
   const handleCreateTask = (task: {
     title: string;
@@ -242,18 +157,18 @@ export function TasksView({ selectedTrackIds }: TasksViewProps) {
     due_date: string | null;
     track_id: string | null;
   }) => {
-    createTaskMutation.mutate(task);
+    createTask(task);
   };
 
   const handleDeleteTask = (taskId: string) => {
-    deleteTaskMutation.mutate(taskId);
+    deleteTask(taskId);
   };
 
   const handleUpdateTaskStatus = (
     taskId: string,
     newStatus: 'todo' | 'in_progress' | 'done'
   ) => {
-    updateTaskStatusMutation.mutate({ taskId, status: newStatus });
+    updateTaskStatus(taskId, newStatus);
   };
 
   const handleUpdateTask = (
@@ -264,7 +179,7 @@ export function TasksView({ selectedTrackIds }: TasksViewProps) {
       due_date: string | null;
     }
   ) => {
-    updateTaskMutation.mutate({ taskId, updates });
+    updateTask(taskId, updates);
   };
 
   if (isLoading) {

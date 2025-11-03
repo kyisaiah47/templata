@@ -14,6 +14,7 @@ import { CalendarEvent, Task } from '@/types/workspace';
 import { format, addMonths, subMonths, addDays, subDays, addWeeks, subWeeks, startOfWeek, endOfWeek } from 'date-fns';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { useDataCache } from '@/contexts/DataCacheContext';
 
 type CalendarViewType = 'month' | 'week' | 'day';
 
@@ -22,11 +23,12 @@ interface CalendarViewProps {
 }
 
 export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
+  const { items: cachedItems, fetchItems, invalidateItems } = useDataCache();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarViewType>('month');
   const [allItems, setAllItems] = useState<CalendarEvent[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -41,40 +43,31 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
   const events = filteredItems.filter(item => item.start_time);
   const filteredTasks = filteredItems.filter(item => item.due_date && !item.start_time);
 
-  // Fetch calendar events
+  // Fetch calendar events using cache
   const fetchEvents = useCallback(async () => {
+    // Try cached items first
+    if (cachedItems && cachedItems.length > 0) {
+      setAllItems(cachedItems as any);
+      setTasks(cachedItems as any);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
 
-      // Fetch all items (both events and tasks)
-      const itemsResponse = await fetch('/api/items');
-
-      if (!itemsResponse.ok) {
-        // If unauthorized, just show empty state
-        if (itemsResponse.status === 401) {
-          setAllItems([]);
-          setTasks([]);
-          setLoading(false);
-          return;
-        }
-        const errorData = await itemsResponse.json().catch(() => ({}));
-        console.error('Items API error:', errorData);
-        throw new Error(errorData.error || 'Failed to fetch items');
-      }
-
-      const itemsData = await itemsResponse.json();
-      setAllItems(itemsData.items || []);
-      setTasks(itemsData.items || []);
+      const items = await fetchItems(false);
+      setAllItems(items as any);
+      setTasks(items as any);
     } catch (err) {
       console.error('Error fetching calendar data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load calendar');
     } finally {
       setLoading(false);
     }
-  }, [currentDate]);
+  }, [cachedItems, fetchItems]);
 
-  // Fetch data on mount and when currentDate changes
+  // Fetch data on mount or when cache changes
   useEffect(() => {
     fetchEvents();
   }, [fetchEvents]);
@@ -90,7 +83,8 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
   };
 
   const handleEventCreated = () => {
-    // Refresh events after creating a new one
+    // Invalidate cache and refresh events after creating a new one
+    invalidateItems();
     fetchEvents();
   };
 
@@ -108,7 +102,8 @@ export function CalendarView({ selectedTrackIds }: CalendarViewProps) {
         throw new Error('Failed to delete event');
       }
 
-      // Refresh events after deletion
+      // Invalidate cache and refresh events after deletion
+      invalidateItems();
       fetchEvents();
     } catch (err) {
       console.error('Error deleting event:', err);
