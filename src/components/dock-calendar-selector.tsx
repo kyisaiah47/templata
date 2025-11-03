@@ -3,6 +3,7 @@
 import * as React from "react"
 import { formatDateRange } from "little-date"
 import { PlusIcon } from "lucide-react"
+import { isSameDay } from "date-fns"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -39,14 +40,26 @@ export function DockCalendarSelector({
         setLoading(true);
         const res = await fetch('/api/items');
 
+        // Handle unauthorized users (show empty state)
+        if (res.status === 401) {
+          setEvents([]);
+          setLoading(false);
+          return;
+        }
+
         if (res.ok) {
           const data = await res.json();
           // Filter only items with start_time (calendar events)
           const calendarEvents = (data.items || []).filter((item: CalendarEvent) => item.start_time);
+          console.log('Fetched calendar events:', calendarEvents);
           setEvents(calendarEvents);
+        } else {
+          console.error('Failed to fetch items:', res.status);
+          setEvents([]);
         }
       } catch (error) {
         console.error('Error fetching calendar events:', error);
+        setEvents([]);
       } finally {
         setLoading(false);
       }
@@ -59,11 +72,14 @@ export function DockCalendarSelector({
   const eventsForSelectedDate = React.useMemo(() => {
     if (!date) return [];
 
-    const selectedDateStr = date.toISOString().split('T')[0];
-    return events.filter(event => {
-      const eventDateStr = new Date(event.start_time).toISOString().split('T')[0];
-      return eventDateStr === selectedDateStr;
+    const filtered = events.filter(event => {
+      if (!event.start_time) return false;
+      return isSameDay(new Date(event.start_time), date);
     });
+
+    console.log('Selected date:', date);
+    console.log('Filtered events for date:', filtered);
+    return filtered;
   }, [date, events])
 
   if (!isOpen) return null;
