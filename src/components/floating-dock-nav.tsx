@@ -12,6 +12,7 @@ import {
   Sun,
   User,
   LayoutDashboard,
+  FolderOpen,
 } from "lucide-react";
 import {
   AnimatePresence,
@@ -25,6 +26,12 @@ import { useRef, useState } from "react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { TrackSelector } from "@/components/track-selector";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type View = 'guides' | 'notes' | 'overview' | 'calendar' | 'tasks';
 
@@ -33,10 +40,21 @@ interface FloatingDockNavProps {
   onViewChange: (view: View) => void;
   onThemeToggle: () => void;
   isDark: boolean;
+  selectedTrackIds: string[];
+  onTrackSelectionChange: (trackIds: string[]) => void;
 }
 
-const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark }: FloatingDockNavProps) => {
+const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark, selectedTrackIds, onTrackSelectionChange }: FloatingDockNavProps) => {
+  const [trackSelectorOpen, setTrackSelectorOpen] = useState(false);
+
   const tabs = [
+    {
+      title: "Tracks",
+      icon: <FolderOpen />,
+      onClick: () => setTrackSelectorOpen(!trackSelectorOpen),
+      isActive: false,
+      isTrackSelector: true,
+    },
     {
       title: "Guides",
       icon: <BookOpen />,
@@ -87,6 +105,10 @@ const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark }: F
           desktopClassName="fixed bottom-4 left-1/2 -translate-x-1/2"
           mobileClassName="fixed right-6 bottom-6"
           items={tabs}
+          trackSelectorOpen={trackSelectorOpen}
+          setTrackSelectorOpen={setTrackSelectorOpen}
+          selectedTrackIds={selectedTrackIds}
+          onTrackSelectionChange={onTrackSelectionChange}
         />
       </div>
     </section>
@@ -103,15 +125,37 @@ const FloatingDock = ({
   items,
   desktopClassName,
   mobileClassName,
+  trackSelectorOpen,
+  setTrackSelectorOpen,
+  selectedTrackIds,
+  onTrackSelectionChange,
 }: {
-  items: { title: string; icon: React.ReactNode; onClick: () => void; isActive: boolean }[];
+  items: { title: string; icon: React.ReactNode; onClick: () => void; isActive: boolean; isTrackSelector?: boolean }[];
   desktopClassName?: string;
   mobileClassName?: string;
+  trackSelectorOpen: boolean;
+  setTrackSelectorOpen: (open: boolean) => void;
+  selectedTrackIds: string[];
+  onTrackSelectionChange: (trackIds: string[]) => void;
 }) => {
   return (
     <>
-      <FloatingDockDesktop items={items} className={desktopClassName} />
-      <FloatingDockMobile items={items} className={mobileClassName} />
+      <FloatingDockDesktop
+        items={items}
+        className={desktopClassName}
+        trackSelectorOpen={trackSelectorOpen}
+        setTrackSelectorOpen={setTrackSelectorOpen}
+        selectedTrackIds={selectedTrackIds}
+        onTrackSelectionChange={onTrackSelectionChange}
+      />
+      <FloatingDockMobile
+        items={items}
+        className={mobileClassName}
+        trackSelectorOpen={trackSelectorOpen}
+        setTrackSelectorOpen={setTrackSelectorOpen}
+        selectedTrackIds={selectedTrackIds}
+        onTrackSelectionChange={onTrackSelectionChange}
+      />
     </>
   );
 };
@@ -119,9 +163,17 @@ const FloatingDock = ({
 const FloatingDockMobile = ({
   items,
   className,
+  trackSelectorOpen,
+  setTrackSelectorOpen,
+  selectedTrackIds,
+  onTrackSelectionChange,
 }: {
-  items: { title: string; icon: React.ReactNode; onClick: () => void; isActive: boolean }[];
+  items: { title: string; icon: React.ReactNode; onClick: () => void; isActive: boolean; isTrackSelector?: boolean }[];
   className?: string;
+  trackSelectorOpen: boolean;
+  setTrackSelectorOpen: (open: boolean) => void;
+  selectedTrackIds: string[];
+  onTrackSelectionChange: (trackIds: string[]) => void;
 }) => {
   const [open, setOpen] = useState(false);
   return (
@@ -152,7 +204,7 @@ const FloatingDockMobile = ({
                 <button
                   onClick={() => {
                     item.onClick();
-                    setOpen(false);
+                    if (!item.isTrackSelector) setOpen(false);
                   }}
                   key={item.title}
                   className={cn(
@@ -167,6 +219,16 @@ const FloatingDockMobile = ({
           </motion.div>
         )}
       </AnimatePresence>
+      {trackSelectorOpen && (
+        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2">
+          <div className="bg-background border border-border rounded-xl p-2 shadow-lg">
+            <TrackSelector
+              selectedTrackIds={selectedTrackIds}
+              onSelectionChange={onTrackSelectionChange}
+            />
+          </div>
+        </div>
+      )}
       <button
         onClick={() => setOpen(!open)}
         className="bg-background border border-border flex h-10 w-10 items-center justify-center rounded-xl"
@@ -180,24 +242,44 @@ const FloatingDockMobile = ({
 const FloatingDockDesktop = ({
   items,
   className,
+  trackSelectorOpen,
+  setTrackSelectorOpen,
+  selectedTrackIds,
+  onTrackSelectionChange,
 }: {
-  items: { title: string; icon: React.ReactNode; onClick: () => void; isActive: boolean }[];
+  items: { title: string; icon: React.ReactNode; onClick: () => void; isActive: boolean; isTrackSelector?: boolean }[];
   className?: string;
+  trackSelectorOpen: boolean;
+  setTrackSelectorOpen: (open: boolean) => void;
+  selectedTrackIds: string[];
+  onTrackSelectionChange: (trackIds: string[]) => void;
 }) => {
   const mouseX = useMotionValue(Infinity);
   return (
-    <motion.div
-      onMouseMove={(e) => mouseX.set(e.pageX)}
-      onMouseLeave={() => mouseX.set(Infinity)}
-      className={cn(
-        "bg-background border border-border shadow-lg z-99 mx-auto hidden h-16 items-end items-center justify-center gap-2 rounded-3xl px-5 md:flex",
-        className,
+    <div className="relative">
+      {trackSelectorOpen && (
+        <div className="absolute bottom-full mb-4 left-0">
+          <div className="bg-background border border-border rounded-xl p-2 shadow-lg">
+            <TrackSelector
+              selectedTrackIds={selectedTrackIds}
+              onSelectionChange={onTrackSelectionChange}
+            />
+          </div>
+        </div>
       )}
-    >
-      {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
-      ))}
-    </motion.div>
+      <motion.div
+        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+        className={cn(
+          "bg-background border border-border shadow-lg z-99 mx-auto hidden h-16 items-end items-center justify-center gap-2 rounded-3xl px-5 md:flex",
+          className,
+        )}
+      >
+        {items.map((item) => (
+          <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        ))}
+      </motion.div>
+    </div>
   );
 };
 
