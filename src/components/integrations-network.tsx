@@ -1,18 +1,16 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, HelpCircle, BookOpen, Map, Calendar, ListTodo, Library, BarChart3, LucideIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const IntegrationsNetwork = () => {
-  const IconElem = ({ image, title }: { image: string; title: string }) => (
+  const IconElem = ({ icon: Icon, title }: { icon: LucideIcon; title: string }) => (
     <div className="flex flex-col items-center">
-      <img
-        src={image}
-        alt={title}
-        className="bg-background mb-3 hidden h-14 w-14 rounded-lg object-cover p-2 shadow-[rgba(50,50,105,0.15)_0px_2px_5px_0px,rgba(0,0,0,0.05)_0px_1px_1px_0px] md:block"
-      />
+      <div className="bg-muted mb-3 hidden h-14 w-14 rounded-lg p-2 shadow-[rgba(50,50,105,0.15)_0px_2px_5px_0px,rgba(0,0,0,0.05)_0px_1px_1px_0px] md:flex items-center justify-center">
+        <Icon className="h-8 w-8" />
+      </div>
       <Badge variant="secondary" className="font-mono text-xs font-semibold">
         {title}
       </Badge>
@@ -41,31 +39,31 @@ const IntegrationsNetwork = () => {
         <div className="relative mx-auto flex max-w-3xl flex-col gap-5 overflow-hidden pb-8 md:gap-0">
           <div className="flex justify-around md:mb-[-30px]">
             <IconElem
-              image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg"
+              icon={HelpCircle}
               title="Questions"
             />
             <IconElem
-              image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-2.svg"
+              icon={BookOpen}
               title="Readings"
             />
           </div>
           <div className="flex justify-center md:mb-[-30px]">
             <IconElem
-              image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-3.svg"
+              icon={Map}
               title="Guides"
             />
           </div>
           <div className="flex justify-evenly md:mb-[-30px]">
-            <IconElem image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-4.svg" title="Calendar" />
-            <IconElem image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-5.svg" title="Tasks" />
+            <IconElem icon={Calendar} title="Calendar" />
+            <IconElem icon={ListTodo} title="Tasks" />
           </div>
           <div className="flex justify-between">
             <IconElem
-              image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-6.svg"
+              icon={Library}
               title="Library"
             />
             <IconElem
-              image="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg"
+              icon={BarChart3}
               title="Analytics"
             />
           </div>
