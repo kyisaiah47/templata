@@ -5,6 +5,7 @@ import { Header } from "./header";
 import { Footer } from "./footer";
 import { RecentlyUsedStrip, RecentlyUsedFooter } from "@/components/recently-used-strip";
 import { Navbar18 } from "@/components/navbar18";
+import { FooterCta } from "@/components/footer-cta";
 import { Button } from "@/components/ui/button";
 import { Play, Menu } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
@@ -78,7 +79,7 @@ export function PageLayout({
 
 			{children}
 
-			{/* {includeFooter && <Footer />} */}
+			{includeFooter && <FooterCta />}
 
 			{/* Recently Used Footer - shows as sticky footer */}
 			{/* <RecentlyUsedFooter /> */}
