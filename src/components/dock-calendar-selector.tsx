@@ -7,23 +7,13 @@ import { PlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 
-const events = [
-  {
-    title: "Team Sync Meeting",
-    from: "2025-06-12T09:00:00",
-    to: "2025-06-12T10:00:00",
-  },
-  {
-    title: "Design Review",
-    from: "2025-06-12T11:30:00",
-    to: "2025-06-12T12:30:00",
-  },
-  {
-    title: "Client Presentation",
-    from: "2025-06-12T14:00:00",
-    to: "2025-06-12T15:00:00",
-  },
-]
+interface CalendarEvent {
+  id: string;
+  title: string;
+  start_time: string;
+  end_time: string;
+  due_date?: string;
+}
 
 interface DockCalendarSelectorProps {
   isOpen: boolean;
@@ -36,9 +26,45 @@ export function DockCalendarSelector({
   onClose,
   noWrapper = false
 }: DockCalendarSelectorProps) {
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(2025, 5, 12)
-  )
+  const [date, setDate] = React.useState<Date | undefined>(new Date())
+  const [events, setEvents] = React.useState<CalendarEvent[]>([])
+  const [loading, setLoading] = React.useState(true)
+
+  // Fetch events from the API
+  React.useEffect(() => {
+    if (!isOpen) return;
+
+    async function fetchEvents() {
+      try {
+        setLoading(true);
+        const res = await fetch('/api/items');
+
+        if (res.ok) {
+          const data = await res.json();
+          // Filter only items with start_time (calendar events)
+          const calendarEvents = (data.items || []).filter((item: CalendarEvent) => item.start_time);
+          setEvents(calendarEvents);
+        }
+      } catch (error) {
+        console.error('Error fetching calendar events:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, [isOpen]);
+
+  // Filter events for the selected date
+  const eventsForSelectedDate = React.useMemo(() => {
+    if (!date) return [];
+
+    const selectedDateStr = date.toISOString().split('T')[0];
+    return events.filter(event => {
+      const eventDateStr = new Date(event.start_time).toISOString().split('T')[0];
+      return eventDateStr === selectedDateStr;
+    });
+  }, [date, events])
 
   if (!isOpen) return null;
 
@@ -73,17 +99,27 @@ export function DockCalendarSelector({
           </Button>
         </div>
         <div className="flex w-full flex-col gap-2">
-          {events.map((event) => (
-            <div
-              key={event.title}
-              className="bg-muted after:bg-primary/70 relative rounded-md p-2 pl-6 text-sm after:absolute after:inset-y-2 after:left-2 after:w-1 after:rounded-full"
-            >
-              <div className="font-medium">{event.title}</div>
-              <div className="text-muted-foreground text-xs">
-                {formatDateRange(new Date(event.from), new Date(event.to))}
-              </div>
+          {loading ? (
+            <div className="text-muted-foreground text-xs text-center py-4">
+              Loading events...
             </div>
-          ))}
+          ) : eventsForSelectedDate.length === 0 ? (
+            <div className="text-muted-foreground text-xs text-center py-4">
+              No events for this day
+            </div>
+          ) : (
+            eventsForSelectedDate.map((event) => (
+              <div
+                key={event.id}
+                className="bg-muted after:bg-primary/70 relative rounded-md p-2 pl-6 text-sm after:absolute after:inset-y-2 after:left-2 after:w-1 after:rounded-full"
+              >
+                <div className="font-medium">{event.title}</div>
+                <div className="text-muted-foreground text-xs">
+                  {formatDateRange(new Date(event.start_time), new Date(event.end_time))}
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
