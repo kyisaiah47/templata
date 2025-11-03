@@ -13,6 +13,22 @@ import * as LucideIcons from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   ArrowRight,
+  Heart,
+  Briefcase,
+  Activity,
+  DollarSign,
+  Home,
+  Users,
+  Rocket,
+  Brain,
+  TrendingUp,
+  Wallet,
+  Baby,
+  Target,
+  Pill,
+  PiggyBank,
+  Sparkles,
+  Calendar,
 } from 'lucide-react';
 
 interface GuideDetailProps {
@@ -186,54 +202,59 @@ export default function GuideDetail({ params }: GuideDetailProps) {
             refresh
           />
 
-          {IconComponent && (
-            <motion.div
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 1 }}
-              className="relative z-20 mt-10 flex items-center justify-center gap-4"
-            >
-              <SkiperUiMarquee
-                showCard={1}
-                className=""
-                reverse={true}
-                Icon={IconComponent}
-              />
-              <SkiperUiMarquee
-                showCard={2}
-                className=""
-                Icon={IconComponent}
-              />
-              <SkiperUiMarquee
-                showCard={3}
-                reverse={true}
-                className=""
-                Icon={IconComponent}
-              />
-              <SkiperUiMarquee
-                showCard={2}
-                className=""
-                Icon={IconComponent}
-              />
-              <SkiperUiMarquee
-                showCard={3}
-                reverse={true}
-                className=""
-                Icon={IconComponent}
-              />
-              <SkiperUiMarquee
-                showCard={2}
-                className=""
-                Icon={IconComponent}
-              />
-              <SkiperUiMarquee
-                reverse={true}
-                showCard={1}
-                className=""
-                Icon={IconComponent}
-              />
-            </motion.div>
-          )}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 1 }}
+            className="relative z-20 mt-10 flex items-center justify-center gap-4"
+          >
+            <SkiperUiMarquee
+              showCard={1}
+              className=""
+              reverse={true}
+              icons={[Heart, Home, Users, Baby]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[Briefcase, Rocket, Target, TrendingUp]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={3}
+              reverse={true}
+              className=""
+              icons={[Activity, Brain, Pill, Sparkles]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={IconComponent ? [IconComponent, IconComponent, IconComponent, IconComponent] : [DollarSign, PiggyBank, Wallet, Calendar]}
+              highlighted
+            />
+            <SkiperUiMarquee
+              showCard={3}
+              reverse={true}
+              className=""
+              icons={[Heart, Home, Briefcase, Activity]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[Rocket, Brain, DollarSign, Users]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              reverse={true}
+              showCard={1}
+              className=""
+              icons={[Target, Pill, PiggyBank, Baby]}
+              dimmed
+            />
+          </motion.div>
 
           <div className="relative z-20 mt-8 flex flex-wrap items-center justify-center gap-8">
             <div className="text-center">
@@ -354,14 +375,18 @@ interface SkiperUiMarqueeProps {
   showCard: number;
   reverse?: boolean;
   className?: string;
-  Icon: React.ComponentType<{ className?: string }>;
+  icons: React.ComponentType<{ className?: string }>[];
+  dimmed?: boolean;
+  highlighted?: boolean;
 }
 
 function SkiperUiMarquee({
   showCard,
   reverse = false,
   className,
-  Icon,
+  icons,
+  dimmed = false,
+  highlighted = false,
 }: SkiperUiMarqueeProps) {
   return (
     <div
@@ -371,8 +396,8 @@ function SkiperUiMarquee({
       }}
     >
       <Marquee reverse={reverse} vertical={true}>
-        {Array(4).fill(0).map((_, idx) => (
-          <Card key={idx} Icon={Icon} />
+        {icons.map((Icon, idx) => (
+          <Card key={idx} Icon={Icon} dimmed={dimmed} highlighted={highlighted} />
         ))}
       </Marquee>
       <div className="from-background absolute top-0 z-10 h-8 w-full bg-gradient-to-b to-transparent" />
@@ -381,16 +406,17 @@ function SkiperUiMarquee({
   );
 }
 
-function Card({ Icon }: { Icon: React.ComponentType<{ className?: string }> }) {
+function Card({ Icon, dimmed, highlighted }: { Icon: React.ComponentType<{ className?: string }>; dimmed?: boolean; highlighted?: boolean }) {
   return (
     <div
       className={cn(
         "border-muted relative flex size-24 items-center justify-center overflow-hidden rounded-3xl border p-4",
         "from-muted/50 to-background bg-gradient-to-b",
         "dark:bg-transparent dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+        dimmed && "opacity-30",
       )}
     >
-      <Icon className="size-8" />
+      <Icon className={cn("size-8", highlighted && "text-foreground")} />
     </div>
   );
 }
