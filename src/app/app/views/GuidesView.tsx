@@ -118,7 +118,7 @@ interface GuidesViewProps {
 }
 
 export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProps) {
-  const { tracks: cachedTracks, fetchTracks } = useDataCache();
+  const { tracks: cachedTracks, fetchTracks, fetchQuestions, fetchReadings } = useDataCache();
   const [selectedGuide, setSelectedGuide] = useState('wedding-planning');
   const [guides, setGuides] = useState<Template[]>([]);
   const [displayedGuides, setDisplayedGuides] = useState<Template[]>([]);
@@ -421,9 +421,8 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
           setGuideInfo({ id: guide.id, name: guide.name });
         }
 
-        const questionsRes = await fetch(`/api/guides/${selectedGuide}/questions`);
-        const questionsData = await questionsRes.json();
-        const fetchedQuestions = questionsData.questions || [];
+        // Fetch questions and readings from cache
+        const fetchedQuestions = await fetchQuestions(selectedGuide);
         setQuestions(fetchedQuestions);
 
         // Collapse all categories by default
@@ -438,9 +437,8 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         const allCategories = Object.keys(groupedQuestions);
         setCollapsedCategories(new Set(allCategories));
 
-        const readingsRes = await fetch(`/api/guides/${selectedGuide}/readings`);
-        const readingsData = await readingsRes.json();
-        setReadings(readingsData.readings || []);
+        const fetchedReadings = await fetchReadings(selectedGuide);
+        setReadings(fetchedReadings);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {

@@ -19,12 +19,29 @@ interface Track {
   guides: Guide;
 }
 
+interface Question {
+  id: string;
+  question: string;
+  categoryName: string;
+}
+
+interface Reading {
+  id: string;
+  title: string;
+  excerpt: string;
+  readTime: string;
+}
+
 interface CacheState {
   tracks: Track[] | null;
   guides: Guide[] | null;
+  questionsByGuide: Record<string, Question[]>;
+  readingsByGuide: Record<string, Reading[]>;
   lastFetch: {
     tracks: number | null;
     guides: number | null;
+    questionsByGuide: Record<string, number>;
+    readingsByGuide: Record<string, number>;
   };
 }
 
@@ -33,6 +50,8 @@ interface DataCacheContextType {
   guides: Guide[] | null;
   fetchTracks: (force?: boolean) => Promise<Track[]>;
   fetchGuides: (force?: boolean) => Promise<Guide[]>;
+  fetchQuestions: (guideId: string, force?: boolean) => Promise<Question[]>;
+  fetchReadings: (guideId: string, force?: boolean) => Promise<Reading[]>;
   invalidateTracks: () => void;
   invalidateGuides: () => void;
   invalidateAll: () => void;
@@ -72,7 +91,14 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     return {
       tracks: null,
       guides: null,
-      lastFetch: { tracks: null, guides: null },
+      questionsByGuide: {},
+      readingsByGuide: {},
+      lastFetch: {
+        tracks: null,
+        guides: null,
+        questionsByGuide: {},
+        readingsByGuide: {},
+      },
     };
   });
 
@@ -175,11 +201,88 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const fetchQuestions = useCallback(async (guideId: string, force = false): Promise<Question[]> => {
+    const currentCache = cacheRef.current;
+
+    // Return cached data if available and not forcing refresh
+    if (!force && currentCache.questionsByGuide[guideId] && currentCache.lastFetch.questionsByGuide[guideId]) {
+      const age = Date.now() - currentCache.lastFetch.questionsByGuide[guideId];
+      if (age < CACHE_DURATION) {
+        return currentCache.questionsByGuide[guideId];
+      }
+    }
+
+    try {
+      const res = await fetch(`/api/guides/${guideId}/questions`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch questions');
+      }
+      const data = await res.json();
+      const questions = data.questions || [];
+
+      setCache(prev => ({
+        ...prev,
+        questionsByGuide: { ...prev.questionsByGuide, [guideId]: questions },
+        lastFetch: {
+          ...prev.lastFetch,
+          questionsByGuide: { ...prev.lastFetch.questionsByGuide, [guideId]: Date.now() },
+        },
+      }));
+
+      return questions;
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      return currentCache.questionsByGuide[guideId] || [];
+    }
+  }, []);
+
+  const fetchReadings = useCallback(async (guideId: string, force = false): Promise<Reading[]> => {
+    const currentCache = cacheRef.current;
+
+    // Return cached data if available and not forcing refresh
+    if (!force && currentCache.readingsByGuide[guideId] && currentCache.lastFetch.readingsByGuide[guideId]) {
+      const age = Date.now() - currentCache.lastFetch.readingsByGuide[guideId];
+      if (age < CACHE_DURATION) {
+        return currentCache.readingsByGuide[guideId];
+      }
+    }
+
+    try {
+      const res = await fetch(`/api/guides/${guideId}/readings`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch readings');
+      }
+      const data = await res.json();
+      const readings = data.readings || [];
+
+      setCache(prev => ({
+        ...prev,
+        readingsByGuide: { ...prev.readingsByGuide, [guideId]: readings },
+        lastFetch: {
+          ...prev.lastFetch,
+          readingsByGuide: { ...prev.lastFetch.readingsByGuide, [guideId]: Date.now() },
+        },
+      }));
+
+      return readings;
+    } catch (error) {
+      console.error('Error fetching readings:', error);
+      return currentCache.readingsByGuide[guideId] || [];
+    }
+  }, []);
+
   const invalidateAll = useCallback(() => {
     setCache({
       tracks: null,
       guides: null,
-      lastFetch: { tracks: null, guides: null },
+      questionsByGuide: {},
+      readingsByGuide: {},
+      lastFetch: {
+        tracks: null,
+        guides: null,
+        questionsByGuide: {},
+        readingsByGuide: {},
+      },
     });
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem(CACHE_KEY);
@@ -193,6 +296,8 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
         guides: cache.guides,
         fetchTracks,
         fetchGuides,
+        fetchQuestions,
+        fetchReadings,
         invalidateTracks,
         invalidateGuides,
         invalidateAll,
