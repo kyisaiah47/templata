@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-type Category = "Support" | "Account" | "Features" | "Security" | "Other";
+type Category = "General" | "Guides" | "Features" | "Pricing" | "Technical";
 
 interface FAQItem {
   question: string;
@@ -21,105 +21,109 @@ interface FAQItem {
 }
 
 const faqItems: FAQItem[] = [
-  // Support Questions
+  // General Questions
   {
-    category: "Support",
-    question: "Is there a free version?",
+    category: "General",
+    question: "What is Templata?",
     answer:
-      "Yes! We offer a generous free plan with just enough features except that one feature you really want! Our strategy is to get your credit card details on file then steadily double our prices against inflation rates.",
+      "Templata is the comprehensive guide and planning tool for major life events. We provide AI-refined questions covering 90%+ of what you need to consider, curated expert readings to inform decisions, and integrated planning tools to keep everything organized.",
   },
   {
-    category: "Support",
-    question: "Is support free, or do I need to Perplexity everything?",
+    category: "General",
+    question: "Who is Templata for?",
     answer:
-      "We pride ourselves on our comprehensive support system. Our chatbot will happily redirect you to our documentation, which will then redirect you back to the chatbot.",
+      "Anyone facing a major life decision—planning a wedding, buying a home, changing careers, starting a business. If you're spending months on scattered research trying to figure out what you even need to know, Templata provides the comprehensive framework.",
   },
   {
-    category: "Support",
-    question: "What if I need immediate assistance?",
+    category: "General",
+    question: "How is this different from using Notion or Google Docs?",
     answer:
-      "Our AI support team will get back to you in approximately 3-5 business years.",
+      "Notion gives you blank pages to figure out yourself. Google gives you scattered information to synthesize. Templata provides comprehensive questions refined through months of AI testing, expert readings curated for each decision point, and planning tools organized per life event.",
   },
-  // Account Questions
+  // Guides Questions
   {
-    category: "Account",
-    question: "How do I update my account without breaking my laptop?",
+    category: "Guides",
+    question: "What guides are currently available?",
     answer:
-      "Our platform is designed to be extremely user-friendly. Just follow our simple 47-step process, and you should be fine!",
+      "We're launching with guides for wedding planning, home buying, and career transitions. Our goal is 1000+ guides covering every major life event—personal, professional, financial, and health-related decisions.",
   },
   {
-    category: "Account",
-    question: "How do I update my account without breaking the universe?",
-    answer: "Just be very careful not to press any buttons too hard.",
+    category: "Guides",
+    question: "What does 90%+ coverage mean?",
+    answer:
+      "It means our question sets have been refined through extensive AI testing to cover the vast majority of considerations for that life event. Not everything—some decisions are unique to your situation—but the critical questions most people need to think through.",
   },
   {
-    category: "Account",
-    question: "What happens if I forget my password?",
-    answer: "You'll need to solve three riddles and defeat a dragon.",
+    category: "Guides",
+    question: "Can I use multiple guides at once?",
+    answer:
+      "Yes. Each guide maintains its own calendar, tasks, and notes. Planning a wedding while buying a home? Your wedding tasks stay separate from home-buying tasks. Switch between guides to see the relevant planning context.",
   },
   // Features Questions
   {
     category: "Features",
-    question: "Are you going to be subsumed by AI?",
+    question: "What is the Axiom Engine?",
     answer:
-      "Probably! But until then, we'll keep pretending we're irreplaceable.",
+      "Our question and reading refinement system. Every guide goes through months of AI-assisted testing to ensure comprehensive coverage. We validate against expert sources, test edge cases, and refine based on what actually matters for each life event.",
   },
   {
     category: "Features",
-    question: "What makes your platform unique?",
+    question: "How do the readings work?",
     answer:
-      "We use at least 7 different types of AI, and none of them work together!",
+      "Each guide includes curated expert readings—articles, guides, and resources vetted for quality and relevance. Readings appear alongside related questions so you can learn and plan simultaneously. No random blog posts, just sources that help inform your decisions.",
   },
   {
     category: "Features",
-    question: "Do you support integration with other tools?",
-    answer: "We integrate with everything except the tools you actually use.",
-  },
-  // Security Questions
-  {
-    category: "Security",
-    question: "How secure is my data?",
+    question: "Does Templata integrate with my calendar or task apps?",
     answer:
-      'We use military-grade encryption, but our password is "password123".',
+      "Currently, calendar events and tasks live within Templata, organized per guide. External integrations are on the roadmap, but the per-guide organization is intentional—when you're in wedding planning mode, you see wedding tasks, not everything else.",
   },
+  // Pricing Questions
   {
-    category: "Security",
-    question: "What happens in case of a data breach?",
+    category: "Pricing",
+    question: "How much does Templata cost?",
     answer:
-      "We'll send you a very apologetic email with a $5 gift card to your local coffee shop.",
+      "Pricing starts at $9-15/month depending on the plan. Compared to hiring a consultant at $150-500/hour or spending months on scattered research, Templata provides comprehensive guidance at a fraction of the cost and time.",
   },
   {
-    category: "Security",
-    question: "Do you have a backup system?",
+    category: "Pricing",
+    question: "Is there a free trial?",
     answer:
-      "Yes, we back up everything to a USB stick that we keep in a very safe place... somewhere.",
+      "Yes. You can explore guides and see the question structure before committing. The trial gives you access to core features so you can evaluate if Templata fits your planning needs.",
   },
-  // Other Questions
   {
-    category: "Other",
-    question: "Why is your pricing so complicated?",
+    category: "Pricing",
+    question: "What happens to my data if I cancel?",
     answer:
-      "Because simple pricing would make it too easy for you to understand what you're paying for.",
+      "You can export your notes, answers, and planning data before canceling. We don't hold your information hostage. Download what you need, cancel when you're done.",
   },
+  // Technical Questions
   {
-    category: "Other",
-    question: "Do you offer refunds?",
+    category: "Technical",
+    question: "How do I get started?",
     answer:
-      "Yes, but only if you can prove you're from an alternate dimension.",
+      "Sign up, browse available guides, and pick the one that matches your current life event. Start answering questions at your own pace. Your progress auto-saves as you work through each section.",
   },
   {
-    category: "Other",
-    question: "What's your roadmap look like?",
-    answer: "It's more of a road-squiggle, really. We're agile!",
+    category: "Technical",
+    question: "Can I collaborate with others on a guide?",
+    answer:
+      "Collaboration features are planned for future releases. Currently, Templata is designed for individual planning, though you can share exported content with others as needed.",
+  },
+  {
+    category: "Technical",
+    question: "Is my data secure?",
+    answer:
+      "Yes. We use industry-standard encryption for data storage and transmission. Your planning information, answers, and notes are private and accessible only to you.",
   },
 ];
 
 const categories: Category[] = [
-  "Support",
-  "Account",
+  "General",
+  "Guides",
   "Features",
-  "Security",
-  "Other",
+  "Pricing",
+  "Technical",
 ];
 
 const TOP_PADDING = 300;
@@ -231,12 +235,11 @@ const FaqHero = () => {
     <section className="min-h-screen bg-[#F2F2F2] py-32 dark:bg-[#24242B]">
       <div className="container max-w-4xl">
         <div className="text-center">
-          <h1 className="text-center text-4xl font-semibold tracking-tight sm:text-5xl">
-            We've got answers
+          <h1 className="text-center text-4xl font-medium tracking-tight sm:text-5xl">
+            Frequently Asked Questions
           </h1>
-          <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-balance text-center">
-            This really should be an LLM but we're waiting for RAG to truly
-            reach commodity stage before we touch it.
+          <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-balance text-center text-lg leading-relaxed">
+            Common questions about Templata, guides, features, and pricing.
           </p>
         </div>
 
@@ -250,7 +253,7 @@ const FaqHero = () => {
                 onClick={() => handleCategoryClick(category)}
                 className={`justify-start text-left text-xl transition-colors ${
                   activeCategory === category
-                    ? "font-semibold"
+                    ? "font-medium"
                     : "font-normal hover:opacity-75"
                 }`}
               >

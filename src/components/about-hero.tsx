@@ -14,74 +14,48 @@ import {
 } from "lucide-react";
 
 const AboutHero = () => {
-  const services = [
-    {
-      icon: Users,
-      title: "User research and persona development",
-    },
-    {
-      icon: Map,
-      title: "Information architecture and user journey mapping",
-    },
-    {
-      icon: Pen,
-      title: "Wireframing and interactive prototyping",
-    },
-    {
-      icon: Palette,
-      title: "Visual design and brand integration",
-    },
-    {
-      icon: TestTube,
-      title: "Usability testing and design validation",
-    },
-    {
-      icon: BookOpen,
-      title: "Design system creation and documentation",
-    },
-  ];
 
   const stats = [
     {
-      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/adobe-icon.png",
-      title: "Adobe Creative Suite",
-      description: "Design proficiency",
+      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg",
+      title: "Comprehensive Questions",
+      description: "90%+ coverage",
     },
     {
-      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/figma-icon.svg",
-      title: "Figma",
-      description: "Years experience",
+      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-2.svg",
+      title: "Expert Readings",
+      description: "Curated guidance",
     },
     {
-      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/sketch-icon.svg",
-      title: "Sketch",
-      description: "Projects completed",
+      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-3.svg",
+      title: "Integrated Planning",
+      description: "Organized by life event",
     },
   ];
 
-  const relatedServices = [
+  const relatedGuides = [
     {
-      icon: Droplet,
-      title: "Brand Identity",
-      description: "Logo design and brand guidelines",
-      link: "#",
-    },
-    {
-      icon: Code,
-      title: "Web Development",
-      description: "Custom website development",
-      link: "#",
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile App Design",
-      description: "iOS and Android app interfaces",
+      icon: Users,
+      title: "Wedding Planning",
+      description: "Comprehensive guide for planning your wedding",
       link: "#",
     },
     {
       icon: Layout,
-      title: "Design Systems",
-      description: "Scalable component libraries",
+      title: "Home Buying",
+      description: "Expert guidance for first-time homebuyers",
+      link: "#",
+    },
+    {
+      icon: BookOpen,
+      title: "Career Change",
+      description: "Navigate your career transition with confidence",
+      link: "#",
+    },
+    {
+      icon: Map,
+      title: "Starting a Business",
+      description: "Build your business foundation step-by-step",
       link: "#",
     },
   ];
@@ -94,23 +68,21 @@ const AboutHero = () => {
           <div className="flex justify-start">
             <div className="bg-muted rounded-full p-6">
               <img
-                src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/symbols/ux.svg"
-                alt="UX/UI Design"
-                className="h-16 dark:invert"
+                src="/favicon.svg"
+                alt="Templata"
+                className="h-16 dark:invert-0 invert"
               />
             </div>
           </div>
 
           <div className="space-y-6">
             <h1 className="text-4xl font-medium tracking-tight md:text-5xl lg:text-6xl">
-              UX/UI Design
+              Our Story
             </h1>
             <p className="text-muted-foreground max-w-3xl text-xl leading-relaxed">
-              We believe that great design should be intuitive, accessible, and
-              purposeful for every user who interacts with your product. Our
-              UX/UI design approach focuses on understanding your users' needs,
-              behaviors, and pain points to create interfaces that not only look
-              beautiful but function seamlessly.
+              Planning life's biggest moments shouldn't mean months of scattered research.
+              Wedding planning. Home buying. Career changes. Each one is hundreds of decisions
+              with no clear roadmap, no comprehensive checklist, no way to know if you're missing something critical.
             </p>
           </div>
         </div>
@@ -118,11 +90,11 @@ const AboutHero = () => {
         {/* Expertise Section */}
         <div className="mb-16">
           <div className="mb-8">
-            <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
-              Our Expertise
+            <h2 className="text-2xl font-medium tracking-tight md:text-3xl">
+              Three Core Features
             </h2>
-            <p className="text-muted-foreground mt-2">
-              Professional tools and proven experience
+            <p className="text-muted-foreground mt-2 text-lg leading-relaxed">
+              Everything you need for life's biggest moments
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -150,96 +122,86 @@ const AboutHero = () => {
         </div>
 
         {/* Main Content */}
-        <div className="prose prose-sm dark:prose-invert mb-16 max-w-none">
-          <h2>Creating Meaningful Digital Experiences</h2>
-          <p>
-            We combine user research, information architecture, and visual
-            design to deliver experiences that drive engagement and conversions.
+        <div className="mb-16 space-y-6">
+          <h2 className="text-2xl font-medium tracking-tight md:text-3xl">Notion gives you blank pages. Google gives you scattered information.</h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            We built Templata because major life decisions deserve better.
+            Comprehensive questions refined through months of AI testing.
+            Expert readings that save you hundreds of hours. Integrated planning
+            that keeps everything organized by life event. Nothing generic,
+            nothing missed. Just 90%+ coverage from day one.
           </p>
 
-          <p>
-            Through comprehensive user research and testing, we validate design
-            decisions with real data. Our iterative design process ensures that
-            every element serves a purpose and contributes to your business
-            goals while providing an exceptional user experience.
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Our guides combine three essential elements: comprehensive questions
+            to ensure you're thinking about everything, curated expert readings
+            to give you the knowledge you need, and integrated planning tools
+            to keep you organized. Whether you're planning a wedding, buying
+            your first home, or changing careers, we've done the research so
+            you don't have to.
           </p>
 
-          <p>
-            We specialize in creating design systems that scale with your
-            business, ensuring consistency across all touchpoints while
-            maintaining flexibility for future growth and evolution.
+          <h2 className="text-2xl font-medium tracking-tight md:text-3xl mt-8">Built with Axiom Engine</h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Every guide is powered by our Axiom Engine—months of AI refinement
+            testing question sets for comprehensiveness and clarity. We don't
+            just throw together generic checklists. Each question has been
+            validated to ensure it covers the critical considerations for that
+            specific life event.
           </p>
 
-          <p>
-            Our collaborative approach involves stakeholders throughout the
-            design process, from initial wireframes to final prototypes. This
-            ensures alignment between business objectives and user needs,
-            resulting in products that succeed in the market.
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            The result? Guides that feel like they were made specifically for
+            your situation, because they capture what actually matters when
+            you're making these decisions. No fluff, no obvious advice—just
+            the thoughtful questions and expert guidance you need.
           </p>
 
-          <p>
-            Every design decision is backed by research and testing, creating
-            solutions that are not just visually appealing but strategically
-            sound and user-validated.
+          <h2 className="text-2xl font-medium tracking-tight md:text-3xl mt-8">1000+ Guides Planned</h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            We're building the comprehensive library of life event guides.
+            From major milestones like weddings and home purchases to career
+            transitions and personal development, we're creating guides for
+            every significant moment in your life. Each one backed by expert
+            research and AI-refined questions.
           </p>
 
-          <h2>Our UX/UI Design Services</h2>
-          <div className="space-y-3">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <div key={index} className="flex items-center gap-3">
-                  <Icon className="text-primary h-5 w-5" />
-                  <span>{service.title}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          <h2>Strategic Design for Business Success</h2>
-          <p>
-            Our design philosophy centers on creating interfaces that bridge the
-            gap between user needs and business objectives. We understand that
-            great UX/UI design is not just about aesthetics—it's about creating
-            meaningful interactions that drive results.
-          </p>
-
-          <p>
-            From initial concept to final implementation, we ensure that every
-            design element contributes to a cohesive user experience that
-            reflects your brand values and supports your business goals. Our
-            designs are optimized for performance, accessibility, and
-            scalability across all devices and platforms.
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Our goal is simple: when you face a major life decision, you
+            shouldn't have to start from scratch. You should have a
+            comprehensive guide that's already done the hard work of figuring
+            out what you need to consider, sourcing the expert knowledge,
+            and organizing it all in one place.
           </p>
         </div>
 
-        {/* Related Services */}
+        {/* Related Guides */}
         <div>
           <div className="mb-8">
-            <h2 className="text-xl font-semibold tracking-tight md:text-2xl">
-              Related Services
+            <h2 className="text-2xl font-medium tracking-tight md:text-3xl">
+              Popular Guides
             </h2>
-            <p className="text-muted-foreground mt-2">
-              Explore our other design and development offerings
+            <p className="text-muted-foreground mt-2 text-lg leading-relaxed">
+              Explore our comprehensive guides for life's biggest moments
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {relatedServices.map((service, index) => {
-              const Icon = service.icon;
+            {relatedGuides.map((guide, index) => {
+              const Icon = guide.icon;
               return (
                 <div key={index} className="group">
                   <a
-                    href={service.link}
+                    href={guide.link}
                     className="hover:bg-muted/50 block space-y-3 rounded-lg border p-6 transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <Icon className="text-muted-foreground group-hover:text-primary h-5 w-5" />
                       <div className="group-hover:text-primary font-medium">
-                        {service.title}
+                        {guide.title}
                       </div>
                     </div>
                     <div className="text-muted-foreground text-sm leading-relaxed">
-                      {service.description}
+                      {guide.description}
                     </div>
                   </a>
                 </div>
