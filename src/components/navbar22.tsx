@@ -19,7 +19,7 @@ const Navbar22 = () => {
   const [currentTime, setCurrentTime] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -93,26 +93,33 @@ const Navbar22 = () => {
                   </a>
                 ))}
                 <ModeToggle />
-                <Button onClick={() => {
-                  if (isLoggedIn) {
-                    router.push('/app');
-                  } else {
-                    setLoginDialogOpen(true);
-                  }
-                }}>
-                  {isLoggedIn ? "Go to App" : "Login"}
+                <Button
+                  onClick={() => {
+                    if (isLoggedIn) {
+                      router.push('/app');
+                    } else {
+                      setLoginDialogOpen(true);
+                    }
+                  }}
+                  disabled={loading}
+                >
+                  {loading ? "Login" : (isLoggedIn ? "Go to App" : "Login")}
                 </Button>
               </div>
 
               <div className="flex items-center gap-2 md:hidden">
-                <Button onClick={() => {
-                  if (isLoggedIn) {
-                    router.push('/app');
-                  } else {
-                    setLoginDialogOpen(true);
-                  }
-                }} size="sm">
-                  {isLoggedIn ? "Go to App" : "Login"}
+                <Button
+                  onClick={() => {
+                    if (isLoggedIn) {
+                      router.push('/app');
+                    } else {
+                      setLoginDialogOpen(true);
+                    }
+                  }}
+                  size="sm"
+                  disabled={loading}
+                >
+                  {loading ? "Login" : (isLoggedIn ? "Go to App" : "Login")}
                 </Button>
                 <ModeToggle />
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>

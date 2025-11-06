@@ -12,7 +12,7 @@ import { useAuth } from "@/contexts/auth-context";
 
 const HeroAnimatedText = () => {
   const [loginOpen, setLoginOpen] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   const router = useRouter();
 
   return (
@@ -96,8 +96,9 @@ const HeroAnimatedText = () => {
               setLoginOpen(true);
             }
           }}
+          disabled={loading}
         >
-          {isLoggedIn ? "Go to App" : "Get Started"}
+          {loading ? "Get Started" : (isLoggedIn ? "Go to App" : "Get Started")}
           <ArrowRight className="size-4 -rotate-45 transition-all ease-out group-hover:ml-3 group-hover:rotate-0" />
         </Button>
       </div>
