@@ -15,7 +15,7 @@ export async function GET(
 
     const { data: readings, error } = await supabase
       .from('readings')
-      .select('id, title, excerpt, read_time, author')
+      .select('id, title, excerpt, read_time, author, slug')
       .eq('guide', guideId)
       .order('created_at', { ascending: true });
 

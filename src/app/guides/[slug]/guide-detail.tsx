@@ -315,7 +315,7 @@ export default function GuideDetail({ params }: GuideDetailProps) {
               {readings.map((reading) => (
                 <div key={reading.id}>
                   <Separator />
-                  <Link href={`/library/${reading.slug}`}>
+                  <Link href={`/library/${reading.id}`}>
                     <div className="my-2.5 grid gap-2.5 text-sm sm:grid-cols-3 hover:text-primary transition-colors cursor-pointer">
                       <div className="text-muted-foreground flex items-center gap-2">
                         {reading.read_time}
