@@ -209,15 +209,6 @@ export function OverviewView() {
     desktop: data.count, // Number of tracks in this category
   }));
 
-  console.log('Chart data:', { timelineChartData, radialChartData, radarChartData });
-  console.log('Radial chart data detail:', radialChartData);
-  console.log('DisplayedTracks with categories:', displayedTracks.map(t => ({
-    name: t.track.custom_name || t.track.guides?.name,
-    category: t.track.guides?.category,
-    questionsAnswered: t.questionsAnswered,
-    totalQuestions: t.totalQuestions
-  })));
-
   // Timeline chart config - one entry per track
   const timelineChartConfig: ChartConfig = displayedTracks.reduce((config, item) => {
     const trackName = item.track.custom_name || item.track.guides?.name || 'Track';

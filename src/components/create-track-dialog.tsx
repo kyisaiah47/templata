@@ -20,18 +20,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, Check, Loader2 } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface Guide {
   id: string;
   name: string;
   description: string;
   icon: string | null;
+  hasContent?: boolean;
 }
 
 interface CreateTrackDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onTrackCreated: () => void;
+  onTrackCreated: (trackId: string) => void;
 }
 
 export function CreateTrackDialog({ open, onOpenChange, onTrackCreated }: CreateTrackDialogProps) {
@@ -41,16 +48,16 @@ export function CreateTrackDialog({ open, onOpenChange, onTrackCreated }: Create
   const [customName, setCustomName] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Only fetch guides when dialog opens if we don't have them
+  // Force fetch guides when dialog opens to get hasContent field
   useEffect(() => {
-    if (open && (!cachedGuides || cachedGuides.length === 0)) {
+    if (open) {
       loadGuides();
     }
   }, [open]);
 
   async function loadGuides() {
     try {
-      await fetchGuides(false); // Don't force, let cache decide
+      await fetchGuides(true); // Force refresh to get hasContent
     } catch (error) {
       console.error('Error fetching guides:', error);
     }
@@ -76,6 +83,9 @@ export function CreateTrackDialog({ open, onOpenChange, onTrackCreated }: Create
         throw new Error('Failed to create track');
       }
 
+      const data = await res.json();
+      const trackId = data.track?.id;
+
       // Invalidate tracks cache so next fetch gets fresh data
       invalidateTracks();
 
@@ -83,7 +93,10 @@ export function CreateTrackDialog({ open, onOpenChange, onTrackCreated }: Create
       setCustomName('');
       setSearchQuery('');
       onOpenChange(false);
-      onTrackCreated();
+
+      if (trackId) {
+        onTrackCreated(trackId);
+      }
     } catch (error) {
       console.error('Error creating track:', error);
     } finally {
@@ -135,19 +148,52 @@ export function CreateTrackDialog({ open, onOpenChange, onTrackCreated }: Create
               />
               <CommandList className="max-h-[400px]">
                 <CommandGroup>
-                  {filteredGuides.map((guide) => (
-                    <CommandItem
-                      key={guide.id}
-                      onSelect={() => handleGuideSelect(guide)}
-                    >
-                      <div className="flex-1">
-                        <div className="font-medium">{guide.name}</div>
-                        <div className="text-xs text-muted-foreground line-clamp-1">
-                          {guide.description}
-                        </div>
-                      </div>
-                    </CommandItem>
-                  ))}
+                  <TooltipProvider>
+                    {filteredGuides.map((guide) => {
+                      const hasContent = guide.hasContent !== false;
+
+                      if (!hasContent) {
+                        return (
+                          <Tooltip key={guide.id}>
+                            <TooltipTrigger asChild>
+                              <div className="opacity-50 cursor-not-allowed">
+                                <CommandItem
+                                  disabled
+                                  onSelect={(e) => {
+                                    e.preventDefault();
+                                  }}
+                                >
+                                  <div className="flex-1">
+                                    <div className="font-medium">{guide.name}</div>
+                                    <div className="text-xs text-muted-foreground line-clamp-1">
+                                      {guide.description}
+                                    </div>
+                                  </div>
+                                </CommandItem>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Coming soon - In the works</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        );
+                      }
+
+                      return (
+                        <CommandItem
+                          key={guide.id}
+                          onSelect={() => handleGuideSelect(guide)}
+                        >
+                          <div className="flex-1">
+                            <div className="font-medium">{guide.name}</div>
+                            <div className="text-xs text-muted-foreground line-clamp-1">
+                              {guide.description}
+                            </div>
+                          </div>
+                        </CommandItem>
+                      );
+                    })}
+                  </TooltipProvider>
                 </CommandGroup>
               </CommandList>
             </Command>

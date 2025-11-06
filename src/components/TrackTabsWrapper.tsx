@@ -97,12 +97,7 @@ export function TrackTabsWrapper({
     );
   }
 
-  // Single track selected
-  if (tracks.length === 1) {
-    return <>{renderView(tracks[0])}</>;
-  }
-
-  // Multiple tracks selected - tabbed interface
+  // Always show tabs for selected tracks
   return (
     <Tabs defaultValue={tracks[0].id} className="h-full flex flex-col">
       <div className="border-b flex items-center justify-center py-2">

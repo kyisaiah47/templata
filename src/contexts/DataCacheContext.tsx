@@ -7,6 +7,7 @@ interface Guide {
   name: string;
   description: string;
   icon: string | null;
+  hasContent?: boolean;
 }
 
 interface Track {

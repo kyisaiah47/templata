@@ -6,7 +6,8 @@
       "mcp__supabase__list_projects",
       "mcp__supabase__execute_sql",
       "Bash(./generate-readings.sh:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []

@@ -815,6 +815,7 @@ export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProp
         {/* Right Sidebar - Readings or Reading Content (Desktop only) */}
         <motion.div
           className="hidden md:block border-l bg-background overflow-y-auto"
+          initial={{ width: 320 }}
           animate={{ width: selectedReading ? 600 : 320 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >

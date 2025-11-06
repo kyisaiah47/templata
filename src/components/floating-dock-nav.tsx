@@ -168,8 +168,10 @@ const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark, sel
       <CreateTrackDialog
         open={createTrackDialogOpen}
         onOpenChange={setCreateTrackDialogOpen}
-        onTrackCreated={() => {
+        onTrackCreated={(trackId) => {
           setTrackRefreshKey(prev => prev + 1);
+          onTrackSelectionChange([trackId]);
+          onViewChange('guides');
         }}
       />
       <AlertDialog open={logoutDialogOpen} onOpenChange={setLogoutDialogOpen}>
