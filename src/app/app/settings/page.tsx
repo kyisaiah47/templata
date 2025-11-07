@@ -9,7 +9,7 @@ import { ArrowLeft, User, Lock, Database } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SettingsPage() {
-  const [activeSection, setActiveSection] = useState<'profile' | 'privacy' | 'data'>('profile');
+  const [activeSection, setActiveSection] = useState<'profile' | 'privacy' | 'data' | 'notifications' | 'appearance'>('profile');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');

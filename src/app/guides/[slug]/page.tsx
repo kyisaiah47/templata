@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: 'Templata',
       images: [
         {
-          url: '/og-image.png',
+          url: '/og-image.svg',
           width: 1200,
           height: 630,
           alt: `${templateData.title} Guide`,
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-image.png'],
+      images: ['/og-image.svg'],
     },
     robots: {
       index: true,

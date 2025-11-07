@@ -109,7 +109,6 @@ const FEATURED_TEMPLATE_IDS = [...FEATURED_GENERAL_IDS, ...FEATURED_GENZ_IDS, ..
 
 interface GuidesViewProps {
   trackId?: string;
-  onViewChange?: (view: 'guides' | 'reflection' | 'overview') => void;
   setActions?: (actions: {
     openGuideDropdown?: () => void;
     selectFirstQuestion?: () => void;
@@ -117,7 +116,7 @@ interface GuidesViewProps {
   }) => void;
 }
 
-export function GuidesView({ trackId, onViewChange, setActions }: GuidesViewProps) {
+export function GuidesView({ trackId, setActions }: GuidesViewProps) {
   const { tracks: cachedTracks, fetchTracks, fetchQuestions, fetchReadings } = useDataCache();
   const [selectedGuide, setSelectedGuide] = useState('wedding-planning');
   const [guides, setGuides] = useState<Template[]>([]);

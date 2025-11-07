@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://templata.org/og-image.png",
+        url: "https://templata.org/og-image.svg",
         width: 1200,
         height: 630,
         alt: "Templata Guides",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "Guides - Templata",
     description:
       "Explore comprehensive guides for life's biggest moments with AI-refined questions and expert readings.",
-    images: ["https://templata.org/og-image.png"],
+    images: ["https://templata.org/og-image.svg"],
   },
 };
 

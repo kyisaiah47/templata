@@ -90,7 +90,7 @@ export function generateStructuredData(type: 'CollectionPage' | 'Article' | 'Web
           name: 'Templata',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://templata.org/logo.png'
+            url: 'https://templata.org/brand/templata-logo.png'
           }
         }
       };

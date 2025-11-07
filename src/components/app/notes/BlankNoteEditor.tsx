@@ -6,7 +6,6 @@ import { SimpleEditor } from '@/components/ui/simple-editor';
 import { GuideHeader } from '@/components/app/guides/GuideHeader';
 import { Loader2, Save, Check } from 'lucide-react';
 import { toast } from 'sonner';
-import { debounce } from '@/lib/utils';
 
 interface BlankNoteEditorProps {
   noteId: string;
@@ -21,6 +20,7 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   // Fetch note content
   useEffect(() => {
@@ -51,30 +51,38 @@ export function BlankNoteEditor({ noteId, workspaceId }: BlankNoteEditorProps) {
 
   // Debounced save function
   const saveNote = useCallback(
-    debounce(async (updates: { content?: string; name?: string; icon?: string; cover_image?: string }) => {
-      try {
-        setSaving(true);
-        const response = await fetch(`/api/notes/${noteId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updates),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to save note');
-        }
-
-        setLastSaved(new Date());
-      } catch (error) {
-        console.error('Error saving note:', error);
-        toast.error('Failed to save note');
-      } finally {
-        setSaving(false);
+    (updates: { content?: string; name?: string; icon?: string; cover_image?: string }) => {
+      if (saveTimeout) {
+        clearTimeout(saveTimeout);
       }
-    }, 1000),
-    [noteId]
+
+      const timeout = setTimeout(async () => {
+        try {
+          setSaving(true);
+          const response = await fetch(`/api/notes/${noteId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updates),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to save note');
+          }
+
+          setLastSaved(new Date());
+        } catch (error) {
+          console.error('Error saving note:', error);
+          toast.error('Failed to save note');
+        } finally {
+          setSaving(false);
+        }
+      }, 1000);
+
+      setSaveTimeout(timeout);
+    },
+    [noteId, saveTimeout]
   );
 
   // Handle content updates

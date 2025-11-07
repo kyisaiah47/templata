@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 import { FileText, Plus, Search, Loader2, Calendar, BookOpen, PenLine } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
-import { useDemo } from '@/contexts/demo-context';
-import { toast } from 'sonner';
 import {
   Dialog,
   DialogContent,
@@ -36,7 +34,6 @@ interface NotesListViewProps {
 
 export function NotesListView({ workspaceId }: NotesListViewProps) {
   const router = useRouter();
-  const { demoMode } = useDemo();
   const [notes, setNotes] = useState<UserGuide[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,10 +77,6 @@ export function NotesListView({ workspaceId }: NotesListViewProps) {
   };
 
   const handleCreateNote = () => {
-    if (demoMode) {
-      toast.info('Not available in demo mode');
-      return;
-    }
     setShowCreateDialog(true);
   };
 
@@ -99,7 +92,6 @@ export function NotesListView({ workspaceId }: NotesListViewProps) {
     setShowCreateDialog(false);
     // TODO: Create blank note (freeform journaling)
     // This will need a new API endpoint and UI for freeform notes
-    console.log('Create blank note - to be implemented');
   };
 
   if (loading) {

@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: 'Templata',
     images: [
       {
-        url: 'https://templata.org/og-image.png',
+        url: 'https://templata.org/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'Templata - Organize Life\'s Biggest Moments',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Templata | Organize Life\'s Biggest Moments',
     description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments.',
-    images: ['https://templata.org/og-image.png'],
+    images: ['https://templata.org/og-image.svg'],
     creator: '@templata',
   },
   robots: {
@@ -67,9 +67,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'your-google-verification-code',
   },
   alternates: {
     canonical: 'https://templata.org',
@@ -106,7 +103,7 @@ export default function RootLayout({
               "name": "Templata",
               "description": "Expert-crafted templates for life's biggest moments",
               "url": "https://templata.org",
-              "logo": "https://templata.org/logo.png",
+              "logo": "https://templata.org/brand/templata-logo.png",
               "sameAs": [
                 "https://twitter.com/templata",
                 "https://linkedin.com/company/templata"

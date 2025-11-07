@@ -41,7 +41,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
         transition={{ duration: 0.8, delay: 0.1 }}
       >
         <img
-          src="/geometric-monuments.png"
+          src="/geometric-monuments.webp"
           alt="Templata"
           className="absolute inset-0 h-full w-full object-cover"
         />

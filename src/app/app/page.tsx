@@ -243,7 +243,6 @@ export default function AppPage() {
 					}}
 				>
 					<GuidesViewWrapper
-						onViewChange={handleViewChange}
 						setActions={setTemplatesActions}
 						selectedTrackIds={selectedTrackIds}
 					/>

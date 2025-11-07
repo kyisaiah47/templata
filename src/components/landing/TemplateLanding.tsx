@@ -14,7 +14,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import type { Metadata } from 'next';
-import { HeroBenefit, Testimonial } from '@/registry/marketing';
 
 interface ProcessStep {
   icon: LucideIcon;
@@ -26,6 +25,19 @@ interface Benefit {
   icon: LucideIcon;
   title: string;
   description: string;
+}
+
+interface HeroBenefit {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+interface Testimonial {
+  name: string;
+  role: string;
+  content: string;
+  avatar?: string;
 }
 
 interface HeroCard {

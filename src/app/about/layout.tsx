@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://templata.org/og-image.png",
+        url: "https://templata.org/og-image.svg",
         width: 1200,
         height: 630,
         alt: "Our Story - Templata",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: "Our Story - Templata",
     description:
       "From democratizing complexity to transforming life's biggest moments. Learn how Templata evolved into a luxury guide + planning tool.",
-    images: ["https://templata.org/og-image.png"],
+    images: ["https://templata.org/og-image.svg"],
   },
 };
 
