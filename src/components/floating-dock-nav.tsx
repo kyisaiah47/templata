@@ -377,6 +377,7 @@ const FloatingDockMobile = ({
                           isOpen={true}
                           onClose={() => setCalendarSelectorOpen(false)}
                           noWrapper={true}
+                          selectedTrackIds={selectedTrackIds}
                         />
                       </PopoverContent>
                     </Popover>
@@ -417,6 +418,7 @@ const FloatingDockMobile = ({
                         <DockTasksSelector
                           isOpen={true}
                           onClose={() => setTasksSelectorOpen(false)}
+                          selectedTrackIds={selectedTrackIds}
                         />
                       </PopoverContent>
                     </Popover>
@@ -699,6 +701,7 @@ function IconContainer({
             isOpen={true}
             onClose={() => setCalendarSelectorOpen(false)}
             noWrapper={true}
+            selectedTrackIds={selectedTrackIds}
           />
         </PopoverContent>
       </Popover>
@@ -717,6 +720,7 @@ function IconContainer({
           <DockTasksSelector
             isOpen={true}
             onClose={() => setTasksSelectorOpen(false)}
+            selectedTrackIds={selectedTrackIds}
           />
         </PopoverContent>
       </Popover>

@@ -22,6 +22,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface Task {
   id: string;
@@ -34,13 +41,15 @@ interface Task {
 interface DockTasksSelectorProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedTrackIds?: string[];
 }
 
 export function DockTasksSelector({
   isOpen,
   onClose,
+  selectedTrackIds = []
 }: DockTasksSelectorProps) {
-  const { items: cachedItems, fetchItems, invalidateItems } = useDataCache();
+  const { items: cachedItems, fetchItems, invalidateItems, tracks, fetchTracks } = useDataCache();
   const [tasks, setTasks] = React.useState<Task[]>([])
   const [loading, setLoading] = React.useState(false)
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false)
@@ -54,6 +63,14 @@ export function DockTasksSelector({
   const [editing, setEditing] = React.useState(false)
   const [deleting, setDeleting] = React.useState(false)
   const [draggedTask, setDraggedTask] = React.useState<Task | null>(null)
+  const [selectedTrackId, setSelectedTrackId] = React.useState<string>('')
+
+  // Fetch tracks for the selector
+  React.useEffect(() => {
+    if (isOpen && !tracks) {
+      fetchTracks(false);
+    }
+  }, [isOpen, tracks, fetchTracks]);
 
   // Fetch tasks using cache
   React.useEffect(() => {
@@ -65,7 +82,13 @@ export function DockTasksSelector({
         const allTasks = cachedItems.filter((item: any) =>
           !item.start_time || item.type === 'task'
         );
-        setTasks(allTasks);
+        // Filter by selected tracks
+        const filteredTasks = selectedTrackIds.length > 0
+          ? allTasks.filter((item: any) =>
+              item.track_id && selectedTrackIds.includes(item.track_id)
+            )
+          : allTasks;
+        setTasks(filteredTasks);
         return;
       }
 
@@ -75,7 +98,13 @@ export function DockTasksSelector({
         const allTasks = items.filter((item: any) =>
           !item.start_time || item.type === 'task'
         );
-        setTasks(allTasks);
+        // Filter by selected tracks
+        const filteredTasks = selectedTrackIds.length > 0
+          ? allTasks.filter((item: any) =>
+              item.track_id && selectedTrackIds.includes(item.track_id)
+            )
+          : allTasks;
+        setTasks(filteredTasks);
       } catch (error) {
         console.error('Error loading tasks:', error);
         setTasks([]);
@@ -85,7 +114,7 @@ export function DockTasksSelector({
     }
 
     loadTasks();
-  }, [isOpen, cachedItems, fetchItems]);
+  }, [isOpen, cachedItems, fetchItems, selectedTrackIds]);
 
   const tasksByStatus = React.useMemo(() => {
     return {
@@ -101,15 +130,22 @@ export function DockTasksSelector({
     const allTasks = items.filter((item: any) =>
       !item.start_time || item.type === 'task'
     );
-    setTasks(allTasks);
-  }, [invalidateItems, fetchItems]);
+    // Filter by selected tracks
+    const filteredTasks = selectedTrackIds.length > 0
+      ? allTasks.filter((item: any) =>
+          item.track_id && selectedTrackIds.includes(item.track_id)
+        )
+      : allTasks;
+    setTasks(filteredTasks);
+  }, [invalidateItems, fetchItems, selectedTrackIds]);
 
   const resetForm = React.useCallback(() => {
     setTaskTitle('');
     setTaskDescription('');
     setDueDate(undefined);
     setSelectedTask(null);
-  }, []);
+    setSelectedTrackId(selectedTrackIds.length === 1 ? selectedTrackIds[0] : '');
+  }, [selectedTrackIds]);
 
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,6 +162,7 @@ export function DockTasksSelector({
           due_date: dueDate ? format(dueDate, 'yyyy-MM-dd') : null,
           status: 'todo',
           type: 'task',
+          track_id: selectedTrackId || null,
         }),
       });
 
@@ -446,6 +483,23 @@ export function DockTasksSelector({
                   placeholder="Task description (optional)"
                 />
               </div>
+              {selectedTrackIds.length > 1 && (
+                <div className="grid gap-2">
+                  <Label htmlFor="task-track">Track</Label>
+                  <Select value={selectedTrackId} onValueChange={setSelectedTrackId}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a track" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[300]">
+                      {tracks?.filter(t => selectedTrackIds.includes(t.id)).map(track => (
+                        <SelectItem key={track.id} value={track.id}>
+                          {track.custom_name || track.guides.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <div className="grid gap-2">
                 <Label>Due Date (Optional)</Label>
                 <Popover open={dueDateOpen} onOpenChange={setDueDateOpen}>
@@ -473,7 +527,7 @@ export function DockTasksSelector({
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={creating || !taskTitle.trim()}>
+              <Button type="submit" disabled={creating || !taskTitle.trim() || (selectedTrackIds.length > 1 && !selectedTrackId)}>
                 {creating ? "Creating..." : "Create Task"}
               </Button>
             </DialogFooter>

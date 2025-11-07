@@ -24,6 +24,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface CalendarEvent {
   id: string;
@@ -37,14 +44,16 @@ interface DockCalendarSelectorProps {
   isOpen: boolean;
   onClose: () => void;
   noWrapper?: boolean;
+  selectedTrackIds?: string[];
 }
 
 export function DockCalendarSelector({
   isOpen,
   onClose,
-  noWrapper = false
+  noWrapper = false,
+  selectedTrackIds = []
 }: DockCalendarSelectorProps) {
-  const { items: cachedItems, fetchItems, invalidateItems } = useDataCache();
+  const { items: cachedItems, fetchItems, invalidateItems, tracks, fetchTracks } = useDataCache();
   const [date, setDate] = React.useState<Date | undefined>(new Date())
   const [events, setEvents] = React.useState<CalendarEvent[]>([])
   const [loading, setLoading] = React.useState(false)
@@ -63,6 +72,14 @@ export function DockCalendarSelector({
   const [detailsDialogOpen, setDetailsDialogOpen] = React.useState(false)
   const [editing, setEditing] = React.useState(false)
   const [deleting, setDeleting] = React.useState(false)
+  const [selectedTrackId, setSelectedTrackId] = React.useState<string>('')
+
+  // Fetch tracks for the selector
+  React.useEffect(() => {
+    if (isOpen && !tracks) {
+      fetchTracks(false);
+    }
+  }, [isOpen, tracks, fetchTracks]);
 
   // Fetch events using cache
   React.useEffect(() => {
@@ -71,14 +88,26 @@ export function DockCalendarSelector({
     async function loadEvents() {
       // Try cached items first
       if (cachedItems && cachedItems.length > 0) {
-        setEvents(cachedItems as any);
+        // Filter by selected tracks
+        const filteredItems = selectedTrackIds.length > 0
+          ? cachedItems.filter((item: any) =>
+              item.track_id && selectedTrackIds.includes(item.track_id)
+            )
+          : cachedItems;
+        setEvents(filteredItems as any);
         return;
       }
 
       try {
         setLoading(true);
         const items = await fetchItems(false);
-        setEvents(items as any);
+        // Filter by selected tracks
+        const filteredItems = selectedTrackIds.length > 0
+          ? items.filter((item: any) =>
+              item.track_id && selectedTrackIds.includes(item.track_id)
+            )
+          : items;
+        setEvents(filteredItems as any);
       } catch (error) {
         console.error('Error loading events:', error);
         setEvents([]);
@@ -88,7 +117,7 @@ export function DockCalendarSelector({
     }
 
     loadEvents();
-  }, [isOpen, cachedItems, fetchItems]);
+  }, [isOpen, cachedItems, fetchItems, selectedTrackIds]);
 
   // Filter events for the selected date
   const eventsForSelectedDate = React.useMemo(() => {
@@ -110,8 +139,14 @@ export function DockCalendarSelector({
   const refreshEvents = React.useCallback(async () => {
     invalidateItems();
     const items = await fetchItems(true);
-    setEvents(items as any);
-  }, [invalidateItems, fetchItems]);
+    // Filter by selected tracks
+    const filteredItems = selectedTrackIds.length > 0
+      ? items.filter((item: any) =>
+          item.track_id && selectedTrackIds.includes(item.track_id)
+        )
+      : items;
+    setEvents(filteredItems as any);
+  }, [invalidateItems, fetchItems, selectedTrackIds]);
 
   const resetForm = React.useCallback(() => {
     setEventTitle('');
@@ -122,7 +157,8 @@ export function DockCalendarSelector({
     setEndTime('10:00');
     setAllDay(false);
     setSelectedEvent(null);
-  }, []);
+    setSelectedTrackId(selectedTrackIds.length === 1 ? selectedTrackIds[0] : '');
+  }, [selectedTrackIds]);
 
   const handleCreateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,6 +186,7 @@ export function DockCalendarSelector({
           start_time: startDateTime,
           end_time: endDateTime,
           all_day: allDay,
+          track_id: selectedTrackId || null,
         }),
       });
 
@@ -356,6 +393,23 @@ export function DockCalendarSelector({
                   placeholder="Event description (optional)"
                 />
               </div>
+              {selectedTrackIds.length > 1 && (
+                <div className="grid gap-2">
+                  <Label htmlFor="event-track">Track</Label>
+                  <Select value={selectedTrackId} onValueChange={setSelectedTrackId}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a track" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[300]">
+                      {tracks?.filter(t => selectedTrackIds.includes(t.id)).map(track => (
+                        <SelectItem key={track.id} value={track.id}>
+                          {track.custom_name || track.guides.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -433,7 +487,7 @@ export function DockCalendarSelector({
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={creating || !eventTitle.trim() || !startDate}>
+              <Button type="submit" disabled={creating || !eventTitle.trim() || !startDate || (selectedTrackIds.length > 1 && !selectedTrackId)}>
                 {creating ? "Creating..." : "Create Event"}
               </Button>
             </DialogFooter>
