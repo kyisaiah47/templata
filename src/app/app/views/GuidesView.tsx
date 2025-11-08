@@ -62,12 +62,6 @@ interface ReadingDetail extends Reading {
   publishedAt: string;
 }
 
-interface GuideListItem {
-  id: string;
-  name: string;
-  category: string;
-}
-
 interface Track {
   id: string;
   guide_id: string;
@@ -81,32 +75,6 @@ interface Track {
   } | null;
 }
 
-const GUIDES_PER_LOAD = 50;
-
-// Featured guides for demo mode
-const FEATURED_GENERAL_IDS = [
-  'wedding-planning',
-  'job-search',
-  'home-buying',
-  'business-launch',
-];
-
-const FEATURED_GENZ_IDS = [
-  'college-planning',
-  'first-job-transition',
-  'first-apartment-independence',
-  'content-creator-career',
-];
-
-const FEATURED_HEALTH_IDS = [
-  'fitness-journey',
-  'mental-health',
-  'nutrition-planning-system',
-  'health-wellness',
-];
-
-const FEATURED_GUIDE_IDS = [...FEATURED_GENERAL_IDS, ...FEATURED_GENZ_IDS, ...FEATURED_HEALTH_IDS];
-
 interface GuidesViewProps {
   trackId?: string;
   setActions?: (actions: {
@@ -119,8 +87,6 @@ interface GuidesViewProps {
 export function GuidesView({ trackId, setActions }: GuidesViewProps) {
   const { tracks: cachedTracks, fetchTracks, fetchQuestions, fetchReadings } = useDataCache();
   const [selectedGuide, setSelectedGuide] = useState('wedding-planning');
-  const [guides, setGuides] = useState<GuideListItem[]>([]);
-  const [displayedGuides, setDisplayedGuides] = useState<GuideListItem[]>([]);
   const [guideInfo, setGuideInfo] = useState<{ id: string; name: string } | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [readings, setReadings] = useState<Reading[]>([]);
@@ -133,8 +99,6 @@ export function GuidesView({ trackId, setActions }: GuidesViewProps) {
   const [loadingReading, setLoadingReading] = useState(false);
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
   const [open, setOpen] = useState(false);
-  const [hasMoreGuides, setHasMoreGuides] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
   const [questionSearchQuery, setQuestionSearchQuery] = useState('');
   const [readingSearchQuery, setReadingSearchQuery] = useState('');
   const [readingContentSearchQuery, setReadingContentSearchQuery] = useState('');
@@ -347,75 +311,13 @@ export function GuidesView({ trackId, setActions }: GuidesViewProps) {
     return () => clearTimeout(timeoutId);
   }, [questionResponse, autoSave, selectedQuestionId, selectedGuide, isAuthenticated]);
 
-  // Fetch guides list
-  useEffect(() => {
-    async function fetchGuides() {
-      try {
-        const res = await fetch('/api/guides');
-        const data = await res.json();
-        const allGuides = (data.guides || []).sort((a: GuideListItem, b: GuideListItem) =>
-          a.name.localeCompare(b.name)
-        );
-        setGuides(allGuides);
-
-        // Initially load first batch
-        setDisplayedGuides(allGuides.slice(0, GUIDES_PER_LOAD));
-        setHasMoreGuides(allGuides.length > GUIDES_PER_LOAD);
-      } catch (error) {
-        console.error('Error fetching guides:', error);
-      }
-    }
-    fetchGuides();
-  }, []);
-
-  // Load more guides
-  const loadMoreGuides = () => {
-    if (!hasMoreGuides) return;
-
-    const currentLength = displayedGuides.length;
-    const nextBatch = guides.slice(currentLength, currentLength + GUIDES_PER_LOAD);
-
-    if (nextBatch.length > 0) {
-      setDisplayedGuides(prev => [...prev, ...nextBatch]);
-      setHasMoreGuides(currentLength + nextBatch.length < guides.length);
-    }
-  };
-
-  // Filter guides based on search
-  const filteredGuides = searchQuery.trim()
-    ? guides.filter(t =>
-        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t.category.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : displayedGuides;
-
-  // Split into featured and regular guides (only when no search)
-  // Always pull featured from full guides array to ensure they're included
-  const showFeatured = !searchQuery.trim();
-  const featuredGeneralGuides = showFeatured
-    ? guides.filter(t => FEATURED_GENERAL_IDS.includes(t.id))
-    : [];
-  const featuredGenZGuides = showFeatured
-    ? guides.filter(t => FEATURED_GENZ_IDS.includes(t.id))
-    : [];
-  const featuredHealthGuides = showFeatured
-    ? guides.filter(t => FEATURED_HEALTH_IDS.includes(t.id))
-    : [];
-  const regularGuides = showFeatured
-    ? filteredGuides.filter(t => !FEATURED_GUIDE_IDS.includes(t.id))
-    : filteredGuides;
-
   // Fetch questions and readings when guide changes
   useEffect(() => {
     async function fetchData() {
       try {
-        // Use track guide info if in track mode, otherwise find in guides array
-        const guide = track?.guides
-          ? { id: track.guides.id, name: track.guides.name }
-          : guides.find(t => t.id === selectedGuide);
-
-        if (guide) {
-          setGuideInfo({ id: guide.id, name: guide.name });
+        // Use track guide info if in track mode
+        if (track?.guides) {
+          setGuideInfo({ id: track.guides.id, name: track.guides.name });
         }
 
         // Fetch questions and readings from cache - NO LOADING STATE
@@ -447,11 +349,11 @@ export function GuidesView({ trackId, setActions }: GuidesViewProps) {
       }
     }
 
-    // Fetch data if we have guides loaded OR if we have a track (which provides the guide info)
-    if (guides.length > 0 || track) {
+    // Fetch data when track or selectedGuide changes
+    if (track || selectedGuide) {
       fetchData();
     }
-  }, [selectedGuide, guides, track]);
+  }, [selectedGuide, track]);
 
   // Check which questions have been answered
   useEffect(() => {
@@ -508,7 +410,6 @@ export function GuidesView({ trackId, setActions }: GuidesViewProps) {
     setSelectedGuide(newGuideId);
     setSelectedQuestionId(null);
     setQuestionResponse('');
-    setSearchQuery('');
     setOpen(false);
   };
 

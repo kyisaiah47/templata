@@ -118,7 +118,7 @@ export default function RootLayout({
                 "name": "Templata - Free Forever",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Full access to 1,298 guides, 104,000+ questions, and 25,936 readings. Completely free, no paywalls."
+                "description": "Expertly crafted guides for life's biggest moments. Completely free, no paywalls."
               }
             })
           }}
