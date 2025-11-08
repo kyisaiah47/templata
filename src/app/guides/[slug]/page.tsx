@@ -18,24 +18,34 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const templateData = template.template;
-  const title = `${templateData.title} - Comprehensive Guide | Templata`;
-  const description = `${templateData.description} Comprehensive guide with AI-refined questions covering 90%+ of what you need to consider, curated expert readings, and integrated planning. Transform your ${templateData.title.toLowerCase()} from overwhelming to exhilarating.`;
+  const title = `${templateData.title} Template, Checklist & Guide | Templata`;
+  const description = `Complete ${templateData.title.toLowerCase()} template and step-by-step checklist. ${templateData.description} Expert guide with 90+ planning questions, curated readings, and proven frameworks. Start planning today.`;
+
+  // Generate comprehensive SEO keywords
+  const baseKeywords = [
+    templateData.title.toLowerCase(),
+    `${templateData.title.toLowerCase()} template`,
+    `${templateData.title.toLowerCase()} checklist`,
+    `${templateData.title.toLowerCase()} guide`,
+    `${templateData.title.toLowerCase()} planning`,
+    `how to plan ${templateData.title.toLowerCase()}`,
+    `${templateData.title.toLowerCase()} step by step`,
+    `${templateData.title.toLowerCase()} tips`,
+    `${templateData.title.toLowerCase()} mistakes to avoid`,
+    `best ${templateData.title.toLowerCase()} guide`,
+    `${templateData.title.toLowerCase()} planning template`,
+    `${templateData.category.toLowerCase()} planning`,
+    `${templateData.category.toLowerCase()} guide`,
+    'planning template',
+    'step-by-step guide',
+    'comprehensive checklist',
+    'expert planning guide',
+  ];
 
   return {
     title,
     description,
-    keywords: [
-      templateData.title.toLowerCase(),
-      `${templateData.title.toLowerCase()} guide`,
-      `${templateData.title.toLowerCase()} planning`,
-      `${templateData.category.toLowerCase()} guide`,
-      'comprehensive planning',
-      'ai-refined questions',
-      'expert readings',
-      'templata',
-      'luxury planning',
-      'life guides',
-    ],
+    keywords: baseKeywords,
     authors: [{ name: 'Templata' }],
     creator: 'Templata',
     publisher: 'Templata',

@@ -34,20 +34,63 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ).join(' ')
     : 'Library';
 
-  const title = `${reading.title} | ${guideName} - Templata`;
-  const description = reading.excerpt || `Expert reading on ${reading.title}. ${reading.read_time || 'Essential'} insights for ${guideName.toLowerCase()}.`;
+  const title = `${reading.title} | ${guideName} Guide - Templata`;
+  const description = reading.excerpt || `${reading.title}. Expert insights for ${guideName.toLowerCase()}. ${reading.read_time || 'Essential reading'} to help you succeed.`;
+
+  // Extract keyword patterns from title
+  const titleLower = reading.title.toLowerCase();
+  const hasPattern = (pattern: string) => titleLower.includes(pattern);
+
+  // Build comprehensive keywords
+  const baseKeywords = [
+    reading.title.toLowerCase(),
+    guideName.toLowerCase(),
+    `${guideName.toLowerCase()} tips`,
+    `${guideName.toLowerCase()} advice`,
+    `${guideName.toLowerCase()} guide`,
+  ];
+
+  // Add pattern-based keywords
+  if (hasPattern('mistake') || hasPattern('error') || hasPattern('avoid')) {
+    baseKeywords.push(
+      `${guideName.toLowerCase()} mistakes`,
+      `${guideName.toLowerCase()} mistakes to avoid`,
+      `common ${guideName.toLowerCase()} mistakes`
+    );
+  }
+  if (hasPattern('how to') || hasPattern('guide to')) {
+    baseKeywords.push(
+      `how to ${guideName.toLowerCase()}`,
+      `${guideName.toLowerCase()} step by step`
+    );
+  }
+  if (hasPattern('tips') || hasPattern('advice')) {
+    baseKeywords.push(
+      `${guideName.toLowerCase()} tips`,
+      `best ${guideName.toLowerCase()} tips`
+    );
+  }
+  if (hasPattern('checklist')) {
+    baseKeywords.push(
+      `${guideName.toLowerCase()} checklist`,
+      `${guideName.toLowerCase()} planning checklist`
+    );
+  }
+
+  // Add tags from database
+  if (reading.tags && Array.isArray(reading.tags)) {
+    baseKeywords.push(...reading.tags.map((tag: string) => tag.toLowerCase()));
+  }
+
+  // Add author if available
+  if (reading.author) {
+    baseKeywords.push(reading.author.toLowerCase());
+  }
 
   return {
     title,
     description,
-    keywords: [
-      reading.title.toLowerCase(),
-      guideName.toLowerCase(),
-      'expert reading',
-      'comprehensive guide',
-      'templata library',
-      ...(reading.author ? [reading.author.toLowerCase()] : []),
-    ],
+    keywords: baseKeywords,
     authors: reading.author ? [{ name: reading.author }] : [{ name: 'Templata' }],
     creator: reading.author || 'Templata',
     publisher: 'Templata',
