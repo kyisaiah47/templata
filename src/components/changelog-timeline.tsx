@@ -91,8 +91,8 @@ const ChangelogTimeline = () => {
                 <h3 className="text-lg font-semibold mb-2">New Features</h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Added How It Works page to help new users understand the app</li>
-                  <li>Added PDF export for your responses and reflections</li>
-                  <li>Added Responses and Reflections tabs to Overview to view everything in one place</li>
+                  <li>Added PDF export for your responses</li>
+                  <li>Added Responses tab to Overview to view everything in one place</li>
                   <li>Added search in articles to find specific information</li>
                   <li>Organized featured templates into 3 sections: General, Gen Z, and Health & Wellness</li>
                 </ul>
@@ -134,7 +134,7 @@ const ChangelogTimeline = () => {
                 <li>104K+ AI-generated prompts</li>
                 <li>25,936 articles providing expert knowledge</li>
                 <li>User authentication and workspace management</li>
-                <li>3 view model: Templates, Reflection, and Overview for comprehensive life planning</li>
+                <li>Multiple view modes for comprehensive life planning</li>
                 <li>Demo mode for unauthenticated users</li>
               </ul>
             </div>

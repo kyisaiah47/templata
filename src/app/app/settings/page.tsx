@@ -205,9 +205,9 @@ export default function SettingsPage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-medium text-foreground">Reflection Reminders</p>
+                        <p className="font-medium text-foreground">Daily Reminders</p>
                         <p className="text-sm text-muted-foreground">
-                          Daily reminders to complete your reflection
+                          Daily reminders to complete your tasks
                         </p>
                       </div>
                       <input type="checkbox" className="h-4 w-4" />
@@ -334,7 +334,7 @@ export default function SettingsPage() {
                     <div>
                       <p className="font-medium text-foreground mb-2">Export Your Data</p>
                       <p className="text-sm text-muted-foreground mb-3">
-                        Download all your reflections, responses, and data
+                        Download all your responses and data
                       </p>
                       <Button variant="outline">Export Data</Button>
                     </div>

@@ -89,71 +89,11 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
         return;
       }
 
-      // Migrate localStorage data to database
-      const workspaceData: any[] = [];
-      const reflectionData: any[] = [];
-
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key) {
-          if (key.startsWith('workspace_')) {
-            const stored = localStorage.getItem(key);
-            if (stored) {
-              try {
-                const parsedData = JSON.parse(stored);
-                const parts = key.split('_');
-                if (parts.length >= 3) {
-                  workspaceData.push({
-                    templateId: parts[1],
-                    promptId: parts[2],
-                    response: parsedData.response,
-                  });
-                }
-              } catch (e) {
-                console.error('Error parsing workspace data:', e);
-              }
-            }
-          } else if (key.startsWith('reflection-')) {
-            const stored = localStorage.getItem(key);
-            if (stored) {
-              try {
-                const parsedData = JSON.parse(stored);
-                reflectionData.push({
-                  date: parsedData.date,
-                  prompt: parsedData.prompt,
-                  content: parsedData.content,
-                  mood: parsedData.mood,
-                  tags: parsedData.tags,
-                });
-              } catch (e) {
-                console.error('Error parsing reflection data:', e);
-              }
-            }
-          }
-        }
-      }
-
-      // Send migration request if there's data
-      if (workspaceData.length > 0 || reflectionData.length > 0) {
-        try {
-          await fetch('/api/migrate-localStorage', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              workspace: workspaceData,
-              reflections: reflectionData,
-            }),
-          });
-        } catch (e) {
-          console.error('Error migrating data:', e);
-        }
-      }
-
-      // Clear localStorage after migration
+      // Clear old localStorage keys
       const keysToRemove: string[] = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && (key.startsWith('workspace_') || key.startsWith('reflection-') || key === 'templata-onboarding-seen')) {
+        if (key && key === 'templata-onboarding-seen') {
           keysToRemove.push(key);
         }
       }
