@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTemplateById } from '@/registry/guides';
 import GuideDetail from './guide-detail';
 import Script from 'next/script';
+import { TEMPLATA_FAQ } from '@/lib/seo';
 
 async function getGuideStats(slug: string) {
   try {
@@ -165,12 +166,31 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     },
   };
 
+  // FAQ schema for rich snippets in Google search
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: TEMPLATA_FAQ.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <>
       <Script
         id="guide-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Script
+        id="guide-faq-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <GuideDetail params={params} />
     </>

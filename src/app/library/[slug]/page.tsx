@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import ReadingPageClient from './reading-page-client';
 import Script from 'next/script';
+import { TEMPLATA_FAQ } from '@/lib/seo';
 
 async function getReading(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/readings/${id}`, {
@@ -189,12 +190,31 @@ export default async function ReadingPage({ params }: { params: Promise<{ slug: 
     },
   };
 
+  // FAQ schema for rich snippets in Google search
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: TEMPLATA_FAQ.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <>
       <Script
         id="reading-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Script
+        id="reading-faq-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <ReadingPageClient params={params} />
     </>
