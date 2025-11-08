@@ -3,6 +3,20 @@ import { getTemplateById } from '@/registry/guides';
 import GuideDetail from './guide-detail';
 import Script from 'next/script';
 
+async function getGuideStats(slug: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/guides/${slug}/questions`, {
+      cache: 'no-store'
+    });
+    const data = await res.json();
+    return {
+      questionCount: data.questions?.length || 0
+    };
+  } catch {
+    return { questionCount: 0 };
+  }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const template = await getTemplateById(slug);
@@ -19,14 +33,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const templateData = template.template;
-  const title = `${templateData.title} Template, Checklist & Guide | Templata`;
-  const description = `Complete ${templateData.title.toLowerCase()} template and step-by-step checklist. ${templateData.description} Expert guide with 90+ planning questions, curated readings, and proven frameworks. Start planning today.`;
+  const { questionCount } = await getGuideStats(slug);
+
+  // Use meta_title if exists in DB, otherwise generate
+  const title = templateData.meta_title || `${templateData.title} Template & Planning Guide | Templata`;
+
+  // Use meta_description if exists in DB, otherwise generate
+  const description = templateData.meta_description || `Complete ${templateData.title.toLowerCase()} planning guide. ${templateData.description} Expert framework with ${questionCount > 0 ? `${questionCount}` : ''} planning questions, curated expert readings, and proven strategies. Start planning today.`;
 
   // Generate comprehensive SEO keywords
   const baseKeywords = [
     templateData.title.toLowerCase(),
     `${templateData.title.toLowerCase()} template`,
-    `${templateData.title.toLowerCase()} checklist`,
     `${templateData.title.toLowerCase()} guide`,
     `${templateData.title.toLowerCase()} planning`,
     `how to plan ${templateData.title.toLowerCase()}`,
@@ -39,9 +57,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     `${templateData.category.toLowerCase()} guide`,
     'planning template',
     'step-by-step guide',
-    'comprehensive checklist',
     'expert planning guide',
   ];
+
+  // Add SEO keywords from database if available
+  if (templateData.seo_keywords && Array.isArray(templateData.seo_keywords)) {
+    baseKeywords.push(...templateData.seo_keywords.map((keyword: string) => keyword.toLowerCase()));
+  }
 
   return {
     title,
