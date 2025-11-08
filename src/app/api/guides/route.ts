@@ -113,6 +113,13 @@ export async function GET(request: Request) {
 
     // Apply search filter if provided
     if (search) {
+      // Validate search length to prevent DoS
+      if (search.length > 100) {
+        return NextResponse.json(
+          { error: 'Search query too long' },
+          { status: 400 }
+        );
+      }
       query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
     }
 

@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  // Production optimizations
+  productionBrowserSourceMaps: false, // Reduce bundle size in production
+  onDemandEntries: {
+    maxInactiveAge: 60 * 60 * 1000, // Keep pages for 1 hour
+    pagesBufferLength: 5,
+  },
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },

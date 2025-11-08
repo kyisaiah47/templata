@@ -7,7 +7,7 @@ import DOMPurify from 'isomorphic-dompurify';
 async function getGuide(slug: string) {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/guides/${slug}`, {
-      cache: 'no-store'
+      next: { revalidate: 3600 } // Revalidate every hour (ISR)
     });
     if (!res.ok) return null;
     return res.json();
@@ -20,10 +20,10 @@ async function getGuideData(slug: string) {
   try {
     const [questionsRes, readingsRes] = await Promise.all([
       fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/guides/${slug}/questions`, {
-        cache: 'no-store'
+        next: { revalidate: 3600 } // Revalidate every hour (ISR)
       }),
       fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/guides/${slug}/readings`, {
-        cache: 'no-store'
+        next: { revalidate: 3600 } // Revalidate every hour (ISR)
       })
     ]);
 

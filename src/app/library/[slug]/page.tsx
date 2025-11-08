@@ -5,7 +5,7 @@ import { TEMPLATA_FAQ } from '@/lib/seo';
 
 async function getReading(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/readings/${id}`, {
-    cache: 'no-store'
+    next: { revalidate: 3600 } // Revalidate every hour (ISR)
   });
 
   if (!res.ok) {

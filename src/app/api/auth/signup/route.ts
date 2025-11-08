@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { signupSchema } from '@/lib/validations/auth';
+import { signupLimiter } from '@/lib/rate-limit';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -9,6 +10,15 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting (2 requests per minute)
+    const rateLimitResult = await signupLimiter(request);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many signup attempts. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate input with Zod
@@ -79,7 +89,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set('sb-access-token', sessionData.session.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'strict', // Stronger CSRF protection
       maxAge: sessionData.session.expires_in,
       path: '/',
     });
@@ -87,7 +97,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set('sb-refresh-token', sessionData.session.refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'strict', // Stronger CSRF protection
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
     });

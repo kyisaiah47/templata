@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { loginSchema } from '@/lib/validations/auth';
+import { authLimiter } from '@/lib/rate-limit';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -9,6 +10,15 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting (5 requests per minute)
+    const rateLimitResult = await authLimiter(request);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate input with Zod
@@ -56,7 +66,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set('sb-access-token', data.session.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'strict', // Stronger CSRF protection
       maxAge: 60 * 60 * 24 * 30, // 30 days
       path: '/',
     });
@@ -64,7 +74,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set('sb-refresh-token', data.session.refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'strict', // Stronger CSRF protection
       maxAge: 60 * 60 * 24 * 30, // 30 days
       path: '/',
     });
