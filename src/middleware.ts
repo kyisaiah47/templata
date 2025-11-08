@@ -21,10 +21,10 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { session } } = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
 
   // Protect /app routes - redirect to home if not authenticated
-  if (request.nextUrl.pathname.startsWith('/app') && !session) {
+  if (request.nextUrl.pathname.startsWith('/app') && !user) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 

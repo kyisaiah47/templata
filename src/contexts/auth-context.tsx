@@ -30,14 +30,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
+    // Get initial user using secure method
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
         setIsLoggedIn(true);
         setUser({
-          id: session.user.id,
-          email: session.user.email!,
-          name: session.user.user_metadata?.name,
+          id: user.id,
+          email: user.email!,
+          name: user.user_metadata?.name,
         });
       }
       setLoading(false);

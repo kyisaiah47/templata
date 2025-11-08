@@ -31,14 +31,12 @@ export async function getAuthenticatedUser(): Promise<AuthSession | null> {
       }
     );
 
-    // Get the current session using Supabase's method
-    const { data: { session }, error } = await supabase.auth.getSession();
+    // Get the current user using Supabase's secure method
+    const { data: { user }, error } = await supabase.auth.getUser();
 
-    if (error || !session?.user) {
+    if (error || !user) {
       return null;
     }
-
-    const user = session.user;
 
     // Get user profile - we need the users.id, not auth.users.id for foreign keys
     const { data: profile } = await supabase

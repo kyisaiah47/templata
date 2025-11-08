@@ -72,6 +72,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         'max-snippet': -1,
       },
     },
+    alternates: {
+      canonical: `https://templata.org/guides/${slug}`,
+    },
   };
 }
 
