@@ -1,5 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import Image from "next/image";
 
 const sections = [
   {
@@ -50,10 +51,12 @@ const MarketingFooter = ({
             <div className="lg:max-w-md">
               <div className="flex items-center justify-start gap-2">
                 <Link href="/">
-                  <img
+                  <Image
                     src={logo.src}
                     alt={logo.alt}
                     title={logo.title}
+                    width={32}
+                    height={32}
                     className="h-8 w-8 dark:invert-0 invert"
                   />
                 </Link>

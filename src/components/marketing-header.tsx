@@ -1,9 +1,10 @@
 "use client";
 
 import { Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -17,27 +18,10 @@ import { LoginDialog } from "@/components/login-dialog";
 import { useAuth } from "@/contexts/auth-context";
 
 const MarketingHeader = () => {
-  const [currentTime, setCurrentTime] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const { isLoggedIn, loading } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      });
-      setCurrentTime(timeString);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   const navLinks = [
     { name: "Library", href: "/library" },
@@ -52,8 +36,10 @@ const MarketingHeader = () => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center gap-2 md:hidden">
-                <img
+                <Image
                   src="/favicon.svg"
+                  width={32}
+                  height={32}
                   className="h-8 w-8 dark:invert-0 invert"
                   alt="Templata"
                 />
@@ -64,8 +50,10 @@ const MarketingHeader = () => {
 
               <div className="absolute left-1/2 hidden -translate-x-1/2 transform md:block">
                 <Link href="/" className="flex items-center gap-2">
-                  <img
+                  <Image
                     src="/favicon.svg"
+                    width={32}
+                    height={32}
                     className="h-8 w-8 dark:invert-0 invert"
                     alt="Templata"
                   />
@@ -144,8 +132,10 @@ const MarketingHeader = () => {
                           className="text-foreground flex items-center justify-start gap-2 text-2xl font-bold tracking-tighter"
                           onClick={() => setIsOpen(false)}
                         >
-                          <img
+                          <Image
                             src="/favicon.svg"
+                            width={32}
+                            height={32}
                             className="h-8 w-8 dark:invert-0 invert"
                             alt="Templata"
                           />
