@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { createClient } from '@supabase/supabase-js';
 import { PageLayout } from '@/components/layout';
 import { CollectionsHub } from '@/components/collections-hub';
@@ -56,9 +57,49 @@ async function getAllCollections() {
 export default async function CollectionsPage() {
   const collections = await getAllCollections();
 
+  // ItemList schema
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Planning Collections',
+    description: 'Curated collections of planning guides for major life events',
+    numberOfItems: collections.length,
+    itemListElement: collections.map((collection: any, index: number) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CollectionPage',
+        name: collection.name,
+        description: collection.description,
+        url: `https://templata.org/collections/${collection.id}`,
+      },
+    })),
+  };
+
+  // WebPage schema
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Planning Collections | Curated Guide Bundles',
+    description: 'Curated collections of planning guides for major life events. New parent essentials, career changer pack, wedding planning complete, and more.',
+    url: 'https://templata.org/collections',
+  };
+
   return (
-    <PageLayout>
-      <CollectionsHub collections={collections} totalCollections={collections.length} />
+    <>
+      <Script
+        id="collections-itemlist-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+      <Script
+        id="collections-webpage-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+
+      <PageLayout>
+        <CollectionsHub collections={collections} totalCollections={collections.length} />
 
       {/* Hidden SEO content */}
       <div className="sr-only" aria-hidden="true">
@@ -88,6 +129,7 @@ export default async function CollectionsPage() {
           <li>entrepreneur resources - launch and grow your business</li>
         </ul>
       </div>
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }

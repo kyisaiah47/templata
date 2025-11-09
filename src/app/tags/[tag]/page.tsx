@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { createClient } from '@supabase/supabase-js';
 import { PageLayout } from '@/components/layout';
 import { Separator } from '@/components/ui/separator';
@@ -70,8 +71,80 @@ export default async function TagPage({
     return acc;
   }, {});
 
+  // CollectionPage schema
+  const collectionPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${tagDisplay} Planning Guides`,
+    description: `Find all planning guides and resources tagged with "${tagDisplay}"`,
+    url: `https://templata.org/tags/${tagSlug}`,
+    numberOfItems: guides.length,
+  };
+
+  // ItemList schema
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${tagDisplay} Guides`,
+    description: `Planning guides tagged with ${tagDisplay}`,
+    numberOfItems: guides.length,
+    itemListElement: guides.map((guide, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'HowTo',
+        name: guide.name,
+        description: guide.description,
+        url: `https://templata.org/guides/${guide.id}`,
+      },
+    })),
+  };
+
+  // Breadcrumb schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://templata.org',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Tags',
+        item: 'https://templata.org/tags',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: tagDisplay,
+        item: `https://templata.org/tags/${tagSlug}`,
+      },
+    ],
+  };
+
   return (
-    <PageLayout>
+    <>
+      <Script
+        id="tag-collectionpage-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+      />
+      <Script
+        id="tag-itemlist-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+      <Script
+        id="tag-breadcrumb-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <PageLayout>
       <section className="py-32">
         <div className="container max-w-4xl">
           <Badge variant="secondary" className="mb-4">
@@ -141,6 +214,7 @@ export default async function TagPage({
           </div>
         </div>
       </section>
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }

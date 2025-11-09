@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { createClient } from '@supabase/supabase-js';
 import { PageLayout } from '@/components/layout';
 import { TagsHub } from '@/components/tags-hub';
@@ -62,9 +63,45 @@ export default async function TagsPage() {
     allGuidesByTag[tag] = data.guides;
   });
 
+  // ItemList schema for tags
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Planning Tags',
+    description: 'Browse planning guides by topic tag',
+    numberOfItems: sortedTags.length,
+    itemListElement: sortedTags.slice(0, 50).map((tagData, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: tagData.tag.replace(/-/g, ' '),
+      url: `https://templata.org/tags/${tagData.tag}`,
+    })),
+  };
+
+  // WebPage schema
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Planning Tags | Browse by Topic',
+    description: 'Browse planning guides by tag - anxiety, budgeting, career change, relationships, health, and more.',
+    url: 'https://templata.org/tags',
+  };
+
   return (
-    <PageLayout>
-      <TagsHub tags={sortedTags} totalTags={sortedTags.length} allGuidesByTag={allGuidesByTag} />
+    <>
+      <Script
+        id="tags-itemlist-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+      <Script
+        id="tags-webpage-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+
+      <PageLayout>
+        <TagsHub tags={sortedTags} totalTags={sortedTags.length} allGuidesByTag={allGuidesByTag} />
 
       {/* Hidden SEO content */}
       <div className="sr-only" aria-hidden="true">
@@ -92,6 +129,7 @@ export default async function TagsPage() {
           <li>health planning resources - wellness and health guides</li>
         </ul>
       </div>
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }

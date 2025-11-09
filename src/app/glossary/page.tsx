@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { PageLayout } from '@/components/layout';
-import { Separator } from '@/components/ui/separator';
+import { GlossaryContent } from '@/components/glossary-content';
 
 export const metadata: Metadata = {
   title: 'Planning Glossary | Key Terms & Definitions | Templata',
@@ -172,95 +173,120 @@ export default function GlossaryPage() {
     terms.map(term => ({ ...term, category }))
   );
 
-  return (
-    <PageLayout>
-      <section className="py-32">
-        <div className="container max-w-4xl">
-          <h1 className="text-4xl font-bold mb-4">Planning Glossary</h1>
-          <p className="text-muted-foreground mb-12">
-            Comprehensive definitions of planning terms, concepts, and methodologies used throughout Templata
-          </p>
+  // DefinedTermSet schema for glossary
+  const definedTermSetSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: 'Planning Glossary',
+    description: 'Comprehensive glossary of planning terms, life planning concepts, and strategic planning definitions',
+    hasDefinedTerm: allTermsFlat.slice(0, 50).map((term) => ({
+      '@type': 'DefinedTerm',
+      name: term.term,
+      description: term.definition,
+      inDefinedTermSet: 'https://templata.org/glossary',
+    })),
+  };
 
-          {Object.entries(glossaryTerms).map(([category, terms]) => (
-            <div key={category} className="mb-12">
-              <h2 className="text-2xl font-semibold mb-4">{category}</h2>
-              <Separator className="mb-6" />
-              <div className="space-y-6">
-                {terms.map((item) => (
-                  <div key={item.term} className="border-l-2 border-primary pl-4">
-                    <h3 className="text-lg font-semibold mb-2">{item.term}</h3>
-                    <p className="text-muted-foreground mb-2">{item.definition}</p>
-                    {item.relatedTerms && item.relatedTerms.length > 0 && (
-                      <div className="text-sm">
-                        <span className="font-medium">Related terms: </span>
-                        <span className="text-muted-foreground">
-                          {item.relatedTerms.join(', ')}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+  // WebPage schema
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Planning Glossary | Key Terms & Definitions',
+    description: 'Comprehensive glossary of planning terms, life planning concepts, and strategic planning definitions. Learn the language of effective planning.',
+    url: 'https://templata.org/glossary',
+  };
+
+  // FAQPage schema for "What is..." questions
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: allTermsFlat.slice(0, 30).map((term) => ({
+      '@type': 'Question',
+      name: `What is ${term.term}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: term.definition,
+      },
+    })),
+  };
+
+  return (
+    <>
+      <Script
+        id="glossary-definedtermset-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermSetSchema) }}
+      />
+      <Script
+        id="glossary-webpage-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <Script
+        id="glossary-faq-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <PageLayout>
+        <GlossaryContent glossaryTerms={glossaryTerms} totalTerms={allTermsFlat.length} />
+
+      {/* Hidden SEO content - all terms for search engines */}
+      <div className="sr-only" aria-hidden="true">
+        <h2>Complete Planning Terminology Reference</h2>
+        <p>
+          Comprehensive planning glossary with {allTermsFlat.length} essential terms for life planning, strategic planning, and decision making.
+        </p>
+
+        <h3>All Planning Terms and Definitions</h3>
+        <dl>
+          {allTermsFlat.map((item) => (
+            <div key={item.term}>
+              <dt>
+                <strong>What is {item.term}?</strong>
+              </dt>
+              <dd>
+                {item.definition}
+                {item.relatedTerms && item.relatedTerms.length > 0 && (
+                  <p>
+                    Related planning terms: {item.relatedTerms.join(', ')}
+                  </p>
+                )}
+                <p>Category: {item.category}</p>
+              </dd>
             </div>
           ))}
+        </dl>
 
-          {/* Hidden SEO content - all terms for search engines */}
-          <div className="sr-only" aria-hidden="true">
-            <h2>Complete Planning Terminology Reference</h2>
-            <p>
-              Comprehensive planning glossary with {allTermsFlat.length} essential terms for life planning, strategic planning, and decision making.
-            </p>
-
-            <h3>All Planning Terms and Definitions</h3>
-            <dl>
-              {allTermsFlat.map((item) => (
-                <div key={item.term}>
-                  <dt>
-                    <strong>What is {item.term}?</strong>
-                  </dt>
-                  <dd>
-                    {item.definition}
-                    {item.relatedTerms && item.relatedTerms.length > 0 && (
-                      <p>
-                        Related planning terms: {item.relatedTerms.join(', ')}
-                      </p>
-                    )}
-                    <p>Category: {item.category}</p>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <h3>Planning Glossary by Category</h3>
-            {Object.entries(glossaryTerms).map(([category, terms]) => (
-              <div key={category}>
-                <h4>{category} - Planning Terms and Definitions</h4>
-                <ul>
-                  {terms.map((term) => (
-                    <li key={term.term}>
-                      <strong>{term.term} definition:</strong> {term.definition}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            <h3>Common Planning Questions</h3>
+        <h3>Planning Glossary by Category</h3>
+        {Object.entries(glossaryTerms).map(([category, terms]) => (
+          <div key={category}>
+            <h4>{category} - Planning Terms and Definitions</h4>
             <ul>
-              <li>What is life planning and why is it important?</li>
-              <li>What is strategic planning in personal development?</li>
-              <li>What is career planning and how do I start?</li>
-              <li>What is financial planning for beginners?</li>
-              <li>What is a planning guide and how do I use it?</li>
-              <li>What are planning questions and why are they important?</li>
-              <li>What is goal setting and how does it work?</li>
-              <li>What is a milestone in planning?</li>
-              <li>What is risk assessment in life planning?</li>
-              <li>What is contingency planning?</li>
+              {terms.map((term) => (
+                <li key={term.term}>
+                  <strong>{term.term} definition:</strong> {term.definition}
+                </li>
+              ))}
             </ul>
           </div>
-        </div>
-      </section>
-    </PageLayout>
+        ))}
+
+        <h3>Common Planning Questions</h3>
+        <ul>
+          <li>What is life planning and why is it important?</li>
+          <li>What is strategic planning in personal development?</li>
+          <li>What is career planning and how do I start?</li>
+          <li>What is financial planning for beginners?</li>
+          <li>What is a planning guide and how do I use it?</li>
+          <li>What are planning questions and why are they important?</li>
+          <li>What is goal setting and how does it work?</li>
+          <li>What is a milestone in planning?</li>
+          <li>What is risk assessment in life planning?</li>
+          <li>What is contingency planning?</li>
+        </ul>
+      </div>
+      </PageLayout>
+    </>
   );
 }
