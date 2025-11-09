@@ -9,6 +9,12 @@ const sections = [
       { name: "Guides", href: "/guides" },
       { name: "Library", href: "/library" },
       { name: "Questions", href: "/questions" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { name: "Glossary", href: "/glossary" },
       { name: "Sitemap", href: "/sitemap" },
     ],
   },
