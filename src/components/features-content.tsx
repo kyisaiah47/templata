@@ -106,7 +106,7 @@ export const FeaturesContent: React.FC = () => {
               showCard={2}
               className=""
               icons={[CheckCircle2, FileText, TrendingUp, BarChart]}
-              highlighted
+              dimmed
             />
             <SkiperUiMarquee
               showCard={3}
@@ -119,6 +119,26 @@ export const FeaturesContent: React.FC = () => {
               showCard={2}
               className=""
               icons={[Lock, Download, Smartphone, Moon]}
+              highlighted
+            />
+            <SkiperUiMarquee
+              showCard={3}
+              reverse={true}
+              className=""
+              icons={[Brain, Target, CheckCircle2, Calendar]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[Sparkles, FileText, Layout, Download]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              reverse={true}
+              showCard={1}
+              className=""
+              icons={[BookOpen, TrendingUp, Search, Lock]}
               dimmed
             />
           </motion.div>

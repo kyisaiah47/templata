@@ -88,13 +88,39 @@ export const PricingContent: React.FC = () => {
               showCard={2}
               className=""
               icons={[Heart, DollarSign, Target, TrendingUp]}
-              highlighted
+              dimmed
             />
             <SkiperUiMarquee
               showCard={3}
               reverse={true}
               className=""
               icons={[Check, Infinity, Shield, Sparkles]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[Zap, Heart, Target, Check]}
+              highlighted
+            />
+            <SkiperUiMarquee
+              showCard={3}
+              reverse={true}
+              className=""
+              icons={[DollarSign, Shield, TrendingUp, Infinity]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[Sparkles, Check, Zap, Heart]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              reverse={true}
+              showCard={1}
+              className=""
+              icons={[Target, Infinity, Shield, DollarSign]}
               dimmed
             />
           </motion.div>

@@ -129,13 +129,39 @@ export const UseCasesContent: React.FC = () => {
               showCard={2}
               className=""
               icons={[Briefcase, Rocket, Target, TrendingUp]}
-              highlighted
+              dimmed
             />
             <SkiperUiMarquee
               showCard={3}
               reverse={true}
               className=""
               icons={[Activity, Brain, Pill, DollarSign]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[Heart, Briefcase, Home, Rocket]}
+              highlighted
+            />
+            <SkiperUiMarquee
+              showCard={3}
+              reverse={true}
+              className=""
+              icons={[Users, Activity, Target, Brain]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              showCard={2}
+              className=""
+              icons={[DollarSign, TrendingUp, Baby, Pill]}
+              dimmed
+            />
+            <SkiperUiMarquee
+              reverse={true}
+              showCard={1}
+              className=""
+              icons={[Heart, Home, Briefcase, Users]}
               dimmed
             />
           </motion.div>
