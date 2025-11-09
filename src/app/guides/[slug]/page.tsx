@@ -5,14 +5,17 @@ import { TEMPLATA_FAQ } from '@/lib/seo';
 import DOMPurify from 'isomorphic-dompurify';
 import { createClient } from '@supabase/supabase-js';
 
-// Use server-side Supabase client for SSR
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Create Supabase client inside functions to avoid module-level initialization issues
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 async function getGuide(slug: string) {
   try {
+    const supabase = getSupabaseClient();
     const { data: guide, error } = await supabase
       .from('guides')
       .select('*')
@@ -36,6 +39,7 @@ async function getGuide(slug: string) {
 
 async function getGuideData(slug: string) {
   try {
+    const supabase = getSupabaseClient();
     const [questionsResult, readingsResult] = await Promise.all([
       supabase
         .from('questions')
