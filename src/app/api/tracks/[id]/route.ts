@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { getAuthenticatedUser, unauthorizedResponse, errorResponse, successResponse } from '@/lib/auth-utils';
 
@@ -46,7 +46,7 @@ export async function PATCH(
     }
 
     return successResponse({ success: true });
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('Internal server error');
   }
 }
@@ -86,7 +86,7 @@ export async function DELETE(
     }
 
     return successResponse({ success: true });
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('Internal server error');
   }
 }

@@ -117,7 +117,6 @@ function Marquee({
   vertical = false,
   repeat = 4,
   ...props
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: any) {
   return (
     <div

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { getAuthenticatedUser, unauthorizedResponse, errorResponse } from '@/lib/auth-utils';
+import { getAuthenticatedUser, unauthorizedResponse } from '@/lib/auth-utils';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

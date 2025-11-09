@@ -3,6 +3,7 @@
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -62,7 +63,7 @@ const MarketingHeader = () => {
               </div>
 
               <div className="absolute left-1/2 hidden -translate-x-1/2 transform md:block">
-                <a href="/" className="flex items-center gap-2">
+                <Link href="/" className="flex items-center gap-2">
                   <img
                     src="/favicon.svg"
                     className="h-8 w-8 dark:invert-0 invert"
@@ -71,7 +72,7 @@ const MarketingHeader = () => {
                   <span className="text-lg font-semibold tracking-tighter">
                     Templata
                   </span>
-                </a>
+                </Link>
               </div>
               <div className="text-muted-foreground hidden items-center space-x-2 text-sm md:flex">
                 <span className="font-medium">Beta</span>
@@ -138,7 +139,7 @@ const MarketingHeader = () => {
 
                     <div className="m-4 flex flex-col space-y-6">
                       <div className="ml-3">
-                        <a
+                        <Link
                           href="/"
                           className="text-foreground flex items-center justify-start gap-2 text-2xl font-bold tracking-tighter"
                           onClick={() => setIsOpen(false)}
@@ -148,7 +149,7 @@ const MarketingHeader = () => {
                             className="h-8 w-8 dark:invert-0 invert"
                             alt="Templata"
                           />
-                        </a>
+                        </Link>
                       </div>
                       <div className="flex flex-col space-y-4">
                         {navLinks.map((link) => (

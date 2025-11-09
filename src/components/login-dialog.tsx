@@ -61,7 +61,7 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
       router.push("/app");
       router.refresh();
       onOpenChange(false);
-    } catch (err) {
+    } catch {
       setLoginError("An error occurred. Please try again.");
     } finally {
       setLoginLoading(false);
@@ -74,7 +74,7 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
     setSignupLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: signupEmail,
         password: signupPassword,
         options: {
@@ -95,7 +95,7 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
       router.push("/app");
       router.refresh();
       onOpenChange(false);
-    } catch (err) {
+    } catch {
       setSignupError("An error occurred. Please try again.");
     } finally {
       setSignupLoading(false);

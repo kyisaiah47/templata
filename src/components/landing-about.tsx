@@ -1,11 +1,5 @@
 import { type SVGProps, useId } from "react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-
 export const LandingAbout = () => {
   return (
     <section className="py-32">

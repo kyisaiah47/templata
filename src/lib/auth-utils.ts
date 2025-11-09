@@ -55,7 +55,7 @@ export async function getAuthenticatedUser(): Promise<AuthSession | null> {
       name: profile.name || user.user_metadata?.name || undefined,
       createdAt: new Date(user.created_at).getTime(),
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 }

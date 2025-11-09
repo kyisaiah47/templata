@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, HelpCircle, BookOpen, Map, Calendar, ListTodo, Library, BarChart3, LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,9 +32,9 @@ const LandingIntegrations = () => {
             Questions, readings, calendar, tasks, and more—all organized by life event.
           </p>
           <Button variant="link" asChild className="text-blue-700">
-            <a href="/guides">
+            <Link href="/guides">
               Explore Guides <ArrowRight className="size-4" />
-            </a>
+            </Link>
           </Button>
         </div>
         <div className="relative mx-auto flex max-w-3xl flex-col gap-5 overflow-hidden pb-8 md:gap-0">

@@ -10,7 +10,6 @@ import {
   PanelBottomOpen,
   Settings,
   Sun,
-  User,
   LayoutDashboard,
   FolderOpen,
 } from "lucide-react";
@@ -78,7 +77,7 @@ const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark, sel
       invalidateAll();
       await fetch('/api/auth/logout', { method: 'POST' });
       window.location.href = '/';
-    } catch (error) {
+    } catch (_error) {
     }
   };
 

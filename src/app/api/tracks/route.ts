@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { getAuthenticatedUser, unauthorizedResponse, errorResponse, successResponse } from '@/lib/auth-utils';
 
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     }));
 
     return successResponse({ tracks: tracksWithGuides });
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('Internal server error');
   }
 }
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
     }
 
     return successResponse({ track }, 201);
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('Internal server error');
   }
 }

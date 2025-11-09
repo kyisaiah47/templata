@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to update user' },
       { status: 500 }

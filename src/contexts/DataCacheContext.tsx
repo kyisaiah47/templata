@@ -190,7 +190,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       }));
 
       return tracks;
-    } catch (error) {
+    } catch {
       // Return cached data if fetch fails
       return currentCache.tracks || [];
     }
@@ -222,7 +222,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       }));
 
       return guides;
-    } catch (error) {
+    } catch {
       // Return cached data if fetch fails
       return currentCache.guides || [];
     }
@@ -258,7 +258,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       }));
 
       return items;
-    } catch (error) {
+    } catch {
       // Return cached data if fetch fails
       return currentCache.items || [];
     }
@@ -317,7 +317,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       }));
 
       return questions;
-    } catch (error) {
+    } catch {
       return currentCache.questionsByGuide[guideId] || [];
     }
   }, []);
@@ -351,7 +351,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       }));
 
       return readings;
-    } catch (error) {
+    } catch {
       return currentCache.readingsByGuide[guideId] || [];
     }
   }, []);
@@ -385,7 +385,7 @@ export function DataCacheProvider({ children }: { children: React.ReactNode }) {
       }));
 
       return content;
-    } catch (error) {
+    } catch {
       return currentCache.notesByTrack?.[trackId] || '';
     }
   }, []);

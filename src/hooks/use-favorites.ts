@@ -24,7 +24,7 @@ export function useFavorites() {
         const items = JSON.parse(stored)
         setFavorites(items)
       }
-    } catch (error) {
+    } catch {
     }
   }, [])
 
@@ -53,7 +53,7 @@ export function useFavorites() {
       // Save to localStorage
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-      } catch (error) {
+      } catch {
       }
 
       return updated
@@ -66,7 +66,7 @@ export function useFavorites() {
       const updated = prev.filter(item => item.id !== id)
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-      } catch (error) {
+      } catch {
       }
       return updated
     })
@@ -77,7 +77,7 @@ export function useFavorites() {
     setFavorites([])
     try {
       localStorage.removeItem(STORAGE_KEY)
-    } catch (error) {
+    } catch {
     }
   }
 

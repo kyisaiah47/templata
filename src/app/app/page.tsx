@@ -14,17 +14,9 @@ export default function AppPage() {
 	const [currentView, setCurrentView] = useState<View>('guides');
 	const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
 	const [isDark, setIsDark] = useState(false);
-	const [userEmail, setUserEmail] = useState('');
 	const [trackSelectorOpen, setTrackSelectorOpen] = useState(false);
 	const [calendarSelectorOpen, setCalendarSelectorOpen] = useState(false);
 	const [tasksSelectorOpen, setTasksSelectorOpen] = useState(false);
-
-	// Callbacks for interactive banner
-	const [templatesActions, setTemplatesActions] = useState<{
-		openTemplateDropdown?: () => void;
-		selectFirstPrompt?: () => void;
-		openFirstArticle?: () => void;
-	}>({});
 
 	useEffect(() => {
 		loadUser();
@@ -37,10 +29,10 @@ export default function AppPage() {
 				const data = await res.json();
 
 				if (data.user) {
-					setUserEmail(data.user.email || '');
+					// User is authenticated
 				}
 				// Allow anonymous users - don't redirect
-			} catch (error) {
+			} catch (_error) {
 				// Allow anonymous users - don't redirect
 			}
 		}
@@ -50,7 +42,8 @@ export default function AppPage() {
 			if (saved) {
 				try {
 					setSelectedTrackIds(JSON.parse(saved));
-				} catch (e) {
+				} catch (_e) {
+					// Ignore parse errors
 				}
 			}
 		}
@@ -241,7 +234,6 @@ export default function AppPage() {
 					}}
 				>
 					<GuidesViewWrapper
-						setActions={setTemplatesActions}
 						selectedTrackIds={selectedTrackIds}
 					/>
 				</motion.div>

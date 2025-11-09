@@ -35,7 +35,7 @@ export async function GET(
     return NextResponse.json({
       questions: mappedQuestions
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch questions' },
       { status: 500 }

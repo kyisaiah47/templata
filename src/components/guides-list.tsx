@@ -85,7 +85,7 @@ const GuidesList = () => {
               <div key={category.id} className="flex flex-col gap-7">
                 <h2 className="text-xl">/ {category.name.toUpperCase()}</h2>
                 <div>
-                  {guides.map((guide, idx) => {
+                  {guides.map((guide) => {
                     // Get the icon component dynamically
                     const IconComponent = guide.icon && (LucideIcons as any)[guide.icon];
                     const hasContent = guide.hasContent !== false;

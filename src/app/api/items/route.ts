@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { getAuthenticatedUser, unauthorizedResponse, errorResponse, successResponse } from '@/lib/auth-utils';
 
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     }
 
     return successResponse({ items: items || [] });
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('Internal server error');
   }
 }
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, description, status, priority, due_date, track_id, page_id } = body;
+    const { title, description, status, due_date, track_id, page_id } = body;
 
     if (!title || typeof title !== 'string' || title.trim().length === 0) {
       return errorResponse('Task title is required', 400);
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     }
 
     return successResponse({ item }, 201);
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('Internal server error');
   }
 }

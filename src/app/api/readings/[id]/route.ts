@@ -41,7 +41,7 @@ export async function GET(
     };
 
     return NextResponse.json(mappedReading);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch reading' },
       { status: 500 }

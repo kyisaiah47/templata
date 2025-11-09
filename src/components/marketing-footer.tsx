@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 const sections = [
   {
@@ -48,14 +49,14 @@ const MarketingFooter = ({
           <div className="flex flex-col items-center justify-between gap-6 lg:flex-row">
             <div className="lg:max-w-md">
               <div className="flex items-center justify-start gap-2">
-                <a href="/">
+                <Link href="/">
                   <img
                     src={logo.src}
                     alt={logo.alt}
                     title={logo.title}
                     className="h-8 w-8 dark:invert-0 invert"
                   />
-                </a>
+                </Link>
                 <h2 className="text-xl font-semibold tracking-tighter">
                   {logo.title}
                 </h2>

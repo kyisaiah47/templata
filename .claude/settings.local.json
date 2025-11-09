@@ -30,7 +30,8 @@
       "Bash(test:*)",
       "Bash(npm outdated:*)",
       "Bash(npm audit:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

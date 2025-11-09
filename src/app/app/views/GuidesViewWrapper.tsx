@@ -5,25 +5,20 @@ import { TrackTabsWrapper } from '@/components/TrackTabsWrapper';
 
 interface GuidesViewWrapperProps {
   selectedTrackIds: string[];
-  setActions?: (actions: any) => void;
 }
 
 export function GuidesViewWrapper({
-  selectedTrackIds,
-  setActions
+  selectedTrackIds
 }: GuidesViewWrapperProps) {
   return (
     <TrackTabsWrapper
       selectedTrackIds={selectedTrackIds}
       renderBrowseMode={() => (
-        <GuidesView
-          setActions={setActions}
-        />
+        <GuidesView />
       )}
       renderView={(track) => (
         <GuidesView
           trackId={track.id}
-          setActions={setActions}
         />
       )}
     />

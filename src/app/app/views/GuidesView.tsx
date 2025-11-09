@@ -5,15 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { useDataCache } from '@/contexts/DataCacheContext';
 import { ErrorLogger } from '@/lib/error-logger';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import {
   Command,
   CommandEmpty,
@@ -78,14 +72,9 @@ interface Track {
 
 interface GuidesViewProps {
   trackId?: string;
-  setActions?: (actions: {
-    openGuideDropdown?: () => void;
-    selectFirstQuestion?: () => void;
-    openFirstReading?: () => void;
-  }) => void;
 }
 
-export function GuidesView({ trackId, setActions }: GuidesViewProps) {
+export function GuidesView({ trackId }: GuidesViewProps) {
   const { tracks: cachedTracks, fetchTracks, fetchQuestions, fetchReadings } = useDataCache();
   const [selectedGuide, setSelectedGuide] = useState('wedding-planning');
   const [guideInfo, setGuideInfo] = useState<{ id: string; name: string } | null>(null);
@@ -166,46 +155,6 @@ export function GuidesView({ trackId, setActions }: GuidesViewProps) {
 
     loadTrack();
   }, [trackId, cachedTracks]);
-
-  // Set up actions for parent to call
-  useEffect(() => {
-    if (setActions) {
-      setActions({
-        openGuideDropdown: () => {
-          setOpen(true);
-        },
-        selectFirstQuestion: () => {
-          if (questions.length > 0) {
-            const groupedQuestions = questions.reduce((acc, question) => {
-              const category = question.categoryName || 'General';
-              if (!acc[category]) {
-                acc[category] = [];
-              }
-              acc[category].push(question);
-              return acc;
-            }, {} as Record<string, Question[]>);
-            const firstCategory = Object.keys(groupedQuestions).sort()[0];
-            // Expand first category
-            setCollapsedCategories((prev) => {
-              const newSet = new Set(prev);
-              newSet.delete(firstCategory);
-              return newSet;
-            });
-            // Select first question
-            const firstQuestion = groupedQuestions[firstCategory][0];
-            if (firstQuestion) {
-              setSelectedQuestionId(firstQuestion.id);
-            }
-          }
-        },
-        openFirstReading: () => {
-          if (readings.length > 0) {
-            handleReadingClick(readings[0].id);
-          }
-        },
-      });
-    }
-  }, [questions, readings, setActions]);
 
   // Check authentication status
   useEffect(() => {

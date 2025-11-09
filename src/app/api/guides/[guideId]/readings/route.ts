@@ -35,7 +35,7 @@ export async function GET(
     return NextResponse.json({
       readings: mappedReadings
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch readings' },
       { status: 500 }

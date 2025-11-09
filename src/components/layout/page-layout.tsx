@@ -13,8 +13,7 @@ interface PageLayoutProps {
 export function PageLayout({
 	children,
 	includeHeader = true,
-	includeFooter = true,
-	includeHeaderPadding = true
+	includeFooter = true
 }: PageLayoutProps) {
 	return (
 		<div className="min-h-screen bg-transparent">

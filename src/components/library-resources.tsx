@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ErrorLogger } from "@/lib/error-logger";
 

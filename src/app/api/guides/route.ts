@@ -159,7 +159,7 @@ export async function GET(request: Request) {
       guides: guidesWithCounts || [],
       total: guidesWithCounts?.length || 0
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch guides' },
       { status: 500 }

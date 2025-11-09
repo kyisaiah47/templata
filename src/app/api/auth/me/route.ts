@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth-utils';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const user = await getAuthenticatedUser();
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
         name: user.name,
       },
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ user: null });
   }
 }

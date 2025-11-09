@@ -57,7 +57,7 @@ export function TrackTabsWrapper({
           selectedTrackIds.includes(t.id)
         );
         setTracks(selectedTracks);
-      } catch (error) {
+      } catch {
         setTracks([]);
       }
     }

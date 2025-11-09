@@ -34,7 +34,7 @@ export async function GET(
     }
 
     return NextResponse.json(guide);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch guide' },
       { status: 500 }
