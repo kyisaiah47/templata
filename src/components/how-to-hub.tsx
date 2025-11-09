@@ -6,18 +6,18 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FileQuestion, Search, Filter, Heart, Briefcase, Activity, DollarSign, Home, Users, Rocket, Brain, TrendingUp, Wallet, Baby, Target, Pill, PiggyBank, Sparkles, Calendar, BookOpen } from "lucide-react";
+import { BookOpen, Search, ArrowRight, Heart, Briefcase, Activity, DollarSign, Home, Users, Rocket, Brain, TrendingUp, Wallet, Baby, Target, Pill, PiggyBank, Sparkles, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { Particles } from "@/components/magicui/particles";
 import { cn } from "@/lib/utils";
 
-interface Question {
+interface Guide {
   id: string;
-  question: string;
-  question_number: number;
-  category_name: string;
-  guideName: string;
-  guideId: string;
+  name: string;
+  description: string;
+  category: string;
+  difficulty?: string;
+  estimated_time?: string;
 }
 
 interface Category {
@@ -27,10 +27,10 @@ interface Category {
   display_order: number;
 }
 
-interface QuestionsHubProps {
-  questionsByCategory: Record<string, Question[]>;
+interface HowToHubProps {
+  guidesByCategory: Record<string, Guide[]>;
   categories: Category[];
-  totalQuestions: number;
+  totalGuides: number;
 }
 
 // Marquee components
@@ -133,46 +133,49 @@ function Card({
   );
 }
 
-export const QuestionsHub: React.FC<QuestionsHubProps> = ({
-  questionsByCategory,
+export const HowToHub: React.FC<HowToHubProps> = ({
+  guidesByCategory,
   categories,
-  totalQuestions,
+  totalGuides,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Filter questions based on search and category
+  // Filter categories based on search and selection
   const filteredCategories = categories.filter((category) => {
-    const categoryQuestions = questionsByCategory[category.id] || [];
-    if (categoryQuestions.length === 0) return false;
+    const categoryGuides = guidesByCategory[category.id] || [];
+    if (categoryGuides.length === 0) return false;
 
     if (selectedCategory && category.id !== selectedCategory) return false;
 
     if (searchQuery) {
-      return categoryQuestions.some((q) =>
-        q.question.toLowerCase().includes(searchQuery.toLowerCase())
+      return categoryGuides.some((guide) =>
+        guide.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        guide.description?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     return true;
   });
 
-  const getFilteredQuestions = (categoryId: string) => {
-    const questions = questionsByCategory[categoryId] || [];
-    if (!searchQuery) return questions;
+  const getFilteredGuides = (categoryId: string) => {
+    const guides = guidesByCategory[categoryId] || [];
+    if (!searchQuery) return guides;
 
-    return questions.filter((q) =>
-      q.question.toLowerCase().includes(searchQuery.toLowerCase())
+    return guides.filter((guide) =>
+      guide.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      guide.description?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   };
 
-  const filteredQuestionsCount = selectedCategory
-    ? getFilteredQuestions(selectedCategory).length
-    : Object.values(questionsByCategory)
+  const filteredGuidesCount = selectedCategory
+    ? getFilteredGuides(selectedCategory).length
+    : Object.values(guidesByCategory)
         .flat()
-        .filter((q) =>
+        .filter((guide) =>
           searchQuery
-            ? q.question.toLowerCase().includes(searchQuery.toLowerCase())
+            ? guide.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              guide.description?.toLowerCase().includes(searchQuery.toLowerCase())
             : true
         ).length;
 
@@ -182,8 +185,8 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
       <section className="relative py-32 pt-56">
         <div className="container flex flex-col items-center justify-center gap-4 overflow-hidden">
           <Badge variant="secondary" className="flex items-center gap-2">
-            <FileQuestion className="w-3 h-3" />
-            {totalQuestions} Planning Questions
+            <BookOpen className="w-3 h-3" />
+            {totalGuides} How-To Guides
           </Badge>
 
           <h1 className="relative z-15 max-w-3xl text-center text-6xl font-medium tracking-tighter md:text-7xl">
@@ -194,7 +197,7 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
                 perspective: "600px",
               }}
             >
-              {"Planning Questions Database".split(" ").map((word, i) => (
+              {"How-To Planning Guides".split(" ").map((word, i) => (
                 <motion.span
                   className="relative inline-block px-[6px] leading-[none]"
                   key={i}
@@ -221,8 +224,8 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
           </h1>
 
           <p className="text-muted-foreground max-w-2xl text-center text-lg mt-4">
-            AI-refined questions to systematically think through life's biggest
-            decisions. Browse by category or search for specific guidance.
+            Step-by-step guidance for life's biggest decisions. Discover how to plan,
+            prepare, and execute major life events with expert frameworks and actionable insights.
           </p>
 
           <Particles
@@ -261,7 +264,7 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
             <SkiperUiMarquee
               showCard={2}
               className=""
-              icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+              icons={[BookOpen, BookOpen, BookOpen, BookOpen]}
               highlighted
             />
             <SkiperUiMarquee
@@ -298,7 +301,7 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search questions..."
+                placeholder="Search how-to guides..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -329,43 +332,31 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
           </div>
 
           <div className="mt-4 text-sm text-muted-foreground">
-            Showing {filteredQuestionsCount} of {totalQuestions} questions
+            Showing {filteredGuidesCount} of {totalGuides} how-to guides
           </div>
         </div>
       </section>
 
-      {/* Questions by Category */}
+      {/* How-To Guides by Category */}
       <section className="py-16">
         <div className="container">
           <div className="flex flex-col gap-12">
             {filteredCategories.map((category) => {
-              const questions = getFilteredQuestions(category.id);
-              if (questions.length === 0) return null;
-
-              // Group by guide
-              const questionsByGuide = questions.reduce((acc: any, question) => {
-                if (!acc[question.guideId]) {
-                  acc[question.guideId] = {
-                    guideName: question.guideName,
-                    questions: [],
-                  };
-                }
-                acc[question.guideId].questions.push(question);
-                return acc;
-              }, {});
+              const guides = getFilteredGuides(category.id);
+              if (guides.length === 0) return null;
 
               return (
                 <div key={category.id} className="flex flex-col gap-8">
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <h2 className="text-2xl font-semibold">
-                        {category.name}
+                        How to Plan {category.name}
                       </h2>
                       <Link
                         href={`/guides/categories/${category.id}`}
-                        className="text-muted-foreground hover:text-primary text-sm transition-colors"
+                        className="text-muted-foreground hover:text-primary text-sm transition-colors flex items-center gap-1"
                       >
-                        View category →
+                        View all <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>
                     <p className="text-muted-foreground text-sm">
@@ -373,42 +364,33 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
                     </p>
                   </div>
 
-                  <div className="flex flex-col gap-8">
-                    {Object.values(questionsByGuide).map((guideGroup: any) => (
-                      <div key={guideGroup.guideName} className="flex flex-col gap-4">
-                        <div className="flex items-baseline justify-between">
-                          <h3 className="text-lg font-semibold">
-                            {guideGroup.guideName}
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {guides.map((guide) => (
+                      <Link
+                        key={guide.id}
+                        href={`/guides/${guide.id}`}
+                        className="border-border rounded-lg border p-6 hover:border-primary transition-colors group"
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                            How to {guide.name}
                           </h3>
-                          <Link
-                            href={`/guides/${guideGroup.questions[0].guideId}`}
-                            className="text-muted-foreground hover:text-primary text-sm transition-colors"
-                          >
-                            View guide →
-                          </Link>
+                          <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                         </div>
-
-                        <div className="grid gap-3">
-                          {guideGroup.questions.map((question: Question, idx: number) => (
-                            <div
-                              key={question.id}
-                              className="border-border rounded-lg border p-4 hover:border-primary transition-colors"
-                            >
-                              <div className="flex items-start gap-3">
-                                <Badge variant="outline" className="text-xs">
-                                  Q{question.question_number}
-                                </Badge>
-                                <p className="flex-1">{question.question}</p>
-                              </div>
-                              {question.category_name && (
-                                <p className="text-muted-foreground text-xs mt-2 ml-11">
-                                  Category: {question.category_name}
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                        <p className="text-muted-foreground text-sm mb-4">
+                          {guide.description}
+                        </p>
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          {guide.difficulty && (
+                            <Badge variant="outline" className="text-xs">
+                              {guide.difficulty}
+                            </Badge>
+                          )}
+                          {guide.estimated_time && (
+                            <span>{guide.estimated_time}</span>
+                          )}
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
 
@@ -420,7 +402,7 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
             {filteredCategories.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-muted-foreground">
-                  No questions found matching your search.
+                  No how-to guides found matching your search.
                 </p>
               </div>
             )}
