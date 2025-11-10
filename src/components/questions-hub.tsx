@@ -432,17 +432,17 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
                             </Link>
                           </div>
 
-                          <div className="grid gap-3">
+                          <div className="grid gap-2">
                             {displayedQuestions.map((question: Question, idx: number) => (
                               <div
                                 key={question.id}
-                                className="border-border rounded-lg border p-4 hover:border-primary transition-colors"
+                                className="border-border rounded-md border p-3 hover:border-primary transition-colors"
                               >
-                                <div className="flex items-start gap-3">
-                                  <Badge variant="outline" className="text-xs">
+                                <div className="flex items-start gap-2">
+                                  <Badge variant="outline" className="text-xs shrink-0">
                                     Q{question.question_number}
                                   </Badge>
-                                  <p className="flex-1">{question.question}</p>
+                                  <p className="flex-1 text-sm">{question.question}</p>
                                 </div>
                               </div>
                             ))}
