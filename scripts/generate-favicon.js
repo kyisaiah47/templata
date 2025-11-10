@@ -3,32 +3,16 @@ const fs = require('fs');
 const path = require('path');
 
 async function generateFavicon() {
-  const svgPath = path.join(__dirname, '../public/favicon.svg');
-  const icoPath = path.join(__dirname, '../public/favicon.ico');
+  const inputPath = path.join(__dirname, '../public/brand/templata-logo.png');
+  const outputPath = path.join(__dirname, '../public/favicon.ico');
 
-  console.log('Generating favicon.ico from favicon.svg...');
+  await sharp(inputPath)
+    .resize(32, 32)
+    .toFile(outputPath.replace('.ico', '-temp.png'));
 
-  try {
-    // Generate a 32x32 PNG (ICO format with multiple sizes would be ideal, but PNG works for most browsers)
-    await sharp(svgPath)
-      .resize(32, 32)
-      .png()
-      .toFile(icoPath.replace('.ico', '-32.png'));
+  fs.renameSync(outputPath.replace('.ico', '-temp.png'), outputPath);
 
-    // Generate 16x16
-    await sharp(svgPath)
-      .resize(16, 16)
-      .png()
-      .toFile(icoPath.replace('.ico', '-16.png'));
-
-    console.log('✓ Generated favicon-16.png and favicon-32.png');
-    console.log('✓ Note: For true .ico support with multiple sizes, use an online converter or ImageMagick');
-    console.log('✓ These PNG files will work as fallbacks for most browsers');
-
-  } catch (error) {
-    console.error('Error generating favicon:', error);
-    process.exit(1);
-  }
+  console.log('✅ Generated favicon.ico from templata-logo.png');
 }
 
-generateFavicon();
+generateFavicon().catch(console.error);

@@ -28,7 +28,7 @@ const sections = [
       { name: "Tags", href: "/tags" },
       { name: "Collections", href: "/collections" },
       { name: "Glossary", href: "/glossary" },
-      { name: "Sitemap", href: "/sitemap" },
+      { name: "Sitemap", href: "/site-map" },
       { name: "FAQ", href: "/faq" },
     ],
   },

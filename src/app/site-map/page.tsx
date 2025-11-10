@@ -51,7 +51,7 @@ export default async function SitemapPage() {
     '@type': 'WebPage',
     name: 'Sitemap | Templata Planning Resources',
     description: 'Complete sitemap of all planning guides, categories, expert readings, and resources on Templata.',
-    url: 'https://templata.org/sitemap',
+    url: 'https://templata.org/site-map',
   };
 
   // ItemList schema for guides
