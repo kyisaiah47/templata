@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FileQuestion, Search, Filter, Heart, Briefcase, Activity, DollarSign, Home, Users, Rocket, Brain, TrendingUp, Wallet, Baby, Target, Pill, PiggyBank, Sparkles, Calendar, BookOpen } from "lucide-react";
+import { FileQuestion, Search, Filter, Heart, Briefcase, Activity, DollarSign, Home, Users, Rocket, Brain, TrendingUp, Wallet, Baby, Target, Pill, PiggyBank, Sparkles, Calendar, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { Particles } from "@/components/magicui/particles";
 import { cn } from "@/lib/utils";
@@ -139,6 +139,21 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [expandedGuides, setExpandedGuides] = useState<Set<string>>(new Set());
+
+  const PREVIEW_QUESTIONS = 3; // Number of questions to show when collapsed
+
+  const toggleGuide = (guideId: string) => {
+    setExpandedGuides((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(guideId)) {
+        newSet.delete(guideId);
+      } else {
+        newSet.add(guideId);
+      }
+      return newSet;
+    });
+  };
 
   // Filter questions based on search and category
   const filteredCategories = categories.filter((category) => {
@@ -373,37 +388,68 @@ export const QuestionsHub: React.FC<QuestionsHubProps> = ({
                   </div>
 
                   <div className="flex flex-col gap-8">
-                    {Object.values(questionsByGuide).map((guideGroup: any) => (
-                      <div key={guideGroup.guideName} className="flex flex-col gap-4">
-                        <div className="flex items-baseline justify-between">
-                          <h3 className="text-lg font-semibold">
-                            {guideGroup.guideName}
-                          </h3>
-                          <Link
-                            href={`/guides/${guideGroup.questions[0].guideId}`}
-                            className="text-muted-foreground hover:text-primary text-sm transition-colors"
-                          >
-                            View guide →
-                          </Link>
-                        </div>
+                    {Object.values(questionsByGuide).map((guideGroup: any) => {
+                      const guideId = guideGroup.questions[0].guideId;
+                      const isExpanded = expandedGuides.has(guideId);
+                      const displayedQuestions = isExpanded
+                        ? guideGroup.questions
+                        : guideGroup.questions.slice(0, PREVIEW_QUESTIONS);
+                      const hasMore = guideGroup.questions.length > PREVIEW_QUESTIONS;
 
-                        <div className="grid gap-3">
-                          {guideGroup.questions.map((question: Question, idx: number) => (
-                            <div
-                              key={question.id}
-                              className="border-border rounded-lg border p-4 hover:border-primary transition-colors"
-                            >
-                              <div className="flex items-start gap-3">
-                                <Badge variant="outline" className="text-xs">
-                                  Q{question.question_number}
-                                </Badge>
-                                <p className="flex-1">{question.question}</p>
-                              </div>
+                      return (
+                        <div key={guideGroup.guideName} className="flex flex-col gap-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <h3 className="text-lg font-semibold">
+                                {guideGroup.guideName}
+                              </h3>
+                              {hasMore && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => toggleGuide(guideId)}
+                                  className="flex items-center gap-1 h-8"
+                                >
+                                  {isExpanded ? (
+                                    <>
+                                      <ChevronUp className="w-4 h-4" />
+                                      <span className="text-xs">Hide</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <ChevronDown className="w-4 h-4" />
+                                      <span className="text-xs">Show {guideGroup.questions.length - PREVIEW_QUESTIONS} more</span>
+                                    </>
+                                  )}
+                                </Button>
+                              )}
                             </div>
-                          ))}
+                            <Link
+                              href={`/guides/${guideId}`}
+                              className="text-muted-foreground hover:text-primary text-sm transition-colors"
+                            >
+                              View guide →
+                            </Link>
+                          </div>
+
+                          <div className="grid gap-3">
+                            {displayedQuestions.map((question: Question, idx: number) => (
+                              <div
+                                key={question.id}
+                                className="border-border rounded-lg border p-4 hover:border-primary transition-colors"
+                              >
+                                <div className="flex items-start gap-3">
+                                  <Badge variant="outline" className="text-xs">
+                                    Q{question.question_number}
+                                  </Badge>
+                                  <p className="flex-1">{question.question}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   <Separator />
