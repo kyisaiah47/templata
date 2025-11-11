@@ -6,7 +6,7 @@ import { VsGoogleContent } from '@/components/vs-google-content';
 export const metadata: Metadata = {
   title: 'Templata vs Google Search - Organized Planning vs Scattered Tabs',
   description: 'Compare Templata to Google Search for life planning. Expert frameworks with 90%+ coverage vs 50 browser tabs. One organized system vs scattered blog posts. Free comprehensive planning.',
-  keywords: 'templata vs google, google search alternative, life planning tool, wedding planning vs google, organized planning, expert frameworks, comprehensive life planning, google search scattered, planning framework, life planning platform',
+  keywords: 'templata vs google, google search alternative, life planning tool, wedding planning vs google, organized planning, expert frameworks, comprehensive life planning, google search scattered, planning framework, life planning platform, google search vs organized system, 50 tabs vs one platform, google research vs expert guidance, scattered blog posts vs curated content, templata vs googling how to plan, comprehensive framework vs random articles, organized planning vs google search results, ai planning vs google searching',
   authors: [{ name: 'Templata' }],
   creator: 'Templata',
   publisher: 'Templata',
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
         url: 'https://templata.org/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Templata vs Google Search',
+        alt: 'Templata vs Google Search: Organized expert planning frameworks with 90%+ coverage vs 50 scattered browser tabs. One comprehensive system vs fragmented blog posts.',
       },
     ],
     locale: 'en_US',
-    type: 'website',
+    type: 'article',
   },
   twitter: {
     card: 'summary_large_image',
@@ -50,12 +50,37 @@ export const metadata: Metadata = {
 };
 
 export default function VsGooglePage() {
-  const comparisonSchema = {
+  // Using Article schema for better Google recognition
+  const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Templata vs Google Search',
-    description: 'Detailed comparison between Templata and Google Search for life planning',
+    '@type': 'Article',
+    headline: 'Templata vs Google Search - Organized Planning vs Scattered Tabs',
+    description: 'Compare expert planning frameworks vs scattered Google search results. One organized system vs 50 browser tabs.',
     url: 'https://templata.org/vs/google',
+    image: 'https://templata.org/og-image.png',
+    author: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://templata.org/brand/templata-logo.png',
+      },
+    },
+    datePublished: '2025-01-10',
+    dateModified: '2025-01-10',
+    inLanguage: 'en-US',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://templata.org/vs/google',
+    },
+    keywords: 'templata vs google, organized planning, life planning tool, wedding planning framework, comprehensive planning system',
+    articleSection: 'Comparisons',
   };
 
   const breadcrumbSchema = {
@@ -86,9 +111,9 @@ export default function VsGooglePage() {
   return (
     <>
       <Script
-        id="vs-google-jsonld"
+        id="vs-google-article-jsonld"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Script
         id="vs-google-breadcrumb-jsonld"

@@ -81,6 +81,38 @@ export default function CalendarFeaturePage() {
     ],
   };
 
+  // FAQ schema for calendar feature
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How does Templata\'s per-guide calendar work?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Templata provides a dedicated calendar for each life event guide. When planning a wedding, you get a wedding calendar. When buying a home, you get a separate home buying calendar. This keeps your timelines organized and prevents mixing deadlines from different life events.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I track different types of events?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes! You can create all-day events for deadlines and milestones, or timed events for specific appointments and meetings. Each event can include detailed descriptions and notes.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is the planning calendar free?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes, the planning calendar is completely free. You get unlimited calendars, one for each guide you use, with no limitations or paywalls.',
+        },
+      },
+    ],
+  };
+
   // Breadcrumb schema
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -118,6 +150,11 @@ export default function CalendarFeaturePage() {
         id="calendar-software-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <Script
+        id="calendar-faq-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Script
         id="calendar-breadcrumb-jsonld"

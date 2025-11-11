@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import Link from 'next/link';
 import { LandingHero } from "@/components/landing-hero";
 import { LandingAbout } from "@/components/landing-about";
 import { LandingFeatures } from "@/components/landing-features";
@@ -79,16 +80,16 @@ export default function HomePage() {
 		description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments.',
 		publisher: {
 			'@type': 'Organization',
-			name: 'Templata',
+			name: 'Templata'
 		},
 		potentialAction: {
 			'@type': 'SearchAction',
 			target: {
 				'@type': 'EntryPoint',
-				urlTemplate: 'https://templata.org/guides?q={search_term_string}',
+				urlTemplate: 'https://templata.org/guides?q={search_term_string}'
 			},
-			'query-input': 'required name=search_term_string',
-		},
+			'query-input': 'required name=search_term_string'
+		}
 	};
 
 	// FAQ schema
@@ -246,6 +247,42 @@ export default function HomePage() {
 					<li>Starting a Business Guide - Launch and grow your business with confidence</li>
 					<li>Moving Checklist & Guide - Stress-free relocation planning</li>
 				</ul>
+
+				<h3>Compare Templata to Other Tools</h3>
+				<p>
+					See how Templata compares to other popular tools for life planning:
+				</p>
+				<ul>
+					<li><Link href="/vs/notion">Templata vs Notion</Link> - Expert frameworks vs blank databases. Why Templata wins for life planning.</li>
+					<li><Link href="/vs/google">Templata vs Google Search</Link> - Organized planning vs 50 scattered browser tabs.</li>
+					<li><Link href="/vs/google-docs">Templata vs Google Docs</Link> - Expert guidance vs blank documents.</li>
+					<li><Link href="/vs/wikipedia">Templata vs Wikipedia</Link> - Active planning vs passive encyclopedia reading.</li>
+				</ul>
+
+				<h3>Powerful Features for Life Planning</h3>
+				<p>
+					Templata includes premium features completely free:
+				</p>
+				<ul>
+					<li><Link href="/features">All Features</Link> - Comprehensive overview of Templata&apos;s planning tools.</li>
+					<li><Link href="/features/calendar">Planning Calendar</Link> - Per-guide calendars to track milestones and deadlines separately.</li>
+					<li><Link href="/features/tasks">Task Management</Link> - Organize action items by priority and status for each life event.</li>
+					<li><Link href="/features/analytics">Progress Analytics</Link> - Visual charts and insights to track your planning progress.</li>
+				</ul>
+
+				<h3>Why Choose Templata</h3>
+				<p>
+					<strong>For Wedding Planning:</strong> Templata provides 400+ wedding-specific questions, expert vendor guidance, budget tracking, and timeline management. Compare to <Link href="/vs/notion">planning your wedding in Notion</Link> or <Link href="/vs/google">researching on Google</Link> - Templata offers comprehensive coverage from day one.
+				</p>
+				<p>
+					<strong>For Career Transitions:</strong> Get expert career assessment questions, transition strategies, and job search tactics. More effective than <Link href="/vs/google-docs">creating your own career plan in Google Docs</Link>.
+				</p>
+				<p>
+					<strong>For Home Buying:</strong> Expert guidance on financing, location criteria, inspection priorities, and negotiation strategies. Better than <Link href="/vs/google">googling home buying tips</Link> across dozens of websites.
+				</p>
+				<p>
+					Learn more about <Link href="/pricing">Templata&apos;s free pricing</Link>, explore our <Link href="/guides">70+ planning guides</Link>, or browse our <Link href="/library">expert reading library</Link>.
+				</p>
 			</div>
 		</>
 	);

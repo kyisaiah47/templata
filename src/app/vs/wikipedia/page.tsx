@@ -6,7 +6,7 @@ import { VsWikipediaContent } from '@/components/vs-wikipedia-content';
 export const metadata: Metadata = {
   title: 'Templata vs Wikipedia - Active Planning vs Passive Reading',
   description: 'Compare Templata to Wikipedia for life planning. Personalized planning frameworks with 50+ questions vs general encyclopedia articles. Active planning vs passive reading. Free comprehensive guidance.',
-  keywords: 'templata vs wikipedia, wikipedia alternative planning, active planning framework, life planning tool, personalized planning, wedding planning vs wikipedia, comprehensive planning, planning framework, life planning platform',
+  keywords: 'templata vs wikipedia, wikipedia alternative planning, active planning framework, life planning tool, personalized planning, wedding planning vs wikipedia, comprehensive planning, planning framework, life planning platform, active vs passive planning, personalized frameworks vs general articles, actionable guidance vs encyclopedia, templata interactive planning vs wikipedia reading, guided questions vs wikipedia information, comprehensive planning vs passive research, life event planning vs wikipedia articles',
   authors: [{ name: 'Templata' }],
   creator: 'Templata',
   publisher: 'Templata',
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
         url: 'https://templata.org/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Templata vs Wikipedia',
+        alt: 'Templata vs Wikipedia: Personalized life planning frameworks with 50+ guided questions vs general encyclopedia articles. Active planning vs passive reading.',
       },
     ],
     locale: 'en_US',
-    type: 'website',
+    type: 'article',
   },
   twitter: {
     card: 'summary_large_image',
@@ -50,12 +50,37 @@ export const metadata: Metadata = {
 };
 
 export default function VsWikipediaPage() {
-  const comparisonSchema = {
+  // Using Article schema for better Google recognition
+  const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Templata vs Wikipedia',
-    description: 'Detailed comparison between Templata and Wikipedia for life planning',
+    '@type': 'Article',
+    headline: 'Templata vs Wikipedia - Active Planning vs Passive Reading',
+    description: 'Compare personalized planning frameworks vs general encyclopedia articles. Active guided planning vs passive information consumption.',
     url: 'https://templata.org/vs/wikipedia',
+    image: 'https://templata.org/og-image.png',
+    author: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://templata.org/brand/templata-logo.png',
+      },
+    },
+    datePublished: '2025-01-10',
+    dateModified: '2025-01-10',
+    inLanguage: 'en-US',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://templata.org/vs/wikipedia',
+    },
+    keywords: 'templata vs wikipedia, active planning, personalized life planning, planning framework, comprehensive guidance',
+    articleSection: 'Comparisons',
   };
 
   const breadcrumbSchema = {
@@ -86,9 +111,9 @@ export default function VsWikipediaPage() {
   return (
     <>
       <Script
-        id="vs-wikipedia-jsonld"
+        id="vs-wikipedia-article-jsonld"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Script
         id="vs-wikipedia-breadcrumb-jsonld"

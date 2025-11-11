@@ -81,6 +81,38 @@ export default function TasksFeaturePage() {
     ],
   };
 
+  // FAQ schema for tasks feature
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How does per-guide task management work?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Each life event guide gets its own dedicated task list. Wedding tasks stay in your wedding guide, career tasks stay in your career guide, and so on. This separation prevents task overload and helps you focus on the right action items for each life event.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I prioritize my tasks?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes! Set priority levels (low, medium, high) for each task to focus on what matters most. Track status (To Do, In Progress, Done) and add optional due dates to manage deadlines effectively.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is task management free in Templata?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes, task management is completely free. You get unlimited tasks across all your guides with full priority management, status tracking, and due dates at no cost.',
+        },
+      },
+    ],
+  };
+
   // Breadcrumb schema
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -118,6 +150,11 @@ export default function TasksFeaturePage() {
         id="tasks-software-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <Script
+        id="tasks-faq-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Script
         id="tasks-breadcrumb-jsonld"

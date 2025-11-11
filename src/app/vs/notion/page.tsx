@@ -6,7 +6,7 @@ import { PageLayout } from '@/components/layout';
 export const metadata: Metadata = {
   title: 'Templata vs Notion - Which is Better for Life Planning?',
   description: 'Templata vs Notion: Expert frameworks (90%+ coverage) vs blank pages. Templata free vs Notion paid. Best for weddings? Templata. Career planning? Templata. Notion better for: general notes. See full comparison, pricing, features.',
-  keywords: 'templata vs notion, templata vs notion 2025, notion alternative life planning, templata or notion which is better, notion vs templata comparison, best notion alternative free, life planning software comparison, wedding planning notion vs templata, career planning notion vs templata, notion alternative for planning, structured planning vs blank pages, expert frameworks vs notion, notion limitations for planning, templata benefits over notion, free alternative to notion for planning, notion pricing vs templata, notion $10 month vs free templata, best life planning tool notion alternative',
+  keywords: 'templata vs notion, templata vs notion 2025, notion alternative life planning, templata or notion which is better, notion vs templata comparison, best notion alternative free, life planning software comparison, wedding planning notion vs templata, career planning notion vs templata, notion alternative for planning, structured planning vs blank pages, expert frameworks vs notion, notion limitations for planning, templata benefits over notion, free alternative to notion for planning, notion pricing vs templata, notion $10 month vs free templata, best life planning tool notion alternative, notion vs templata for weddings, notion vs templata for home buying, expert guided planning vs notion databases, ai refined questions vs notion templates, comprehensive coverage vs blank notion pages, templata free beta vs notion paid',
   authors: [{ name: 'Templata' }],
   creator: 'Templata',
   publisher: 'Templata',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
         url: 'https://templata.org/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Templata vs Notion Comparison',
+        alt: 'Templata vs Notion: Expert life planning frameworks with 90%+ coverage vs blank pages. Free vs $10/month. Wedding planning, career changes, and major life decisions comparison.',
       },
     ],
     locale: 'en_US',
@@ -50,12 +50,47 @@ export const metadata: Metadata = {
 };
 
 export default function VsNotionPage() {
-  const comparisonSchema = {
+  // Using Article schema instead of ComparisonPage for better Google recognition
+  const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'ComparisonPage',
-    name: 'Templata vs Notion - Life Planning Comparison',
-    description: 'Comprehensive comparison of Templata and Notion for life planning and major decisions',
+    '@type': 'Article',
+    headline: 'Templata vs Notion - Which is Better for Life Planning?',
+    description: 'Comprehensive comparison of Templata and Notion for life planning and major decisions. Expert frameworks vs blank pages.',
     url: 'https://templata.org/vs/notion',
+    image: 'https://templata.org/og-image.png',
+    author: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://templata.org/brand/templata-logo.png',
+      },
+    },
+    datePublished: '2025-01-10',
+    dateModified: '2025-01-10',
+    inLanguage: 'en-US',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://templata.org/vs/notion',
+    },
+    keywords: 'templata vs notion, notion alternative, life planning software, expert frameworks, wedding planning, career planning',
+    articleSection: 'Comparisons',
+    about: [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Templata',
+      },
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Notion',
+      },
+    ],
   };
 
   const breadcrumbSchema = {
@@ -86,9 +121,9 @@ export default function VsNotionPage() {
   return (
     <>
       <Script
-        id="vsnotion-comparison-jsonld"
+        id="vsnotion-article-jsonld"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Script
         id="vsnotion-breadcrumb-jsonld"

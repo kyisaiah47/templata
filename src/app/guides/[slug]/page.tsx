@@ -62,6 +62,23 @@ async function getGuideData(slug: string) {
   }
 }
 
+async function getRelatedGuides(category: string, currentSlug: string) {
+  try {
+    const { data: guides } = await supabase
+      .from('guides')
+      .select('id, name, description, category')
+      .eq('category', category)
+      .neq('id', currentSlug)
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    return guides || [];
+  } catch (e) {
+    console.error('[getRelatedGuides] Exception:', e);
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const guide = await getGuide(slug);
@@ -126,7 +143,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           url: '/og-image.png',
           width: 1200,
           height: 630,
-          alt: `${guide.name} Guide`,
+          alt: `${guide.name} Planning Guide: Expert framework with AI-refined questions, curated readings, and comprehensive ${guide.category.toLowerCase()} planning guidance. Free access to professional ${guide.name.toLowerCase()} template.`,
         },
       ],
       locale: 'en_US',
@@ -181,7 +198,10 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     return <GuideDetail params={params} />;
   }
 
-  const { questions, readings } = await getGuideData(slug);
+  const [{ questions, readings }, relatedGuides] = await Promise.all([
+    getGuideData(slug),
+    getRelatedGuides(guide.category, slug)
+  ]);
 
   // Convert guide data for GuideDetail component
   const guideEntry = {
@@ -315,6 +335,20 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             </div>
           </article>
         ))}
+
+        {/* Related guides for internal linking */}
+        {relatedGuides.length > 0 && (
+          <section>
+            <h2>Related {guide.category} Planning Guides</h2>
+            <p>If you're planning {guide.name.toLowerCase()}, you might also be interested in these related {guide.category.toLowerCase()} planning guides:</p>
+            {relatedGuides.map((relatedGuide: any) => (
+              <article key={`related-${relatedGuide.id}`}>
+                <h3><a href={`/guides/${relatedGuide.id}`}>{relatedGuide.name} Planning Guide</a></h3>
+                <p>{relatedGuide.description || `Comprehensive ${relatedGuide.name.toLowerCase()} planning guide with expert frameworks and AI-refined questions.`}</p>
+              </article>
+            ))}
+          </section>
+        )}
       </div>
     </>
   );

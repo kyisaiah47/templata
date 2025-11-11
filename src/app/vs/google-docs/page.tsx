@@ -6,7 +6,7 @@ import { PageLayout } from '@/components/layout';
 export const metadata: Metadata = {
   title: 'Templata vs Google Docs - Expert Planning Frameworks vs Blank Pages',
   description: 'Templata vs Google Docs: 90%+ coverage frameworks with AI questions vs blank documents. Both free but Templata adds expert guidance, curated readings. Wedding planning: Templata wins. Career change: Templata wins. General notes: Google Docs fine. See comparison.',
-  keywords: 'templata vs google docs, templata vs google docs 2025, google docs alternative planning, google docs vs templata, best google docs alternative for planning, life planning google docs vs templata, wedding planning google docs alternative, career planning tools vs google docs, google docs limitations planning, structured planning vs google docs, expert frameworks vs blank documents, google docs for life planning, templata better than google docs, free planning tool vs google docs',
+  keywords: 'templata vs google docs, templata vs google docs 2025, google docs alternative planning, google docs vs templata, best google docs alternative for planning, life planning google docs vs templata, wedding planning google docs alternative, career planning tools vs google docs, google docs limitations planning, structured planning vs google docs, expert frameworks vs blank documents, google docs for life planning, templata better than google docs, free planning tool vs google docs, google docs vs structured planning, blank pages vs expert frameworks, google docs vs ai questions, templata organized planning vs google docs chaos, free planning tool vs google docs templates, comprehensive guidance vs empty documents, expert content vs blank google doc, life planning beyond google docs',
   authors: [{ name: 'Templata' }],
   creator: 'Templata',
   publisher: 'Templata',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: 'Expert frameworks with comprehensive guidance vs blank documents.',
     url: 'https://templata.org/vs/google-docs',
     siteName: 'Templata',
-    images: [{ url: 'https://templata.org/og-image.png', width: 1200, height: 630, alt: 'Templata vs Google Docs' }],
+    images: [{ url: 'https://templata.org/og-image.png', width: 1200, height: 630, alt: 'Templata vs Google Docs: Expert life planning frameworks with 90%+ coverage, AI-refined questions, and curated readings vs blank documents. Free comprehensive planning vs empty pages.' }],
     locale: 'en_US',
     type: 'article',
   },
@@ -31,10 +31,43 @@ export const metadata: Metadata = {
 };
 
 export default function VsGoogleDocsPage() {
+  // Using Article schema for better Google recognition
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Templata vs Google Docs for Life Planning',
+    description: 'Compare expert planning frameworks with 90%+ coverage vs blank documents. Templata provides AI-refined questions, curated readings, and integrated organization.',
+    url: 'https://templata.org/vs/google-docs',
+    image: 'https://templata.org/og-image.png',
+    author: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Templata',
+      url: 'https://templata.org',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://templata.org/brand/templata-logo.png',
+      },
+    },
+    datePublished: '2025-01-10',
+    dateModified: '2025-01-10',
+    inLanguage: 'en-US',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://templata.org/vs/google-docs',
+    },
+    keywords: 'templata vs google docs, google docs alternative, life planning framework, wedding planning documents, career planning guide',
+    articleSection: 'Comparisons',
+  };
+
   return (
     <>
-      <Script id="vsgoogledocs-schema" type="application/ld+json"
-        dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'ComparisonPage',name:'Templata vs Google Docs',url:'https://templata.org/vs/google-docs'})}}/>
+      <Script id="vsgoogledocs-article-schema" type="application/ld+json"
+        dangerouslySetInnerHTML={{__html:JSON.stringify(articleSchema)}}/>
       <PageLayout><VsGoogleDocsContent/></PageLayout>
       <div className="sr-only" aria-hidden="true">
         <h1>Templata vs Google Docs for Life Planning</h1>

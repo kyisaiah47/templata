@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { AboutHeroVideo } from "@/components/about-hero-video";
+import { AboutHeroImage } from "@/components/about-hero-image";
 import { AboutHero } from "@/components/about-hero";
 import { AboutLogos } from "@/components/about-logos";
 import { AboutFaq } from "@/components/about-faq";
@@ -122,7 +122,7 @@ export default function AboutPage() {
 			/>
 
 			<PageLayout>
-				<AboutHeroVideo />
+				<AboutHeroImage />
 				<AboutLogos />
 				<AboutHero />
 				<AboutFaq />

@@ -23,7 +23,7 @@ const stats = [
   },
 ];
 
-const AboutHeroVideo = () => {
+const AboutHeroImage = () => {
   return (
     <section className="pt-48 pb-24 relative">
       <Particles
@@ -129,4 +129,4 @@ const AboutHeroVideo = () => {
   );
 };
 
-export { AboutHeroVideo };
+export { AboutHeroImage };
