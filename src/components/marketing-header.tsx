@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -24,11 +24,13 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { LoginDialog } from "@/components/login-dialog";
+import { MarketingFeedbackDialog } from "@/components/marketing-feedback-dialog";
 import { useAuth } from "@/contexts/auth-context";
 
 const MarketingHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const { isLoggedIn, loading } = useAuth();
   const router = useRouter();
 
@@ -70,6 +72,15 @@ const MarketingHeader = () => {
                 <div className="bg-muted text-muted-foreground flex items-center rounded-full px-3 py-1 text-xs font-medium">
                   Beta
                 </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setFeedbackOpen(true)}
+                  className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  <span className="sr-only">Send feedback</span>
+                </Button>
                 <NavigationMenu viewport={false}>
                   <NavigationMenuList className="gap-4">
                     <NavigationMenuItem>
@@ -255,6 +266,10 @@ const MarketingHeader = () => {
       <LoginDialog
         open={loginDialogOpen}
         onOpenChange={setLoginDialogOpen}
+      />
+      <MarketingFeedbackDialog
+        open={feedbackOpen}
+        onOpenChange={setFeedbackOpen}
       />
     </section>
   );

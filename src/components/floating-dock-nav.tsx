@@ -6,6 +6,7 @@ import {
   CheckSquare,
   FileText,
   LogOut,
+  MessageSquare,
   Moon,
   PanelBottomOpen,
   Settings,
@@ -30,6 +31,7 @@ import { DockCalendarSelector } from "@/components/dock-calendar-selector";
 import { DockTasksSelector } from "@/components/dock-tasks-selector";
 import { SettingsDialog } from "@/components/settings-dialog";
 import { CreateTrackDialog } from "@/components/create-track-dialog";
+import { FeedbackDialog } from "@/components/feedback-dialog";
 import { useDataCache } from "@/contexts/DataCacheContext";
 import {
   Popover,
@@ -67,6 +69,7 @@ interface FloatingDockNavProps {
 const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark, selectedTrackIds, onTrackSelectionChange, trackSelectorOpen, setTrackSelectorOpen, calendarSelectorOpen, setCalendarSelectorOpen, tasksSelectorOpen, setTasksSelectorOpen }: FloatingDockNavProps) => {
   const { invalidateAll } = useDataCache();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const [createTrackDialogOpen, setCreateTrackDialogOpen] = useState(false);
   const [trackRefreshKey, setTrackRefreshKey] = useState(0);
@@ -129,6 +132,12 @@ const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark, sel
       isActive: false,
     },
     {
+      title: "Feedback",
+      icon: <MessageSquare />,
+      onClick: () => setFeedbackOpen(true),
+      isActive: false,
+    },
+    {
       title: "Settings",
       icon: <Settings />,
       onClick: () => setSettingsOpen(true),
@@ -164,6 +173,7 @@ const FloatingDockNav = ({ currentView, onViewChange, onThemeToggle, isDark, sel
         />
       </div>
       <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+      <FeedbackDialog open={feedbackOpen} onOpenChange={setFeedbackOpen} />
       <CreateTrackDialog
         open={createTrackDialogOpen}
         onOpenChange={setCreateTrackDialogOpen}
