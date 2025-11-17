@@ -13,7 +13,7 @@ const ChangelogTimeline = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 pt-56">
+      <section className="relative py-32 pt-32">
         <div className="container flex flex-col items-center justify-center gap-4 overflow-hidden">
           <Badge variant="secondary" className="flex items-center gap-2">
             <Sparkles className="w-3 h-3" />
@@ -129,6 +129,26 @@ const ChangelogTimeline = () => {
         <div className="border-border mx-auto mt-20 max-w-2xl space-y-10 border-l border-dashed pl-6">
           <div>
             <p className="text-muted-foreground relative font-mono text-sm">
+              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-muted-foreground"></time>
+              November 16, 2025
+            </p>
+            <div className="my-4">
+              <h2 className="mb-2 text-2xl font-semibold">Design Refresh & Feedback System</h2>
+              <p className="mb-4 text-muted-foreground">
+                Visual refinements and new feedback functionality for improved user experience.
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Added feedback modal and functionality for user input</li>
+                <li>Refreshed theming with muted purple accent colors for easier viewing</li>
+                <li>Reduced stark contrasts for a more comfortable reading experience</li>
+                <li>Updated to Outfit font family for improved readability</li>
+                <li>New icon design for better brand consistency</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-muted-foreground relative font-mono text-sm">
               <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-primary"></time>
               November 6, 2025
             </p>
@@ -171,7 +191,7 @@ const ChangelogTimeline = () => {
 
           <div>
             <p className="text-muted-foreground relative font-mono text-sm">
-              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-emerald-400"></time>
+              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-muted-foreground"></time>
               October 21, 2025
             </p>
             <div className="my-4">
@@ -193,7 +213,7 @@ const ChangelogTimeline = () => {
 
           <div>
             <p className="text-muted-foreground relative font-mono text-sm">
-              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-emerald-400"></time>
+              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-muted-foreground"></time>
               October 19, 2025
             </p>
             <div className="my-4 space-y-6">
@@ -219,7 +239,7 @@ const ChangelogTimeline = () => {
 
           <div>
             <p className="text-muted-foreground relative font-mono text-sm">
-              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-emerald-400"></time>
+              <time className="absolute -left-6 top-1 h-3 w-3 -translate-x-1/2 rounded-full bg-muted-foreground"></time>
               October 18, 2025
             </p>
             <div className="my-4">

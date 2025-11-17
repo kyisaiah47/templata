@@ -195,7 +195,7 @@ export default function ReadingPageClient({ params }: { params: Promise<{ slug: 
   return (
     <PageLayout>
       {/* Hero Section - Minimized */}
-      <section className="relative py-20 pt-40">
+      <section className="relative py-20 pt-32">
         <div className="container flex flex-col items-center justify-center gap-3 overflow-hidden">
           {guideId && (
             <Link href={`/guides/${guideId}`} className="text-muted-foreground hover:text-foreground transition-colors">

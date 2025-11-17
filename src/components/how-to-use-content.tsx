@@ -104,7 +104,7 @@ export const HowToUseContent: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-32 pt-56">
+      <section className="relative py-32 pt-32">
         <div className="container flex flex-col items-center justify-center gap-4 overflow-hidden">
           <Badge variant="secondary" className="flex items-center gap-2">
             <BookOpen className="w-3 h-3" />

@@ -191,7 +191,7 @@ export default function GuideDetail({ params, initialTemplate, initialQuestions,
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative py-32 pt-40">
+      <section className="relative py-32 pt-32">
         <div className="container flex flex-col items-center justify-center gap-4 overflow-hidden">
           <Badge variant="outline" className="px-4 py-2">
             {guideData.category.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
