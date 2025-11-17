@@ -9,6 +9,7 @@ type Card = {
   name: string;
   designation: string;
   content: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 export const CardStack = ({
@@ -40,12 +41,12 @@ export const CardStack = ({
   };
 
   return (
-    <div className="relative   h-60 w-96">
+    <div className="relative h-[400px] w-96">
       {cards.map((card, index) => {
         return (
           <motion.div
             key={card.id}
-            className="absolute dark:bg-black bg-white w-96 p-4 border border-neutral-200 dark:border-white/[0.1] flex flex-col gap-4"
+            className="absolute bg-primary text-primary-foreground w-96 h-[380px] p-6 border border-primary-foreground/20 shadow-lg flex flex-col gap-4 rounded-xl"
             style={{
               transformOrigin: "top center",
             }}
@@ -55,15 +56,23 @@ export const CardStack = ({
               zIndex: cards.length - index, //  decrease z-index for the cards that are behind
             }}
           >
-            <div className="space-y-1">
-              <p className="text-neutral-400 font-normal dark:text-neutral-200">
-                {card.name}
-              </p>
-              <p className="text-neutral-500 font-medium dark:text-white">
-                {card.designation}
-              </p>
+            <div className="flex items-start gap-4">
+              {card.icon && (
+                <div className="bg-primary-foreground/10 p-3 rounded-lg">
+                  {card.icon}
+                </div>
+              )}
+              <div className="flex-1 space-y-1">
+                <p className="text-primary-foreground/70 font-normal text-sm">
+                  {card.name}
+                </p>
+                <p className="text-primary-foreground font-semibold text-lg">
+                  {card.designation}
+                </p>
+              </div>
             </div>
-            <div className="font-normal text-neutral-700 dark:text-neutral-200">
+            <div className="border-t border-primary-foreground/20" />
+            <div className="font-normal text-primary-foreground/90 text-base leading-relaxed">
               {card.content}
             </div>
           </motion.div>
