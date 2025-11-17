@@ -1,52 +1,224 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Home, ArrowLeft } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import React from "react";
+import { Home, ArrowLeft, FileQuestion } from "lucide-react";
+import Link from "next/link";
+
+import { cn } from "@/lib/utils";
+import { Particles } from "@/components/magicui/particles";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center space-y-6 max-w-md"
-      >
-        <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+    <section className="relative min-h-screen flex items-center justify-center">
+      <div className="container flex flex-col items-center justify-center gap-4 overflow-hidden">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-muted-foreground"
         >
-          <h1 className="text-9xl font-bold text-primary">404</h1>
-        </motion.div>
+          Oops! This page doesn't exist
+        </motion.p>
+        <h1 className="relative z-15 max-w-3xl text-center text-6xl font-medium tracking-tighter md:text-7xl">
+          <span
+            className="overflow-hidden"
+            style={{
+              transformStyle: "preserve-3d",
+              perspective: "600px",
+            }}
+          >
+            {"Page Not Found"
+              .split(" ")
+              .map((word, i) => (
+                <motion.span
+                  className="relative inline-block px-[6px] leading-[none]"
+                  key={i}
+                  initial={{
+                    opacity: 0,
+                    y: "70%",
+                    rotateX: "-28deg",
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: "0%",
+                    rotateX: "0deg",
+                  }}
+                  transition={{
+                    delay: i * 0.08 + 0.1,
+                    duration: 0.8,
+                    ease: [0.215, 0.61, 0.355, 1],
+                  }}
+                >
+                  {word === "Found" ? (
+                    <span className="font-playfair italic">{word}</span>
+                  ) : (
+                    word
+                  )}
+                </motion.span>
+              ))}
+          </span>
+        </h1>
+        <Particles
+          className="absolute inset-0 z-0"
+          quantity={500}
+          ease={80}
+          refresh
+        />
 
-        <div className="space-y-2">
-          <h2 className="text-2xl font-semibold text-foreground">Page not found</h2>
-          <p className="text-muted-foreground">
-            Sorry, we couldn't find the page you're looking for.
-          </p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+          className="relative z-20 mt-10 flex items-center justify-center gap-4"
+        >
+          <SkiperUiMarquee
+            showCard={1}
+            className=""
+            reverse={true}
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+          <SkiperUiMarquee
+            showCard={2}
+            className=""
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+          <SkiperUiMarquee
+            showCard={3}
+            reverse={true}
+            className=""
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+          <SkiperUiMarquee
+            showCard={2}
+            className=""
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+          <SkiperUiMarquee
+            showCard={3}
+            reverse={true}
+            className=""
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+          <SkiperUiMarquee
+            showCard={2}
+            className=""
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+          <SkiperUiMarquee
+            reverse={true}
+            showCard={1}
+            className=""
+            icons={[FileQuestion, FileQuestion, FileQuestion, FileQuestion]}
+          />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-3 justify-center"
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="relative z-20 mt-8 flex items-center gap-6 text-sm text-muted-foreground"
         >
-          <Button variant="default" asChild>
-            <Link href="/" className="flex items-center gap-2">
-              <Home className="h-4 w-4" />
-              Go home
-            </Link>
-          </Button>
-          <Button variant="outline" onClick={() => window.history.back()}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
+          <Link href="/" className="flex items-center gap-2 hover:text-foreground transition-colors">
+            <Home className="h-4 w-4" />
+            Go home
+          </Link>
+          <span className="text-muted-foreground/30">•</span>
+          <button onClick={() => window.history.back()} className="flex items-center gap-2 hover:text-foreground transition-colors">
+            <ArrowLeft className="h-4 w-4" />
             Go back
-          </Button>
+          </button>
         </motion.div>
-      </motion.div>
+
+        <div className="h-92 bg-background absolute bottom-20 left-0 right-0 w-full blur-xl" />
+      </div>
+    </section>
+  );
+}
+
+function Marquee({
+  className,
+  reverse,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: any) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)]",
+        {
+          "flex-row": !vertical,
+          "flex-col": vertical,
+        },
+        className,
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              "flex shrink-0 justify-around ![animation-duration:12s] [animation-play-state:running] [gap:var(--gap)] group-hover:[animation-play-state:paused]",
+              {
+                "animate-marquee flex-row": !vertical,
+                "animate-marquee-vertical flex-col": vertical,
+                "[animation-direction:reverse]": reverse,
+              },
+            )}
+          >
+            {children}
+          </div>
+        ))}
+    </div>
+  );
+}
+
+interface SkiperUiMarqueeProps {
+  showCard: number;
+  reverse?: boolean;
+  className?: string;
+  icons: React.ComponentType<{ className?: string }>[];
+}
+
+function SkiperUiMarquee({
+  showCard,
+  reverse = false,
+  className,
+  icons,
+}: SkiperUiMarqueeProps) {
+  return (
+    <div
+      className={cn("relative overflow-hidden", className)}
+      style={{
+        height: showCard * 113,
+      }}
+    >
+      <Marquee reverse={reverse} vertical={true}>
+        {icons.map((Icon, idx) => (
+          <Card key={idx} Icon={Icon} />
+        ))}
+      </Marquee>
+      <div className="from-background absolute top-0 z-10 h-8 w-full bg-gradient-to-b to-transparent" />
+      <div className="from-background absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t to-transparent" />
+    </div>
+  );
+}
+
+function Card({ Icon }: { Icon: React.ComponentType<{ className?: string }> }) {
+  return (
+    <div
+      className={cn(
+        "border-muted relative flex size-24 items-center justify-center overflow-hidden rounded-3xl border p-4",
+        "from-muted/50 to-background bg-gradient-to-b",
+        "dark:bg-transparent dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+      )}
+    >
+      <Icon className="size-8" />
     </div>
   );
 }
