@@ -60,9 +60,9 @@
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-
 .animate-marquee-banner {
-  animation: marquee-banner 25s linear infinite;
+  animation: marquee-banner 30s linear infinite;
+  will-change: transform;
 }
 
 @layer base {

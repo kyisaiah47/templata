@@ -6,7 +6,8 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { LoginDialog } from '@/components/login-dialog';
 import { useAuth } from '@/contexts/auth-context';
-import { ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
+import { ArrowRight, HelpCircle, Sparkles, Zap, Users, GitFork, BookOpen, Brain } from 'lucide-react';
+
 import Image from 'next/image';
 
 
@@ -32,23 +33,19 @@ export default function HomePage() {
 
       {/* Marquee banner */}
       <div className="border-b border-border bg-secondary/40 overflow-hidden py-2.5">
-        <div className="flex whitespace-nowrap animate-marquee-banner">
+        <div className="flex whitespace-nowrap animate-marquee-banner" style={{ width: 'max-content' }}>
           {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex items-center shrink-0">
+            <div key={i} className="flex items-center shrink-0" aria-hidden={i === 1}>
               {[
-                { icon: <Sparkles className="w-3 h-3" />, text: 'Powered by Claude' },
-                { icon: <HelpCircle className="w-3 h-3" />, text: 'AI insight on every answer' },
-                { icon: <Sparkles className="w-3 h-3" />, text: 'Generated in seconds' },
-                { icon: <HelpCircle className="w-3 h-3" />, text: 'Wedding, career, home buying & more' },
-                { icon: <Sparkles className="w-3 h-3" />, text: 'Free to use' },
-                { icon: <HelpCircle className="w-3 h-3" />, text: 'Share & fork community playbooks' },
-                { icon: <Sparkles className="w-3 h-3" />, text: 'Tailored to your budget & location' },
-                { icon: <HelpCircle className="w-3 h-3" />, text: 'Not a generic template' },
+                { icon: <Zap className="w-3 h-3" />, text: 'Powered by Claude' },
+                { icon: <GitFork className="w-3 h-3" />, text: 'Browse & fork community playbooks' },
+                { icon: <Users className="w-3 h-3" />, text: 'Wedding, career, home buying & more' },
+                { icon: <Brain className="w-3 h-3" />, text: 'AI insight on every answer you write' },
               ].map((item, j) => (
-                <span key={j} className="inline-flex items-center gap-2 text-xs text-muted-foreground px-6">
+                <span key={j} className="inline-flex items-center gap-2 text-xs px-6 text-muted-foreground">
                   {item.icon}
                   {item.text}
-                  <span className="ml-6 text-border">·</span>
+                  <span className="ml-4 text-border">·</span>
                 </span>
               ))}
             </div>
@@ -95,8 +92,12 @@ export default function HomePage() {
                   Build my playbook
                   <ArrowRight className="w-4 h-4" />
                 </Button>
-                <p className="text-xs text-muted-foreground">Free to use. No credit card required.</p>
-              </div>
+                <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1">
+                  <span>Free — 1 playbook/mo</span>
+                  <span>·</span>
+                  <span>Pro — $9/mo · 10 playbooks</span>
+                </div>
+</div>
             </motion.div>
           </div>
 
