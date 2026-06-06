@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Loader2, ArrowRight, Trash2, BookOpen } from 'lucide-react';
+import { Sparkles, Loader2, ArrowRight, Trash2, BookOpen, AlertCircle } from 'lucide-react';
 import { AppNav } from '@/components/app-nav';
 import { toast } from 'sonner';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -62,7 +62,7 @@ export default function AppPage() {
 
       if (!res.ok) {
         if (data.limitReached) {
-          router.push('/pricing');
+          setError(data.error);
           return;
         }
         setError(data.error ?? 'Something went wrong.');
@@ -137,7 +137,7 @@ export default function AppPage() {
           </div>
 
           {error && (
-            <p className="text-sm text-destructive mt-2">{error}</p>
+            <p className="text-sm text-destructive mt-2 flex items-center gap-1.5"><AlertCircle className="w-3.5 h-3.5 shrink-0" />{error}</p>
           )}
 
           {/* Example chips */}

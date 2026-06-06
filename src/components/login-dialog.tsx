@@ -5,7 +5,7 @@ import { createBrowserClient } from '@supabase/ssr';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Sparkles, ArrowRight, Loader2 } from 'lucide-react';
+import { Sparkles, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 
 interface LoginDialogProps {
@@ -71,7 +71,12 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
             <p className="text-sm text-muted-foreground text-center mb-8">Enter your email to sign in or create an account.</p>
             <form onSubmit={handleSubmit} className="space-y-3">
               <Input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus required disabled={loading} className="bg-background" />
-              {error && <p className="text-xs text-destructive">{error}</p>}
+              {error && (
+                <p className="text-xs text-destructive flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  {error}
+                </p>
+              )}
               <Button type="submit" className="w-full gap-2" disabled={!email.trim() || loading}>
                 {loading ? <><Loader2 className="w-4 h-4 animate-spin" />Sending...</> : <>Continue <ArrowRight className="w-4 h-4" /></>}
               </Button>
