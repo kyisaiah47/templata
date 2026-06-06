@@ -24,10 +24,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'No subscription found' }, { status: 404 });
   }
 
-  const session = await stripe.billingPortal.sessions.create({
-    customer: sub.stripe_customer_id,
-    return_url: `${process.env.NEXT_PUBLIC_APP_URL}/app`,
-  });
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? '').replace(/\/$/, '') || 'https://templata.org';
 
-  return NextResponse.json({ url: session.url });
+  try {
+    const session = await stripe.billingPortal.sessions.create({
+      customer: sub.stripe_customer_id,
+      return_url: `${appUrl}/app`,
+    });
+    return NextResponse.json({ url: session.url });
+  } catch (err: any) {
+    console.error('Stripe portal error:', err.message);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }
