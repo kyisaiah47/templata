@@ -1,18 +1,23 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Loader2, HelpCircle, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { Sparkles, Loader2, HelpCircle, ExternalLink, ChevronDown, ChevronUp, MapPin, BookOpen, User, Video, Wrench, Globe, Link } from 'lucide-react';
 import { AppNav } from '@/components/app-nav';
 import type { Playbook, PlaybookItem } from '@/types/playbook';
 
-const RESOURCE_ICONS: Record<string, string> = {
-  venue: '📍', book: '📚', person: '👤', video: '🎬', tool: '🔧', website: '🌐',
+const RESOURCE_ICONS: Record<string, React.ReactNode> = {
+  venue: <MapPin className="w-4 h-4 text-muted-foreground" />,
+  book: <BookOpen className="w-4 h-4 text-muted-foreground" />,
+  person: <User className="w-4 h-4 text-muted-foreground" />,
+  video: <Video className="w-4 h-4 text-muted-foreground" />,
+  tool: <Wrench className="w-4 h-4 text-muted-foreground" />,
+  website: <Globe className="w-4 h-4 text-muted-foreground" />,
 };
 
 export default function PlaybookPage({ params }: { params: Promise<{ playbookId: string }> }) {
@@ -155,16 +160,16 @@ function ItemRow({ item, activeItemId, setActiveItemId, draftAnswers, setDraftAn
   );
 
   if (item.type === 'resource') {
-    const icon = RESOURCE_ICONS[item.resource_type ?? ''] ?? '🔗';
+    const icon = RESOURCE_ICONS[item.resource_type ?? ''] ?? <Link className="w-4 h-4 text-muted-foreground" />;
     return (
       <div className="flex items-start gap-3 py-2">
-        <span className="text-sm shrink-0 mt-0.5">{icon}</span>
-        <div className="flex items-center gap-2 flex-wrap">
+        <span className="shrink-0 mt-0.5">{icon}</span>
+        <div className="flex flex-col gap-1.5">
           {item.url
-            ? <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline underline-offset-2 flex items-center gap-1">{item.content}<ExternalLink className="w-3 h-3 text-muted-foreground" /></a>
+            ? <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline underline-offset-2 inline-flex items-start gap-1.5">{item.content}<ExternalLink className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" /></a>
             : <span className="text-sm">{item.content}</span>
           }
-          {item.resource_type && <Badge variant="secondary" className="text-xs capitalize">{item.resource_type}</Badge>}
+          {item.resource_type && <Badge variant="secondary" className="text-xs capitalize w-fit">{item.resource_type}</Badge>}
         </div>
       </div>
     );
