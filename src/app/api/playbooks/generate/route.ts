@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       title: generated.title,
       description: generated.description,
       context: context.trim(),
-      is_public: false,
+      is_public: true,
     })
     .select('*')
     .single();
