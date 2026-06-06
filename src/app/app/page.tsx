@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Loader2, ArrowRight, Trash2, BookOpen } from 'lucide-react';
 import { AppNav } from '@/components/app-nav';
+import { toast } from 'sonner';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import type { Playbook } from '@/types/playbook';
 
@@ -64,6 +65,7 @@ export default function AppPage() {
         return;
       }
 
+      if (forkFrom) toast.success('Playbook forked and tailored to you!');
       router.push(`/app/${data.playbook.id}`);
     } catch {
       setError('Something went wrong. Please try again.');
