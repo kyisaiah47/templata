@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { getAuthenticatedUser } from '@/lib/auth-utils';
 import { apiLimiter } from '@/lib/rate-limit';
 import { buildFeedbackPrompt } from '@/lib/feedback-prompt';
+import { checkFeedbackLimit, incrementFeedback } from '@/lib/usage';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -51,6 +52,13 @@ export async function POST(
     return NextResponse.json({ error: 'Feedback is only available for questions.' }, { status: 400 });
   }
 
+  if (user) {
+    const limit = await checkFeedbackLimit(user.userId);
+    if (!limit.allowed) {
+      return NextResponse.json({ error: `You've used ${limit.used}/${limit.limit} AI insights this month. Upgrade to Pro for more.`, limitReached: true }, { status: 403 });
+    }
+  }
+
   // Get AI feedback
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
@@ -75,5 +83,6 @@ export async function POST(
     return NextResponse.json({ error: 'Failed to save answer.' }, { status: 500 });
   }
 
+  if (user) await incrementFeedback(user.userId);
   return NextResponse.json({ feedback });
 }

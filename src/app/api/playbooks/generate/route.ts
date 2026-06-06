@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { getAuthenticatedUser } from '@/lib/auth-utils';
 import { apiLimiter } from '@/lib/rate-limit';
 import { buildPlaybookPrompt, GeneratedPlaybook } from '@/lib/playbook-prompt';
+import { checkPlaybookLimit, incrementPlaybooks } from '@/lib/usage';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -21,6 +22,12 @@ export async function POST(request: NextRequest) {
   }
 
   const user = await getAuthenticatedUser();
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const limit = await checkPlaybookLimit(user.userId);
+  if (!limit.allowed) {
+    return NextResponse.json({ error: `You've used ${limit.used}/${limit.limit} playbooks this month. Upgrade to Pro for more.`, limitReached: true }, { status: 403 });
+  }
 
   const { context } = await request.json();
 
@@ -91,5 +98,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to save playbook items.' }, { status: 500 });
   }
 
+  await incrementPlaybooks(user.userId);
   return NextResponse.json({ playbook }, { status: 201 });
 }
