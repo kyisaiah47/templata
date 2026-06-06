@@ -42,7 +42,17 @@ export function AppNav({ showCommunity, showMyPlaybooks, showUserMenu, rightCont
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem
-                className="text-destructive focus:text-destructive cursor-pointer"
+                className="cursor-pointer"
+                onClick={async () => {
+                  const res = await fetch('/api/stripe/checkout', { method: 'POST' });
+                  const data = await res.json();
+                  if (data.url) window.location.href = data.url;
+                }}
+              >
+                Upgrade to Pro
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
                 onClick={async () => {
                   await fetch('/api/auth/logout', { method: 'POST' });
                   router.push('/');

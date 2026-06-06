@@ -29,10 +29,10 @@ export const viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://templata.org'),
-  title: 'Templata - Free Life Planning Platform | 90%+ Coverage Guarantee',
-  description: 'Expert-crafted planning guides for weddings, careers, home buying & 70+ life events. AI-refined questions. Curated readings. Free beta access. Better than Notion, Trello, or Google Docs for life planning.',
-  keywords: 'life planning platform, life planning templates, free planning app, wedding planning, career change, home buying, business planning, expert guidance, structured frameworks, life organization, ai planning assistant, free notion alternative',
-  authors: [{ name: 'Templata Team' }],
+  title: 'Templata — AI Playbooks for Life\'s Biggest Moments',
+  description: 'Describe what you\'re planning and Claude builds a personalized playbook in seconds. Tasks, questions, and AI insight tailored to your situation — not a generic template.',
+  keywords: 'ai planning, life planning, wedding planning app, career change planner, home buying guide, ai playbook, personalized planning, claude ai, life events',
+  authors: [{ name: 'Templata' }],
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: '32x32' },
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'Templata | Organize Life\'s Biggest Moments',
-    description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments. Get organized in minutes with proven frameworks from domain experts.',
+    title: 'Templata — AI Playbooks for Life\'s Biggest Moments',
+    description: 'Describe what you\'re planning and Claude builds a personalized playbook in seconds. Not a generic template — yours.',
     url: 'https://templata.org',
     siteName: 'Templata',
     images: [
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         url: 'https://templata.org/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Templata - Organize Life\'s Biggest Moments',
+        alt: 'Templata — AI Playbooks for Life\'s Biggest Moments',
       },
     ],
     locale: 'en_US',
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Templata | Organize Life\'s Biggest Moments',
-    description: 'Skip the blank page with expertly crafted templates for life\'s biggest moments.',
+    title: 'Templata — AI Playbooks for Life\'s Biggest Moments',
+    description: 'Describe what you\'re planning and Claude builds a personalized playbook in seconds.',
     images: ['https://templata.org/og-image.png'],
     creator: '@templata',
   },
