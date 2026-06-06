@@ -33,7 +33,7 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
     const { error } = await supabase.auth.signInWithOtp({
       email: email.trim(),
       options: {
-        emailRedirectTo: `${window.location.origin}/app`,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
