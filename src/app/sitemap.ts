@@ -6,12 +6,12 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const baseUrl = 'https://www.templata.org';
+const baseUrl = 'https://templata.org';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: playbooks } = await supabase
     .from('playbooks')
-    .select('id, created_at')
+    .select('id, created_at, updated_at')
     .eq('is_public', true)
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const communityPages: MetadataRoute.Sitemap =
     playbooks?.map((p) => ({
       url: `${baseUrl}/community/${p.id}`,
-      lastModified: new Date(p.created_at),
+      lastModified: new Date(p.updated_at ?? p.created_at),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })) || [];
@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/community`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'hourly',
       priority: 0.9,
     },
     ...communityPages,

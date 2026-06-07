@@ -17,7 +17,7 @@ interface AppNavProps {
 
 export function AppNav({ showCommunity, showMyPlaybooks, showUserMenu, rightContent }: AppNavProps) {
   const router = useRouter();
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, logout } = useAuth();
   const initial = user?.name?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase() ?? '?';
 
   return (
@@ -68,7 +68,7 @@ export function AppNav({ showCommunity, showMyPlaybooks, showUserMenu, rightCont
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={async () => {
-                  await fetch('/api/auth/logout', { method: 'POST' });
+                  await logout();
                   router.push('/');
                 }}
               >

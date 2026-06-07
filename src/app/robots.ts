@@ -15,19 +15,8 @@ export default function robots(): MetadataRoute.Robots {
           '/private/',
           '/*.json$',
           '/test-images',
+          '/app/',
         ],
-      },
-      {
-        userAgent: 'GPTBot',
-        disallow: '/',
-      },
-      {
-        userAgent: 'ChatGPT-User',
-        disallow: '/',
-      },
-      {
-        userAgent: 'CCBot',
-        disallow: '/',
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

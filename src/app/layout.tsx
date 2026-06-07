@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/error-boundary"
 import { AuthProvider } from "@/contexts/auth-context"
 import { Analytics } from "@/components/analytics"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { TEMPLATA_FAQ, faqPageSchema } from "@/lib/seo"
 
 const geist = Geist({
   variable: "--font-sans",
@@ -106,7 +107,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Templata",
-              "description": "Expert-crafted templates for life's biggest moments",
+              "description": "AI playbook generator for life's biggest moments. Describe your goal and get a personalized, step-by-step playbook in seconds.",
               "url": "https://templata.org",
               "logo": "https://templata.org/templata-social.png",
               "sameAs": [
@@ -117,16 +118,63 @@ export default function RootLayout({
                 "@type": "ContactPoint",
                 "contactType": "customer service",
                 "email": "templata.app@gmail.com"
-              },
-              "offers": {
-                "@type": "Offer",
-                "name": "Templata - Free Beta",
-                "price": "0",
-                "priceCurrency": "USD",
-                "description": "Expertly crafted guides for life's biggest moments. Free beta access."
               }
             })
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Templata",
+              "url": "https://templata.org",
+              "description": "AI-generated personalized playbooks for life's biggest moments.",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://templata.org/community?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Templata",
+              "applicationCategory": "ProductivityApplication",
+              "operatingSystem": "Web",
+              "url": "https://templata.org",
+              "description": "Describe what you're planning and get a personalized AI-generated playbook in seconds — tasks, reflection questions, and resources tailored to your situation.",
+              "offers": [
+                {
+                  "@type": "Offer",
+                  "name": "Free",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "description": "1 playbook per month, community browsing"
+                },
+                {
+                  "@type": "Offer",
+                  "name": "Pro",
+                  "price": "9",
+                  "priceCurrency": "USD",
+                  "description": "10 playbooks per month, full community access"
+                }
+              ]
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema()) }}
         />
       </head>
       <body
