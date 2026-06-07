@@ -52,8 +52,8 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
         <DialogTitle className="sr-only">Sign in to Templata</DialogTitle>
         {sent ? (
           <div className="text-center">
-            <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center mx-auto mb-4">
-              <TemplataIcon size={20} className="opacity-50" />
+            <div className="w-12 h-12 rounded-full bg-foreground flex items-center justify-center mx-auto mb-4">
+              <TemplataIcon size={20} className="invert" />
             </div>
             <h2 className="font-semibold text-lg tracking-tight mb-2">Check your email</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
