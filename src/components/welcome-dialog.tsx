@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { PlaybookIcon } from '@/components/ui/playbook-icon';
 import { PencilLine, Sparkles, GitFork } from 'lucide-react';
 
@@ -28,6 +29,7 @@ const POINTS = [
 
 export function WelcomeDialog({ onGetStarted }: { onGetStarted: () => void }) {
   const [open, setOpen] = useState(false);
+  const [dontShowAgain, setDontShowAgain] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem(SEEN_KEY)) {
@@ -36,8 +38,8 @@ export function WelcomeDialog({ onGetStarted }: { onGetStarted: () => void }) {
     }
   }, []);
 
-  function dismiss() {
-    localStorage.setItem(SEEN_KEY, '1');
+  function dismiss(remember = false) {
+    if (remember || dontShowAgain) localStorage.setItem(SEEN_KEY, '1');
     setOpen(false);
   }
 
@@ -72,12 +74,16 @@ export function WelcomeDialog({ onGetStarted }: { onGetStarted: () => void }) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Button className="w-full" onClick={() => { dismiss(); onGetStarted(); }}>
+          <Button className="w-full" onClick={() => { dismiss(true); onGetStarted(); }}>
             Build my first playbook
           </Button>
-          <Button variant="ghost" className="w-full text-muted-foreground" onClick={dismiss}>
+          <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => dismiss()}>
             Just browse the feed
           </Button>
+          <label className="flex items-center justify-center gap-2 mt-2 text-xs text-muted-foreground cursor-pointer select-none">
+            <Checkbox checked={dontShowAgain} onCheckedChange={(v) => setDontShowAgain(v === true)} className="size-3.5" />
+            Don&apos;t show this again
+          </label>
         </div>
         </div>
       </DialogContent>
