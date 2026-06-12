@@ -210,6 +210,7 @@ export default function AppPage() {
               const tasks = (p.items ?? []).filter(it => it.type === 'task');
               const done = tasks.filter(it => it.completed).length;
               const pct = tasks.length > 0 ? Math.round((done / tasks.length) * 100) : 0;
+              const nextTask = tasks.find(it => !it.completed);
               return (
                 <motion.article
                   key={p.id}
@@ -231,7 +232,11 @@ export default function AppPage() {
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                    {p.description && (
+                    {nextTask ? (
+                      <p className="text-sm leading-relaxed mt-1 truncate">
+                        <span className="text-muted-foreground">Next:</span> {nextTask.content}
+                      </p>
+                    ) : p.description && (
                       <p className="text-sm text-muted-foreground leading-relaxed mt-0.5 line-clamp-2">{p.description}</p>
                     )}
                     <div className="flex items-center gap-3 mt-2.5">

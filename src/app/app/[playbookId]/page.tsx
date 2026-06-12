@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, HelpCircle, ExternalLink, ChevronDown, ChevronUp, MapPin, BookOpen, User, Video, Wrench, Globe, Link, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { Loader2, HelpCircle, ExternalLink, ChevronDown, ChevronUp, MapPin, BookOpen, User, Video, Wrench, Globe, Link, CheckCircle2, ArrowLeft, Pencil, Plus, Trash2 } from 'lucide-react';
 import { PlaybookIcon } from '@/components/ui/playbook-icon';
 import { Shell, NavRail, RailFooter } from '@/components/shell';
 import type { Playbook, PlaybookItem } from '@/types/playbook';
@@ -33,6 +33,7 @@ export default function PlaybookPage({ params }: { params: Promise<{ playbookId:
   const [submitting, setSubmitting] = useState<string | null>(null);
   const [expandedFeedback, setExpandedFeedback] = useState<Record<string, boolean>>({});
   const [expandedPhases, setExpandedPhases] = useState<Record<string, boolean>>({});
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => { fetchPlaybook(); }, [playbookId]);
 
@@ -74,6 +75,33 @@ export default function PlaybookPage({ params }: { params: Promise<{ playbookId:
     } finally {
       setSubmitting(null);
     }
+  }
+
+  async function saveEdit(item: PlaybookItem, content: string) {
+    const trimmed = content.trim();
+    if (!trimmed) return;
+    setItems(prev => prev.map(i => i.id === item.id ? { ...i, content: trimmed } : i));
+    setEditingId(null);
+    await fetch(`/api/playbooks/${playbookId}/items/${item.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: trimmed }),
+    });
+  }
+
+  async function deleteItem(item: PlaybookItem) {
+    setItems(prev => prev.filter(i => i.id !== item.id));
+    await fetch(`/api/playbooks/${playbookId}/items/${item.id}`, { method: 'DELETE' });
+  }
+
+  async function addItem(phase: string, type: 'task' | 'question', content: string) {
+    const res = await fetch(`/api/playbooks/${playbookId}/items`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, content, phase }),
+    });
+    const data = await res.json();
+    if (res.ok) setItems(prev => [...prev, data.item]);
   }
 
   const phases = items.reduce<Record<string, PlaybookItem[]>>((acc, item) => {
@@ -205,8 +233,13 @@ export default function PlaybookPage({ params }: { params: Promise<{ playbookId:
                             setExpandedFeedback={setExpandedFeedback}
                             onToggleTask={toggleTask}
                             onSubmitAnswer={submitAnswer}
+                            editingId={editingId}
+                            setEditingId={setEditingId}
+                            onSaveEdit={saveEdit}
+                            onDeleteItem={deleteItem}
                           />
                         ))}
+                        <AddItemRow phase={phase} onAdd={addItem} />
                       </div>
                     </motion.div>
                   )}
@@ -220,43 +253,145 @@ export default function PlaybookPage({ params }: { params: Promise<{ playbookId:
   );
 }
 
-function ItemRow({ item, activeItemId, setActiveItemId, draftAnswers, setDraftAnswers, submitting, expandedFeedback, setExpandedFeedback, onToggleTask, onSubmitAnswer }: {
+function RowActions({ item, setEditingId, onDeleteItem }: {
+  item: PlaybookItem;
+  setEditingId: (id: string | null) => void;
+  onDeleteItem: (item: PlaybookItem) => void;
+}) {
+  return (
+    <span className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity">
+      <button className="p-1.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent transition-colors" onClick={() => setEditingId(item.id)}>
+        <Pencil className="w-3.5 h-3.5" />
+      </button>
+      <button className="p-1.5 rounded-full text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" onClick={() => onDeleteItem(item)}>
+        <Trash2 className="w-3.5 h-3.5" />
+      </button>
+    </span>
+  );
+}
+
+function EditItemForm({ item, onSave, onCancel }: {
+  item: PlaybookItem;
+  onSave: (item: PlaybookItem, content: string) => void;
+  onCancel: () => void;
+}) {
+  const [draft, setDraft] = useState(item.content);
+  return (
+    <div className="py-2">
+      <Textarea autoFocus value={draft} onChange={e => setDraft(e.target.value)} className="min-h-[70px] resize-none text-sm mb-2 bg-card" />
+      <div className="flex gap-2">
+        <Button size="sm" onClick={() => onSave(item, draft)} disabled={!draft.trim()}>Save</Button>
+        <Button size="sm" variant="ghost" onClick={onCancel}>Cancel</Button>
+      </div>
+    </div>
+  );
+}
+
+function AddItemRow({ phase, onAdd }: {
+  phase: string;
+  onAdd: (phase: string, type: 'task' | 'question', content: string) => Promise<void>;
+}) {
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState<'task' | 'question'>('task');
+  const [content, setContent] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  if (!open) return (
+    <button
+      className="flex items-center gap-2 py-2 text-xs text-muted-foreground hover:text-primary transition-colors"
+      onClick={() => setOpen(true)}
+    >
+      <Plus className="w-3.5 h-3.5" />
+      Add step
+    </button>
+  );
+
+  return (
+    <div className="py-2 space-y-2">
+      <div className="flex gap-1.5">
+        {(['task', 'question'] as const).map(t => (
+          <button
+            key={t}
+            onClick={() => setType(t)}
+            className={`text-xs px-3 py-1 rounded-full capitalize transition-colors ${type === t ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground'}`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+      <Textarea
+        autoFocus
+        placeholder={type === 'task' ? 'What needs to get done?' : 'What should you think through?'}
+        value={content}
+        onChange={e => setContent(e.target.value)}
+        className="min-h-[70px] resize-none text-sm bg-card"
+        disabled={saving}
+      />
+      <div className="flex gap-2">
+        <Button
+          size="sm"
+          disabled={!content.trim() || saving}
+          onClick={async () => {
+            setSaving(true);
+            await onAdd(phase, type, content.trim());
+            setSaving(false);
+            setContent('');
+            setOpen(false);
+          }}
+        >
+          {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Add'}
+        </Button>
+        <Button size="sm" variant="ghost" onClick={() => setOpen(false)} disabled={saving}>Cancel</Button>
+      </div>
+    </div>
+  );
+}
+
+function ItemRow({ item, activeItemId, setActiveItemId, draftAnswers, setDraftAnswers, submitting, expandedFeedback, setExpandedFeedback, onToggleTask, onSubmitAnswer, editingId, setEditingId, onSaveEdit, onDeleteItem }: {
   item: PlaybookItem; playbookId: string;
   activeItemId: string | null; setActiveItemId: (id: string | null) => void;
   draftAnswers: Record<string, string>; setDraftAnswers: (fn: (p: Record<string, string>) => Record<string, string>) => void;
   submitting: string | null;
   expandedFeedback: Record<string, boolean>; setExpandedFeedback: (fn: (p: Record<string, boolean>) => Record<string, boolean>) => void;
   onToggleTask: (item: PlaybookItem) => void; onSubmitAnswer: (item: PlaybookItem) => void;
+  editingId: string | null; setEditingId: (id: string | null) => void;
+  onSaveEdit: (item: PlaybookItem, content: string) => void; onDeleteItem: (item: PlaybookItem) => void;
 }) {
   const isActive = activeItemId === item.id;
   const hasFeedback = !!item.ai_feedback;
   const feedbackExpanded = expandedFeedback[item.id];
 
+  if (editingId === item.id) return (
+    <EditItemForm item={item} onSave={onSaveEdit} onCancel={() => setEditingId(null)} />
+  );
+
   if (item.type === 'task') return (
-    <div className="flex items-start gap-3 py-2">
+    <div className="flex items-start gap-3 py-2 group/item">
       <Checkbox checked={item.completed} onCheckedChange={() => onToggleTask(item)} className="mt-0.5 shrink-0" />
-      <span className={`text-sm leading-relaxed ${item.completed ? 'line-through text-muted-foreground' : ''}`}>{item.content}</span>
+      <span className={`flex-1 text-sm leading-relaxed ${item.completed ? 'line-through text-muted-foreground' : ''}`}>{item.content}</span>
+      <RowActions item={item} setEditingId={setEditingId} onDeleteItem={onDeleteItem} />
     </div>
   );
 
   if (item.type === 'resource') {
     const icon = RESOURCE_ICONS[item.resource_type ?? ''] ?? <Link className="w-4 h-4 text-muted-foreground" />;
     return (
-      <div className="flex items-start gap-3 py-2">
+      <div className="flex items-start gap-3 py-2 group/item">
         <span className="shrink-0 mt-0.5">{icon}</span>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex-1 flex flex-col gap-1.5">
           {item.url
             ? <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline underline-offset-2 inline-flex items-start gap-1.5">{item.content}<ExternalLink className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" /></a>
             : <span className="text-sm">{item.content}</span>
           }
           {item.resource_type && <Badge variant="secondary" className="text-xs capitalize w-fit">{item.resource_type}</Badge>}
         </div>
+        <RowActions item={item} setEditingId={setEditingId} onDeleteItem={onDeleteItem} />
       </div>
     );
   }
 
   return (
-    <div className="py-3">
+    <div className="py-3 group/item">
       <div className="flex items-start gap-3">
         <HelpCircle className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
         <div className="flex-1 min-w-0">
@@ -307,6 +442,7 @@ function ItemRow({ item, activeItemId, setActiveItemId, draftAnswers, setDraftAn
             </button>
           )}
         </div>
+        <RowActions item={item} setEditingId={setEditingId} onDeleteItem={onDeleteItem} />
       </div>
     </div>
   );

@@ -26,7 +26,10 @@ export async function PATCH(
   }
 
   const body = await request.json();
-  const allowed = ['completed', 'answer'];
+  if ('content' in body && (typeof body.content !== 'string' || !body.content.trim() || body.content.length > 1000)) {
+    return NextResponse.json({ error: 'Invalid content.' }, { status: 400 });
+  }
+  const allowed = ['completed', 'answer', 'content'];
   const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
   for (const key of allowed) {
     if (key in body) updates[key] = body[key];
@@ -36,6 +39,33 @@ export async function PATCH(
 
   if (error) {
     return NextResponse.json({ error: 'Failed to update item.' }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true });
+}
+
+// DELETE /api/playbooks/[id]/items/[itemId]
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string; itemId: string }> }
+) {
+  const { id: playbookId, itemId } = await params;
+  const user = await getAuthenticatedUser();
+
+  const { data: playbook } = await supabase
+    .from('playbooks')
+    .select('user_id')
+    .eq('id', playbookId)
+    .single();
+
+  if (!playbook || playbook.user_id !== user?.userId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { error } = await supabase.from('items').delete().eq('id', itemId).eq('playbook_id', playbookId);
+
+  if (error) {
+    return NextResponse.json({ error: 'Failed to delete item.' }, { status: 500 });
   }
 
   return NextResponse.json({ success: true });
