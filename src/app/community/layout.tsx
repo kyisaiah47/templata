@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Community Playbooks — Playbook',
     description: 'Browse AI-generated playbooks for life\'s biggest moments. Fork and customize any playbook for your situation.',
-    url: 'https://templata.org/community',
+    url: 'https://playbook-tau-henna.vercel.app/community',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://templata.org/community',
+    canonical: 'https://playbook-tau-henna.vercel.app/community',
   },
 };
 

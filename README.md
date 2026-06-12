@@ -2,47 +2,39 @@
 
 <img src="assets/banner.png" alt="banner" width="100%" />
 
-# 📋 Templata
+# Playbook
 
-**AI-powered playbooks for life's biggest moments — describe your situation, Claude builds the plan.**
+**The social feed for life's biggest moments — describe your situation, Claude builds the plan, the community makes it better.**
 
-[![Next.js](https://img.shields.io/badge/Next.js_15-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js_16-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
-
-**Live at [templata.org](https://templata.org)**
 
 </div>
 
 <br/>
 
-Notion is a blank canvas — powerful but overwhelming. Generic templates are too rigid. ChatGPT gives you a wall of text with no structure. Templata sits in the middle: describe your specific situation in plain language and Claude generates a personalized, structured Playbook tailored to *you* — not a copy-paste guide. Work through it with AI as a thinking partner at every step.
-
-> Notion is for organizing your life. Templata is for executing the big moments in it.
+Notion is a blank canvas. ChatGPT is a wall of text. Playbook is a feed of real plans: describe what you're planning in one sentence and Claude generates a personalized, structured playbook — phases, checkable tasks, questions with inline AI feedback, and resources. The homepage is the community feed itself: browse what other people are planning, fork any playbook, and Claude re-tailors it to your situation.
 
 ## ✨ Features
 
-- **AI Playbook Generation** — Describe your situation once; Claude returns a full structured plan (tasks, questions, resources) in a single shot
-- **Three Item Types** — Tasks you can check off, Questions that trigger real-time AI feedback on your answers, and Resources for upfront context
-- **Inline AI Feedback** — Answer any question and Claude responds with contextual, situation-specific guidance saved permanently inline
-- **Community & Forking** — Browse public playbooks, fork one, and Claude re-tailors it to your specific context
-- **Usage Tiers** — Free plan (1 playbook / 5 AI insights per month) and Pro plan ($9/month for 10 playbooks / 50 AI insights)
-- **Magic Link Auth** — Passwordless login via Resend; no friction to get started
-
-## 🎥 Demo
-
-[![Watch Demo](https://img.shields.io/badge/YouTube-Watch%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=6dtePu7HaWI)
+- **Feed-first homepage** — the community feed *is* the landing page: real playbooks with task previews, category tags, and momentum rankings
+- **AI Playbook Generation** — one sentence in, a full structured plan out (tasks, questions, resources) with a staged generating experience
+- **Inline AI Feedback** — answer any question and Claude responds with situation-specific guidance, saved permanently inline
+- **Fork & re-tailor** — take anyone's playbook and Claude rebuilds it around your context
+- **Progress everywhere** — progress-ring avatars, phase completion counts, collapsed-by-default phase cards
+- **Usage Tiers** — Free (1 playbook / 5 AI insights per month) and Pro ($9/month for 10 playbooks / 50 insights) via Stripe
+- **Magic Link Auth** — passwordless login; no friction to get started
 
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 15 (App Router) + React 19 |
+| Framework | Next.js 16 (App Router) + React 19 |
 | Language | TypeScript |
 | AI | Claude API (`claude-sonnet-4-6`) via `@anthropic-ai/sdk` |
 | Auth & Database | Supabase (`@supabase/ssr`) |
-| Email | Resend (magic link auth) |
 | Payments | Stripe (checkout + webhooks) |
 | Styling | Tailwind CSS v4, shadcn/ui |
 | Animations | Framer Motion |
@@ -51,14 +43,13 @@ Notion is a blank canvas — powerful but overwhelming. Generic templates are to
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+, Supabase project, Anthropic API key, Resend account, Stripe account
+- Node.js 20+, Supabase project, Anthropic API key, Stripe account
 
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/kyisaiah47/templata.git
-cd templata
-git checkout playbook-v2
+git clone https://github.com/kyisaiah47/templata.git playbook
+cd playbook
 npm install
 ```
 

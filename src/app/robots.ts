@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://templata.org';
+  const baseUrl = 'https://playbook-tau-henna.vercel.app';
 
   return {
     rules: [

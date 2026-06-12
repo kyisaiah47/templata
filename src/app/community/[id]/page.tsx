@@ -10,7 +10,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const baseUrl = 'https://templata.org';
+const baseUrl = 'https://playbook-tau-henna.vercel.app';
 
 async function getPlaybook(id: string): Promise<{ playbook: Playbook; items: PlaybookItem[] } | null> {
   const { data: playbook, error } = await supabase

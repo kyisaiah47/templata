@@ -1,14 +1,14 @@
-# Templata — Product Vision & Data Model
+# Playbook — Product Vision & Data Model
 
 ## Vision
 
-Pivot Templata from a static life planning template library into an AI-powered **Playbook** platform.
+Pivot Playbook from a static life planning template library into an AI-powered **Playbook** platform.
 
-**The problem:** Notion is a blank canvas — powerful but overwhelming. ChatGPT gives you a wall of text. Templata's old model gave you rigid pre-written templates. None of these feel tailored.
+**The problem:** Notion is a blank canvas — powerful but overwhelming. ChatGPT gives you a wall of text. Playbook's old model gave you rigid pre-written templates. None of these feel tailored.
 
 **The solution:** User describes their situation in natural language → Claude generates a personalized Playbook in one shot → user works through it with AI as a thinking partner inline.
 
-> Notion is for organizing your life. Templata is for executing the big moments in it.
+> Notion is for organizing your life. Playbook is for executing the big moments in it.
 
 ---
 
@@ -63,7 +63,7 @@ AI decides the ordering and phasing of items — no manual categories.
 
 ## Terminology
 
-| Old (Templata) | New |
+| Old (Playbook) | New |
 |---|---|
 | Guide | Playbook |
 | Track | (gone — merged into Playbook) |

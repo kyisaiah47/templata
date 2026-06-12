@@ -29,7 +29,7 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://templata.org'),
+  metadataBase: new URL('https://playbook-tau-henna.vercel.app'),
   title: 'Playbook — AI Playbooks for Life\'s Biggest Moments',
   description: 'Describe what you\'re planning and Claude builds a personalized playbook in seconds. Tasks, questions, and AI insight tailored to your situation — not a generic template.',
   keywords: 'ai planning, life planning, wedding planning app, career change planner, home buying guide, ai playbook, personalized planning, claude ai, life events',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Playbook — AI Playbooks for Life\'s Biggest Moments',
     description: 'Describe what you\'re planning and Claude builds a personalized playbook in seconds. Not a generic template — yours.',
-    url: 'https://templata.org',
+    url: 'https://playbook-tau-henna.vercel.app',
     siteName: 'Playbook',
     images: [
       {
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://templata.org',
+    canonical: 'https://playbook-tau-henna.vercel.app',
   },
   category: 'productivity',
   verification: {
@@ -108,7 +108,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "Playbook",
               "description": "AI playbook generator for life's biggest moments. Describe your goal and get a personalized, step-by-step playbook in seconds.",
-              "url": "https://templata.org",
+              "url": "https://playbook-tau-henna.vercel.app",
               "logo": "/social.png",
               "sameAs": [
                 "https://twitter.com/templata",
@@ -129,13 +129,13 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "Playbook",
-              "url": "https://templata.org",
+              "url": "https://playbook-tau-henna.vercel.app",
               "description": "AI-generated personalized playbooks for life's biggest moments.",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": {
                   "@type": "EntryPoint",
-                  "urlTemplate": "https://templata.org/community?q={search_term_string}"
+                  "urlTemplate": "https://playbook-tau-henna.vercel.app/community?q={search_term_string}"
                 },
                 "query-input": "required name=search_term_string"
               }
@@ -151,7 +151,7 @@ export default function RootLayout({
               "name": "Playbook",
               "applicationCategory": "ProductivityApplication",
               "operatingSystem": "Web",
-              "url": "https://templata.org",
+              "url": "https://playbook-tau-henna.vercel.app",
               "description": "Describe what you're planning and get a personalized AI-generated playbook in seconds — tasks, reflection questions, and resources tailored to your situation.",
               "offers": [
                 {

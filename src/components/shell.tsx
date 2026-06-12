@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { Heart, MessageSquare, GitFork, Search, Home, Compass, SquarePen, LogOut, Square, CheckSquare, HelpCircle, Link2, Flame } from 'lucide-react';
+import { Heart, MessageSquare, GitFork, Search, Home, Compass, SquarePen, LogOut, LogIn, Square, CheckSquare, HelpCircle, Link2, Flame } from 'lucide-react';
 import { PlaybookIcon } from '@/components/ui/playbook-icon';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -62,12 +62,62 @@ export function Shell({ left, right, children }: {
         <aside className="hidden md:block w-[300px] xl:w-[340px] shrink-0">
           <div className="sticky top-0 h-screen flex flex-col px-7 py-8 overflow-y-auto">{left}</div>
         </aside>
-        <main className="w-full max-w-[620px] min-h-screen border-x border-border">{children}</main>
+        <main className="w-full max-w-[620px] min-h-screen border-x border-border pb-20 md:pb-0">{children}</main>
         <aside className="hidden lg:block w-[340px] shrink-0">
           <div className="sticky top-0 h-screen flex flex-col gap-4 px-6 py-5 overflow-y-auto">{right}</div>
         </aside>
       </div>
+      <MobileTabBar />
     </div>
+  );
+}
+
+function MobileTabBar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { user, isLoggedIn, logout } = useAuth();
+  const initial = user?.name?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase() ?? '?';
+
+  const tab = (href: string, icon: React.ReactNode, active: boolean) => (
+    <button
+      onClick={() => router.push(href)}
+      className={`flex-1 flex items-center justify-center py-3.5 ${active ? 'text-foreground' : 'text-muted-foreground'}`}
+    >
+      {icon}
+    </button>
+  );
+
+  return (
+    <nav className="md:hidden fixed inset-x-0 bottom-0 z-40 flex border-t border-border bg-background/95 backdrop-blur-md">
+      {tab(isLoggedIn ? '/app' : '/', <Home className="w-6 h-6" strokeWidth={pathname === (isLoggedIn ? '/app' : '/') ? 2.5 : 2} />, pathname === (isLoggedIn ? '/app' : '/'))}
+      {tab('/community', <Compass className="w-6 h-6" strokeWidth={pathname === '/community' ? 2.5 : 2} />, pathname === '/community')}
+      {isLoggedIn ? (
+        <>
+          {tab('/app', <SquarePen className="w-6 h-6 text-primary" />, false)}
+          <div className="flex-1 flex items-center justify-center py-2.5">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="w-8 h-8 rounded-full bg-primary/20 text-primary text-xs font-bold flex items-center justify-center">{initial}</button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" side="top" className="w-48">
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={async () => {
+                    await logout();
+                    router.push('/');
+                  }}
+                >
+                  <LogOut className="w-3.5 h-3.5 mr-2" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </>
+      ) : (
+        tab('/', <LogIn className="w-6 h-6" />, false)
+      )}
+    </nav>
   );
 }
 
