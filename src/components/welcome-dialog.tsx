@@ -11,19 +11,19 @@ const SEEN_KEY = 'playbooks_welcome_seen';
 
 const POINTS = [
   {
-    icon: <PencilLine className="w-4 h-4" />,
-    title: 'Describe what you\'re planning',
-    body: 'A wedding, a career change, a first home — one sentence is enough. Claude builds a step-by-step playbook around your situation.',
+    icon: <PencilLine className="w-5 h-5" />,
+    title: 'Say what you\'re planning',
+    body: 'One sentence. Claude builds your step-by-step playbook in ~20 seconds.',
   },
   {
-    icon: <Sparkles className="w-4 h-4" />,
+    icon: <Sparkles className="w-5 h-5" />,
     title: 'Work through it with AI',
-    body: 'Check off tasks, answer questions, and get AI guidance specific to you. If life changes, replan without losing your progress.',
+    body: 'Check off tasks, get guidance on every answer, replan when life changes.',
   },
   {
-    icon: <GitFork className="w-4 h-4" />,
-    title: 'Or start from someone else\'s',
-    body: 'This feed is real plans from real people. Fork any playbook and Claude re-tailors it to your situation.',
+    icon: <GitFork className="w-5 h-5" />,
+    title: 'Or fork a real plan',
+    body: 'This feed is real plans from real people. Fork one and Claude makes it yours.',
   },
 ];
 
@@ -45,46 +45,55 @@ export function WelcomeDialog({ onGetStarted }: { onGetStarted: () => void }) {
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) dismiss(); }}>
-      <DialogContent className="sm:max-w-md p-0 overflow-hidden gap-0">
+      <DialogContent className="sm:max-w-[min(1100px,94vw)] p-0 overflow-hidden gap-0 max-h-[92vh] overflow-y-auto">
         <DialogTitle className="sr-only">Welcome to Playbooks</DialogTitle>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/welcome.jpg"
-          alt=""
-          className="w-full h-44 object-cover"
-          onError={(e) => { e.currentTarget.style.display = 'none'; }}
-        />
-        <div className="p-8">
-        <div className="flex flex-col items-center text-center mb-6">
-          <PlaybookIcon size={40} className="text-primary mb-4" />
-          <h2 className="text-2xl font-bold tracking-tight">Big moments don&apos;t come with a manual</h2>
-          <p className="text-sm text-muted-foreground mt-2">Playbooks turns whatever you&apos;re planning into a step-by-step plan — with AI guidance the whole way through.</p>
-        </div>
-
-        <div className="space-y-4 mb-8">
-          {POINTS.map((p, i) => (
-            <div key={i} className="flex items-start gap-3.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary shrink-0">{p.icon}</span>
-              <div>
-                <p className="text-sm font-semibold">{p.title}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed mt-0.5">{p.body}</p>
-              </div>
+        <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/welcome.jpg"
+            alt=""
+            className="w-full h-72 sm:h-80 object-cover"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0c1118] via-[#0c1118]/30 to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 px-8 sm:px-12 pb-7 flex items-end gap-5">
+            <PlaybookIcon size={56} className="text-primary shrink-0 mb-1.5" />
+            <div>
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight max-w-3xl">Big moments don&apos;t come with a manual</h2>
             </div>
-          ))}
+          </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <Button className="w-full" onClick={() => { dismiss(true); onGetStarted(); }}>
-            Build my first playbook
-          </Button>
-          <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => dismiss()}>
-            Just browse the feed
-          </Button>
-          <label className="flex items-center justify-center gap-2 mt-2 text-xs text-muted-foreground cursor-pointer select-none">
+        <div className="px-8 sm:px-12 pt-6 pb-10">
+          <p className="text-base sm:text-lg text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+            Playbooks turns whatever you&apos;re planning into a step-by-step plan — with AI guidance the whole way through.
+          </p>
+
+          <div className="grid sm:grid-cols-3 gap-4 mb-10">
+            {POINTS.map((p, i) => (
+              <div key={i} className="rounded-2xl border border-border bg-secondary/40 p-6">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary">{p.icon}</span>
+                  <span className="text-4xl font-bold text-border">{i + 1}</span>
+                </div>
+                <p className="text-lg font-bold mb-2">{p.title}</p>
+                <p className="text-[15px] text-muted-foreground leading-relaxed">{p.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button size="lg" className="px-8 w-full sm:w-auto" onClick={() => { dismiss(true); onGetStarted(); }}>
+              Build my first playbook
+            </Button>
+            <Button size="lg" variant="secondary" className="px-8 w-full sm:w-auto" onClick={() => dismiss()}>
+              Just browse the feed
+            </Button>
+          </div>
+          <label className="flex items-center justify-center gap-2 mt-5 text-xs text-muted-foreground cursor-pointer select-none">
             <Checkbox checked={dontShowAgain} onCheckedChange={(v) => setDontShowAgain(v === true)} className="size-3.5" />
             Don&apos;t show this again
           </label>
-        </div>
         </div>
       </DialogContent>
     </Dialog>
