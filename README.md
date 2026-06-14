@@ -2,7 +2,7 @@
 
 <img src="assets/banner.png" alt="banner" width="100%" />
 
-# Playbooks
+# 📓 Playbooks
 
 **The social feed for life's biggest moments — describe your situation, Claude builds the plan, the community makes it better.**
 
